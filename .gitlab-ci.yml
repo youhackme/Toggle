@@ -8,6 +8,9 @@ before_script:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   - php -v
+  - php /composer.phar self-update
+  - php /composer.phar -V
+  - php /composer.phar install --no-progress
 demo:
   stage: deploy
   script:
