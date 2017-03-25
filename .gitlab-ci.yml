@@ -16,7 +16,7 @@ demo:
   script:
     #- npm install
     # - gulp gitlab
-    - composer install
+    # - composer install
     # Push source files to server
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/toggle.me/public_html
   environment:
