@@ -1,4 +1,4 @@
-#image: darktips
+image: darktips
 stages:
   - deploy
 before_script:
