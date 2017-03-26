@@ -15,4 +15,4 @@ Route::get( '/', function () {
 	return view( 'welcome' );
 } );
 
-Route::get( '/scrape', 'ScrapeController@result' );
+Route::get( '/scrape/page/{page}', 'ScrapeController@result' );
