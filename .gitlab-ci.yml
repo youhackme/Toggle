@@ -24,3 +24,4 @@ demo:
     url: https://toggle.me
   only:
     - master
+    - themescraping
