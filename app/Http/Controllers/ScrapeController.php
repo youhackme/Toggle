@@ -67,7 +67,7 @@ class ScrapeController extends Controller {
 			} );
 
 			// Click on each theme name and go to their theme page details
-			$link                 = $this->crawler->selectLink( $this->theme['name'] )->link();
+			$link                 = $this->crawler->selectLink( trim($this->theme['name']) )->link();
 			$crawlerThemefullPage = $this->client->click( $link );
 
 
