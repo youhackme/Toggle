@@ -20,12 +20,6 @@ class ScrapeController extends Controller {
 	private $client;
 
 
-	public function __construct() {
-
-
-	}
-
-
 	public function result( $page = 1 ) {
 
 
@@ -111,17 +105,5 @@ class ScrapeController extends Controller {
 	}
 
 
-	public function test() {
-		return [
-			[
-				'Name'  => 'Hyder',
-				'Email' => 'ismaakeel@gmail.com',
-			],
-			[
-				'Name'  => 'Hyder',
-				'Email' => 'darktips.com@gmail.com',
-			],
-		];
-	}
 
 }
