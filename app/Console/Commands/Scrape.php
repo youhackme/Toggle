@@ -35,11 +35,11 @@ class Scrape extends Command {
 	 */
 	public function handle() {
 
-
 		$provider = $this->option( 'provider' );
-
-
 		$this->info( "Scraping theme from $provider" );
+		$themes  = ( new \App\Http\Controllers\ScrapeController() )->result();
+		$headers = [ 'id', 'name', 'previewScreenshot', 'previewURL', 'description', 'origin' ];
+		$this->table( $headers, $themes );
 
 	}
 }
