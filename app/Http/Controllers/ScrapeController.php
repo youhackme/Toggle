@@ -26,7 +26,7 @@ class ScrapeController extends Controller {
 	}
 
 
-	public function result() {
+	public function result( $page = 1 ) {
 
 
 		$guzzleClient = new GuzzleClient( [
@@ -42,9 +42,8 @@ class ScrapeController extends Controller {
 
 		$crawler = $goutteClient->request(
 			'GET',
-			'https://themeforest.net/category/wordpress?utf8=%E2%9C%93&referrer=search&view=list'
+			'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list'
 		);
-
 
 
 		$this->client  = $goutteClient;
@@ -58,7 +57,7 @@ class ScrapeController extends Controller {
 
 			// The theme name
 			$themelist->filter( 'h3' )->each( function ( $themeTitle ) {
-				$this->theme['name'] = trim( $themeTitle->text() );
+				$this->theme['name'] = $themeTitle->text();
 			} );
 
 
@@ -80,7 +79,7 @@ class ScrapeController extends Controller {
 
 			// Get the theme description
 			$crawlerThemefullPage->filter( 'div.item-description' )->each( function ( $themeDescription ) {
-				$this->theme['description'] = trim( $themeDescription->text() );
+				$this->theme['description'] = $themeDescription->text();
 			} );
 
 			// Click on the preview link
@@ -92,13 +91,14 @@ class ScrapeController extends Controller {
 				$this->theme['origin'] = $themeDescription->attr( 'href' );
 			} );
 
+
 			$this->data[] = [
-				'id'                => $this->theme['id'],
-				'name'              => $this->theme['name'],
-				'previewScreenshot' => $this->theme['previewScreenshot'],
-				'previewURL'        => $this->theme['previewURL'],
-				'description'       => $this->theme['description'],
-				'origin'            => $this->theme['origin'],
+				'id'                => trim( $this->theme['id'] ),
+				'name'              => trim( $this->theme['name'] ),
+				'previewScreenshot' => trim( $this->theme['previewScreenshot'] ),
+				'previewURL'        => trim( $this->theme['previewURL'] ),
+				'description'       => trim( $this->theme['description'] ),
+				'origin'            => trim( $this->theme['origin'] ),
 			];
 
 
