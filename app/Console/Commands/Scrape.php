@@ -38,9 +38,11 @@ class Scrape extends Command {
 		$provider = $this->option( 'provider' );
 		$page     = $this->argument( 'page' );
 		$this->info( "Scraping theme from $provider" );
-		$themes  = ( new \App\Http\Controllers\ScrapeController() )->result( $page );
-		$headers = [ 'id', 'name', 'previewScreenshot', 'previewURL', 'description', 'origin' ];
-		$this->table( $headers, $themes );
+		$themes = ( new \App\Http\Controllers\ScrapeController() )->result( $page );
+		foreach ( $themes as $theme ) {
+			$this->info( "Scraped theme {$theme['name']}" );
+		}
+
 
 	}
 }
