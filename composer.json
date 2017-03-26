@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "fabpot/goutte": "^3.2",
+        "guzzlehttp/guzzle": "^6.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0"
     },
