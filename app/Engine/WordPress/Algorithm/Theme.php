@@ -7,6 +7,7 @@
  */
 
 namespace App\Engine\WordPress\Algorithm;
+
 use App\Engine\WordPress\WordPressAbstract;
 
 use App\Engine\SiteAnatomy;
@@ -17,10 +18,26 @@ class Theme extends WordPressAbstract {
 	// -- theme alias => wp-content/themes/theme-name
 	// -- meta data in style sheets
 
+	public $theme;
+	public $siteAnatomy;
+
 	public function check( SiteAnatomy $siteAnatomy ) {
 
-		$this->setScore( '0', "Well, no footprint in theme" );
+		$this->siteAnatomy = $siteAnatomy;
+
+		$this->theme = $this->getThemeAlias();
 
 		return $this;
+	}
+
+
+	public function getThemeAlias() {
+
+		if ( preg_match_all( '/\/wp-content\/themes\/(.+?)\//', $this->siteAnatomy->html, $matches ) ) {
+			if ( ! empty( $matches[1] ) ) {
+				return array_unique( $matches[1] );
+			}
+
+		}
 	}
 }
