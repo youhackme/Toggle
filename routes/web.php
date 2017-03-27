@@ -15,4 +15,5 @@ Route::get( '/', function () {
 	return view( 'welcome' );
 } );
 
-Route::get( '/scrape/page/{page}', 'ScrapeController@result' );
+Route::get( '/scrape/tf/theme/page/{page}', 'ScrapeController@result' );
+Route::get( '/scrape/tf/plugin/page/{page}', 'PluginController@result' );

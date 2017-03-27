@@ -8,18 +8,16 @@ use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 
 
-class ScrapeController extends Controller {
+class PluginController extends Controller {
 
 	/**
 	 * Store theme meta data
 	 * @var array
 	 */
-	private $theme = [];
+	private $plugin = [];
 	private $data;
 	private $crawler;
 	private $client;
-
-
 
 
 	public function result( $page = 1 ) {
@@ -38,7 +36,7 @@ class ScrapeController extends Controller {
 
 		$crawler = $goutteClient->request(
 			'GET',
-			'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales'
+			'https://codecanyon.net/category/wordpress?page=$page'
 		);
 
 
@@ -95,7 +93,6 @@ class ScrapeController extends Controller {
 					} );
 
 
-
 					/*$crawler->filter('tbody > tr > td > a')->each(function ($node, $i = 0) use (&$URLs)
 					{
 						{
@@ -112,8 +109,11 @@ class ScrapeController extends Controller {
 						'description'       => trim( $this->theme['description'] ),
 						'origin'            => trim( $this->theme['origin'] ),
 					];
+
+
+
 				} catch ( \InvalidArgumentException $e ) {
-					echo "Well, it sucks. Cannot scrape: ".json_encode($this->theme['id']);
+					echo "Well, it sucks. Cannot scrape: " . json_encode( $this->theme['id'] );
 				}
 			} else {
 				echo "No data for" . $this->theme['id'];
