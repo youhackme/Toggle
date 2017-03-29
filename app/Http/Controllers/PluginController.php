@@ -15,7 +15,7 @@ class PluginController extends Controller {
 	 * @var array
 	 */
 	private $plugin = [];
-	private $data;
+	private $result;
 	private $crawler;
 	private $client;
 
@@ -44,41 +44,58 @@ class PluginController extends Controller {
 		$this->crawler = $crawler;
 
 
-		$crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) {
+		$plugin = [];
+
+
+		$crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) use ( &$plugin
+		) {
+
 
 			// The theme Unique id
-			$this->theme['id'] = $themelist->attr( 'data-item-id' );
+			$plugin['id'] = $themelist->attr( 'data-item-id' );
 
 			// The theme name
-			$themelist->filter( 'h3' )->each( function ( $themeTitle ) {
-				$this->theme['name'] = $themeTitle->text();
+			$themelist->filter( 'h3' )->each( function ( $themeTitle ) use ( &$plugin
+			) {
+				$plugin['name'] = $themeTitle->text();
 
 			} );
 
+			// The theme preview  screenshot
+			$themelist->filter( 'img.preload' )->each( function ( $themeImage ) use ( &$plugin
+			) {
+				$plugin['previewScreenshot'] = $themeImage->attr( 'data-preview-url' );
+			} );
 
 			// The theme preview  screenshot
-			$themelist->filter( 'img.preload' )->each( function ( $themeImage ) {
-				$this->theme['previewScreenshot'] = $themeImage->attr( 'data-preview-url' );
+			$themelist->filter( '[itemprop="genre"]' )->each( function ( $themeImage ) use ( &$plugin
+			) {
+				$plugin['category'] = $themeImage->text();
 			} );
 
 
 			// Click on each theme name and go to their theme page details
-			if ( ! empty( trim( $this->theme['name'] ) ) ) {
+			if ( ! empty( trim( $plugin['name'] ) ) ) {
 
 				try {
-					$link                 = $this->crawler->selectLink( trim( $this->theme['name'] ) )->link();
+					$link                 = $this->crawler->selectLink( trim( $plugin['name'] ) )->link();
 					$crawlerThemefullPage = $this->client->click( $link );
 
 
 					// Get the Preview URL
-					$crawlerThemefullPage->filter( 'a.live-preview' )->each( function ( $themePreviewlink ) {
-						$this->theme['previewURL'] = $themePreviewlink->attr( 'href' );
+					$crawlerThemefullPage->filter( 'a.live-preview' )->each( function ( $themePreviewlink ) use (
+						&
+						$plugin
+					) {
+						$plugin['previewURL'] = $themePreviewlink->attr( 'href' );
 					} );
 
 
 					// Get the theme description
-					$crawlerThemefullPage->filter( 'div.item-description' )->each( function ( $themeDescription ) {
-						$this->theme['description'] = $themeDescription->text();
+					$crawlerThemefullPage->filter( 'div.item-description' )->each( function ( $themeDescription ) use (
+						&$plugin
+					) {
+						$plugin['description'] = $themeDescription->text();
 					} );
 
 					// Click on the preview link
@@ -88,8 +105,9 @@ class PluginController extends Controller {
 					// Get the theme url hosted by the author
 					$crawlerThemePreviewLink->filter( 'div.preview__action--close a' )->each( function (
 						$themeDescription
+					) use ( &$plugin
 					) {
-						$this->theme['origin'] = $themeDescription->attr( 'href' );
+						$plugin['origin'] = $themeDescription->attr( 'href' );
 					} );
 
 
@@ -101,25 +119,27 @@ class PluginController extends Controller {
 					});*/
 
 
-					$this->data[] = [
-						'id'                => trim( $this->theme['id'] ),
-						'name'              => trim( $this->theme['name'] ),
-						'previewScreenshot' => trim( $this->theme['previewScreenshot'] ),
-						'previewURL'        => trim( $this->theme['previewURL'] ),
-						'description'       => trim( $this->theme['description'] ),
-						'origin'            => trim( $this->theme['origin'] ),
+					$this->result[] = [
+						'id'                => trim( $plugin['id'] ),
+						'name'              => trim( $plugin['name'] ),
+						'previewScreenshot' => trim( $plugin['previewScreenshot'] ),
+						'previewURL'        => trim( $plugin['previewURL'] ),
+						'description'       => trim( $plugin['description'] ),
+						'origin'            => trim( $plugin['origin'] ),
+						'category'          => trim( $plugin['category'] ),
 					];
 
 
-
 				} catch ( \InvalidArgumentException $e ) {
-					echo "Well, it sucks. Cannot scrape: " . json_encode( $this->theme['id'] );
+					echo "Well, it sucks. Cannot scrape: " . json_encode( $plugin['id'] );
 				}
 			} else {
-				echo "No data for" . $this->theme['id'];
+				echo "No data for" . $plugin['id'];
 			}
 
 		} );
+
+		dd( $this->result );
 
 
 		return $this->data;
