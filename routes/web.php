@@ -17,3 +17,6 @@ Route::get( '/', function () {
 
 Route::get( '/scrape/tf/theme/page/{page}', 'ScrapeController@result' );
 Route::get( '/scrape/tf/plugin/page/{page}', 'PluginController@result' );
+
+
+Route::get( '/scrape/wp/plugin', 'PluginController@scrape' );

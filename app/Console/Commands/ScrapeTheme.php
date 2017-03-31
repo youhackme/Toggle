@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class Scrape extends Command {
+class ScrapeTheme extends Command {
 	/**
 	 * The name and signature of the console command.
 	 *
@@ -17,7 +17,7 @@ class Scrape extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description';
+	protected $description = 'Scrape TF themes';
 
 	/**
 	 * Create a new command instance.
