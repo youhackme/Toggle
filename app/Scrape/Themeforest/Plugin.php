@@ -8,7 +8,7 @@
 
 namespace App\Scrape\Themeforest;
 
-use Illuminate\Http\Request;
+
 
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
@@ -20,11 +20,7 @@ use GuzzleHttp\Client as GuzzleClient;
  */
 class Plugin {
 
-	/**
-	 * Store theme meta data
-	 * @var array
-	 */
-	private $plugin = [];
+
 	private $result;
 	private $crawler;
 	private $client;
