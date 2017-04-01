@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Scrape\Themeforest;
 
 use Illuminate\Http\Request;
 
@@ -8,7 +8,13 @@ use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 
 
-class ScrapeController extends Controller {
+/**
+ * Created by PhpStorm.
+ * User: Hyder
+ * Date: 01/04/2017
+ * Time: 11:26
+ */
+class Theme {
 
 	/**
 	 * Store theme meta data
@@ -19,10 +25,7 @@ class ScrapeController extends Controller {
 	private $crawler;
 	private $client;
 
-
-
-
-	public function result( $page = 1 ) {
+	public function scrape( $page = 1 ) {
 
 
 		$guzzleClient = new GuzzleClient( [
@@ -95,7 +98,6 @@ class ScrapeController extends Controller {
 					} );
 
 
-
 					/*$crawler->filter('tbody > tr > td > a')->each(function ($node, $i = 0) use (&$URLs)
 					{
 						{
@@ -113,7 +115,7 @@ class ScrapeController extends Controller {
 						'origin'            => trim( $this->theme['origin'] ),
 					];
 				} catch ( \InvalidArgumentException $e ) {
-					echo "Well, it sucks. Cannot scrape: ".json_encode($this->theme['id']);
+					echo "Well, it sucks. Cannot scrape: " . json_encode( $this->theme['id'] );
 				}
 			} else {
 				echo "No data for" . $this->theme['id'];
@@ -126,6 +128,5 @@ class ScrapeController extends Controller {
 
 
 	}
-
 
 }

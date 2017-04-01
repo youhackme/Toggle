@@ -17,7 +17,7 @@ class ScrapePlugin extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Scrape TF pluginss';
+	protected $description = 'Scrape TF plugins';
 
 	/**
 	 * Create a new command instance.
@@ -36,8 +36,12 @@ class ScrapePlugin extends Command {
 	public function handle() {
 		$provider = $this->option( 'provider' );
 		$page     = $this->argument( 'page' );
+
+
 		$this->info( "Scraping plugins from $provider" );
-		$plugins = ( new \App\Http\Controllers\PluginController() )->result( $page );
+		$methodName = 'scrape' . ucfirst( $provider );
+
+		$plugins = ( new \App\Http\Controllers\PluginController() )->$methodName( $page );
 		foreach ( $plugins as $plugin ) {
 			$this->info( "Scraped plugin {$plugin['name']}" );
 		}

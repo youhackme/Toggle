@@ -15,8 +15,17 @@ Route::get( '/', function () {
 	return view( 'welcome' );
 } );
 
-Route::get( '/scrape/tf/theme/page/{page}', 'ScrapeController@result' );
-Route::get( '/scrape/tf/plugin/page/{page}', 'PluginController@result' );
+
+/**
+ * Scrape plugins from different providers
+ */
+Route::get( '/scrape/tf/plugin/page/{page}', 'PluginController@scrapeThemeForest' );
+Route::get( '/scrape/wp/plugin', 'PluginController@scrapeWordPress' );
+
+/**
+ * Scrape themes from different providers
+ */
+Route::get( '/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest' );
+Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
 
 
-Route::get( '/scrape/wp/plugin', 'PluginController@scrape' );
