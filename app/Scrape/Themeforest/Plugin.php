@@ -9,9 +9,9 @@
 namespace App\Scrape\Themeforest;
 
 
-
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
+use App\Plugin as PluginModel;
 
 
 /**
@@ -38,10 +38,13 @@ class Plugin {
 		$goutteClient = new Client();
 		$goutteClient->setClient( $guzzleClient );
 
+		$pageToCrawl = 'https://codecanyon.net/category/wordpress?page=' . $page;
+		echo "Scraping page: $pageToCrawl";
+		echo br();
 
 		$crawler = $goutteClient->request(
 			'GET',
-			'https://codecanyon.net/category/wordpress?page=' . $page
+			$pageToCrawl
 		);
 
 
@@ -116,16 +119,24 @@ class Plugin {
 					} );
 
 
-					/*$crawler->filter('tbody > tr > td > a')->each(function ($node, $i = 0) use (&$URLs)
-					{
-						{
-							$URLs[] = $node->attr('href');
-						}
-					});*/
+					if ( $this->exist( trim( $plugin['id'] ) ) ) {
+						$pluginModel                   = new PluginModel;
+						$pluginModel->uniqueidentifier = trim( $plugin['id'] );
+						$pluginModel->name             = trim( $plugin['name'] );
+						$pluginModel->url              = trim( $plugin['previewURL'] );
+						$pluginModel->downloadlink     = trim( $plugin['previewURL'] );
+						$pluginModel->demolink         = trim( $plugin['origin'] );
+						$pluginModel->description      = trim( $plugin['description'] );
+						$pluginModel->screenshotUrl    = trim( $plugin['previewScreenshot'] );
+						$pluginModel->provider         = 'themeforest';
+						$pluginModel->category         = trim( $plugin['category'] );
+						$pluginModel->type             = 'premium';
+						$pluginModel->save();
+					}
 
 
 					$this->result[] = [
-						'id'                => trim( $plugin['id'] ),
+						'uniqueidentifier'  => trim( $plugin['id'] ),
 						'name'              => trim( $plugin['name'] ),
 						'previewScreenshot' => trim( $plugin['previewScreenshot'] ),
 						'previewURL'        => trim( $plugin['previewURL'] ),
@@ -137,18 +148,36 @@ class Plugin {
 
 				} catch ( \InvalidArgumentException $e ) {
 					echo "Well, it sucks. Cannot scrape: " . json_encode( $plugin['id'] );
+					echo "<br/> \n";
 				}
 			} else {
 				echo "No data for" . $plugin['id'];
+				echo "<br/> \n";
 			}
 
 		} );
 
-		dd( $this->result );
+
+		//return $this->result;
 
 
-		return $this->result;
+	}
 
+
+	public function exist( $externalPluginIdentifier ) {
+
+
+		if ( ! PluginModel::where( 'uniqueidentifier', '=', $externalPluginIdentifier )->exists() ) {
+			echo "[" . getMemUsage() . "]$externalPluginIdentifier is a new plugin.";
+			echo br();
+
+			return true;
+		} else {
+			echo "[" . getMemUsage() . "]$externalPluginIdentifier has already been scrapped.";
+			echo br();
+
+			return false;
+		}
 
 	}
 

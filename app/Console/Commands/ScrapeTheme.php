@@ -10,7 +10,7 @@ class ScrapeTheme extends Command {
 	 *
 	 * @var string
 	 */
-	protected $signature = 'scrape:theme  {page=1} {--provider=}';
+	protected $signature = 'scrape:theme  {--page=1} {--provider=}';
 
 	/**
 	 * The console command description.
@@ -38,12 +38,10 @@ class ScrapeTheme extends Command {
 		$provider = $this->option( 'provider' );
 		$page     = $this->argument( 'page' );
 		$this->info( "Scraping theme from $provider" );
-		$methodName = 'scrape' . ucfirst( $provider );
-		$themes = ( new \App\Http\Controllers\ThemeController() )->$methodName( $page );
 
-		foreach ( $themes as $theme ) {
-			$this->info( "Scraped theme {$theme['name']}" );
-		}
+		$methodName = 'scrape' . ucfirst( $provider );
+
+		( new \App\Http\Controllers\ThemeController() )->$methodName( $page );
 
 
 	}

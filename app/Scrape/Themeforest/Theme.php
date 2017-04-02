@@ -2,10 +2,10 @@
 
 namespace App\Scrape\Themeforest;
 
-use Illuminate\Http\Request;
 
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
+use App\Theme as ThemeModel;
 
 
 /**
@@ -20,7 +20,6 @@ class Theme {
 	 * Store theme meta data
 	 * @var array
 	 */
-	private $theme = [];
 	private $data;
 	private $crawler;
 	private $client;
@@ -48,42 +47,49 @@ class Theme {
 		$this->client  = $goutteClient;
 		$this->crawler = $crawler;
 
+		$theme = [];
 
-		$crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) {
+		$crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) use ( &$theme
+		) {
 
 			// The theme Unique id
-			$this->theme['id'] = $themelist->attr( 'data-item-id' );
+			$theme['id'] = $themelist->attr( 'data-item-id' );
 
 			// The theme name
-			$themelist->filter( 'h3' )->each( function ( $themeTitle ) {
-				$this->theme['name'] = $themeTitle->text();
+			$themelist->filter( 'h3' )->each( function ( $themeTitle ) use ( &$theme ) {
+				$theme['name'] = $themeTitle->text();
 
 			} );
 
 
 			// The theme preview  screenshot
-			$themelist->filter( 'img.preload' )->each( function ( $themeImage ) {
-				$this->theme['previewScreenshot'] = $themeImage->attr( 'data-preview-url' );
+			$themelist->filter( 'img.preload' )->each( function ( $themeImage ) use ( &$theme ) {
+				$theme['previewScreenshot'] = $themeImage->attr( 'data-preview-url' );
 			} );
 
 
 			// Click on each theme name and go to their theme page details
-			if ( ! empty( trim( $this->theme['name'] ) ) ) {
+			if ( ! empty( trim( $theme['name'] ) ) ) {
 
 				try {
-					$link                 = $this->crawler->selectLink( trim( $this->theme['name'] ) )->link();
+					$link                 = $this->crawler->selectLink( trim( $theme['name'] ) )->link();
 					$crawlerThemefullPage = $this->client->click( $link );
 
 
 					// Get the Preview URL
-					$crawlerThemefullPage->filter( 'a.live-preview' )->each( function ( $themePreviewlink ) {
-						$this->theme['previewURL'] = $themePreviewlink->attr( 'href' );
+					$crawlerThemefullPage->filter( 'a.live-preview' )->each( function ( $themePreviewlink ) use (
+						&
+						$theme
+					) {
+						$theme['previewURL'] = $themePreviewlink->attr( 'href' );
 					} );
 
 
 					// Get the theme description
-					$crawlerThemefullPage->filter( 'div.item-description' )->each( function ( $themeDescription ) {
-						$this->theme['description'] = $themeDescription->text();
+					$crawlerThemefullPage->filter( 'div.item-description' )->each( function ( $themeDescription ) use (
+						&$theme
+					) {
+						$theme['description'] = $themeDescription->text();
 					} );
 
 					// Click on the preview link
@@ -93,32 +99,41 @@ class Theme {
 					// Get the theme url hosted by the author
 					$crawlerThemePreviewLink->filter( 'div.preview__action--close a' )->each( function (
 						$themeDescription
-					) {
-						$this->theme['origin'] = $themeDescription->attr( 'href' );
+					) use (
+						&$theme
+					){
+						$theme['origin'] = $themeDescription->attr( 'href' );
 					} );
 
 
-					/*$crawler->filter('tbody > tr > td > a')->each(function ($node, $i = 0) use (&$URLs)
-					{
-						{
-							$URLs[] = $node->attr('href');
-						}
-					});*/
+					if ( $this->exist( trim( $theme['id'] ) ) ) {
+						$themeModel                   = new ThemeModel;
+						$themeModel->uniqueidentifier = trim( $theme['id'] );
+						$themeModel->name             = trim( $theme['name'] );
+						$themeModel->url              = trim( $theme['previewURL'] );
+						$themeModel->downloadLink     = trim( $theme['previewURL'] );
+						$themeModel->PreviewLink         = trim( $theme['origin'] );
+						$themeModel->description      = trim( $theme['description'] );
+						$themeModel->screenshotUrl    = trim( $theme['previewScreenshot'] );
+						$themeModel->provider         = 'themeforest';
+						$themeModel->type             = 'premium';
+						$themeModel->save();
+					}
 
 
 					$this->data[] = [
-						'id'                => trim( $this->theme['id'] ),
-						'name'              => trim( $this->theme['name'] ),
-						'previewScreenshot' => trim( $this->theme['previewScreenshot'] ),
-						'previewURL'        => trim( $this->theme['previewURL'] ),
-						'description'       => trim( $this->theme['description'] ),
-						'origin'            => trim( $this->theme['origin'] ),
+						'id'                => trim( $theme['id'] ),
+						'name'              => trim( $theme['name'] ),
+						'previewScreenshot' => trim( $theme['previewScreenshot'] ),
+						'previewURL'        => trim( $theme['previewURL'] ),
+						'description'       => trim( $theme['description'] ),
+						'origin'            => trim( $theme['origin'] ),
 					];
 				} catch ( \InvalidArgumentException $e ) {
-					echo "Well, it sucks. Cannot scrape: " . json_encode( $this->theme['id'] );
+					echo "Well, it sucks. Cannot scrape: " . json_encode( $theme['id'] );
 				}
 			} else {
-				echo "No data for" . $this->theme['id'];
+				echo "No data for" . $theme['id'];
 			}
 
 		} );
@@ -126,6 +141,24 @@ class Theme {
 
 		return $this->data;
 
+
+	}
+
+
+	public function exist( $externalThemeIdentifier ) {
+
+
+		if ( ! ThemeModel::where( 'uniqueidentifier', '=', $externalThemeIdentifier )->exists() ) {
+			echo "[" . getMemUsage() . "]$externalThemeIdentifier is a new theme.";
+			echo br();
+
+			return true;
+		} else {
+			echo "[" . getMemUsage() . "]$externalThemeIdentifier has already been scrapped.";
+			echo br();
+
+			return false;
+		}
 
 	}
 

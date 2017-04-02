@@ -10,7 +10,7 @@ class ScrapePlugin extends Command {
 	 *
 	 * @var string
 	 */
-	protected $signature = 'scrape:plugin  {page=1} {--provider=}';
+	protected $signature = 'scrape:plugin  {--page=1} {--provider=}';
 
 	/**
 	 * The console command description.
@@ -35,15 +35,12 @@ class ScrapePlugin extends Command {
 	 */
 	public function handle() {
 		$provider = $this->option( 'provider' );
-		$page     = $this->argument( 'page' );
-
+		$page     = $this->option( 'page' );
 
 		$this->info( "Scraping plugins from $provider" );
 		$methodName = 'scrape' . ucfirst( $provider );
 
-		$plugins = ( new \App\Http\Controllers\PluginController() )->$methodName( $page );
-		foreach ( $plugins as $plugin ) {
-			$this->info( "Scraped plugin {$plugin['name']}" );
-		}
+		( new \App\Http\Controllers\PluginController() )->$methodName( $page );
+
 	}
 }
