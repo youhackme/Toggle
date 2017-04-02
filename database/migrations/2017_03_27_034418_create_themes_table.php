@@ -21,7 +21,7 @@ class CreateThemesTable extends Migration {
 			$table->string( 'url', 255 )->nullable();
 			$table->string( 'provider', 150 )->nullable();
 			$table->string( 'alias', 100 )->nullable();
-			$table->string( 'screenshotUrl', 150 )->nullable();
+			$table->string( 'screenshotUrl', 255 )->nullable();
 			$table->string( 'screenshotHash', 32 )->nullable();
 			$table->string( 'version', 5 )->nullable();
 			$table->string( 'category', 150 )->nullable();
