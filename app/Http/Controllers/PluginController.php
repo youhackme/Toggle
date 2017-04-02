@@ -10,7 +10,7 @@ class PluginController extends Controller {
 
 		$pages = explode( '-', $page );
 
-		foreach ( $pages as $page ) {
+		foreach ( range( $pages[0], $pages[1] ) as $page ) {
 
 			$result = ( new \App\Scrape\Themeforest\Plugin() )->scrape( $page );
 

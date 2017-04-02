@@ -37,11 +37,16 @@ class Theme {
 		$goutteClient = new Client();
 		$goutteClient->setClient( $guzzleClient );
 
+		$pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
+		echo "Scraping page: $pageToCrawl";
+		echo br();
 
 		$crawler = $goutteClient->request(
 			'GET',
-			'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales'
+			$pageToCrawl
 		);
+
+
 
 
 		$this->client  = $goutteClient;
@@ -101,7 +106,7 @@ class Theme {
 						$themeDescription
 					) use (
 						&$theme
-					){
+					) {
 						$theme['origin'] = $themeDescription->attr( 'href' );
 					} );
 
@@ -112,7 +117,7 @@ class Theme {
 						$themeModel->name             = trim( $theme['name'] );
 						$themeModel->url              = trim( $theme['previewURL'] );
 						$themeModel->downloadLink     = trim( $theme['previewURL'] );
-						$themeModel->PreviewLink         = trim( $theme['origin'] );
+						$themeModel->PreviewLink      = trim( $theme['origin'] );
 						$themeModel->description      = trim( $theme['description'] );
 						$themeModel->screenshotUrl    = trim( $theme['previewScreenshot'] );
 						$themeModel->provider         = 'themeforest';
