@@ -14,7 +14,7 @@ class CreateThemesTable extends Migration {
 		Schema::create( 'themes', function ( Blueprint $table ) {
 			$table->engine = 'InnoDB';
 			$table->increments( 'id' );
-			$table->integer( 'uniqueidentifier' );
+			$table->string( 'uniqueidentifier',150 );
 			$table->string( 'name', 100 );
 			$table->text( 'description', 255 )->nullable();
 			$table->string( 'author', 100 )->nullable();

@@ -14,13 +14,13 @@ class CreatePluginsTable extends Migration {
 		Schema::create( 'plugins', function ( Blueprint $table ) {
 			$table->engine = 'InnoDB';
 			$table->increments( 'id' );
-			$table->integer( 'uniqueidentifier' );
+			$table->string( 'uniqueidentifier',150 );
 			$table->string( 'name', 200 );
 			$table->string( 'url', 200 )->nullable();
 			$table->string( 'downloadlink', 200 )->nullable();
 			$table->string( 'demolink', 200 )->nullable();
 			$table->text( 'description', 255 )->nullable();
-			$table->string( 'screenshotUrl', 150 )->nullable();
+			$table->string( 'screenshotUrl', 200 )->nullable();
 			$table->string( 'provider', 50 )->nullable();
 			$table->string( 'category', 150 )->nullable();
 			$table->enum( 'type', [ 'free', 'premium' ] );
