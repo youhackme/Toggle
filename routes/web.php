@@ -11,8 +11,23 @@
 |
 */
 
+
+ini_set( 'max_execution_time', 0 );
 Route::get( '/', function () {
 	return view( 'welcome' );
 } );
 
-Route::get( '/scrape', 'ScrapeController@result' );
+
+/**
+ * Scrape plugins from different providers
+ */
+Route::get( '/scrape/tf/plugin/page/{page}', 'PluginController@scrapeThemeForest' );
+Route::get( '/scrape/wp/plugin', 'PluginController@scrapeWordPress' );
+
+/**
+ * Scrape themes from different providers
+ */
+Route::get( '/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest' );
+Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
+
+

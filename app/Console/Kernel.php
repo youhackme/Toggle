@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-	    'App\Console\Commands\Scrape'
+	    'App\Console\Commands\ScrapeTheme',
+	    'App\Console\Commands\ScrapePlugin'
     ];
 
     /**

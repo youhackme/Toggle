@@ -4,20 +4,20 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class Scrape extends Command {
+class ScrapePlugin extends Command {
 	/**
 	 * The name and signature of the console command.
 	 *
 	 * @var string
 	 */
-	protected $signature = 'scrape:theme  {--provider=}';
+	protected $signature = 'scrape:plugin  {--page=1} {--provider=}';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description';
+	protected $description = 'Scrape TF plugins';
 
 	/**
 	 * Create a new command instance.
@@ -34,12 +34,13 @@ class Scrape extends Command {
 	 * @return mixed
 	 */
 	public function handle() {
-
 		$provider = $this->option( 'provider' );
-		$this->info( "Scraping theme from $provider" );
-		$themes  = ( new \App\Http\Controllers\ScrapeController() )->result();
-		$headers = [ 'id', 'name', 'previewScreenshot', 'previewURL', 'description', 'origin' ];
-		$this->table( $headers, $themes );
+		$page     = $this->option( 'page' );
+
+		$this->info( "Scraping plugins from $provider" );
+		$methodName = 'scrape' . ucfirst( $provider );
+
+		( new \App\Http\Controllers\PluginController() )->$methodName( $page );
 
 	}
 }
