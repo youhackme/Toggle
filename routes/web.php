@@ -30,4 +30,10 @@ Route::get( '/scrape/wp/plugin', 'PluginController@scrapeWordPress' );
 Route::get( '/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest' );
 Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
 
+/**
+ * Scrape themes from different providers
+ */
+Route::get( '/site/{site}', 'EngineController@detect' );
+
+
 

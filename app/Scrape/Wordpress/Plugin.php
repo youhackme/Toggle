@@ -54,8 +54,8 @@ class Plugin {
 		        ->each( function ( $pluginName ) use ( &$plugin ) {
 			        $plugin['name'] = $pluginName->text();
 			        $url            = 'https://wordpress.org/plugins/' . $plugin['name'];
-			        echo '<a href="' . $url . '">' . $plugin['name'] . '</a>';
-			        echo "<br/>";
+			        // echo '<a href="' . $url . '">' . $plugin['name'] . '</a>';
+			        // echo "<br/>";
 
 
 			        $crawlerPluginfullPage = $this->client->request(
@@ -91,8 +91,9 @@ class Plugin {
 				                              $tags = [];
 				                              // Get the description
 				                              $content->filter( '.tags a' )
-				                                      ->each( function ( $content ) use ( & $plugin, $tags ) {
+				                                      ->each( function ( $content ) use ( & $plugin, &$tags ) {
 					                                      $tags[] = $content->text();
+
 				                                      } );
 				                              $plugin['category'] = implode( ',', $tags );
 
@@ -107,7 +108,7 @@ class Plugin {
 				        $pluginModel->description      = trim( $plugin['description'] );
 				        $pluginModel->screenshotUrl    = trim( $plugin['screenshotUrl'] );
 				        $pluginModel->provider         = $plugin['provider'];
-				        $pluginModel->category         = trim( $plugin['category'] );
+				        $pluginModel->category         = trim( substr( $plugin['category'], 0, 240 ) );
 				        $pluginModel->type             = $plugin['type'];
 				        $pluginModel->save();
 
