@@ -22,7 +22,7 @@ class CreatePluginsTable extends Migration {
 			$table->text( 'description', 255 )->nullable();
 			$table->string( 'screenshotUrl', 200 )->nullable();
 			$table->string( 'provider', 50 )->nullable();
-			$table->string( 'category', 150 )->nullable();
+			$table->string( 'category', 255 )->nullable();
 			$table->enum( 'type', [ 'free', 'premium' ] );
 			$table->timestamps();
 
