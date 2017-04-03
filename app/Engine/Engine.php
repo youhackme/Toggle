@@ -146,6 +146,70 @@ class Engine {
 	}
 
 
+	/**
+	 * Extract CSS Class names
+	 * @return array
+	 */
+	public function getCssClasses() {
+
+		$cssClasses = [];
+		$this->crawler->filterXpath( '//*[@class]' )
+		              ->each( function ( $cssClass ) use ( &$cssClasses ) {
+
+			              $classes      = trim( $cssClass->attr( 'class' ) );
+			              $classes      = explode( ' ', $classes );
+			              $cssClasses[] = $classes;
+
+		              } );
+
+		$uniqueCssClasses = array_unique( array_flatten( $cssClasses ) );
+
+		$finalCssClasses = [];
+		foreach ( $uniqueCssClasses as $uniqueCssClass ) {
+			if ( strlen( $uniqueCssClass ) > 5 ) {
+				$finalCssClasses[] = $uniqueCssClass;
+			}
+		}
+
+
+		return $finalCssClasses;
+
+	}
+
+	/**
+	 * Extract CSS Ids
+	 * @return array
+	 */
+	public function getCssIds() {
+
+		$cssIds = [];
+		$this->crawler->filterXpath( '//*[@id]' )
+		              ->each( function ( $cssId ) use ( &$cssIds ) {
+
+			              $cssIds[] = trim( $cssId->attr( 'id' ) );
+
+		              } );
+
+		$uniqueCssIds = array_unique( array_flatten( $cssIds ) );
+
+		$finalCssIds = [];
+		foreach ( $uniqueCssIds as $uniqueCssId ) {
+			if ( strlen( $uniqueCssId ) > 5 ) {
+				$finalCssIds[] = $uniqueCssId;
+			}
+		}
+
+
+		return $finalCssIds;
+
+
+	}
+
+
+	/**
+	 * Get the result
+	 * @return array
+	 */
 	public function result() {
 		return [
 			'styles'   => $this->getStyleSheets(),
@@ -155,7 +219,10 @@ class Engine {
 			'cookies'  => $this->getCookies(),
 			'comments' => $this->getHtmlComments(),
 			'status'   => $this->getStatus(),
-
+			'css'      => [
+				'classes' => $this->getCssClasses(),
+				'ids'     => $this->getCssIds(),
+			],
 		];
 	}
 
