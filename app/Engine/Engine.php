@@ -2,8 +2,6 @@
 
 namespace App\Engine;
 
-use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
 
 /**
  * Created by PhpStorm.
@@ -22,23 +20,12 @@ class Engine {
 
 	public function __construct( $site ) {
 
-		$guzzleClient       = new GuzzleClient( [
-			'timeout' => 60,
-			'headers' => [
-				'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-
-			],
-		] );
-		$this->goutteClient = new Client();
-		$this->goutteClient->setClient( $guzzleClient );
-
-		$siteToCrawl = "http://" . $site;
+		$this->goutteClient = \App::make( 'goutte' );
 
 		$this->crawler = $this->goutteClient->request(
 			'GET',
-			$siteToCrawl
+			"http://" . $site
 		);
-
 
 	}
 
@@ -199,9 +186,13 @@ class Engine {
 			}
 		}
 
-
 		return $finalCssIds;
+	}
 
+	/**
+	 * Find inner links of a domain to make further analysis
+	 */
+	public function getInnnerLinks() {
 
 	}
 
@@ -212,17 +203,18 @@ class Engine {
 	 */
 	public function result() {
 		return [
-			'styles'   => $this->getStyleSheets(),
-			'scripts'  => $this->getScripts(),
-			'metas'    => $this->metatags(),
-			'headers'  => $this->getHeaders(),
-			'cookies'  => $this->getCookies(),
-			'comments' => $this->getHtmlComments(),
-			'status'   => $this->getStatus(),
-			'css'      => [
+			'styles'     => $this->getStyleSheets(),
+			'scripts'    => $this->getScripts(),
+			'metas'      => $this->metatags(),
+			'headers'    => $this->getHeaders(),
+			'cookies'    => $this->getCookies(),
+			'comments'   => $this->getHtmlComments(),
+			'status'     => $this->getStatus(),
+			'css'        => [
 				'classes' => $this->getCssClasses(),
 				'ids'     => $this->getCssIds(),
 			],
+			'innerlinks' => $this->getInnnerLinks(),
 		];
 	}
 
