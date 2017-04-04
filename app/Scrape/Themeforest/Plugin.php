@@ -141,7 +141,7 @@ class Plugin {
 		              } );
 
 
-		//return $this->result;
+
 
 
 	}
