@@ -2,7 +2,7 @@
 
 namespace App\Engine;
 
-
+use App;
 /**
  * Created by PhpStorm.
  * User: Hyder
@@ -20,7 +20,7 @@ class Engine {
 
 	public function __construct( $site ) {
 
-		$this->goutteClient = \App::make( 'goutte' );
+		$this->goutteClient = App::make( 'goutte' );
 
 		$this->crawler = $this->goutteClient->request(
 			'GET',
@@ -95,7 +95,7 @@ class Engine {
 
 		              } );
 
-		return $styleSheets;
+		return array_unique($styleSheets);
 	}
 
 	/**
@@ -111,7 +111,7 @@ class Engine {
 			              }
 		              } );
 
-		return $scripts;
+		return array_unique($scripts);
 	}
 
 	/**
