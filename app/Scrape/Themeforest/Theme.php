@@ -22,39 +22,27 @@ class Theme {
 	 */
 	private $data;
 	private $crawler;
-	private $client;
+	private $goutteClient;
 
 	public function scrape( $page = 1 ) {
-
-
-		$guzzleClient = new GuzzleClient( [
-			'timeout' => 60,
-			'headers' => [
-				'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-
-			],
-		] );
-		$goutteClient = new Client();
-		$goutteClient->setClient( $guzzleClient );
 
 		$pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
 		echo "Scraping page: $pageToCrawl";
 		echo br();
 
-		$crawler = $goutteClient->request(
+		$this->goutteClient = \App::make( 'goutte' );
+
+		$this->crawler = $this->goutteClient->request(
 			'GET',
 			$pageToCrawl
 		);
 
 
-
-
-		$this->client  = $goutteClient;
-		$this->crawler = $crawler;
-
 		$theme = [];
 
-		$crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) use ( &$theme
+		$this->crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) use (
+			&
+			$theme
 		) {
 
 			// The theme Unique id
@@ -78,7 +66,7 @@ class Theme {
 
 				try {
 					$link                 = $this->crawler->selectLink( trim( $theme['name'] ) )->link();
-					$crawlerThemefullPage = $this->client->click( $link );
+					$crawlerThemefullPage = $this->goutteClient->click( $link );
 
 
 					// Get the Preview URL
@@ -99,7 +87,7 @@ class Theme {
 
 					// Click on the preview link
 					$previewlink             = $crawlerThemefullPage->selectLink( 'Live Preview' )->link();
-					$crawlerThemePreviewLink = $this->client->click( $previewlink );
+					$crawlerThemePreviewLink = $this->goutteClient->click( $previewlink );
 
 					// Get the theme url hosted by the author
 					$crawlerThemePreviewLink->filter( 'div.preview__action--close a' )->each( function (
