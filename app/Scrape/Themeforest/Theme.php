@@ -3,8 +3,7 @@
 namespace App\Scrape\Themeforest;
 
 
-use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
+
 use App\Theme as ThemeModel;
 
 

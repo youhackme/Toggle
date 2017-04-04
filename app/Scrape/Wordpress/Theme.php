@@ -20,50 +20,40 @@ class Theme {
 	 * @var array
 	 */
 	private $crawler;
-	private $client;
+	private $goutteClient;
 
 	/**
 	 * Scrape WordPress.org
 	 */
 	public function scrape() {
-		$guzzleClient = new GuzzleClient( [
-			'timeout' => 60,
-			'headers' => [
-				'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-
-			],
-		] );
-		$goutteClient = new Client();
-		$goutteClient->setClient( $guzzleClient );
 
 
-		$crawler = $goutteClient->request(
+		$this->goutteClient = \App::make( 'goutte' );
+
+		$this->crawler = $this->goutteClient->request(
 			'GET',
-			'http://themes.svn.wordpress.org/'
+			'http://plugins.svn.wordpress.org/'
 		);
 
-
-		$this->client  = $goutteClient;
-		$this->crawler = $crawler;
 
 
 		$theme = [];
 
 		// The Theme name
-		$crawler->filter( 'li' )
+		$this->crawler->filter( 'li' )
 		        ->each( function ( $themeName ) use ( &$theme ) {
 			        $theme['name'] = $themeName->text();
 
 			        $theme['uniqueidentifier'] = $theme['name'];
-			        $url           = 'https://wordpress.org/themes/' . $theme['name'];
+			        $url                       = 'https://wordpress.org/themes/' . $theme['name'];
 
 
-			        $crawlerThemefullPage = $this->client->request(
+			        $crawlerThemefullPage = $this->goutteClient->request(
 				        'GET',
 				        $url
 			        );
 
-			        $responseStatus = $this->client->getResponse()->getStatus();
+			        $responseStatus = $this->goutteClient->getResponse()->getStatus();
 			        if ( $responseStatus == 200 ) {
 
 				        $theme['url']      = $url;
@@ -78,7 +68,7 @@ class Theme {
 					                             // Get the Theme name
 					                             $content->filter( '.theme-name' )
 					                                     ->each( function ( $content ) use ( & $theme ) {
-						                                     $theme['name']             = trim( $content->text() );
+						                                     $theme['name'] = trim( $content->text() );
 
 					                                     } );
 
