@@ -10,15 +10,17 @@ namespace App\Engine\WordPress;
  */
 class WordPress {
 
+
+
 	/**
 	 * 1. Check for presence of readme.html
 	 * 2. Check for generator meta tags
 	 * 3. Check presence of this file: https://darktips.com/wp-includes/css/buttons.css
 	 * 4. Check for WP core api: wp-json in url
 	 * 5. check for wp-content/wp-includes in souces code
-	 * 6.
-	 * 7.
-	 * 8.
+	 * 6. find /wp-content/ in robots.txt
+	 * 7. Find logo /wp-admin/images/wordpress-logo.svg
+	 * 8. Find /license.txt
 	 * 9.
 	 * 10.
 	 * 11.

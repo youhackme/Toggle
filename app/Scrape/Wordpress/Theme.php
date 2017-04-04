@@ -2,8 +2,11 @@
 
 namespace App\Scrape\WordPress;
 
+
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
+use App\Theme as ThemeModel;
+
 /**
  * Created by PhpStorm.
  * User: Hyder
@@ -16,8 +19,6 @@ class Theme {
 	 * Store theme meta data
 	 * @var array
 	 */
-	private $plugin = [];
-	private $result;
 	private $crawler;
 	private $client;
 
@@ -38,7 +39,7 @@ class Theme {
 
 		$crawler = $goutteClient->request(
 			'GET',
-			'http://plugins.svn.wordpress.org/'
+			'http://themes.svn.wordpress.org/'
 		);
 
 
@@ -46,16 +47,100 @@ class Theme {
 		$this->crawler = $crawler;
 
 
-		$plugin = [];
+		$theme = [];
 
-		// The plugin name
-		$crawler->filter( 'li' )->each( function ( $pluginName ) use ( &$plugin
-		) {
-			$plugin['name'] = $pluginName->text();
-			echo '<a href="https://wordpress.org/plugins/' . $plugin['name'] . '">' . $plugin['name'] . '</a>';
-			echo "<br/>";
+		// The Theme name
+		$crawler->filter( 'li' )
+		        ->each( function ( $themeName ) use ( &$theme ) {
+			        $theme['name'] = $themeName->text();
 
-		} );
+			        $theme['uniqueidentifier'] = $theme['name'];
+			        $url           = 'https://wordpress.org/themes/' . $theme['name'];
+
+
+			        $crawlerThemefullPage = $this->client->request(
+				        'GET',
+				        $url
+			        );
+
+			        $responseStatus = $this->client->getResponse()->getStatus();
+			        if ( $responseStatus == 200 ) {
+
+				        $theme['url']      = $url;
+				        $theme['provider'] = 'wordpress.org';
+				        $theme['type']     = 'free';
+
+				        // Get the Preview URL
+				        $crawlerThemefullPage->filter( '.theme-wrap' )
+				                             ->each( function ( $content ) use ( & $theme ) {
+
+
+					                             // Get the Theme name
+					                             $content->filter( '.theme-name' )
+					                                     ->each( function ( $content ) use ( & $theme ) {
+						                                     $theme['name']             = trim( $content->text() );
+
+					                                     } );
+
+
+					                             // Get the description
+					                             $content->filter( '.theme-description' )
+					                                     ->each( function ( $content ) use ( & $theme ) {
+						                                     $theme['description'] = trim( $content->text() );
+					                                     } );
+
+					                             $tags = [];
+					                             // Get the description
+					                             $content->filter( '.theme-tags a' )
+					                                     ->each( function ( $content ) use ( & $theme, &$tags ) {
+						                                     $tags[] = $content->text();
+
+					                                     } );
+					                             $theme['category'] = substr( implode( ',', $tags ), 0, 150 );
+
+
+				                             } );
+
+
+				        if ( $this->exist( trim( $theme['uniqueidentifier'] ) ) ) {
+					        $themeModel                   = new ThemeModel;
+					        $themeModel->uniqueidentifier = trim( $theme['uniqueidentifier'] );
+					        $themeModel->name             = trim( $theme['name'] );
+					        $themeModel->url              = trim( $theme['url'] );
+					        $themeModel->description      = trim( $theme['description'] );
+					        $themeModel->provider         = $theme['provider'];
+					        $themeModel->category         = trim( $theme['category'] );
+					        $themeModel->type             = $theme['type'];
+					        $themeModel->save();
+
+				        }
+
+
+			        } else {
+				        echo "Theme {$theme['name']} does not exist";
+				        echo br();
+			        }
+
+
+		        } );
+	}
+
+
+	public function exist( $externalThemeIdentifier ) {
+
+
+		if ( ! ThemeModel::where( 'uniqueidentifier', '=', $externalThemeIdentifier )->exists() ) {
+			echo "[" . getMemUsage() . "]$externalThemeIdentifier is a new Theme.";
+			echo br();
+
+			return true;
+		} else {
+			echo "[" . getMemUsage() . "]$externalThemeIdentifier has already been scrapped.";
+			echo br();
+
+			return false;
+		}
+
 	}
 
 
