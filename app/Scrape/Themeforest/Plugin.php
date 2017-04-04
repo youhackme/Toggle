@@ -21,7 +21,7 @@ use App\Plugin as PluginModel;
 class Plugin {
 
 
-	private $result;
+
 	private $crawler;
 	private $goutteClient;
 
@@ -118,15 +118,6 @@ class Plugin {
 					              }
 
 
-					              $this->result[] = [
-						              'uniqueidentifier'  => trim( $plugin['id'] ),
-						              'name'              => trim( $plugin['name'] ),
-						              'previewScreenshot' => trim( $plugin['previewScreenshot'] ),
-						              'previewURL'        => trim( $plugin['previewURL'] ),
-						              'description'       => trim( $plugin['description'] ),
-						              'origin'            => trim( $plugin['origin'] ),
-						              'category'          => trim( $plugin['category'] ),
-					              ];
 
 
 				              } catch ( \InvalidArgumentException $e ) {
@@ -141,7 +132,7 @@ class Plugin {
 		              } );
 
 
-		//return $this->result;
+
 
 
 	}
