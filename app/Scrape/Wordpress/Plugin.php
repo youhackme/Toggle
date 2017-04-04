@@ -54,8 +54,7 @@ class Plugin {
 		        ->each( function ( $pluginName ) use ( &$plugin ) {
 			        $plugin['name'] = $pluginName->text();
 			        $url            = 'https://wordpress.org/plugins/' . $plugin['name'];
-			        // echo '<a href="' . $url . '">' . $plugin['name'] . '</a>';
-			        // echo "<br/>";
+
 
 
 			        $crawlerPluginfullPage = $this->client->request(
