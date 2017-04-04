@@ -10,6 +10,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use \Goutte\Client as GoutteClient;
+use GuzzleHttp\Client as GuzzleClient;
 use App;
 
 class GoutteServiceProvider extends ServiceProvider {
@@ -29,7 +30,18 @@ class GoutteServiceProvider extends ServiceProvider {
 	public function register() {
 
 		$this->app->singleton( 'goutte', function () {
-			return new GoutteClient;
+
+			$guzzleClient = new GuzzleClient( [
+				'timeout' => 60,
+				'headers' => [
+					'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+
+				],
+			] );
+
+			$goutteClient = new GoutteClient();
+			$goutteClient->setClient( $guzzleClient );
+			return new $goutteClient;
 		} );
 
 	}
