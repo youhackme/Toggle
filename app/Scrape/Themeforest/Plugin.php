@@ -9,8 +9,6 @@
 namespace App\Scrape\Themeforest;
 
 
-use Goutte\goutteClient;
-use GuzzleHttp\goutteClient as GuzzlegoutteClient;
 use App\Plugin as PluginModel;
 
 

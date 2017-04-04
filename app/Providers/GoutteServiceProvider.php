@@ -11,7 +11,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use \Goutte\Client as GoutteClient;
 use GuzzleHttp\Client as GuzzleClient;
-use App;
+
 
 class GoutteServiceProvider extends ServiceProvider {
 
