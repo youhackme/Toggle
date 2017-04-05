@@ -11,7 +11,6 @@ namespace App\Engine\WordPress;
 class WordPress {
 
 
-
 	/**
 	 * 1. Check for presence of readme.html
 	 * 2. Check for generator meta tags
@@ -30,4 +29,46 @@ class WordPress {
 	 * 15.
 	 */
 
+}
+
+class MetaTags {
+
+	// Check for powered by wordpress
+	// Check also for presence of plugins in meta tags to confirm WP
+
+}
+
+class Headers {
+	// Check for headers such as Powered by W3 total cache
+	// Powered by X
+	// This will confirm WP
+}
+
+class Uri {
+	// Check presence of wp-content
+	// Check presence of wp-include
+}
+
+class robots {
+	// Check presence of wp-content in robots.txt
+}
+
+class link(){
+	// check presence of absolute path such as readme, buttons.css , license.txt
+}
+
+class plugins {
+	// * ways to check for presence of plugins:
+	//   - based on urls e.g wp-content/plugins/w3totalcache
+	//   - based on class names and ids
+	//   - Based on headers
+	//   - html comments such as "html": "<!--[^>]+WP-Super-Cache",
+	//   -
+}
+
+class Theme{
+	// * detect theme based on
+	// -- screenshot hash
+	// -- theme alias => wp-content/themes/theme-name
+	// -- meta data in style sheets
 }
