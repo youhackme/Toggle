@@ -9,7 +9,7 @@ use App;
  * Date: 03/04/2017
  * Time: 10:52
  */
-class Engine {
+class Site {
 
 
 	/**

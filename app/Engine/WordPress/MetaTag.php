@@ -12,11 +12,11 @@ namespace App\Engine\WordPress;
 class MetaTag extends WordPressDetector {
 
 
-	public function check( WordPress $wordpress ) {
-		if ( ! $wordpress->$metaTag ) {
-			throw new \Exception( "Do not check for meta tags" );
+	public function check( Engine $engine ) {
+		if ( ! $engine->metatags() ) {
+			throw new \Exception( "Well this site does not have any meta tags, move on to next check" );
 		}
-		$this->next( $wordpress );
+		$this->next( $engine );
 	}
 
 	// Check for powered by wordpress
