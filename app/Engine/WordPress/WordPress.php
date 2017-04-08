@@ -8,6 +8,8 @@ namespace App\Engine\WordPress;
  * Date: 03/04/2017
  * Time: 22:16
  */
+use App\Engine\SiteAnatomy;
+
 /**
  * Handle the algorithm to detect if a site is using WordPress
  * @package App\Engine\WordPress
@@ -15,34 +17,54 @@ namespace App\Engine\WordPress;
 class WordPress {
 
 
-	public $metaTag = true;
-	public $link = true;
-	public $robot = true;
-
+	/**
+	 * An instance of Site Anatomy
+	 * @var
+	 */
 	public $siteAnatomy;
 
+	/**
+	 * The order each algorithm should be checked
+	 * @var array
+	 */
+	protected $algorithms = [
+		\App\Engine\WordPress\Algorithm\Header::class,
+		\App\Engine\WordPress\Algorithm\Link::class,
+		\App\Engine\WordPress\Algorithm\MetaTag::class,
+		\App\Engine\WordPress\Algorithm\Robot::class,
+		\App\Engine\WordPress\Algorithm\Theme::class,
+		\App\Engine\WordPress\Algorithm\Plugin::class,
+		\App\Engine\WordPress\Algorithm\Uri::class,
 
-	public function __construct( $siteAnatomy ) {
+	];
+
+
+	/**
+	 * WordPress constructor.
+	 *
+	 * @param SiteAnatomy $siteAnatomy
+	 */
+	public function __construct( SiteAnatomy $siteAnatomy ) {
 
 		$this->siteAnatomy = $siteAnatomy;
 
 	}
 
+	/**
+	 * Detect CMS based on each algorithm
+	 * @return array
+	 */
 	public function detect() {
 
-		$metatag = new MetaTag();
+		$result = [];
+		foreach ( $this->algorithms as $algorithm ) {
+			
+			$result[] = ( new $algorithm )->check( $this->siteAnatomy )->getScore();
 
-		$link    = new Link();
-//		$plugin  = new Plugin();
-//		$robot   = new Robot();
-//		$theme   = new Theme();
+		}
 
-		$metatag->succeedWith( $link );
-		//$link->succeedWith( $plugin );
-		//$plugin->succeedWith( $robot );
-		//$robot->succeedWith( $theme );
+		return $result;
 
-		$metatag->check( $this->siteAnatomy );
 	}
 
 
