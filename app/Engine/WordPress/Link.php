@@ -8,7 +8,14 @@
 
 namespace App\Engine\WordPress;
 
+use App\Engine\SiteAnatomy;
 
-class Link {
-// check presence of absolute path such as readme, buttons.css , license.txt
+class Link extends WordPressAbstract {
+
+
+	public function check( SiteAnatomy $siteAnatomy ) {
+//// check presence of absolute path such as readme, buttons.css , license.txt
+		dd( "Well, checking for links.." );
+		$this->next( $engine );
+	}
 }

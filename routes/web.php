@@ -33,7 +33,7 @@ Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
 /**
  * Scrape themes from different providers
  */
-Route::get( '/site/{site}', 'EngineController@detect' );
+Route::get( '/site/{site}', 'SiteController@detect' );
 
 
 

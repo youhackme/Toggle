@@ -3,19 +3,29 @@
 namespace App\Engine;
 
 use App;
+
 /**
  * Created by PhpStorm.
  * User: Hyder
  * Date: 03/04/2017
  * Time: 10:52
  */
-class Site {
+class SiteAnatomy {
 
 
 	/**
 	 * @var \Symfony\Component\DomCrawler\Crawler
 	 */
 	private $crawler;
+	public $styles;
+	public $scripts;
+	public $metas;
+	public $headers;
+	public $cookies;
+	public $comments;
+	public $status;
+	public $css;
+	public $innerlinks;
 
 
 	public function __construct( $site ) {
@@ -27,6 +37,8 @@ class Site {
 			"http://" . $site
 		);
 
+		$this->result();
+
 	}
 
 
@@ -34,7 +46,7 @@ class Site {
 	 * Get the raw HTML
 	 * @return null|object
 	 */
-	public function getHtml() {
+	private function getHtml() {
 		return $this->goutteClient->getResponse()->getContent();
 	}
 
@@ -42,7 +54,7 @@ class Site {
 	 * Get meta tags
 	 * @return array
 	 */
-	public function metatags() {
+	private function metatags() {
 
 		$tags = [];
 		$this->crawler->filterXpath( '//meta[@name="generator"]' )
@@ -60,7 +72,7 @@ class Site {
 	 * Get HTTP Headers
 	 * @return mixed
 	 */
-	public function getHeaders() {
+	private function getHeaders() {
 		return $this->goutteClient->getResponse()->getHeaders();
 	}
 
@@ -69,7 +81,7 @@ class Site {
 	 * Get HTTP Response code
 	 * @return mixed
 	 */
-	public function getStatus() {
+	private function getStatus() {
 		return $this->goutteClient->getResponse()->getStatus();
 	}
 
@@ -77,7 +89,7 @@ class Site {
 	 * Get cookie jar
 	 * @return \Symfony\Component\BrowserKit\CookieJar
 	 */
-	public function getCookies() {
+	private function getCookies() {
 		return $this->goutteClient->getCookieJar();
 	}
 
@@ -86,7 +98,7 @@ class Site {
 	 * List CSS Sheets
 	 * @return array
 	 */
-	public function getStyleSheets() {
+	private function getStyleSheets() {
 		$styleSheets = [];
 		$this->crawler->filterXpath( '//link[@rel="stylesheet"]' )
 		              ->each( function ( $styleSheet ) use ( &$styleSheets ) {
@@ -95,14 +107,14 @@ class Site {
 
 		              } );
 
-		return array_unique($styleSheets);
+		return array_unique( $styleSheets );
 	}
 
 	/**
 	 * List JS scripts
 	 * @return array
 	 */
-	public function getScripts() {
+	private function getScripts() {
 		$scripts = [];
 		$this->crawler->filterXpath( '//script' )
 		              ->each( function ( $script ) use ( &$scripts ) {
@@ -111,14 +123,14 @@ class Site {
 			              }
 		              } );
 
-		return array_unique($scripts);
+		return array_unique( $scripts );
 	}
 
 	/**
 	 * Parse HTML Comments
 	 * @return array
 	 */
-	public function getHtmlComments() {
+	private function getHtmlComments() {
 
 		$comments = [];
 		$this->crawler->filterXpath( '//comment()' )
@@ -137,7 +149,7 @@ class Site {
 	 * Extract CSS Class names
 	 * @return array
 	 */
-	public function getCssClasses() {
+	private function getCssClasses() {
 
 		$cssClasses = [];
 		$this->crawler->filterXpath( '//*[@class]' )
@@ -167,7 +179,7 @@ class Site {
 	 * Extract CSS Ids
 	 * @return array
 	 */
-	public function getCssIds() {
+	private function getCssIds() {
 
 		$cssIds = [];
 		$this->crawler->filterXpath( '//*[@id]' )
@@ -192,7 +204,7 @@ class Site {
 	/**
 	 * Find inner links of a domain to make further analysis
 	 */
-	public function getInnnerLinks() {
+	private function getInnnerLinks() {
 
 	}
 
@@ -201,21 +213,21 @@ class Site {
 	 * Get the result
 	 * @return array
 	 */
-	public function result() {
-		return [
-			'styles'     => $this->getStyleSheets(),
-			'scripts'    => $this->getScripts(),
-			'metas'      => $this->metatags(),
-			'headers'    => $this->getHeaders(),
-			'cookies'    => $this->getCookies(),
-			'comments'   => $this->getHtmlComments(),
-			'status'     => $this->getStatus(),
-			'css'        => [
-				'classes' => $this->getCssClasses(),
-				'ids'     => $this->getCssIds(),
-			],
-			'innerlinks' => $this->getInnnerLinks(),
+	private function result() {
+
+		$this->styles     = $this->getStyleSheets();
+		$this->scripts    = $this->getScripts();
+		$this->metas      = $this->metatags();
+		$this->headers    = $this->getHeaders();
+		$this->cookies    = $this->getCookies();
+		$this->comments   = $this->getHtmlComments();
+		$this->status     = $this->getStatus();
+		$this->css        = [
+			'classes' => $this->getCssClasses(),
+			'ids'     => $this->getCssIds(),
 		];
+		$this->innerlinks = $this->getInnnerLinks();
+
 	}
 
 }
