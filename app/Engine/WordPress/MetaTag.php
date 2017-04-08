@@ -8,15 +8,18 @@
 
 namespace App\Engine\WordPress;
 
+use App\Engine\SiteAnatomy;
 
-class MetaTag extends WordPressDetector {
+class MetaTag extends WordPressAbstract {
 
 
-	public function check( Engine $engine ) {
-		if ( ! $engine->metatags() ) {
+	public function check( SiteAnatomy $siteAnatomy ) {
+
+		if ( ! $siteAnatomy->metas ) {
 			throw new \Exception( "Well this site does not have any meta tags, move on to next check" );
 		}
-		$this->next( $engine );
+
+		$this->next( $siteAnatomy );
 	}
 
 	// Check for powered by wordpress
