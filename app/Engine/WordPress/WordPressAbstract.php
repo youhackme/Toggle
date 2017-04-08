@@ -17,11 +17,12 @@ use App\Engine\SiteAnatomy;
  */
 abstract class WordPressAbstract {
 
+
 	/**
-	 * Hold the successor in the chain
+	 * Score
 	 * @var
 	 */
-	protected $successor;
+	public $score;
 
 
 	/**
@@ -33,24 +34,27 @@ abstract class WordPressAbstract {
 	 */
 	public abstract function check( SiteAnatomy $siteAnatomy );
 
+
 	/**
-	 * Set the successor in the chain
+	 * Set score if detected to measure accuracy
 	 *
-	 * @param WordPressAbstract $successor
+	 * @param $score
+	 * @param $description
 	 */
-	public function succeedWith( WordPressAbstract $successor ) {
-		$this->successor = $successor;
+	public function setScore( $score, $description ) {
+		$this->score = [
+			'score'       => $score,
+			'description' => $description,
+		];
+	}
+
+	/**
+	 * Get Score
+	 * @return mixed
+	 */
+	public function getScore() {
+		return $this->score;
 	}
 
 
-	/**
-	 * Move to check the next successor in the chain
-	 *
-	 * @param SiteAnatomy $siteAnatomy
-	 */
-	public function next( SiteAnatomy $siteAnatomy ) {
-		if ( $this->successor ) {
-			$this->successor->check( $siteAnatomy );
-		}
-	}
 }

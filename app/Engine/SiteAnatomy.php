@@ -28,6 +28,9 @@ class SiteAnatomy {
 	public $innerlinks;
 
 
+
+
+
 	public function __construct( $site ) {
 
 		$this->goutteClient = App::make( 'goutte' );
@@ -229,5 +232,7 @@ class SiteAnatomy {
 		$this->innerlinks = $this->getInnnerLinks();
 
 	}
+
+
 
 }
