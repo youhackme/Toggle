@@ -19,10 +19,12 @@ abstract class WordPressAbstract {
 
 
 	/**
-	 * Score
+	 * Plugin
 	 * @var
 	 */
-	public $score;
+	public $plugins;
+
+	public $confidence = 0;
 
 
 	/**
@@ -35,15 +37,29 @@ abstract class WordPressAbstract {
 	public abstract function check( SiteAnatomy $siteAnatomy );
 
 
-	/**
-	 * Set score if detected to measure accuracy
-	 *
-	 * @param $score
-	 * @param $description
-	 */
-	public function setScore( $score, $description ) {
-		$this->score = [
-			'score'       => $score,
+	public function dictionary() {
+
+		return [
+			"type" => [
+				"plugin" => [
+					"W3 Total Cache" => [
+						"headers" => [
+							"X-Powered-By" => "/W3 Total Cache/u",
+						],
+						"html"    => [
+							"<!--[^>]+W3 Total Cache",
+						],
+					],
+				],
+			],
+		];
+
+	}
+
+
+	public function setPlugin( $name, $description ) {
+		$this->plugins[] = [
+			'name'        => $name,
 			'description' => $description,
 		];
 	}
@@ -52,8 +68,16 @@ abstract class WordPressAbstract {
 	 * Get Score
 	 * @return mixed
 	 */
-	public function getScore() {
-		return $this->score;
+	public function getPlugin() {
+		return $this->plugins;
+	}
+
+	public function getConfidence() {
+		return $this->confidence;
+	}
+
+	public function setConfidence( $confidence ) {
+		$this->confidence = $confidence;
 	}
 
 

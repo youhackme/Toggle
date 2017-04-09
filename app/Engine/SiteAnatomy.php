@@ -28,9 +28,6 @@ class SiteAnatomy {
 	public $innerlinks;
 
 
-
-
-
 	public function __construct( $site ) {
 
 		$this->goutteClient = App::make( 'goutte' );
@@ -135,15 +132,10 @@ class SiteAnatomy {
 	 */
 	private function getHtmlComments() {
 
-		$comments = [];
-		$this->crawler->filterXpath( '//comment()' )
-		              ->each( function ( $comment ) use ( &$comments ) {
+		if ( preg_match_all( '/<!-- ([\\s\\S])*?-->/uim', $this->getHtml(), $comments ) ) {
+			return $comments[0];
+		}
 
-			              $comments[] = trim( $comment->text() );
-
-		              } );
-
-		return $comments;
 
 	}
 
@@ -230,9 +222,10 @@ class SiteAnatomy {
 			'ids'     => $this->getCssIds(),
 		];
 		$this->innerlinks = $this->getInnnerLinks();
+		$this->html       = $this->getHtml();
+
 
 	}
-
 
 
 }
