@@ -26,6 +26,7 @@ class SiteAnatomy {
 	public $status;
 	public $css;
 	public $innerlinks;
+	public $html;
 
 
 
@@ -230,6 +231,7 @@ class SiteAnatomy {
 			'ids'     => $this->getCssIds(),
 		];
 		$this->innerlinks = $this->getInnnerLinks();
+		$this->html = $this->crawler->html();
 
 	}
 

@@ -18,11 +18,38 @@ class Plugin  extends WordPressAbstract{
 	//   - html comments such as "html": "<!--[^>]+WP-Super-Cache",
 	//   -
 
+	public $siteAnatomy;
+
+
 	public function check( SiteAnatomy $siteAnatomy ) {
 
-		$this->setScore( '0', "Well, no footprint in plugins" );
+		$this->siteAnatomy = $siteAnatomy;
+
+		foreach ( $this->dictionary() as $dictionary ) {
+			foreach ( $dictionary['plugin'] as $name => $plugin ) {
+				foreach ( $plugin['headers'] as $headerRegex ) {
+					foreach ( $this->siteAnatomy->headers as $siteAnatomyHeader ) {
+
+
+						if ( is_array( $siteAnatomyHeader ) ) {
+							foreach ( $siteAnatomyHeader as $value ) {
+								if ( preg_match( $headerRegex, $value ) ) {
+
+									$this->setPlugin( $name, "Detected in header by regex $headerRegex" );
+
+								}
+							}
+
+						} else {
+							echo "$siteAnatomyHeader is not an array";
+						}
+					}
+				}
+			}
+		}
 
 		return $this;
+
 	}
 
 }

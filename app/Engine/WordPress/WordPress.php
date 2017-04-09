@@ -28,13 +28,13 @@ class WordPress {
 	 * @var array
 	 */
 	protected $algorithms = [
-		\App\Engine\WordPress\Algorithm\Header::class,
-		\App\Engine\WordPress\Algorithm\Link::class,
-		\App\Engine\WordPress\Algorithm\MetaTag::class,
-		\App\Engine\WordPress\Algorithm\Robot::class,
-		\App\Engine\WordPress\Algorithm\Theme::class,
-		\App\Engine\WordPress\Algorithm\Plugin::class,
-		\App\Engine\WordPress\Algorithm\Uri::class,
+		\App\Engine\WordPress\Algorithm\Html::class,
+//		\App\Engine\WordPress\Algorithm\Link::class,
+
+//		\App\Engine\WordPress\Algorithm\Robot::class,
+//		\App\Engine\WordPress\Algorithm\Theme::class,
+//		\App\Engine\WordPress\Algorithm\Plugin::class,
+//		\App\Engine\WordPress\Algorithm\Uri::class,
 
 	];
 
@@ -58,8 +58,8 @@ class WordPress {
 
 		$result = [];
 		foreach ( $this->algorithms as $algorithm ) {
-			
-			$result[] = ( new $algorithm )->check( $this->siteAnatomy )->getScore();
+
+			$result[] = ( new $algorithm )->check( $this->siteAnatomy );
 
 		}
 
