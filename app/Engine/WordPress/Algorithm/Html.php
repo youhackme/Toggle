@@ -27,9 +27,11 @@ class Html extends WordPressAbstract {
 	}
 
 
+	/**
+	 * Check for presence of WordPress in meta generator
+	 */
 	public function checkInMetatags() {
 		if ( isset( $this->siteAnatomy->metas['generator'] ) ) {
-
 			foreach ( $this->siteAnatomy->metas['generator'] as $metatag ) {
 				if ( preg_match( '/WordPress/u', $metatag ) ) {
 					$this->isWordpress['metagtag'] = true;
