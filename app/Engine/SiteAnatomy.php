@@ -26,10 +26,6 @@ class SiteAnatomy {
 	public $status;
 	public $css;
 	public $innerlinks;
-	public $html;
-
-
-
 
 
 	public function __construct( $site ) {
@@ -136,15 +132,10 @@ class SiteAnatomy {
 	 */
 	private function getHtmlComments() {
 
-		$comments = [];
-		$this->crawler->filterXpath( '//comment()' )
-		              ->each( function ( $comment ) use ( &$comments ) {
+		if ( preg_match_all( '/<!-- ([\\s\\S])*?-->/uim', $this->getHtml(), $comments ) ) {
+			return $comments[0];
+		}
 
-			              $comments[] = trim( $comment->text() );
-
-		              } );
-
-		return $comments;
 
 	}
 
@@ -231,10 +222,10 @@ class SiteAnatomy {
 			'ids'     => $this->getCssIds(),
 		];
 		$this->innerlinks = $this->getInnnerLinks();
-		$this->html = $this->crawler->html();
+		$this->html       = $this->getHtml();
+
 
 	}
-
 
 
 }
