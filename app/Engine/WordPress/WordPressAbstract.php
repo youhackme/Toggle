@@ -15,70 +15,123 @@ use App\Engine\SiteAnatomy;
  * Class WordPressDetector
  * @package App\Engine\WordPress
  */
-abstract class WordPressAbstract {
+abstract class WordPressAbstract
+{
 
 
-	/**
-	 * Plugin
-	 * @var
-	 */
-	public $plugins;
+    /**
+     * Plugin names found on the page
+     * @var
+     */
+    public $plugins;
 
-	public $confidence = 0;
+    /**
+     * Store all theme names detected, ideally this should be one but we never know..
+     * @var
+     */
+    public $themes;
 
-
-	/**
-	 * Check if it statisfies the algo condition
-	 *
-	 * @param SiteAnatomy $siteAnatomy
-	 *
-	 * @return mixed
-	 */
-	public abstract function check( SiteAnatomy $siteAnatomy );
-
-
-	public function dictionary() {
-
-		return [
-			"type" => [
-				"plugin" => [
-					"W3 Total Cache" => [
-						"headers" => [
-							"X-Powered-By" => "/W3 Total Cache/u",
-						],
-						"html"    => [
-							"<!--[^>]+W3 Total Cache",
-						],
-					],
-				],
-			],
-		];
-
-	}
+    /**
+     * Store how many times algorithm asserts that a site is using WordPress
+     * @var
+     */
+    public $assertWordPress = false;
 
 
-	public function setPlugin( $name, $description ) {
-		$this->plugins[] = [
-			'name'        => $name,
-			'description' => $description,
-		];
-	}
+    /**
+     * Check if it statisfies the algo condition
+     *
+     * @param SiteAnatomy $siteAnatomy
+     *
+     * @return mixed
+     */
+    public abstract function check(SiteAnatomy $siteAnatomy);
 
-	/**
-	 * Get Score
-	 * @return mixed
-	 */
-	public function getPlugin() {
-		return $this->plugins;
-	}
 
-	public function getConfidence() {
-		return $this->confidence;
-	}
+    /**
+     * Our Sample dictionary
+     * @return array
+     */
+    public function dictionary()
+    {
 
-	public function setConfidence( $confidence ) {
-		$this->confidence = $confidence;
-	}
+        return [
+            "type" => [
+                "plugin" => [
+                    "W3 Total Cache" => [
+                        "headers" => [
+                            "X-Powered-By" => "/W3 Total Cache/u",
+                        ],
+                        "html"    => [
+                            "<!--[^>]+W3 Total Cache",
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
+    }
+
+    /**
+     * Set plugin name
+     *
+     * @param      $name
+     * @param null $description
+     */
+    public function setPlugin($name, $description = null)
+    {
+        $this->plugins[] = [
+            'name'        => $name,
+            'description' => $description,
+        ];
+    }
+
+    /**
+     * Get list of plugin
+     * @return mixed
+     */
+    public function getPlugin()
+    {
+        return $this->plugins;
+    }
+
+
+    /**
+     * Set theme name
+     *
+     * @param      $name
+     * @param null $description
+     */
+    public function setTheme($name, $description = null)
+    {
+        $this->themes[] = [
+            'name'        => $name,
+            'description' => $description,
+        ];
+    }
+
+    /**
+     * Get Score
+     * @return mixed
+     */
+    public function getTheme()
+    {
+        return $this->plugins;
+    }
+
+    /**
+     * Assert this site is using WordPress
+     *
+     * @param      $tag
+     * @param null $description
+     */
+    public function assertWordPress($tag, $description = null)
+    {
+        $this->themes[] = [
+            'tag'         => $tag,
+            'description' => $description,
+        ];
+
+    }
 
 }
