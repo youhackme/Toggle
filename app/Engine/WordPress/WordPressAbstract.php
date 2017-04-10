@@ -127,7 +127,7 @@ abstract class WordPressAbstract
      */
     public function assertWordPress($tag, $description = null)
     {
-        $this->themes[] = [
+        $this->assertWordPress[] = [
             'tag'         => $tag,
             'description' => $description,
         ];
