@@ -13,8 +13,19 @@ class SiteController extends Controller
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
 
-        $wordPress = (new \App\Engine\WordPress\WordPress($siteAnatomy))->detect();
+        $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
+        if ($application->isWordPress()) {
+            echo json_encode(
+                [
+                    'wordpress' => true,
+                    'theme'     => $application->theme(),
+                    'plugins'   => $application->plugins(),
+                ]
+            );
+        } else {
+            echo "Sadly, you are not using WordPress";
+        }
 
-        dd($wordPress);
+
     }
 }

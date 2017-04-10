@@ -25,6 +25,30 @@ class WordPress
     public $siteAnatomy;
 
     /**
+     * Are you WordPress?!
+     * @var
+     */
+    private $isWordPress;
+
+    /**
+     * Attempt to detect WordPress version
+     * @var
+     */
+    private $version;
+
+    /**
+     * Attempt to make a unique list of plugins out of those algos
+     * @var
+     */
+    private $plugins;
+
+    /**
+     * Attempt to determine the correct theme name out of those algos
+     * @var
+     */
+    private $theme;
+
+    /**
      * The order each algorithm should be checked
      * @var array
      */
@@ -48,6 +72,7 @@ class WordPress
     {
 
         $this->siteAnatomy = $siteAnatomy;
+        $this->detect();
 
     }
 
@@ -58,32 +83,50 @@ class WordPress
     public function detect()
     {
 
-        $result = [];
         foreach ($this->algorithms as $algorithm) {
-            $wordPress = (new $algorithm)->check($this->siteAnatomy);
-            var_dump($wordPress->getWordPressAssertions(), $wordPress->getTheme(), $wordPress->getPlugin());
-            echo "<hr/>";
-            // $result[] = (new $algorithm)->check($this->siteAnatomy);
-
+            $wordPress           = (new $algorithm)->check($this->siteAnatomy);
+            $this->isWordPress[] = $wordPress->getWordPressAssertions();
+            $this->theme[]       = $wordPress->getTheme();
+            $this->plugins[]     = $wordPress->getPlugin();
         }
-
-        return $result;
 
     }
 
     public function isWordPress()
     {
+
+        if ( ! empty(array_collapse($this->isWordPress))) {
+            return true;
+        }
+
+        return false;
         // Cycle through each algorithm and find out through assertWordPress
     }
 
     public function plugins()
     {
-// Cycle through each algorithm and find out through getPlugin
+        return array_collapse($this->plugins);
+        // Cycle through each algorithm and find out through getPlugin
+        // Find more information from plugin database now
     }
 
     public function theme()
     {
-// Cycle through each algorithm and find out through getTheme
+        $themeAlias = array_collapse($this->theme);
+        if ( ! empty($themeAlias)) {
+
+            if (count($themeAlias) > 1) {
+                foreach ($themeAlias as $alias => $rubbish) {
+                    return $alias;
+                }
+            }
+
+            return $themeAlias;
+        }
+
+        return false;
+        // Cycle through each algorithm and find out through getTheme
+        // Find more information from theme database now
     }
 
 
