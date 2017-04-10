@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
 
-	public function detect( $site ) {
+    public function detect($site)
+    {
 
-		$siteAnatomy = ( new \App\Engine\SiteAnatomy( $site ) );
+        $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
 
-		$wordPress = ( new \App\Engine\WordPress\WordPress( $siteAnatomy ) )->detect();
+        $wordPress = (new \App\Engine\WordPress\WordPress($siteAnatomy))->detect();
 
-		dd( $wordPress );
-	}
+        dd($wordPress);
+    }
 }

@@ -14,9 +14,17 @@ use App\Engine\SiteAnatomy;
 class Html extends WordPressAbstract
 {
 
+    /**
+     * Inject an instance of \App\Engine\SiteAnatomy
+     * @var
+     */
     public $siteAnatomy;
 
-
+    /**
+     * @param SiteAnatomy $siteAnatomy
+     *
+     * @return $this
+     */
     public function check(SiteAnatomy $siteAnatomy)
     {
         $this->siteAnatomy = $siteAnatomy;
@@ -37,18 +45,20 @@ class Html extends WordPressAbstract
         if (isset($this->siteAnatomy->metas['generator'])) {
             foreach ($this->siteAnatomy->metas['generator'] as $metatag) {
                 if (preg_match('/WordPress/u', $metatag)) {
-                    $this->isWordpress['metagtag'] = true;
-                    //$this->setConfidence( 90 );
+                    $this->assertWordPress('metatag');
                 }
             };
         }
     }
 
+    /**
+     *
+     */
     public function checkUri()
     {
 
         if (preg_match('/wp-content|wp-includes/i', $this->siteAnatomy->html, $matches)) {
-            $this->isWordpress['uri'] = true;
+            $this->assertWordPress('uri');
         }
     }
 

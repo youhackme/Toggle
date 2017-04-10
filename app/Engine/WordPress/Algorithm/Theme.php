@@ -12,32 +12,38 @@ use App\Engine\WordPress\WordPressAbstract;
 
 use App\Engine\SiteAnatomy;
 
-class Theme extends WordPressAbstract {
+class Theme extends WordPressAbstract
+{
 // * detect theme based on
-	// -- screenshot hash
-	// -- theme alias => wp-content/themes/theme-name
-	// -- meta data in style sheets
+    // -- screenshot hash
+    // -- theme alias => wp-content/themes/theme-name
+    // -- meta data in style sheets
 
-	public $theme;
-	public $siteAnatomy;
+    public $theme;
+    public $siteAnatomy;
 
-	public function check( SiteAnatomy $siteAnatomy ) {
+    public function check(SiteAnatomy $siteAnatomy)
+    {
 
-		$this->siteAnatomy = $siteAnatomy;
+        $this->siteAnatomy = $siteAnatomy;
 
-		$this->theme = $this->getThemeAlias();
+        $this->theme = $this->getThemeAlias();
 
-		return $this;
-	}
+        return $this;
+    }
 
 
-	public function getThemeAlias() {
+    public function getThemeAlias()
+    {
 
-		if ( preg_match_all( '/\/wp-content\/themes\/(.+?)\//', $this->siteAnatomy->html, $matches ) ) {
-			if ( ! empty( $matches[1] ) ) {
-				return array_unique( $matches[1] );
-			}
+        if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $this->siteAnatomy->html, $matches)) {
+            if ( ! empty($matches[1])) {
+                $templates = array_unique($matches[1]);
+                foreach ($templates as $template) {
+                    $this->setTheme($template);
+                }
+            }
 
-		}
-	}
+        }
+    }
 }

@@ -14,58 +14,77 @@ use App\Engine\SiteAnatomy;
  * Handle the algorithm to detect if a site is using WordPress
  * @package App\Engine\WordPress
  */
-class WordPress {
+class WordPress
+{
 
 
-	/**
-	 * An instance of Site Anatomy
-	 * @var
-	 */
-	public $siteAnatomy;
+    /**
+     * An instance of Site Anatomy
+     * @var
+     */
+    public $siteAnatomy;
 
-	/**
-	 * The order each algorithm should be checked
-	 * @var array
-	 */
-	protected $algorithms = [
-		\App\Engine\WordPress\Algorithm\Html::class,
+    /**
+     * The order each algorithm should be checked
+     * @var array
+     */
+    protected $algorithms = [
+        \App\Engine\WordPress\Algorithm\Html::class,
+        \App\Engine\WordPress\Algorithm\Theme::class,
+        \App\Engine\WordPress\Algorithm\Plugin::class,
 //		\App\Engine\WordPress\Algorithm\Link::class,
-
 //		\App\Engine\WordPress\Algorithm\Robot::class,
-		\App\Engine\WordPress\Algorithm\Theme::class,
-		\App\Engine\WordPress\Algorithm\Plugin::class,
 //		\App\Engine\WordPress\Algorithm\Uri::class,
 
-	];
+    ];
 
 
-	/**
-	 * WordPress constructor.
-	 *
-	 * @param SiteAnatomy $siteAnatomy
-	 */
-	public function __construct( SiteAnatomy $siteAnatomy ) {
+    /**
+     * WordPress constructor.
+     *
+     * @param SiteAnatomy $siteAnatomy
+     */
+    public function __construct(SiteAnatomy $siteAnatomy)
+    {
 
-		$this->siteAnatomy = $siteAnatomy;
+        $this->siteAnatomy = $siteAnatomy;
 
-	}
+    }
 
-	/**
-	 * Detect CMS based on each algorithm
-	 * @return array
-	 */
-	public function detect() {
+    /**
+     * Detect CMS based on each algorithm
+     * @return array
+     */
+    public function detect()
+    {
 
-		$result = [];
-		foreach ( $this->algorithms as $algorithm ) {
+        $result = [];
+        foreach ($this->algorithms as $algorithm) {
+            $wordPress = (new $algorithm)->check($this->siteAnatomy);
+            var_dump($wordPress->getWordPressAssertions(), $wordPress->getTheme(), $wordPress->getPlugin());
+            echo "<hr/>";
+            // $result[] = (new $algorithm)->check($this->siteAnatomy);
 
-			$result[] = ( new $algorithm )->check( $this->siteAnatomy );
+        }
 
-		}
+        return $result;
 
-		return $result;
+    }
 
-	}
+    public function isWordPress()
+    {
+        // Cycle through each algorithm and find out through assertWordPress
+    }
+
+    public function plugins()
+    {
+// Cycle through each algorithm and find out through getPlugin
+    }
+
+    public function theme()
+    {
+// Cycle through each algorithm and find out through getTheme
+    }
 
 
 }
