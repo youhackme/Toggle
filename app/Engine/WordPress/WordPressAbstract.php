@@ -20,13 +20,22 @@ abstract class WordPressAbstract
 
 
     /**
-     * Plugin
+     * Plugin names found on the page
      * @var
      */
     public $plugins;
 
-
+    /**
+     * Store all theme names detected, ideally this should be one but we never know..
+     * @var
+     */
     public $themes;
+
+    /**
+     * Store how many times algorithm asserts that a site is using WordPress
+     * @var
+     */
+    public $assertWordPress = false;
 
 
     /**
@@ -110,5 +119,19 @@ abstract class WordPressAbstract
         return $this->plugins;
     }
 
+    /**
+     * Assert this site is using WordPress
+     *
+     * @param      $tag
+     * @param null $description
+     */
+    public function assertWordPress($tag, $description = null)
+    {
+        $this->themes[] = [
+            'tag'         => $tag,
+            'description' => $description,
+        ];
+
+    }
 
 }
