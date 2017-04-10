@@ -20,7 +20,11 @@ class Html extends WordPressAbstract
      */
     public $siteAnatomy;
 
-
+    /**
+     * @param SiteAnatomy $siteAnatomy
+     *
+     * @return $this
+     */
     public function check(SiteAnatomy $siteAnatomy)
     {
         $this->siteAnatomy = $siteAnatomy;
@@ -47,6 +51,9 @@ class Html extends WordPressAbstract
         }
     }
 
+    /**
+     *
+     */
     public function checkUri()
     {
 

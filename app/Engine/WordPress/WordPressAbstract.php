@@ -23,19 +23,19 @@ abstract class WordPressAbstract
      * Plugin names found on the page
      * @var
      */
-    public $plugins;
+    private $plugins;
 
     /**
      * Store all theme names detected, ideally this should be one but we never know..
      * @var
      */
-    public $themes;
+    private $themes;
 
     /**
      * Store how many times algorithm asserts that a site is using WordPress
      * @var
      */
-    public $assertWordPress = false;
+    private $assertWordPress = false;
 
 
     /**
@@ -116,7 +116,7 @@ abstract class WordPressAbstract
      */
     public function getTheme()
     {
-        return $this->plugins;
+        return $this->themes;
     }
 
     /**
@@ -132,6 +132,12 @@ abstract class WordPressAbstract
             'description' => $description,
         ];
 
+    }
+
+
+    public function getWordPressAssertions()
+    {
+        return $this->assertWordPress;
     }
 
 }

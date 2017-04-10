@@ -60,13 +60,30 @@ class WordPress
 
         $result = [];
         foreach ($this->algorithms as $algorithm) {
-
-            $result[] = (new $algorithm)->check($this->siteAnatomy);
+            $wordPress = (new $algorithm)->check($this->siteAnatomy);
+            var_dump($wordPress->getWordPressAssertions(), $wordPress->getTheme(), $wordPress->getPlugin());
+            echo "<hr/>";
+            // $result[] = (new $algorithm)->check($this->siteAnatomy);
 
         }
 
         return $result;
 
+    }
+
+    public function isWordPress()
+    {
+        // Cycle through each algorithm and find out through assertWordPress
+    }
+
+    public function plugins()
+    {
+// Cycle through each algorithm and find out through getPlugin
+    }
+
+    public function theme()
+    {
+// Cycle through each algorithm and find out through getTheme
     }
 
 
