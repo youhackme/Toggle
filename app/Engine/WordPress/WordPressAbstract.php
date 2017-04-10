@@ -82,14 +82,13 @@ abstract class WordPressAbstract
     {
 
         if ( ! is_null($name) || ! empty($name)) {
-            $this->plugins[] = [
-                'name'        => $name,
+            $this->plugins[$name] = [
                 'description' => $description,
             ];
 
             $this->assertWordPress($name, "Implies WordPress, if you have a plugin name, right?");
         }
-        
+
     }
 
     /**
@@ -111,8 +110,7 @@ abstract class WordPressAbstract
     public function setTheme($name, $description = null)
     {
         if ( ! is_null($name) || ! empty($name)) {
-            $this->themes[] = [
-                'name'        => $name,
+            $this->themes[$name] = [
                 'description' => $description,
             ];
 
@@ -139,8 +137,7 @@ abstract class WordPressAbstract
     public function assertWordPress($tag, $description = null)
     {
         if ( ! is_null($tag) || ! empty($tag)) {
-            $this->assertWordPress[] = [
-                'tag'         => $tag,
+            $this->assertWordPress[$tag] = [
                 'description' => $description,
             ];
         }
