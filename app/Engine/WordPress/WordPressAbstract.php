@@ -15,70 +15,100 @@ use App\Engine\SiteAnatomy;
  * Class WordPressDetector
  * @package App\Engine\WordPress
  */
-abstract class WordPressAbstract {
+abstract class WordPressAbstract
+{
 
 
-	/**
-	 * Plugin
-	 * @var
-	 */
-	public $plugins;
-
-	public $confidence = 0;
+    /**
+     * Plugin
+     * @var
+     */
+    public $plugins;
 
 
-	/**
-	 * Check if it statisfies the algo condition
-	 *
-	 * @param SiteAnatomy $siteAnatomy
-	 *
-	 * @return mixed
-	 */
-	public abstract function check( SiteAnatomy $siteAnatomy );
+    public $themes;
 
 
-	public function dictionary() {
-
-		return [
-			"type" => [
-				"plugin" => [
-					"W3 Total Cache" => [
-						"headers" => [
-							"X-Powered-By" => "/W3 Total Cache/u",
-						],
-						"html"    => [
-							"<!--[^>]+W3 Total Cache",
-						],
-					],
-				],
-			],
-		];
-
-	}
+    /**
+     * Check if it statisfies the algo condition
+     *
+     * @param SiteAnatomy $siteAnatomy
+     *
+     * @return mixed
+     */
+    public abstract function check(SiteAnatomy $siteAnatomy);
 
 
-	public function setPlugin( $name, $description ) {
-		$this->plugins[] = [
-			'name'        => $name,
-			'description' => $description,
-		];
-	}
+    /**
+     * Our Sample dictionary
+     * @return array
+     */
+    public function dictionary()
+    {
 
-	/**
-	 * Get Score
-	 * @return mixed
-	 */
-	public function getPlugin() {
-		return $this->plugins;
-	}
+        return [
+            "type" => [
+                "plugin" => [
+                    "W3 Total Cache" => [
+                        "headers" => [
+                            "X-Powered-By" => "/W3 Total Cache/u",
+                        ],
+                        "html"    => [
+                            "<!--[^>]+W3 Total Cache",
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
-	public function getConfidence() {
-		return $this->confidence;
-	}
+    }
 
-	public function setConfidence( $confidence ) {
-		$this->confidence = $confidence;
-	}
+    /**
+     * Set plugin name
+     *
+     * @param      $name
+     * @param null $description
+     */
+    public function setPlugin($name, $description = null)
+    {
+        $this->plugins[] = [
+            'name'        => $name,
+            'description' => $description,
+        ];
+    }
+
+    /**
+     * Get list of plugin
+     * @return mixed
+     */
+    public function getPlugin()
+    {
+        return $this->plugins;
+    }
+
+
+    /**
+     * Set theme name
+     *
+     * @param      $name
+     * @param null $description
+     */
+    public function setTheme($name, $description = null)
+    {
+        $this->themes[] = [
+            'name'        => $name,
+            'description' => $description,
+        ];
+    }
+
+    /**
+     * Get Score
+     * @return mixed
+     */
+    public function getTheme()
+    {
+        return $this->plugins;
+    }
 
 
 }
