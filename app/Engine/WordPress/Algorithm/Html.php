@@ -52,7 +52,7 @@ class Html extends WordPressAbstract
     }
 
     /**
-     *
+     * Check presence of specific Uri in source code e.g wp-content, wp-includes etc
      */
     public function checkUri()
     {
