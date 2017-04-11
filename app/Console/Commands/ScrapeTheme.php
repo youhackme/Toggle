@@ -10,7 +10,7 @@ class ScrapeTheme extends Command {
 	 *
 	 * @var string
 	 */
-	protected $signature = 'scrape:theme  {--page=1} {--provider=}';
+	protected $signature = 'scrape:theme  {--page=1-2} {--provider=}';
 
 	/**
 	 * The console command description.
