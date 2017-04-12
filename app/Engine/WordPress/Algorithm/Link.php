@@ -16,43 +16,84 @@ use App\Engine\SiteAnatomy;
 class Link extends WordPressAbstract
 {
 
-//// check presence of absolute path such as readme, buttons.css , license.txt
-    ///wp-includes/wlwmanifest.xml
-    // WordPress version : wp-links-opml.php
-    // /wp-json/
-    //- It should be asynchronous
+    /**
+     * Inject an instance of \App\Engine\SiteAnatomy
+     * @var
+     */
+    public $siteAnatomy;
 
-
+    /**
+     * @param SiteAnatomy $siteAnatomy
+     *
+     * @return $this
+     */
     public function check(SiteAnatomy $siteAnatomy)
     {
+        $this->siteAnatomy = $siteAnatomy;
+        $host              = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
 
-        $this->setScore('0', "Well, no footprint in links");
+
+        foreach ($this->commonWordPressPaths() as $commonWordPressPaths) {
+            $url      = "http://$host/{$commonWordPressPaths['path']}";
+            $response = $this->getPageContent($url);
+
+            if ($response->getStatus() == 200) {
+                if (preg_match_all($commonWordPressPaths['searchFor'], $response->getContent())) {
+                    $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths['searchFor']);
+                }
+            }
+        }
+
 
         return $this;
     }
 
-    private function commonWordPressPath()
+    /**
+     * A dictionary containing all WordPress common path with their content
+     * @return array
+     */
+    private function commonWordPressPaths()
     {
         return [
             [
                 'path'      => 'readme.html',
-                'searchFor' => '/WordPress/',
+                'searchFor' => '/WordPress/i',
             ],
             [
                 'path'      => 'wp-includes/wlwmanifest.xml',
-                'searchFor' => '/WordPress|manifest/',
+                'searchFor' => '/WordPress|manifest/i',
             ],
             [
                 'path'      => 'wp-links-opml.php',
-                'searchFor' => '/WordPress|opml/',
+                'searchFor' => '/WordPress|opml/i',
             ],
             [
                 'path'      => 'wp-json',
-                'searchFor' => '/WordPress|wp-api/',
+                'searchFor' => '/WordPress|wp-api/i',
             ],
 
 
         ];
+    }
+
+    /**
+     * Fetch a page content
+     *
+     * @param $url
+     *
+     * @return mixed
+     */
+    private function getPageContent($url)
+    {
+        $goutteClient = \App::make('goutte');
+
+        $goutteClient->request(
+            'GET',
+            $url
+        );
+
+        return $goutteClient->getResponse();
+
     }
 
 
