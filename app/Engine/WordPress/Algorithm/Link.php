@@ -11,7 +11,7 @@ namespace App\Engine\WordPress\Algorithm;
 use App\Engine\WordPress\WordPressAbstract;
 
 use App\Engine\SiteAnatomy;
-
+use GuzzleHttp\Promise;
 
 class Link extends WordPressAbstract
 {
@@ -33,15 +33,17 @@ class Link extends WordPressAbstract
         $host              = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
 
 
-        foreach ($this->commonWordPressPaths() as $commonWordPressPaths) {
-            $url      = "http://$host/{$commonWordPressPaths['path']}";
-            $response = $this->getPageContent($url);
+        $commonWordPressPaths = $this->commonWordPressPaths();
+        $responses            = $this->launchAsyncRequests($host);
 
-            if ($response->getStatus() == 200) {
-                if (preg_match_all($commonWordPressPaths['searchFor'], $response->getContent())) {
-                    $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths['searchFor']);
+        foreach ($responses as $key => $response) {
+
+            if ($response['value']->getStatusCode() == 200) {
+                if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
+                    $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
                 }
             }
+
         }
 
 
@@ -49,7 +51,7 @@ class Link extends WordPressAbstract
     }
 
     /**
-     * A dictionary containing all WordPress common path with their content
+     * A dictionary containing all WordPress common path with their corresponding content
      * @return array
      */
     private function commonWordPressPaths()
@@ -76,23 +78,27 @@ class Link extends WordPressAbstract
         ];
     }
 
+
     /**
-     * Fetch a page content
      *
-     * @param $url
+     * Launch asynchronous requests
+     *
+     * @param $host The host e.g toggle.me
      *
      * @return mixed
      */
-    private function getPageContent($url)
+    private function launchAsyncRequests($host)
     {
-        $goutteClient = \App::make('goutte');
+        $promises             = [];
+        $goutteClient         = \App::make('goutte');
+        $commonWordPressPaths = $this->commonWordPressPaths();
+        foreach ($commonWordPressPaths as $commonWordPressPath) {
+            $url        = "http://$host/{$commonWordPressPath['path']}";
+            $promises[] = $goutteClient->getClient()->getAsync($url);
+        }
 
-        $goutteClient->request(
-            'GET',
-            $url
-        );
 
-        return $goutteClient->getResponse();
+        return Promise\settle($promises)->wait();
 
     }
 
