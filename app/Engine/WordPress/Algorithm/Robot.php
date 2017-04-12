@@ -39,8 +39,7 @@ class Robot extends WordPressAbstract
         $this->siteAnatomy     = $siteAnatomy;
         $host                  = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
         $this->pathToRobotsTxt = "http://$host/robots.txt";
-        $content               = $this->getRobotsTxtContent();
-        $this->checkWordPressFootprints($content);
+        $this->checkWordPressFootprints($this->getRobotsTxtContent());
 
         return $this;
     }
@@ -58,7 +57,7 @@ class Robot extends WordPressAbstract
             $this->pathToRobotsTxt
         );
 
-        return $content = $goutteClient->getResponse()->getContent();
+        return $goutteClient->getResponse()->getContent();
 
     }
 

@@ -57,7 +57,7 @@ class WordPress
         \App\Engine\WordPress\Algorithm\Theme::class,
         \App\Engine\WordPress\Algorithm\Plugin::class,
         \App\Engine\WordPress\Algorithm\Robot::class,
-//		\App\Engine\WordPress\Algorithm\Link::class,
+        \App\Engine\WordPress\Algorithm\Link::class,
 //		\App\Engine\WordPress\Algorithm\Uri::class,
 
     ];
@@ -92,6 +92,10 @@ class WordPress
 
     }
 
+    /**
+     * Are you WordPress? You have the last word!
+     * @return bool
+     */
     public function isWordPress()
     {
 
@@ -103,6 +107,10 @@ class WordPress
         // Cycle through each algorithm and find out through assertWordPress
     }
 
+    /**
+     * Get the list of plugins being used, again, you have the last Word
+     * @return array
+     */
     public function plugins()
     {
         return array_collapse($this->plugins);
@@ -110,6 +118,10 @@ class WordPress
         // Find more information from plugin database now
     }
 
+    /**
+     * Get the theme name, you have the last word, duh.
+     * @return array|bool|int|string
+     */
     public function theme()
     {
         $themeAlias = array_collapse($this->theme);

@@ -7,25 +7,100 @@
  */
 
 namespace App\Engine\WordPress\Algorithm;
+
 use App\Engine\WordPress\WordPressAbstract;
 
 use App\Engine\SiteAnatomy;
+use GuzzleHttp\Promise;
+
+class Link extends WordPressAbstract
+{
+
+    /**
+     * Inject an instance of \App\Engine\SiteAnatomy
+     * @var
+     */
+    public $siteAnatomy;
+
+    /**
+     * @param SiteAnatomy $siteAnatomy
+     *
+     * @return $this
+     */
+    public function check(SiteAnatomy $siteAnatomy)
+    {
+        $this->siteAnatomy = $siteAnatomy;
+        $host              = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
 
 
-class Link extends WordPressAbstract {
+        $commonWordPressPaths = $this->commonWordPressPaths();
+        $responses            = $this->launchAsyncRequests($host);
 
-//// check presence of absolute path such as readme, buttons.css , license.txt
-	///wp-includes/wlwmanifest.xml
-	// WordPress version : wp-links-opml.php
-	// /wp-json/
+        foreach ($responses as $key => $response) {
+
+            if ($response['value']->getStatusCode() == 200) {
+                if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
+                    $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+                }
+            }
+
+        }
 
 
-	public function check( SiteAnatomy $siteAnatomy ) {
+        return $this;
+    }
 
-		$this->setScore( '0', "Well, no footprint in links" );
+    /**
+     * A dictionary containing all WordPress common path with their corresponding content
+     * @return array
+     */
+    private function commonWordPressPaths()
+    {
+        return [
+            [
+                'path'      => 'readme.html',
+                'searchFor' => '/WordPress/i',
+            ],
+            [
+                'path'      => 'wp-includes/wlwmanifest.xml',
+                'searchFor' => '/WordPress|manifest/i',
+            ],
+            [
+                'path'      => 'wp-links-opml.php',
+                'searchFor' => '/WordPress|opml/i',
+            ],
+            [
+                'path'      => 'wp-json',
+                'searchFor' => '/WordPress|wp-api/i',
+            ],
 
-		return $this;
-	}
+
+        ];
+    }
+
+
+    /**
+     *
+     * Launch asynchronous requests
+     *
+     * @param $host The host e.g toggle.me
+     *
+     * @return mixed
+     */
+    private function launchAsyncRequests($host)
+    {
+        $promises             = [];
+        $goutteClient         = \App::make('goutte');
+        $commonWordPressPaths = $this->commonWordPressPaths();
+        foreach ($commonWordPressPaths as $commonWordPressPath) {
+            $url        = "http://$host/{$commonWordPressPath['path']}";
+            $promises[] = $goutteClient->getClient()->getAsync($url);
+        }
+
+
+        return Promise\settle($promises)->wait();
+
+    }
 
 
 }
