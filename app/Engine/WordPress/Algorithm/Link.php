@@ -38,11 +38,15 @@ class Link extends WordPressAbstract
 
         foreach ($responses as $key => $response) {
 
-            if ($response['value']->getStatusCode() == 200) {
-                if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
-                    $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+            if($response['state']=='fulfilled'){
+                if ($response['value']->getStatusCode() == 200) {
+                    if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
+                        $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+                    }
                 }
             }
+
+
 
         }
 
