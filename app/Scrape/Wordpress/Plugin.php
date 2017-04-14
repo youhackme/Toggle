@@ -3,8 +3,6 @@
 namespace App\Scrape\WordPress;
 
 
-use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
 use App\Plugin as PluginModel;
 
 /**
