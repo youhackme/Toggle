@@ -38,11 +38,18 @@ class Link extends WordPressAbstract
 
         foreach ($responses as $key => $response) {
 
-            if ($response['value']->getStatusCode() == 200) {
-                if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
-                    $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+            if ($response['state'] == 'fulfilled') {
+                if ($response['value']->getStatusCode() == 200) {
+                    if (isset($commonWordPressPaths[$key]['searchFor'])) {
+                        if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
+                            $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+                        }
+                    }
+                    $this->assertWordPress('commonWordPressPaths-image-' . $key);
+
                 }
             }
+
 
         }
 
@@ -73,6 +80,14 @@ class Link extends WordPressAbstract
                 'path'      => 'wp-json',
                 'searchFor' => '/WordPress|wp-api/i',
             ],
+            [
+                'path' => 'wp-admin/images/wordpress-logo.svg',
+            ],
+            [
+                'path'      => 'api/oembed/1.0/embed',
+                'searchFor' => '/rest_missing_callback_param/i',
+            ]
+            
 
 
         ];
@@ -91,9 +106,10 @@ class Link extends WordPressAbstract
     {
         $promises             = [];
         $goutteClient         = \App::make('goutte');
+
         $commonWordPressPaths = $this->commonWordPressPaths();
         foreach ($commonWordPressPaths as $commonWordPressPath) {
-            $url        = "http://$host/{$commonWordPressPath['path']}";
+            $url        = "https://$host/{$commonWordPressPath['path']}";
             $promises[] = $goutteClient->getClient()->getAsync($url);
         }
 

@@ -58,7 +58,6 @@ class WordPress
         \App\Engine\WordPress\Algorithm\Plugin::class,
         \App\Engine\WordPress\Algorithm\Robot::class,
         \App\Engine\WordPress\Algorithm\Link::class,
-//		\App\Engine\WordPress\Algorithm\Uri::class,
 
     ];
 
