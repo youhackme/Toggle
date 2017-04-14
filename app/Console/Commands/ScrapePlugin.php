@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use App\Repositories\PluginRepository;
+
 class ScrapePlugin extends Command {
 	/**
 	 * The name and signature of the console command.
@@ -19,16 +21,29 @@ class ScrapePlugin extends Command {
 	 */
 	protected $description = 'Scrape TF plugins';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
+
+
+    /**
+     * An instance of Plugin Repository
+     * @var PluginRepository
+     */
+    protected $plugin;
+
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+	public function __construct(PluginRepository $plugin) {
 		parent::__construct();
+        $this->plugin = $plugin;
 	}
 
-	/**
+
+
+
+    /**
 	 * Execute the console command.
 	 *
 	 * @return mixed
@@ -41,7 +56,7 @@ class ScrapePlugin extends Command {
 		$methodName = 'scrape' . ucfirst( $provider );
 
 
-		( new \App\Http\Controllers\PluginController() )->$methodName( $page );
+		( new \App\Http\Controllers\PluginController($this->plugin) )->$methodName( $page );
 
 	}
 }

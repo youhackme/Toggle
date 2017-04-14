@@ -3,47 +3,58 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Repositories\ThemeRepository;
 
-class ScrapeTheme extends Command {
-	/**
-	 * The name and signature of the console command.
-	 *
-	 * @var string
-	 */
-	protected $signature = 'scrape:theme  {--page=1-2} {--provider=}';
+class ScrapeTheme extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'scrape:theme  {--page=1-2} {--provider=}';
 
-	/**
-	 * The console command description.
-	 *
-	 * @var string
-	 */
-	protected $description = 'Scrape TF themes';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Scrape TF themes';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
+    /**
+     * An instance of ThemeRepository
+     * @var ThemeRepository
+     */
+    protected $theme;
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function handle() {
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct(ThemeRepository $theme)
+    {
+        parent::__construct();
+        $this->theme = $theme;
+    }
 
-		$provider = $this->option( 'provider' );
-		$page     = $this->option( 'page' );
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
 
-		$this->info( "Scraping theme from $provider" );
+        $provider = $this->option('provider');
+        $page     = $this->option('page');
 
-		$methodName = 'scrape' . ucfirst( $provider );
+        $this->info("Scraping theme from $provider");
 
-		( new \App\Http\Controllers\ThemeController() )->$methodName( $page );
+        $methodName = 'scrape' . ucfirst($provider);
+
+        (new \App\Http\Controllers\ThemeController($this->theme))->$methodName($page);
 
 
-	}
+    }
 }

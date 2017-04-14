@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PluginRepository;
 
-class PluginController extends Controller {
+class PluginController extends Controller
+{
 
 
-	public function scrapeThemeForest( $page = 1 ) {
+    /**
+     * An instance of Plugin Repository
+     * @var PluginRepository
+     */
+    protected $plugin;
 
-		$pages = explode( '-', $page );
 
-		foreach ( range( $pages[0], $pages[1] ) as $page ) {
+    public function __construct(PluginRepository $plugin)
+    {
+        $this->plugin = $plugin;
+    }
 
-			( new \App\Scrape\Themeforest\Plugin() )->scrape( $page );
 
-		}
-	}
+    public function scrapeThemeForest($page = 1)
+    {
 
-	public function scrapeWordPress() {
-		( new \App\Scrape\WordPress\Plugin() )->scrape();
+        $pages = explode('-', $page);
 
-	}
+        foreach (range($pages[0], $pages[1]) as $page) {
+
+            (new \App\Scrape\Themeforest\Plugin($this->plugin))->scrape($page);
+
+        }
+    }
+
+    public function scrapeWordPress()
+    {
+        (new \App\Scrape\WordPress\Plugin($this->plugin))->scrape();
+
+    }
 }

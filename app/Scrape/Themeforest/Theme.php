@@ -3,8 +3,8 @@
 namespace App\Scrape\Themeforest;
 
 
-
-use App\Theme as ThemeModel;
+use App\Models\Theme as ThemeModel;
+use App\Repositories\ThemeRepository;
 
 
 /**
@@ -13,145 +13,173 @@ use App\Theme as ThemeModel;
  * Date: 01/04/2017
  * Time: 11:26
  */
-class Theme {
+class Theme
+{
 
-	/**
-	 * Store theme meta data
-	 * @var array
-	 */
-	private $data;
-	private $crawler;
-	private $goutteClient;
-
-	public function scrape( $page = 1 ) {
-
-		$pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
-		echo "Scraping page: $pageToCrawl";
-		echo br();
-
-		$this->goutteClient = \App::make( 'goutte' );
-
-		$this->crawler = $this->goutteClient->request(
-			'GET',
-			$pageToCrawl
-		);
+    /**
+     * Store theme meta data
+     * @var array
+     */
+    private $data;
 
 
-		$theme = [];
+    /**
+     * Store theme meta data
+     * @var array
+     */
+    private $crawler;
 
-		$this->crawler->filter( 'li.js-google-analytics__list-event-container' )->each( function ( $themelist ) use (
-			&
-			$theme
-		) {
-
-			// The theme Unique id
-			$theme['id'] = $themelist->attr( 'data-item-id' );
-
-			// The theme name
-			$themelist->filter( 'h3' )->each( function ( $themeTitle ) use ( &$theme ) {
-				$theme['name'] = $themeTitle->text();
-
-			} );
+    /**
+     * Goutte Client
+     * @var
+     */
+    private $goutteClient;
 
 
-			// The theme preview  screenshot
-			$themelist->filter( 'img.preload' )->each( function ( $themeImage ) use ( &$theme ) {
-				$theme['previewScreenshot'] = $themeImage->attr( 'data-preview-url' );
-			} );
+    /**
+     * An instance of Plugin Repository
+     * @var PluginRepository
+     */
+    protected $theme;
 
 
-			// Click on each theme name and go to their theme page details
-			if ( ! empty( trim( $theme['name'] ) ) ) {
-
-				try {
-					$link                 = $this->crawler->selectLink( trim( $theme['name'] ) )->link();
-					$crawlerThemefullPage = $this->goutteClient->click( $link );
+    public function __construct(ThemeRepository $theme)
+    {
+        $this->theme = $theme;
+    }
 
 
-					// Get the Preview URL
-					$crawlerThemefullPage->filter( 'a.live-preview' )->each( function ( $themePreviewlink ) use (
-						&
-						$theme
-					) {
-						$theme['previewURL'] = $themePreviewlink->attr( 'href' );
-					} );
+    public function scrape($page = 1)
+    {
+
+        $pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
+        echo "Scraping page: $pageToCrawl";
+        echo br();
+
+        $this->goutteClient = \App::make('goutte');
+
+        $this->crawler = $this->goutteClient->request(
+            'GET',
+            $pageToCrawl
+        );
 
 
-					// Get the theme description
-					$crawlerThemefullPage->filter( 'div.item-description' )->each( function ( $themeDescription ) use (
-						&$theme
-					) {
-						$theme['description'] = $themeDescription->text();
-					} );
+        $theme = [];
 
-					// Click on the preview link
-					$previewlink             = $crawlerThemefullPage->selectLink( 'Live Preview' )->link();
-					$crawlerThemePreviewLink = $this->goutteClient->click( $previewlink );
+        $this->crawler->filter('li.js-google-analytics__list-event-container')->each(function ($themelist) use (
+            &
+            $theme
+        ) {
 
-					// Get the theme url hosted by the author
-					$crawlerThemePreviewLink->filter( 'div.preview__action--close a' )->each( function (
-						$themeDescription
-					) use (
-						&$theme
-					) {
-						$theme['origin'] = $themeDescription->attr( 'href' );
-					} );
+            // The theme Unique id
+            $theme['id'] = $themelist->attr('data-item-id');
+
+            // The theme name
+            $themelist->filter('h3')->each(function ($themeTitle) use (&$theme) {
+                $theme['name'] = $themeTitle->text();
+
+            });
 
 
-					if ( $this->exist( trim( $theme['id'] ) ) ) {
-						$themeModel                   = new ThemeModel;
-						$themeModel->uniqueidentifier = trim( $theme['id'] );
-						$themeModel->name             = trim( $theme['name'] );
-						$themeModel->url              = trim( $theme['previewURL'] );
-						$themeModel->downloadLink     = trim( $theme['previewURL'] );
-						$themeModel->PreviewLink      = trim( $theme['origin'] );
-						$themeModel->description      = trim( $theme['description'] );
-						$themeModel->screenshotUrl    = trim( $theme['previewScreenshot'] );
-						$themeModel->provider         = 'themeforest';
-						$themeModel->type             = 'premium';
-						$themeModel->save();
-					}
+            // The theme preview  screenshot
+            $themelist->filter('img.preload')->each(function ($themeImage) use (&$theme) {
+                $theme['previewScreenshot'] = $themeImage->attr('data-preview-url');
+            });
 
 
-					$this->data[] = [
-						'id'                => trim( $theme['id'] ),
-						'name'              => trim( $theme['name'] ),
-						'previewScreenshot' => trim( $theme['previewScreenshot'] ),
-						'previewURL'        => trim( $theme['previewURL'] ),
-						'description'       => trim( $theme['description'] ),
-						'origin'            => trim( $theme['origin'] ),
-					];
-				} catch ( \InvalidArgumentException $e ) {
-					echo "Well, it sucks. Cannot scrape: " . json_encode( $theme['id'] );
-				}
-			} else {
-				echo "No data for" . $theme['id'];
-			}
+            // Click on each theme name and go to their theme page details
+            if ( ! empty(trim($theme['name']))) {
 
-		} );
+                try {
+                    $link                 = $this->crawler->selectLink(trim($theme['name']))->link();
+                    $crawlerThemefullPage = $this->goutteClient->click($link);
 
 
-		return $this->data;
+                    // Get the Preview URL
+                    $crawlerThemefullPage->filter('a.live-preview')->each(function ($themePreviewlink) use (
+                        &
+                        $theme
+                    ) {
+                        $theme['previewURL'] = $themePreviewlink->attr('href');
+                    });
 
 
-	}
+                    // Get the theme description
+                    $crawlerThemefullPage->filter('div.item-description')->each(function ($themeDescription) use (
+                        &$theme
+                    ) {
+                        $theme['description'] = $themeDescription->text();
+                    });
+
+                    // Click on the preview link
+                    $previewlink             = $crawlerThemefullPage->selectLink('Live Preview')->link();
+                    $crawlerThemePreviewLink = $this->goutteClient->click($previewlink);
+
+                    // Get the theme url hosted by the author
+                    $crawlerThemePreviewLink->filter('div.preview__action--close a')->each(function (
+                        $themeDescription
+                    ) use (
+                        &$theme
+                    ) {
+                        $theme['origin'] = $themeDescription->attr('href');
+                    });
 
 
-	public function exist( $externalThemeIdentifier ) {
+                    if ($this->theme->exist(trim($theme['id']))) {
+                        $themeModel                   = new ThemeModel;
+                        $themeModel->uniqueidentifier = trim($theme['id']);
+                        $themeModel->name             = trim($theme['name']);
+                        $themeModel->url              = trim($theme['previewURL']);
+                        $themeModel->downloadLink     = trim($theme['previewURL']);
+                        $themeModel->PreviewLink      = trim($theme['origin']);
+                        $themeModel->description      = trim($theme['description']);
+                        $themeModel->screenshotUrl    = trim($theme['previewScreenshot']);
+                        $themeModel->provider         = 'themeforest';
+                        $themeModel->type             = 'premium';
+                        $themeModel->save();
+                    }
 
 
-		if ( ! ThemeModel::where( 'uniqueidentifier', '=', $externalThemeIdentifier )->exists() ) {
-			echo "[" . getMemUsage() . "]$externalThemeIdentifier is a new theme.";
-			echo br();
+                    $this->data[] = [
+                        'id'                => trim($theme['id']),
+                        'name'              => trim($theme['name']),
+                        'previewScreenshot' => trim($theme['previewScreenshot']),
+                        'previewURL'        => trim($theme['previewURL']),
+                        'description'       => trim($theme['description']),
+                        'origin'            => trim($theme['origin']),
+                    ];
+                } catch (\InvalidArgumentException $e) {
+                    echo "Well, it sucks. Cannot scrape: " . json_encode($theme['id']);
+                }
+            } else {
+                echo "No data for" . $theme['id'];
+            }
 
-			return true;
-		} else {
-			echo "[" . getMemUsage() . "]$externalThemeIdentifier has already been scrapped.";
-			echo br();
+        });
 
-			return false;
-		}
 
-	}
+        return $this->data;
+
+
+    }
+
+
+    public function exist($externalThemeIdentifier)
+    {
+
+
+        if ( ! ThemeModel::where('uniqueidentifier', '=', $externalThemeIdentifier)->exists()) {
+            echo "[" . getMemUsage() . "]$externalThemeIdentifier is a new theme.";
+            echo br();
+
+            return true;
+        } else {
+            echo "[" . getMemUsage() . "]$externalThemeIdentifier has already been scrapped.";
+            echo br();
+
+            return false;
+        }
+
+    }
 
 }
