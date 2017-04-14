@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PluginRepository;
+use App\Repositories\Plugin\PluginRepository;
 
 class PluginController extends Controller
 {

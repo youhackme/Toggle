@@ -10,7 +10,7 @@ namespace App\Scrape\Themeforest;
 
 
 use App\Models\Plugin as PluginModel;
-use App\Repositories\PluginRepository;
+use App\Repositories\Plugin\PluginRepository;
 
 
 /**

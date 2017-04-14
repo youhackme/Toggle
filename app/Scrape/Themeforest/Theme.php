@@ -4,7 +4,7 @@ namespace App\Scrape\Themeforest;
 
 
 use App\Models\Theme as ThemeModel;
-use App\Repositories\ThemeRepository;
+use App\Repositories\Theme\ThemeRepository;
 
 
 /**

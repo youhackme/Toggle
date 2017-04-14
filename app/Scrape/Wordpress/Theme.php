@@ -3,7 +3,7 @@
 namespace App\Scrape\WordPress;
 
 use App\Models\Theme as ThemeModel;
-use App\Repositories\ThemeRepository;
+use App\Repositories\Theme\ThemeRepository;
 
 /**
  * Created by PhpStorm.

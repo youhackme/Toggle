@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Repositories\ThemeRepository;
+use App\Repositories\Theme\ThemeRepository;
 
 class ScrapeTheme extends Command
 {
