@@ -9,7 +9,6 @@
 namespace App\Scrape\Themeforest;
 
 
-use App\Models\Plugin as PluginModel;
 use App\Repositories\Plugin\PluginRepository;
 
 
