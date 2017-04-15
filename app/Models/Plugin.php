@@ -18,13 +18,12 @@ class Plugin extends Model
     protected $fillable = [
         'uniqueidentifier',
         'name',
-        'screenshotUrl',
+        'screenshoturl',
         'category',
-        'demolink',
         'description',
         'provider',
         'type',
-        'url',
+        'previewlink',
         'downloadlink',
 
     ];
@@ -43,6 +42,11 @@ class Plugin extends Model
     public function setdescriptionAttribute($value)
     {
         $this->attributes['description'] = trim(strtolower($value));
+    }
+
+    public function setpreviewlinkAttribute($value)
+    {
+        $this->attributes['previewlink'] = trim(strtolower($value));
     }
 
 

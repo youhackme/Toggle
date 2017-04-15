@@ -58,10 +58,11 @@ abstract class DbScrapeRepositoryAbstract
     {
 
         if ($this->exist(trim($data['uniqueidentifier']))) {
+
             return $this->model->create($data);
         } else {
             return false;
         }
-        
+
     }
 }
