@@ -11,7 +11,7 @@ use App\Scrape\ScraperInterface;
  * Date: 01/04/2017
  * Time: 11:26
  */
-class Theme
+class Theme implements ScraperInterface
 {
 
 

@@ -2,8 +2,8 @@
 
 namespace App\Scrape\WordPress;
 
-
 use App\Repositories\Theme\ThemeRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.
@@ -11,7 +11,7 @@ use App\Repositories\Theme\ThemeRepository;
  * Date: 01/04/2017
  * Time: 11:26
  */
-class Theme
+class Theme implements ScraperInterface
 {
 
     /**

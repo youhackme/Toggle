@@ -10,13 +10,13 @@ namespace App\Scrape\Themeforest;
 
 
 use App\Repositories\Plugin\PluginRepository;
-
+use App\Scrape\ScraperInterface;
 
 /**
  * Scrape plugins from Themeforest
  * @package App\Scrape\Themeforest
  */
-class Plugin
+class Plugin implements ScraperInterface
 {
 
 
