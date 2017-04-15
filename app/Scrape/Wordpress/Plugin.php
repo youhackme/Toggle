@@ -67,7 +67,8 @@ class Plugin implements ScraperInterface
                               $url
                           );
 
-                          $plugin['url']      = $url;
+                          $plugin['previewlink']      = $url;
+                          $plugin['downloadlink']      = $url;
                           $plugin['provider'] = 'wordpress.org';
                           $plugin['type']     = 'free';
 
@@ -81,7 +82,7 @@ class Plugin implements ScraperInterface
                                                     $content->filter('.plugin-title')
                                                             ->each(function ($content) use (& $plugin) {
                                                                 $plugin['name']             = trim($content->text());
-                                                                $plugin['screenshotUrl']    = 'https://ps.w.org/' . $plugin['name'] . '/assets/icon-128x128.png';
+                                                                $plugin['screenshoturl']    = 'https://ps.w.org/' . $plugin['name'] . '/assets/icon-128x128.png';
                                                                 $plugin['uniqueidentifier'] = $plugin['name'];
                                                             });
 
