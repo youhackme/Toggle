@@ -22,7 +22,7 @@ class Plugin
 
 
     /**
-     * Store theme meta data
+     * Store plugin meta data
      * @var array
      */
     private $crawler;
@@ -43,7 +43,8 @@ class Plugin
 
     public function __construct(PluginRepository $plugin)
     {
-        $this->plugin = $plugin;
+        $this->plugin       = $plugin;
+        $this->goutteClient = \App::make('goutte');
     }
 
 
@@ -55,7 +56,6 @@ class Plugin
         echo "Scraping page: $pageToCrawl";
         echo br();
 
-        $this->goutteClient = \App::make('goutte');
 
         $this->crawler = $this->goutteClient->request(
             'GET',
@@ -70,29 +70,29 @@ class Plugin
                       ->each(function ($themelist) use (&$plugin) {
 
 
-                          // The theme Unique id
-                          $plugin['id'] = $themelist->attr('data-item-id');
+                          // The plugin Unique id
+                          $plugin['uniqueidentifier'] = $themelist->attr('data-item-id');
 
-                          // The theme name
+                          // The plugin name
                           $themelist->filter('h3')
                                     ->each(function ($themeTitle) use (&$plugin) {
                                         $plugin['name'] = $themeTitle->text();
                                     });
 
-                          // The theme preview  screenshot
+                          // The plugin preview  screenshot
                           $themelist->filter('img.preload')
                                     ->each(function ($themeImage) use (&$plugin) {
-                                        $plugin['previewScreenshot'] = $themeImage->attr('data-preview-url');
+                                        $plugin['screenshotUrl'] = $themeImage->attr('data-preview-url');
                                     });
 
-                          // The theme preview  screenshot
+                          // The plugin preview  screenshot
                           $themelist->filter('[itemprop="genre"]')
                                     ->each(function ($themeImage) use (&$plugin) {
                                         $plugin['category'] = $themeImage->text();
                                     });
 
 
-                          // Click on each theme name and go to their theme page details
+                          // Click on each plugin name and go to their plugin page details
                           if ( ! empty(trim($plugin['name']))) {
 
                               try {
@@ -103,11 +103,11 @@ class Plugin
                                   // Get the Preview URL
                                   $this->crawlerThemefullPage->filter('a.live-preview')
                                                              ->each(function ($themePreviewlink) use (& $plugin) {
-                                                                 $plugin['previewURL'] = $themePreviewlink->attr('href');
+                                                                 $plugin['downloadlink'] = $themePreviewlink->attr('href');
                                                              });
 
 
-                                  // Get the theme description
+                                  // Get the plugin description
                                   $this->crawlerThemefullPage->filter('div.item-description')
                                                              ->each(function ($themeDescription) use (&$plugin) {
                                                                  $plugin['description'] = $themeDescription->text();
@@ -117,36 +117,23 @@ class Plugin
                                   $previewlink                   = $this->crawlerThemefullPage->selectLink('Live Preview')->link();
                                   $this->crawlerThemePreviewLink = $this->goutteClient->click($previewlink);
 
-                                  // Get the theme url hosted by the author
+                                  // Get the plugin url hosted by the author
                                   $this->crawlerThemePreviewLink->filter('div.preview__action--close a')
                                                                 ->each(function ($themeDescription) use (&$plugin
                                                                 ) {
-                                                                    $plugin['origin'] = $themeDescription->attr('href');
+                                                                    $plugin['url'] = $themeDescription->attr('href');
                                                                 });
 
 
-                                  if ($this->plugin->exist(trim($plugin['id']))) {
-                                      $pluginModel                   = new PluginModel;
-                                      $pluginModel->uniqueidentifier = trim($plugin['id']);
-                                      $pluginModel->name             = trim($plugin['name']);
-                                      $pluginModel->url              = trim($plugin['previewURL']);
-                                      $pluginModel->downloadlink     = trim($plugin['previewURL']);
-                                      $pluginModel->demolink         = trim($plugin['origin']);
-                                      $pluginModel->description      = trim($plugin['description']);
-                                      $pluginModel->screenshotUrl    = trim($plugin['previewScreenshot']);
-                                      $pluginModel->provider         = 'themeforest';
-                                      $pluginModel->category         = trim($plugin['category']);
-                                      $pluginModel->type             = 'premium';
-                                      $pluginModel->save();
-                                  }
+                                  $this->plugin->save($plugin);
 
 
                               } catch (\InvalidArgumentException $e) {
-                                  echo "Well, it sucks. Cannot scrape: " . json_encode($plugin['id']);
+                                  echo "Well, it sucks. Cannot scrape: " . json_encode($plugin['uniqueidentifier']);
                                   echo "<br/> \n";
                               }
                           } else {
-                              echo "No data for" . $plugin['id'];
+                              echo "No data for" . $plugin['uniqueidentifier'];
                               echo "<br/> \n";
                           }
 
