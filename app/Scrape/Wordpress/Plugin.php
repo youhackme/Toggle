@@ -2,9 +2,8 @@
 
 namespace App\Scrape\WordPress;
 
-
-use App\Models\Plugin as PluginModel;
 use App\Repositories\Plugin\PluginRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.
@@ -12,11 +11,11 @@ use App\Repositories\Plugin\PluginRepository;
  * Date: 01/04/2017
  * Time: 11:26
  */
-class Plugin
+class Plugin implements ScraperInterface
 {
 
     /**
-     * Store theme meta data
+     * Store plugin meta data
      * @var array
      */
     private $crawler;
@@ -36,7 +35,8 @@ class Plugin
 
     public function __construct(PluginRepository $plugin)
     {
-        $this->plugin = $plugin;
+        $this->plugin       = $plugin;
+        $this->goutteClient = \App::make('goutte');
     }
 
 
@@ -46,7 +46,6 @@ class Plugin
     public function scrape()
     {
 
-        $this->goutteClient = \App::make('goutte');
 
         $this->crawler = $this->goutteClient->request(
             'GET',
@@ -105,19 +104,7 @@ class Plugin
 
                                                 });
 
-                          if ($this->plugin->exist(trim($plugin['uniqueidentifier']))) {
-                              $pluginModel                   = new PluginModel;
-                              $pluginModel->uniqueidentifier = trim($plugin['uniqueidentifier']);
-                              $pluginModel->name             = trim($plugin['name']);
-                              $pluginModel->url              = trim($plugin['url']);
-                              $pluginModel->description      = trim($plugin['description']);
-                              $pluginModel->screenshotUrl    = trim($plugin['screenshotUrl']);
-                              $pluginModel->provider         = $plugin['provider'];
-                              $pluginModel->category         = trim(substr($plugin['category'], 0, 240));
-                              $pluginModel->type             = $plugin['type'];
-                              $pluginModel->save();
-
-                          }
+                          $this->plugin->save($plugin);
 
 
                       });

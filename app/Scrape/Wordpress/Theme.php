@@ -2,8 +2,8 @@
 
 namespace App\Scrape\WordPress;
 
-use App\Models\Theme as ThemeModel;
 use App\Repositories\Theme\ThemeRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.
@@ -11,7 +11,7 @@ use App\Repositories\Theme\ThemeRepository;
  * Date: 01/04/2017
  * Time: 11:26
  */
-class Theme
+class Theme implements ScraperInterface
 {
 
     /**
@@ -28,15 +28,16 @@ class Theme
 
 
     /**
-     * An instance of Plugin Repository
-     * @var PluginRepository
+     * An instance of Theme Repository
+     * @var ThemeRepository
      */
     protected $theme;
 
 
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme = $theme;
+        $this->theme        = $theme;
+        $this->goutteClient = \App::make('goutte');
     }
 
 
@@ -45,9 +46,6 @@ class Theme
      */
     public function scrape()
     {
-
-
-        $this->goutteClient = \App::make('goutte');
 
         $this->crawler = $this->goutteClient->request(
             'GET',
@@ -64,9 +62,9 @@ class Theme
 
                           $theme['uniqueidentifier'] = $theme['name'];
                           $url                       = 'https://wordpress.org/themes/' . $theme['name'];
-
-
-                          $crawlerThemefullPage = $this->goutteClient->request(
+                          $theme['downloadLink']     = $url;
+                          $theme['PreviewLink']      = $url;
+                          $crawlerThemefullPage      = $this->goutteClient->request(
                               'GET',
                               $url
                           );
@@ -90,6 +88,12 @@ class Theme
 
                                                                });
 
+                                                       $content->filter('div.screenshot img')
+                                                               ->each(function ($content) use (& $theme) {
+                                                                   $theme['screenshotUrl'] = trim($content->attr('src'));
+
+                                                               });
+
 
                                                        // Get the description
                                                        $content->filter('.theme-description')
@@ -98,7 +102,7 @@ class Theme
                                                                });
 
                                                        $tags = [];
-                                                       // Get the description
+                                                       // Get the category
                                                        $content->filter('.theme-tags a')
                                                                ->each(function ($content) use (& $theme, &$tags) {
                                                                    $tags[] = $content->text();
@@ -109,19 +113,7 @@ class Theme
 
                                                    });
 
-
-                              if ($this->theme->exist(trim($theme['uniqueidentifier']))) {
-                                  $themeModel                   = new ThemeModel;
-                                  $themeModel->uniqueidentifier = trim($theme['uniqueidentifier']);
-                                  $themeModel->name             = trim($theme['name']);
-                                  $themeModel->url              = trim($theme['url']);
-                                  $themeModel->description      = trim($theme['description']);
-                                  $themeModel->provider         = $theme['provider'];
-                                  $themeModel->category         = trim($theme['category']);
-                                  $themeModel->type             = $theme['type'];
-                                  $themeModel->save();
-
-                              }
+                              $this->theme->save($theme);
 
 
                           } else {

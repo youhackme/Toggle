@@ -46,4 +46,22 @@ abstract class DbScrapeRepositoryAbstract
             return false;
         }
     }
+
+    /**
+     * Save data only if it is new
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function save(array $data)
+    {
+
+        if ($this->exist(trim($data['uniqueidentifier']))) {
+            return $this->model->create($data);
+        } else {
+            return false;
+        }
+        
+    }
 }

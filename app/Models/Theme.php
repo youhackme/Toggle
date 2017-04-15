@@ -4,6 +4,43 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Theme extends Model {
-	protected $table = 'themes';
+class Theme extends Model
+{
+    protected $table = 'themes';
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'uniqueidentifier',
+        'name',
+        'url',
+        'downloadLink',
+        'PreviewLink',
+        'description',
+        'screenshotUrl',
+        'provider',
+        'type',
+    ];
+
+
+    public function setuniqueidentifierAttribute($value)
+    {
+        $this->attributes['uniqueidentifier'] = trim(strtolower($value));
+    }
+
+    public function setnameAttribute($value)
+    {
+        $this->attributes['name'] = trim(strtolower($value));
+    }
+
+    public function setdescriptionAttribute($value)
+    {
+        $this->attributes['description'] = trim(strtolower($value));
+    }
+
+
 }

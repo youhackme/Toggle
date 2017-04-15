@@ -2,10 +2,8 @@
 
 namespace App\Scrape\Themeforest;
 
-
-use App\Models\Theme as ThemeModel;
 use App\Repositories\Theme\ThemeRepository;
-
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.
@@ -13,14 +11,8 @@ use App\Repositories\Theme\ThemeRepository;
  * Date: 01/04/2017
  * Time: 11:26
  */
-class Theme
+class Theme implements ScraperInterface
 {
-
-    /**
-     * Store theme meta data
-     * @var array
-     */
-    private $data;
 
 
     /**
@@ -37,15 +29,16 @@ class Theme
 
 
     /**
-     * An instance of Plugin Repository
-     * @var PluginRepository
+     * An instance of Theme Repository
+     * @var ThemeRepository
      */
     protected $theme;
 
 
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme = $theme;
+        $this->theme        = $theme;
+        $this->goutteClient = \App::make('goutte');
     }
 
 
@@ -56,7 +49,6 @@ class Theme
         echo "Scraping page: $pageToCrawl";
         echo br();
 
-        $this->goutteClient = \App::make('goutte');
 
         $this->crawler = $this->goutteClient->request(
             'GET',
@@ -66,13 +58,17 @@ class Theme
 
         $theme = [];
 
+        $theme['provider'] = 'themeforest.net';
+        $theme['type']     = 'premium';
+
+
         $this->crawler->filter('li.js-google-analytics__list-event-container')->each(function ($themelist) use (
             &
             $theme
         ) {
 
             // The theme Unique id
-            $theme['id'] = $themelist->attr('data-item-id');
+            $theme['uniqueidentifier'] = $themelist->attr('data-item-id');
 
             // The theme name
             $themelist->filter('h3')->each(function ($themeTitle) use (&$theme) {
@@ -83,7 +79,7 @@ class Theme
 
             // The theme preview  screenshot
             $themelist->filter('img.preload')->each(function ($themeImage) use (&$theme) {
-                $theme['previewScreenshot'] = $themeImage->attr('data-preview-url');
+                $theme['screenshotUrl'] = $themeImage->attr('data-preview-url');
             });
 
 
@@ -100,7 +96,7 @@ class Theme
                         &
                         $theme
                     ) {
-                        $theme['previewURL'] = $themePreviewlink->attr('href');
+                        $theme['downloadLink'] = $themePreviewlink->attr('href');
                     });
 
 
@@ -121,33 +117,13 @@ class Theme
                     ) use (
                         &$theme
                     ) {
-                        $theme['origin'] = $themeDescription->attr('href');
+                        $theme['PreviewLink'] = $themeDescription->attr('href');
                     });
 
 
-                    if ($this->theme->exist(trim($theme['id']))) {
-                        $themeModel                   = new ThemeModel;
-                        $themeModel->uniqueidentifier = trim($theme['id']);
-                        $themeModel->name             = trim($theme['name']);
-                        $themeModel->url              = trim($theme['previewURL']);
-                        $themeModel->downloadLink     = trim($theme['previewURL']);
-                        $themeModel->PreviewLink      = trim($theme['origin']);
-                        $themeModel->description      = trim($theme['description']);
-                        $themeModel->screenshotUrl    = trim($theme['previewScreenshot']);
-                        $themeModel->provider         = 'themeforest';
-                        $themeModel->type             = 'premium';
-                        $themeModel->save();
-                    }
+                    $this->theme->save($theme);
 
 
-                    $this->data[] = [
-                        'id'                => trim($theme['id']),
-                        'name'              => trim($theme['name']),
-                        'previewScreenshot' => trim($theme['previewScreenshot']),
-                        'previewURL'        => trim($theme['previewURL']),
-                        'description'       => trim($theme['description']),
-                        'origin'            => trim($theme['origin']),
-                    ];
                 } catch (\InvalidArgumentException $e) {
                     echo "Well, it sucks. Cannot scrape: " . json_encode($theme['id']);
                 }
@@ -158,28 +134,7 @@ class Theme
         });
 
 
-        return $this->data;
-
-
     }
 
-
-    public function exist($externalThemeIdentifier)
-    {
-
-
-        if ( ! ThemeModel::where('uniqueidentifier', '=', $externalThemeIdentifier)->exists()) {
-            echo "[" . getMemUsage() . "]$externalThemeIdentifier is a new theme.";
-            echo br();
-
-            return true;
-        } else {
-            echo "[" . getMemUsage() . "]$externalThemeIdentifier has already been scrapped.";
-            echo br();
-
-            return false;
-        }
-
-    }
 
 }
