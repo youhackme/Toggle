@@ -2,10 +2,8 @@
 
 namespace App\Scrape\Themeforest;
 
-
-use App\Models\Theme as ThemeModel;
 use App\Repositories\Theme\ThemeRepository;
-
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.
