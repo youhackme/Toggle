@@ -2,7 +2,7 @@
 
 namespace App\Scrape\WordPress;
 
-use App\Models\Theme as ThemeModel;
+
 use App\Repositories\Theme\ThemeRepository;
 
 /**
@@ -59,7 +59,7 @@ class Theme
         $this->crawler->filter('li')
                       ->each(function ($themeName) use (&$theme) {
                           $theme['name'] = $themeName->text();
-                          
+
                           $theme['uniqueidentifier'] = $theme['name'];
                           $url                       = 'https://wordpress.org/themes/' . $theme['name'];
                           $theme['downloadLink']     = $url;
