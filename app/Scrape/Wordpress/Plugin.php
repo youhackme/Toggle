@@ -3,7 +3,7 @@
 namespace App\Scrape\WordPress;
 
 
-use App\Models\Plugin as PluginModel;
+
 use App\Repositories\Plugin\PluginRepository;
 
 /**
