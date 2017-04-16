@@ -111,6 +111,7 @@ class Theme implements ScraperInterface
                     $previewlink             = $crawlerThemefullPage->selectLink('Live Preview')->link();
                     $crawlerThemePreviewLink = $this->goutteClient->click($previewlink);
 
+
                     // Get the theme url hosted by the author
                     $crawlerThemePreviewLink->filter('div.preview__action--close a')->each(function (
                         $themeDescription
@@ -118,6 +119,8 @@ class Theme implements ScraperInterface
                         &$theme
                     ) {
                         $theme['PreviewLink'] = $themeDescription->attr('href');
+
+
                     });
 
 
@@ -137,4 +140,38 @@ class Theme implements ScraperInterface
     }
 
 
+    public function extractThemeAlias()
+    {
+
+        $this->theme->chunk(10, function ($themes) {
+            foreach ($themes as $theme) {
+
+                echo 'Author url: ' . $theme->previewlink;
+                echo br();
+
+                $this->crawler = $this->goutteClient->request(
+                    'GET',
+                    $theme->previewlink
+                );
+
+                // Algo:
+                // 1. Do you have an iframe?
+                // 2. if yes, remove iframe
+
+                if ( ! empty($this->crawler->filter('iframe')->count())) {
+                    echo $this->crawler->filter('iframe')->attr('src');
+                    echo br();
+                } else {
+                    echo "No iframe";
+                    echo br();
+                }
+
+
+                //  echo $this->goutteClient->getResponse()->getContent();
+
+
+            }
+        });
+
+    }
 }
