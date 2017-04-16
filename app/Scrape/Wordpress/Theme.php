@@ -72,7 +72,7 @@ class Theme implements ScraperInterface
                           $responseStatus = $this->goutteClient->getResponse()->getStatus();
                           if ($responseStatus == 200) {
 
-                              $theme['url']      = $url;
+
                               $theme['provider'] = 'wordpress.org';
                               $theme['type']     = 'free';
 

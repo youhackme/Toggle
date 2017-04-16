@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Theme\ThemeRepository;
+
 class ThemeController extends Controller
 {
 
@@ -25,7 +26,7 @@ class ThemeController extends Controller
 
         foreach (range($pages[0], $pages[1]) as $page) {
 
-            (new \App\Scrape\Themeforest\Theme( $this->theme))->scrape($page);
+            (new \App\Scrape\Themeforest\Theme($this->theme))->scrape($page);
 
         }
 
@@ -33,8 +34,13 @@ class ThemeController extends Controller
 
     public function scrapeWordPress()
     {
-        (new \App\Scrape\WordPress\Theme( $this->theme))->scrape();
+        (new \App\Scrape\WordPress\Theme($this->theme))->scrape();
 
+    }
+
+    public function scrapeThemeAlias()
+    {
+        (new \App\Scrape\Themeforest\Theme($this->theme))->extractThemeAlias();
     }
 
 

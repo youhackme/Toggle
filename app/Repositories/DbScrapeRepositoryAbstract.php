@@ -58,10 +58,19 @@ abstract class DbScrapeRepositoryAbstract
     {
 
         if ($this->exist(trim($data['uniqueidentifier']))) {
+
             return $this->model->create($data);
         } else {
             return false;
         }
-        
+
+    }
+
+
+    public function chunk($chunk = 10, callable $callback)
+    {
+
+        return $this->model->where('status', 'unprocessed')->chunk($chunk, $callback);
+
     }
 }

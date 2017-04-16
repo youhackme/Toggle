@@ -31,10 +31,16 @@ Route::get( '/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest' 
 Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
 
 /**
+ * Scrape theme alias from different providers
+ */
+Route::get( '/scrape/tf/theme', 'ThemeController@scrapeThemeAlias' );
+
+
+/**
  * Scrape themes from different providers
  */
 Route::get( '/site/{site?}', 'SiteController@detect' )
-	->where('site', '(.*)');;
+	->where('site', '(.*)');
 
 
 

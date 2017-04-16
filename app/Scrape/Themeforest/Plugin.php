@@ -62,7 +62,9 @@ class Plugin implements ScraperInterface
         );
 
 
-        $plugin = [];
+        $plugin             = [];
+        $plugin['type']     = 'premium';
+        $plugin['provider'] = 'themeforest.net';
 
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
@@ -81,7 +83,7 @@ class Plugin implements ScraperInterface
                           // The plugin preview  screenshot
                           $themelist->filter('img.preload')
                                     ->each(function ($themeImage) use (&$plugin) {
-                                        $plugin['screenshotUrl'] = $themeImage->attr('data-preview-url');
+                                        $plugin['screenshoturl'] = $themeImage->attr('data-preview-url');
                                     });
 
                           // The plugin preview  screenshot
@@ -120,7 +122,7 @@ class Plugin implements ScraperInterface
                                   $this->crawlerThemePreviewLink->filter('div.preview__action--close a')
                                                                 ->each(function ($themeDescription) use (&$plugin
                                                                 ) {
-                                                                    $plugin['url'] = $themeDescription->attr('href');
+                                                                    $plugin['previewlink'] = $themeDescription->attr('href');
                                                                 });
 
 
