@@ -40,10 +40,6 @@ class CreateThemesTable extends Migration
              */
             $table->string('provider', 150)->nullable();
             /**
-             * The theme official alias
-             */
-            $table->string('alias', 100)->nullable();
-            /**
              * The theme official screenshot (not the one within the themes/ folder)
              */
             $table->string('screenshoturl', 255)->nullable();
@@ -67,6 +63,15 @@ class CreateThemesTable extends Migration
              * Is this theme free or paid?
              */
             $table->enum('type', ['free', 'premium']);
+            /**
+             * Status :
+             *
+             * unprocessed => theme alias not found yet
+             * detected => theme alias has already been found
+             * notdetected=> theme alias has not been detected
+             *
+             */
+            $table->enum('status', ['unprocessed', 'detected', 'notdetected']);
             /**
              * The created_at and updated_at columns
              */
