@@ -158,12 +158,29 @@ class Theme implements ScraperInterface
                 // 1. Do you have an iframe?
                 // 2. if yes, remove iframe
 
+
+
                 if ( ! empty($this->crawler->filter('iframe')->count())) {
-                    echo $this->crawler->filter('iframe')->attr('src');
-                    echo br();
+
+                    // Get the theme url hosted by the author
+                    $this->crawler->filter('iframe')->each(function ($iframe) use ($theme) {
+                        $iframeBlacklist = ['vimeo', 'youtube', 'video'];
+                        if ( containsInList($iframe->attr('src'),$iframeBlacklist)) {
+                            $iframeUrl = $iframe->attr('src');
+                            echo "$iframeUrl is fake! The is @ $theme->previewlink";
+                        }
+
+                        echo br();
+                    });
+
+
+                    //   echo $this->crawler->filter('iframe')->attr('src');
+
+                    echo "<hr/>";
                 } else {
-                    echo "No iframe";
+                    echo "<p style='color:red;'>No iframe</p>";
                     echo br();
+                    echo "<hr/>";
                 }
 
 
@@ -174,4 +191,6 @@ class Theme implements ScraperInterface
         });
 
     }
+
+
 }
