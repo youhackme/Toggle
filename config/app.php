@@ -167,6 +167,8 @@ return [
 		 * Package Service Providers...
 		 */
 		Laravel\Tinker\TinkerServiceProvider::class,
+        Toggle\Goutte\GoutteServiceProvider::class,
+
 
 		/*
 		 * Application Service Providers...
@@ -177,7 +179,6 @@ return [
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 		Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
-		App\Providers\GoutteServiceProvider::class,
 
 	],
 
@@ -228,7 +229,7 @@ return [
 		'Validator'    => Illuminate\Support\Facades\Validator::class,
 		'View'         => Illuminate\Support\Facades\View::class,
 		'Bugsnag'      => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
-		'Goutte'       => App\Facades\GoutteFacade::class,
+        'Goutte' => Toggle\Goutte\GoutteFacade::class,
 	],
 
 ];
