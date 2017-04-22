@@ -119,44 +119,12 @@ class Theme implements ScraperInterface
                         &$theme
                     ) {
 
-                        $theme['previewlink'] = $themeDescription->attr('href');
+                        $theme['previewlink'] = $this->getRealThemeUrl($themeDescription->attr('href'));
 
-                        $crawlerAuthorUrl = $this->goutteClient->request(
-                            'GET',
-                            $theme['previewlink']
-                        );
-
-
-
-                        if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
-
-                            // Get the theme url hosted by the author
-                            $crawlerAuthorUrl->filter('iframe')->each(function ($iframe) use (&$theme) {
-                                $iframeBlacklist = ['vimeo', 'youtube', 'video', 'googletagmanager'];
-                                $iframeUrl       = $iframe->attr('src');
-                                if (containsInList($iframeUrl, $iframeBlacklist)) {
-                                    echo "$iframeUrl is fake! Real one remains: " . $theme['previewlink'];
-                                } else {
-                                    echo "$iframeUrl has been extracted from iframe";
-                                    $theme['previewlink'] = $iframeUrl;
-                                }
-
-                                echo br();
-                            });
-
-
-
-                        } else {
-                            echo "<p style='color:red;'>No iframe</p>";
-                            echo "Well no iframe found, url remains: " . $theme['previewlink'];
-                            echo br();
-                        }
                     });
-
-                    echo $theme['name'] . ' points to ' . $theme['previewlink'];
-                    echo br();
+                    echo $theme['previewlink'] . br();
+                    $this->theme->save($theme);
                     unset($theme);
-                    // $this->theme->save($theme);
 
 
                 } catch (\InvalidArgumentException $e) {
@@ -226,8 +194,40 @@ class Theme implements ScraperInterface
     }
 
 
-    public function getRealThemeUrl()
+    /**
+     * Attempt to detect the theme demo URL (The one without iframe)
+     *
+     * @param $previewLink
+     *
+     * @return mixed
+     */
+    private function getRealThemeUrl($previewLink)
     {
+
+        //Crawl the theme preview url
+        $crawlerAuthorUrl = $this->goutteClient->request(
+            'GET',
+            $previewLink
+        );
+
+        // Do you have at least one iframe?
+        if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
+
+            // Get the theme url hosted by the author
+            $crawlerAuthorUrl->filter('iframe')->each(function ($iframe) use (&$previewLink) {
+                //Extract iframes only if you do not contain any of these words
+                $iframeBlacklist = ['vimeo', 'youtube', 'video', 'googletagmanager'];
+                $iframeUrl       = $iframe->attr('src');
+                if ( ! containsInList($iframeUrl, $iframeBlacklist)) {
+                    // echo "$iframeUrl has been extracted from iframe";
+                    $previewLink = $iframeUrl;
+                }
+
+            });
+
+        }
+
+        return $previewLink;
 
     }
 
