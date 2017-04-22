@@ -207,6 +207,7 @@ class Theme implements ScraperInterface
                     'data:image',
                     'facebook',
                     'soundcloud',
+                    'mixcloud',
                 ];
                 $iframeUrl       = $iframe->attr('src');
                 if ( ! containsInList($iframeUrl, $iframeBlacklist)) {
