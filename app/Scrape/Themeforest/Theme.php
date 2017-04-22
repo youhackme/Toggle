@@ -71,63 +71,65 @@ class Theme implements ScraperInterface
             $theme['uniqueidentifier'] = $themelist->attr('data-item-id');
 
             // The theme name
-            $themelist->filter('h3')->each(function ($themeTitle) use (&$theme) {
-                $theme['name'] = $themeTitle->text();
-
-            });
+            $theme['name'] = $themelist->filter('h3')->text();
 
 
             // The theme preview  screenshot
-            $themelist->filter('img.preload')->each(function ($themeImage) use (&$theme) {
-                $theme['screenshotUrl'] = $themeImage->attr('data-preview-url');
-            });
+            $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
 
 
             // Click on each theme name and go to their theme page details
             if ( ! empty(trim($theme['name']))) {
 
+
                 try {
-                    $link                 = $this->crawler->selectLink(trim($theme['name']))->link();
-                    $crawlerThemefullPage = $this->goutteClient->click($link);
 
 
-                    // Get the Preview URL
-                    $crawlerThemefullPage->filter('a.live-preview')->each(function ($themepreviewlink) use (
-                        &
-                        $theme
-                    ) {
-                        $theme['downloadlink'] = $themepreviewlink->attr('href');
-                    });
+                    $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
+                    // Navigate to the theme full page
+                    $crawlerThemefullPage = $this->goutteClient->request(
+                        'GET',
+                        'https://' . $theme['provider'] . $themeFullPageUrl
+                    );
 
 
-                    // Get the theme description
-                    $crawlerThemefullPage->filter('div.item-description')->each(function ($themeDescription) use (
-                        &$theme
-                    ) {
-                        $theme['description'] = $themeDescription->text();
-                    });
-
-                    // Click on the preview link
-                    $previewlink             = $crawlerThemefullPage->selectLink('Live Preview')->link();
-                    $crawlerThemepreviewlink = $this->goutteClient->click($previewlink);
+                    // Then, click on the Preview URL
+                    $theme['downloadlink'] = $crawlerThemefullPage
+                        ->filter('a.live-preview')
+                        ->attr('href');
 
 
-                    // Get the theme url hosted by the author
-                    $crawlerThemepreviewlink->filter('div.preview__action--close a')->each(function (
-                        $themeDescription
-                    ) use (
-                        &$theme
-                    ) {
+                    //to get the Theme description
+                    $theme['description'] = $crawlerThemefullPage
+                        ->filter('div.item-description')
+                        ->text();
 
-                        $theme['previewlink'] = $this->getRealThemeUrl($themeDescription->attr('href'));
+                    // Get the preview url of the theme
+                    $livePreviewLink = $crawlerThemefullPage
+                        ->filter('a.live-preview')
+                        ->attr('href');
 
-                    });
+                    //Click on the preview link button on the theme full page
+                    $crawlerThemepreviewlink = $this->goutteClient->request(
+                        'GET',
+                        $livePreviewLink
+                    );
+
+
+                    // Get the initial theme url hosted by the author
+                    // Then attempt to get the deeplink url
+                    $theme['previewlink'] = $this->getRealThemeUrl($crawlerThemepreviewlink
+                        ->filter('div.preview__action--close a')
+                        ->attr('href'));
+
+
                     echo $theme['previewlink'] . br();
                     $this->theme->save($theme);
                     unset($theme);
 
 
-                } catch (\InvalidArgumentException $e) {
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
                     echo "Well, it sucks. Cannot scrape: " . json_encode($theme['uniqueidentifier']);
                 }
             } else {
@@ -140,7 +142,8 @@ class Theme implements ScraperInterface
     }
 
 
-    public function extractThemeAlias()
+    public
+    function extractThemeAlias()
     {
 
         $this->theme->chunk(10, function ($themes) {
