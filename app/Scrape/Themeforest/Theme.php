@@ -124,7 +124,7 @@ class Theme implements ScraperInterface
 
 
                     $this->theme->save($theme);
-                    unset($theme);
+
 
 
                 } catch (\Exception $e) {
@@ -136,6 +136,7 @@ class Theme implements ScraperInterface
             } else {
                 echo "No data for" . $theme['uniqueidentifier'];
             }
+            unset($theme);
 
         });
 

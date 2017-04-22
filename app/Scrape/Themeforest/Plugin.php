@@ -140,7 +140,7 @@ class Plugin implements ScraperInterface
                               echo "No data for" . $plugin['uniqueidentifier'];
                               echo "<br/> \n";
                           }
-
+                          unset($plugin);
                       });
 
     }
