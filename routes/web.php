@@ -33,7 +33,7 @@ Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
 /**
  * Scrape theme alias from different providers
  */
-Route::get( '/scrape/tf/theme', 'ThemeController@scrapeThemeAlias' );
+Route::get( '/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias' );
 
 
 /**

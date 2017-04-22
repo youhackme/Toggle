@@ -71,67 +71,69 @@ class Theme implements ScraperInterface
             $theme['uniqueidentifier'] = $themelist->attr('data-item-id');
 
             // The theme name
-            $themelist->filter('h3')->each(function ($themeTitle) use (&$theme) {
-                $theme['name'] = $themeTitle->text();
-
-            });
+            $theme['name'] = $themelist->filter('h3')->text();
 
 
             // The theme preview  screenshot
-            $themelist->filter('img.preload')->each(function ($themeImage) use (&$theme) {
-                $theme['screenshotUrl'] = $themeImage->attr('data-preview-url');
-            });
+            $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
 
 
             // Click on each theme name and go to their theme page details
             if ( ! empty(trim($theme['name']))) {
 
+
                 try {
-                    $link                 = $this->crawler->selectLink(trim($theme['name']))->link();
-                    $crawlerThemefullPage = $this->goutteClient->click($link);
 
 
-                    // Get the Preview URL
-                    $crawlerThemefullPage->filter('a.live-preview')->each(function ($themePreviewlink) use (
-                        &
-                        $theme
-                    ) {
-                        $theme['downloadLink'] = $themePreviewlink->attr('href');
-                    });
+                    $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
+                    // Navigate to the theme full page
+                    $crawlerThemefullPage = $this->goutteClient->request(
+                        'GET',
+                        'https://' . $theme['provider'] . $themeFullPageUrl
+                    );
 
 
-                    // Get the theme description
-                    $crawlerThemefullPage->filter('div.item-description')->each(function ($themeDescription) use (
-                        &$theme
-                    ) {
-                        $theme['description'] = $themeDescription->text();
-                    });
-
-                    // Click on the preview link
-                    $previewlink             = $crawlerThemefullPage->selectLink('Live Preview')->link();
-                    $crawlerThemePreviewLink = $this->goutteClient->click($previewlink);
+                    // Then, click on the Preview URL
+                    $theme['downloadlink'] = $crawlerThemefullPage
+                        ->filter('a.live-preview')
+                        ->attr('href');
 
 
-                    // Get the theme url hosted by the author
-                    $crawlerThemePreviewLink->filter('div.preview__action--close a')->each(function (
-                        $themeDescription
-                    ) use (
-                        &$theme
-                    ) {
-                        $theme['PreviewLink'] = $themeDescription->attr('href');
+                    //to get the Theme description
+                    $theme['description'] = $crawlerThemefullPage
+                        ->filter('div.item-description')
+                        ->text();
+
+                    // Get the preview url of the theme
+                    $livePreviewLink = $crawlerThemefullPage
+                        ->filter('a.live-preview')
+                        ->attr('href');
+
+                    //Click on the preview link button on the theme full page
+                    $crawlerThemepreviewlink = $this->goutteClient->request(
+                        'GET',
+                        $livePreviewLink
+                    );
 
 
-                    });
+                    // Get the initial theme url hosted by the author
+                    // Then attempt to get the deeplink url
+                    $theme['previewlink'] = $this->getRealThemeUrl($crawlerThemepreviewlink
+                        ->filter('div.preview__action--close a')
+                        ->attr('href'));
 
 
+                    echo $theme['previewlink'] . br();
                     $this->theme->save($theme);
+                    unset($theme);
 
 
-                } catch (\InvalidArgumentException $e) {
-                    echo "Well, it sucks. Cannot scrape: " . json_encode($theme['id']);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                    echo "Well, it sucks. Cannot scrape: " . json_encode($theme['uniqueidentifier']);
                 }
             } else {
-                echo "No data for" . $theme['id'];
+                echo "No data for" . $theme['uniqueidentifier'];
             }
 
         });
@@ -140,7 +142,8 @@ class Theme implements ScraperInterface
     }
 
 
-    public function extractThemeAlias()
+    public
+    function extractThemeAlias()
     {
 
         $this->theme->chunk(10, function ($themes) {
@@ -158,37 +161,62 @@ class Theme implements ScraperInterface
                 // 1. Do you have an iframe?
                 // 2. if yes, remove iframe
 
-
-
-                if ( ! empty($this->crawler->filter('iframe')->count())) {
-
-                    // Get the theme url hosted by the author
-                    $this->crawler->filter('iframe')->each(function ($iframe) use ($theme) {
-                        $iframeBlacklist = ['vimeo', 'youtube', 'video'];
-                        if ( containsInList($iframe->attr('src'),$iframeBlacklist)) {
-                            $iframeUrl = $iframe->attr('src');
-                            echo "$iframeUrl is fake! The is @ $theme->previewlink";
-                        }
-
-                        echo br();
-                    });
-
-
-                    //   echo $this->crawler->filter('iframe')->attr('src');
-
-                    echo "<hr/>";
-                } else {
-                    echo "<p style='color:red;'>No iframe</p>";
-                    echo br();
-                    echo "<hr/>";
-                }
-
-
                 //  echo $this->goutteClient->getResponse()->getContent();
-
 
             }
         });
+
+    }
+
+
+    /**
+     * Attempt to detect the theme demo URL (The one without iframe)
+     *
+     * @param $previewLink
+     *
+     * @return mixed
+     */
+    private function getRealThemeUrl($previewLink)
+    {
+
+        try {
+            //Crawl the theme preview url
+            $crawlerAuthorUrl = $this->goutteClient->request(
+                'GET',
+                $previewLink
+            );
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            echo $e->getMessage();
+
+            return $previewLink;
+        }
+        // Do you have at least one iframe?
+        if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
+
+            // Get the theme url hosted by the author
+            $crawlerAuthorUrl->filter('iframe')->each(function ($iframe) use (&$previewLink) {
+                //Extract iframes only if you do not contain any of these words
+                $iframeBlacklist = [
+                    'vimeo',
+                    'youtube',
+                    'video',
+                    'googletagmanager',
+                    'google.com',
+                    'data:image',
+                    'facebook',
+                    'soundcloud',
+                ];
+                $iframeUrl       = $iframe->attr('src');
+                if ( ! containsInList($iframeUrl, $iframeBlacklist)) {
+                    // echo "$iframeUrl has been extracted from iframe";
+                    $previewLink = $iframeUrl;
+                }
+
+            });
+
+        }
+
+        return $previewLink;
 
     }
 

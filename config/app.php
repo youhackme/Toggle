@@ -168,6 +168,8 @@ return [
 		 */
 		Laravel\Tinker\TinkerServiceProvider::class,
         Toggle\Goutte\GoutteServiceProvider::class,
+        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
 
 		/*
@@ -178,7 +180,7 @@ return [
 		// App\Providers\BroadcastServiceProvider::class,
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
-		Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+
 
 	],
 
@@ -230,6 +232,7 @@ return [
 		'View'         => Illuminate\Support\Facades\View::class,
 		'Bugsnag'      => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Goutte' => Toggle\Goutte\GoutteFacade::class,
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
 	],
 
 ];

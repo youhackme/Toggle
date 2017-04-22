@@ -18,10 +18,10 @@ class Theme extends Model
         'uniqueidentifier',
         'name',
         'url',
-        'downloadLink',
-        'PreviewLink',
+        'downloadlink',
+        'previewlink',
         'description',
-        'screenshotUrl',
+        'screenshoturl',
         'provider',
         'type',
     ];
