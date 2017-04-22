@@ -123,14 +123,15 @@ class Theme implements ScraperInterface
                         ->attr('href'));
 
 
-                    echo $theme['previewlink'] . br();
                     $this->theme->save($theme);
                     unset($theme);
 
 
                 } catch (\Exception $e) {
-                    echo $e->getMessage();
-                    echo "Well, it sucks. Cannot scrape: " . json_encode($theme['uniqueidentifier']);
+                    echo "No preview url for theme:." . json_encode($theme['uniqueidentifier']) . br();
+                    echo $e->getMessage() . br();
+                    // Save theme even if we have partial data.
+                    $this->theme->save($theme);
                 }
             } else {
                 echo "No data for" . $theme['uniqueidentifier'];
@@ -141,9 +142,10 @@ class Theme implements ScraperInterface
 
     }
 
-
-    public
-    function extractThemeAlias()
+    /**
+     * Extract theme Alias based on the theme Url
+     */
+    public function extractThemeAlias()
     {
 
         $this->theme->chunk(10, function ($themes) {
@@ -208,7 +210,6 @@ class Theme implements ScraperInterface
                 ];
                 $iframeUrl       = $iframe->attr('src');
                 if ( ! containsInList($iframeUrl, $iframeBlacklist)) {
-                    // echo "$iframeUrl has been extracted from iframe";
                     $previewLink = $iframeUrl;
                 }
 
