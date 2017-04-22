@@ -51,7 +51,7 @@ class Plugin implements ScraperInterface
     {
 
 
-        $pageToCrawl = 'https://codecanyon.net/category/wordpress?page=' . $page;
+        $pageToCrawl = 'https://codecanyon.net/category/wordpress?page=' . $page . '&referrer=search&sort=sales&utf8=✓&view=list';
         echo "Scraping page: $pageToCrawl";
         echo br();
 
@@ -64,84 +64,85 @@ class Plugin implements ScraperInterface
 
         $plugin             = [];
         $plugin['type']     = 'premium';
-        $plugin['provider'] = 'themeforest.net';
+        $plugin['provider'] = 'codecanyon.net';
 
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
-                      ->each(function ($themelist) use (&$plugin) {
+                      ->each(function ($pluginlist) use (&$plugin) {
 
 
                           // The plugin Unique id
-                          $plugin['uniqueidentifier'] = $themelist->attr('data-item-id');
+                          $plugin['uniqueidentifier'] = $pluginlist->attr('data-item-id');
 
                           // The plugin name
-                          $themelist->filter('h3')
-                                    ->each(function ($themeTitle) use (&$plugin) {
-                                        $plugin['name'] = $themeTitle->text();
-                                    });
+                          $plugin['name'] = $pluginlist->filter('h3')->text();
 
                           // The plugin preview  screenshot
-                          $themelist->filter('img.preload')
-                                    ->each(function ($themeImage) use (&$plugin) {
-                                        $plugin['screenshoturl'] = $themeImage->attr('data-preview-url');
-                                    });
+                          $plugin['screenshoturl'] = $pluginlist->filter('img.preload')->attr('data-preview-url');
 
-                          // The plugin preview  screenshot
-                          $themelist->filter('[itemprop="genre"]')
-                                    ->each(function ($themeImage) use (&$plugin) {
-                                        $plugin['category'] = $themeImage->text();
-                                    });
+                          // The plugin category
+                          $plugin['category'] = $pluginlist->filter('[itemprop="genre"]')->text();
 
 
                           // Click on each plugin name and go to their plugin page details
                           if ( ! empty(trim($plugin['name']))) {
 
                               try {
-                                  $link                       = $this->crawler->selectLink(trim($plugin['name']))->link();
-                                  $this->crawlerThemefullPage = $this->goutteClient->click($link);
 
+                                  // Navigate to the plugin full page
+                                  $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
+
+                                  $crawlerPluginfullPage = $this->goutteClient->request(
+                                      'GET',
+                                      'https://' . $plugin['provider'] . $pluginFullPageUrl
+                                  );
 
                                   // Get the Preview URL
-                                  $this->crawlerThemefullPage->filter('a.live-preview')
-                                                             ->each(function ($themePreviewlink) use (& $plugin) {
-                                                                 $plugin['downloadlink'] = $themePreviewlink->attr('href');
-                                                             });
+                                  $plugin['downloadlink'] = $crawlerPluginfullPage->filter('a.live-preview')
+                                                                                  ->attr('href');
 
 
                                   // Get the plugin description
-                                  $this->crawlerThemefullPage->filter('div.item-description')
-                                                             ->each(function ($themeDescription) use (&$plugin) {
-                                                                 $plugin['description'] = $themeDescription->text();
-                                                             });
+                                  $plugin['description'] = $crawlerPluginfullPage
+                                      ->filter('div.item-description')
+                                      ->text();
 
-                                  // Click on the preview link
-                                  $previewlink                   = $this->crawlerThemefullPage->selectLink('Live Preview')->link();
-                                  $this->crawlerThemePreviewLink = $this->goutteClient->click($previewlink);
+
+                                  // Get the preview url of the plugin
+                                  $livePreviewLink = $crawlerPluginfullPage
+                                      ->filter('.live-preview')
+                                      ->attr('href');
+
+
+                                  //Click on the preview link button on the plugin full page
+                                  $crawlerPluginPreviewLink = $this->goutteClient->request(
+                                      'GET',
+                                      $livePreviewLink
+                                  );
 
                                   // Get the plugin url hosted by the author
-                                  $this->crawlerThemePreviewLink->filter('div.preview__action--close a')
-                                                                ->each(function ($themeDescription) use (&$plugin
-                                                                ) {
-                                                                    $plugin['previewlink'] = $themeDescription->attr('href');
-                                                                });
+                                  $plugin['previewlink'] = $crawlerPluginPreviewLink
+                                      ->filter('div.preview__action--close a')
+                                      ->attr('href');
 
 
                                   $this->plugin->save($plugin);
 
 
                               } catch (\InvalidArgumentException $e) {
-                                  echo "Well, it sucks. Cannot scrape: " . json_encode($plugin['uniqueidentifier']);
-                                  echo "<br/> \n";
+                                  echo $e->getMessage() . br();
+                                  echo "This plugin does not have a demo page: " . json_encode($plugin['uniqueidentifier']) . br();
+                                  //Save plugin data even if it is partially filled
+                                  $this->plugin->save($plugin);
+
                               }
                           } else {
                               echo "No data for" . $plugin['uniqueidentifier'];
                               echo "<br/> \n";
                           }
-
+                          unset($plugin);
                       });
 
-
     }
-
 
 }
