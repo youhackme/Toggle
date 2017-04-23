@@ -64,6 +64,7 @@ class WordPress
         \App\Engine\WordPress\Algorithm\Plugin::class,
         \App\Engine\WordPress\Algorithm\Robot::class,
         \App\Engine\WordPress\Algorithm\Link::class,
+        \App\Engine\WordPress\Algorithm\Screenshot::class,
 
     ];
 
@@ -136,7 +137,12 @@ class WordPress
 
             if (count($themeAlias) > 1) {
 
-                Bugsnag::notifyError('Anomaly', "More than one theme detected");
+                \Bugsnag::notifyError('Anomaly', "More than one theme detected", function ($report) use ($themeAlias) {
+                    $report->setSeverity('info');
+                    $report->setMetaData([
+                        'themes' => $themeAlias,
+                    ]);
+                });
 
                 foreach ($themeAlias as $alias => $rubbish) {
                     return $alias;
@@ -168,7 +174,7 @@ class WordPress
     private function screenshot()
     {
         //@Todo: More than one url found? Not normal. Send to bugsnag for further analysis.
-        return false;
+        return array_unique(array_collapse($this->screenshot));
     }
 
     /**
