@@ -135,6 +135,9 @@ class WordPress
         if ( ! empty($themeAlias)) {
 
             if (count($themeAlias) > 1) {
+
+                Bugsnag::notifyError('Anomaly', "More than one theme detected");
+
                 foreach ($themeAlias as $alias => $rubbish) {
                     return $alias;
                 }
