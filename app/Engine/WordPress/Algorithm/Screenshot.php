@@ -44,16 +44,19 @@ class Screenshot extends WordPressAbstract
     public function findScreenshot()
     {
 
-        $host = $this->siteAnatomy->crawler->getBaseHref();
-
+        $host                       = $this->siteAnatomy->crawler->getBaseHref();
+        $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
         if (preg_match_all('/wp-content\/themes\/([\w]+)\//im', $this->siteAnatomy->html, $themeAliases)) {
             $themeAliases = array_unique($themeAliases[1]);
             foreach ($themeAliases as $themeAlias) {
-                // Get thr host name, concat with wp-content/themes/aliasname/screenshot.png
-                $screenshotUrl = $host . '/wp-content/themes/' . $themeAlias . '/screenshot.png';
-                if ($this->UrlExist($screenshotUrl) == 200) {
-                    $this->setScreenshot($themeAlias, $screenshotUrl);
+                foreach ($allowedScreenshotExtension as $extension) {
+                    $screenshotUrl = $host . '/wp-content/themes/' . $themeAlias . '/screenshot' . $extension;
+                    if ($this->UrlExist($screenshotUrl) == 200) {
+                        $this->setScreenshot($themeAlias, $screenshotUrl);
+                        break;
+                    }
                 }
+
 
             }
         }
@@ -75,8 +78,6 @@ class Screenshot extends WordPressAbstract
             'GET',
             $screenshotUrl
         );
-
-        var_dump($goutteClient->getResponse()->getStatus());
 
         return $goutteClient->getResponse()->getStatus();
     }
