@@ -195,11 +195,12 @@ abstract class WordPressAbstract
     /**
      * Set WordPress screenshot
      *
-     * @param mixed $screenshot
+     * @param $themealias
+     * @param $screenshot
      */
-    public function setScreenshot($screenshot)
+    public function setScreenshot($themealias, $screenshot)
     {
-        $this->screenshot[] = $screenshot;
+        $this->screenshot[$themealias] = $screenshot;
     }
 
 
