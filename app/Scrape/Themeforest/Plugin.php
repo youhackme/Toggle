@@ -87,25 +87,22 @@ class Plugin implements ScraperInterface
                           // Click on each plugin name and go to their plugin page details
                           if ( ! empty(trim($plugin['name']))) {
 
+
+                              // Navigate to the plugin full page
+                              $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
+
+                              $crawlerPluginfullPage = $this->goutteClient->request(
+                                  'GET',
+                                  'https://' . $plugin['provider'] . $pluginFullPageUrl
+                              );
+
+
+                              // Get the plugin description
+                              $plugin['description'] = $crawlerPluginfullPage
+                                  ->filter('div.item-description')
+                                  ->text();
+
                               try {
-
-                                  // Navigate to the plugin full page
-                                  $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
-
-                                  $crawlerPluginfullPage = $this->goutteClient->request(
-                                      'GET',
-                                      'https://' . $plugin['provider'] . $pluginFullPageUrl
-                                  );
-
-                                  // Get the Preview URL
-                                  $plugin['downloadlink'] = $crawlerPluginfullPage->filter('a.live-preview')
-                                                                                  ->attr('href');
-
-
-                                  // Get the plugin description
-                                  $plugin['description'] = $crawlerPluginfullPage
-                                      ->filter('div.item-description')
-                                      ->text();
 
 
                                   // Get the preview url of the plugin
@@ -113,7 +110,7 @@ class Plugin implements ScraperInterface
                                       ->filter('.live-preview')
                                       ->attr('href');
 
-
+                                  $plugin['downloadlink'] = $livePreviewLink;
                                   //Click on the preview link button on the plugin full page
                                   $crawlerPluginPreviewLink = $this->goutteClient->request(
                                       'GET',
@@ -127,12 +124,14 @@ class Plugin implements ScraperInterface
 
 
                                   $this->plugin->save($plugin);
+                                  unset($plugin);
 
 
                               } catch (\InvalidArgumentException $e) {
                                   echo $e->getMessage() . br();
                                   echo "This plugin does not have a demo page: " . json_encode($plugin['uniqueidentifier']) . br();
                                   //Save plugin data even if it is partially filled
+                                  unset($plugin['previewlink']);
                                   $this->plugin->save($plugin);
 
                               }
@@ -140,7 +139,7 @@ class Plugin implements ScraperInterface
                               echo "No data for" . $plugin['uniqueidentifier'];
                               echo "<br/> \n";
                           }
-                          unset($plugin);
+
                       });
 
     }
