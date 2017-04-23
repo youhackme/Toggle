@@ -37,6 +37,12 @@ class WordPress
     private $version;
 
     /**
+     * Attempt to detect Theme screenshot
+     * @var
+     */
+    private $screenshot;
+
+    /**
      * Attempt to make a unique list of plugins out of those algos
      * @var
      */
@@ -87,6 +93,8 @@ class WordPress
             $this->isWordPress[] = $wordPress->getWordPressAssertions();
             $this->theme[]       = $wordPress->getTheme();
             $this->plugins[]     = $wordPress->getPlugin();
+            $this->screenshot[]  = $wordPress->getScreenshot();
+            $this->version[]     = $wordPress->getVersion();
         }
 
     }
@@ -110,7 +118,7 @@ class WordPress
      * Get the list of plugins being used, again, you have the last Word
      * @return array
      */
-    public function plugins()
+    private function plugins()
     {
         return array_collapse($this->plugins);
         // Cycle through each algorithm and find out through getPlugin
@@ -121,7 +129,7 @@ class WordPress
      * Get the theme name, you have the last word, duh.
      * @return array|bool|int|string
      */
-    public function theme()
+    private function theme()
     {
         $themeAlias = array_collapse($this->theme);
         if ( ! empty($themeAlias)) {
@@ -138,6 +146,41 @@ class WordPress
         return false;
         // Cycle through each algorithm and find out through getTheme
         // Find more information from theme database now
+    }
+
+    /**
+     * Tell us the real WordPress version
+     * @return bool
+     */
+    private function version()
+    {
+        //@Todo: If more than one different version is found, then something is wrong. Send to bugsnag.
+        return false;
+    }
+
+    /**
+     * Give us the theme's screeeshot path
+     * @return bool
+     */
+    private function screenshot()
+    {
+        //@Todo: More than one url found? Not normal. Send to bugsnag for further analysis.
+        return false;
+    }
+
+    /**
+     * Reveal the WordPress Bold N Nuts
+     * @return string
+     */
+    public function details()
+    {
+        return json_encode([
+            'wordpress'  => true,
+            'version'    => $this->version(),
+            'theme'      => $this->theme(),
+            'plugins'    => $this->plugins(),
+            'screenshot' => $this->screenshot(),
+        ]);
     }
 
 
