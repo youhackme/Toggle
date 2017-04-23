@@ -37,6 +37,18 @@ abstract class WordPressAbstract
      */
     private $assertWordPress = false;
 
+    /**
+     * Store WordPress version
+     * @var
+     */
+    private $version;
+
+    /**
+     * Store the path to the theme screenshot in case WordPress has been detected
+     * @var
+     */
+    private $screenshot;
+
 
     /**
      * Check if it statisfies the algo condition
@@ -143,10 +155,52 @@ abstract class WordPressAbstract
         }
     }
 
-
+    /**
+     * Get WordPress Assertions
+     * @return bool
+     */
     public function getWordPressAssertions()
     {
         return $this->assertWordPress;
     }
+
+    /**
+     * Get WordPress version
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Set WordPress version
+     *
+     * @param mixed $version
+     */
+    public function setVersion($version)
+    {
+        $this->version[] = $version;
+    }
+
+    /**
+     * Get theme screenshot
+     * @return mixed
+     */
+    public function getScreenshot()
+    {
+        return $this->screenshot;
+    }
+
+    /**
+     * Set WordPress screenshot
+     *
+     * @param mixed $screenshot
+     */
+    public function setScreenshot($screenshot)
+    {
+        $this->screenshot[] = $screenshot;
+    }
+
 
 }
