@@ -131,7 +131,7 @@ class Plugin implements ScraperInterface
                                   echo $e->getMessage() . br();
                                   echo "This plugin does not have a demo page: " . json_encode($plugin['uniqueidentifier']) . br();
                                   //Save plugin data even if it is partially filled
-                                  unset($plugin['previewlink']);
+                                  unset($plugin['previewlink'],$plugin['downloadlink']);
                                   $this->plugin->save($plugin);
 
                               }
