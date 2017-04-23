@@ -13,14 +13,16 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-	    'App\Console\Commands\ScrapeTheme',
-	    'App\Console\Commands\ScrapePlugin'
+        'App\Console\Commands\ScrapeTheme',
+        'App\Console\Commands\ScrapePlugin',
+        'App\Console\Commands\DetectWordPress',
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
