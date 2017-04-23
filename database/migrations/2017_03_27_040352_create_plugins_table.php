@@ -30,7 +30,7 @@ class CreatePluginsTable extends Migration
             /**
              * The preview link without the iframe
              */
-            $table->string('previewlink', 200)->nullable();
+            $table->string('previewlink', 255)->nullable();
 
             /**
              * The 'indirect' download link
