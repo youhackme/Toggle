@@ -31,12 +31,13 @@ class SiteAnatomy
 
     public function __construct($site)
     {
+        $url = str_contains($site, ['http://', 'https://']) ? $site : "http://" . $site;
 
         $this->goutteClient = App::make('goutte');
 
         $this->crawler = $this->goutteClient->request(
             'GET',
-            "http://" . $site
+            $url
         );
 
         $this->result();
