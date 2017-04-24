@@ -70,7 +70,9 @@ abstract class DbScrapeRepositoryAbstract
     public function chunk($chunk = 10, callable $callback)
     {
 
-        return $this->model->where('status', 'unprocessed')->chunk($chunk, $callback);
+        return $this->model->where('status', 'unprocessed')
+                           ->where('previewlink', '!=', '')
+                           ->chunk($chunk, $callback);
 
     }
 }
