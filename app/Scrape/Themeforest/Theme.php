@@ -126,7 +126,6 @@ class Theme implements ScraperInterface
                     $this->theme->save($theme);
 
 
-
                 } catch (\Exception $e) {
                     echo "No preview url for theme:." . json_encode($theme['uniqueidentifier']) . br();
                     echo $e->getMessage() . br();
@@ -149,22 +148,21 @@ class Theme implements ScraperInterface
     public function extractThemeAlias()
     {
 
+
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
-
-                echo 'Author url: ' . $theme->previewlink;
+                $site = $theme->previewlink;
+                echo 'Author url: ' .$site;
                 echo br();
+                $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
+                $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 
-                $this->crawler = $this->goutteClient->request(
-                    'GET',
-                    $theme->previewlink
-                );
-
-                // Algo:
-                // 1. Do you have an iframe?
-                // 2. if yes, remove iframe
-
-                //  echo $this->goutteClient->getResponse()->getContent();
+                if ($application->isWordPress()) {
+                    echo $application->details();
+                } else {
+                    echo "Sadly, you are not using WordPress";
+                }
+                echo br();
 
             }
         });
