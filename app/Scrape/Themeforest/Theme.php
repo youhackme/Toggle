@@ -41,7 +41,11 @@ class Theme implements ScraperInterface
         $this->goutteClient = \App::make('goutte');
     }
 
-
+    /**
+     * Scrape theme
+     *
+     * @param int $page
+     */
     public function scrape($page = 1)
     {
 
@@ -152,7 +156,7 @@ class Theme implements ScraperInterface
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
                 $site = $theme->previewlink;
-                echo 'Author url: ' .$site;
+                echo 'Author url: ' . $site;
                 echo br();
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
                 $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
