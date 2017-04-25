@@ -141,6 +141,7 @@ class WordPress
                     $report->setSeverity('info');
                     $report->setMetaData([
                         'themes' => $themeAlias,
+                        'other'  => json_encode($this),
                     ]);
                 });
 
