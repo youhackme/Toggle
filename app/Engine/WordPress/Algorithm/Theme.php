@@ -32,7 +32,9 @@ class Theme extends WordPressAbstract
         return $this;
     }
 
-
+    /**
+     * Attempt to extract the theme Alias
+     */
     public function getThemeAlias()
     {
 
