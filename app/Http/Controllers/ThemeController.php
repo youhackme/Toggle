@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Theme\ThemeRepository;
 
+/**
+ * Class ThemeController
+ * @package App\Http\Controllers
+ */
 class ThemeController extends Controller
 {
 
@@ -13,13 +17,22 @@ class ThemeController extends Controller
      */
     protected $theme;
 
-
+    /**
+     * ThemeController constructor.
+     *
+     * @param ThemeRepository $theme
+     */
     public function __construct(ThemeRepository $theme)
     {
         $this->theme = $theme;
     }
 
 
+    /**
+     * Scrape theme from Themeforest
+     *
+     * @param int $page
+     */
     public function scrapeThemeForest($page = 1)
     {
         $pages = explode('-', $page);
@@ -32,12 +45,18 @@ class ThemeController extends Controller
 
     }
 
+    /**
+     * Scrape WordPress theme
+     */
     public function scrapeWordPress()
     {
         (new \App\Scrape\WordPress\Theme($this->theme))->scrape();
 
     }
 
+    /**
+     * Scrape Theme Alias
+     */
     public function scrapeThemeAlias()
     {
         (new \App\Scrape\Themeforest\Theme($this->theme))->extractThemeAlias();
