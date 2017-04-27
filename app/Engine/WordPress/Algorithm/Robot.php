@@ -3,27 +3,26 @@
  * Created by PhpStorm.
  * User: Hyder
  * Date: 07/04/2017
- * Time: 20:31
+ * Time: 20:31.
  */
 
 namespace App\Engine\WordPress\Algorithm;
 
-use App\Engine\WordPress\WordPressAbstract;
-
 use App\Engine\SiteAnatomy;
+use App\Engine\WordPress\WordPressAbstract;
 
 class Robot extends WordPressAbstract
 {
-
     /**
-     * Inject an instance of \App\Engine\SiteAnatomy
+     * Inject an instance of \App\Engine\SiteAnatomy.
+     *
      * @var
      */
     public $siteAnatomy;
 
-
     /**
-     * The path to Robots.txt
+     * The path to Robots.txt.
+     *
      * @var
      */
     public $pathToRobotsTxt;
@@ -35,18 +34,16 @@ class Robot extends WordPressAbstract
      */
     public function check(SiteAnatomy $siteAnatomy)
     {
-
-        $this->siteAnatomy     = $siteAnatomy;
-        $host                  = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
+        $this->siteAnatomy = $siteAnatomy;
+        $host = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
         $this->pathToRobotsTxt = "http://$host/robots.txt";
         $this->checkWordPressFootprints($this->getRobotsTxtContent());
 
         return $this;
     }
 
-
     /**
-     * Fetch the content of the Robots.txt
+     * Fetch the content of the Robots.txt.
      */
     public function getRobotsTxtContent()
     {
@@ -58,11 +55,10 @@ class Robot extends WordPressAbstract
         );
 
         return $goutteClient->getResponse()->getContent();
-
     }
 
     /**
-     * Check for WordPress footprints in robots.txt
+     * Check for WordPress footprints in robots.txt.
      *
      * @param $content
      */
@@ -72,6 +68,4 @@ class Robot extends WordPressAbstract
             $this->assertWordPress('robot');
         }
     }
-
-
 }

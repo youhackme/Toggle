@@ -8,7 +8,6 @@ class Theme extends Model
 {
     protected $table = 'themes';
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -26,7 +25,6 @@ class Theme extends Model
         'type',
     ];
 
-
     public function setuniqueidentifierAttribute($value)
     {
         $this->attributes['uniqueidentifier'] = trim(strtolower($value));
@@ -41,6 +39,4 @@ class Theme extends Model
     {
         $this->attributes['description'] = trim(strtolower($value));
     }
-
-
 }

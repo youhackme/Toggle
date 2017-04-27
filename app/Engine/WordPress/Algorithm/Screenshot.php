@@ -3,20 +3,19 @@
  * Created by PhpStorm.
  * User: Hyder
  * Date: 23/04/2017
- * Time: 12:02
+ * Time: 12:02.
  */
 
 namespace App\Engine\WordPress\Algorithm;
 
-use App\Engine\WordPress\WordPressAbstract;
 use App\Engine\SiteAnatomy;
-
+use App\Engine\WordPress\WordPressAbstract;
 
 class Screenshot extends WordPressAbstract
 {
-
     /**
-     * Inject an instance of \App\Engine\SiteAnatomy
+     * Inject an instance of \App\Engine\SiteAnatomy.
+     *
      * @var
      */
     public $siteAnatomy;
@@ -36,30 +35,25 @@ class Screenshot extends WordPressAbstract
         return $this;
     }
 
-
     /**
-     * Find screenshot path of the undeerlying theme
+     * Find screenshot path of the undeerlying theme.
      */
     public function findScreenshot()
     {
-
-        $host                       = $this->siteAnatomy->crawler->getBaseHref();
+        $host = $this->siteAnatomy->crawler->getBaseHref();
         $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
         if (preg_match_all('/wp-content\/themes\/([\w]+)\//im', $this->siteAnatomy->html, $themeAliases)) {
             $themeAliases = array_unique($themeAliases[1]);
             foreach ($themeAliases as $themeAlias) {
                 foreach ($allowedScreenshotExtension as $extension) {
-                    $screenshotUrl = $host . '/wp-content/themes/' . $themeAlias . '/screenshot' . $extension;
+                    $screenshotUrl = $host.'/wp-content/themes/'.$themeAlias.'/screenshot'.$extension;
                     if ($this->urlExist($screenshotUrl) == 200) {
                         $this->setScreenshot($themeAlias, $screenshotUrl);
                         break;
                     }
                 }
-
-
             }
         }
-
     }
 
     /**
@@ -71,7 +65,6 @@ class Screenshot extends WordPressAbstract
      */
     public function urlExist($screenshotUrl)
     {
-
         $goutteClient = \App::make('goutte');
         $goutteClient->request(
             'GET',
@@ -80,6 +73,4 @@ class Screenshot extends WordPressAbstract
 
         return $goutteClient->getResponse()->getStatus();
     }
-
-
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateThememeta extends Migration
 {
@@ -13,7 +13,6 @@ class CreateThememeta extends Migration
      */
     public function up()
     {
-
         Schema::create('thememeta', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');

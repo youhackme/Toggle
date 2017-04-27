@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Repositories\Theme\ThemeRepository;
 
 /**
- * Class ThemeController
- * @package App\Http\Controllers
+ * Class ThemeController.
  */
 class ThemeController extends Controller
 {
-
     /**
-     * An instance of Theme Repository
+     * An instance of Theme Repository.
+     *
      * @var ThemeRepository
      */
     protected $theme;
@@ -27,9 +26,8 @@ class ThemeController extends Controller
         $this->theme = $theme;
     }
 
-
     /**
-     * Scrape theme from Themeforest
+     * Scrape theme from Themeforest.
      *
      * @param int $page
      */
@@ -38,29 +36,23 @@ class ThemeController extends Controller
         $pages = explode('-', $page);
 
         foreach (range($pages[0], $pages[1]) as $page) {
-
             (new \App\Scrape\Themeforest\Theme($this->theme))->scrape($page);
-
         }
-
     }
 
     /**
-     * Scrape WordPress theme
+     * Scrape WordPress theme.
      */
     public function scrapeWordPress()
     {
         (new \App\Scrape\WordPress\Theme($this->theme))->scrape();
-
     }
 
     /**
-     * Scrape Theme Alias
+     * Scrape Theme Alias.
      */
     public function scrapeThemeAlias()
     {
         (new \App\Scrape\Themeforest\Theme($this->theme))->extractThemeAlias();
     }
-
-
 }
