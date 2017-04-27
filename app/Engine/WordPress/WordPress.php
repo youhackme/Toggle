@@ -92,12 +92,12 @@ class WordPress
     public function detect()
     {
         foreach ($this->algorithms as $algorithm) {
-            $wordPress           = (new $algorithm())->check($this->siteAnatomy);
+            $wordPress = (new $algorithm())->check($this->siteAnatomy);
             $this->isWordPress[] = $wordPress->getWordPressAssertions();
-            $this->theme[]       = $wordPress->getTheme();
-            $this->plugins[]     = $wordPress->getPlugin();
-            $this->screenshot[]  = $wordPress->getScreenshot();
-            $this->version[]     = $wordPress->getVersion();
+            $this->theme[] = $wordPress->getTheme();
+            $this->plugins[] = $wordPress->getPlugin();
+            $this->screenshot[] = $wordPress->getScreenshot();
+            $this->version[] = $wordPress->getVersion();
         }
     }
 
@@ -108,7 +108,7 @@ class WordPress
      */
     public function isWordPress()
     {
-        if ( ! empty(array_collapse($this->isWordPress))) {
+        if (!empty(array_collapse($this->isWordPress))) {
             return true;
         }
 
@@ -136,7 +136,7 @@ class WordPress
     private function theme()
     {
         $themeAlias = array_collapse($this->theme);
-        if ( ! empty($themeAlias)) {
+        if (!empty($themeAlias)) {
             if (count($themeAlias) > 1) {
                 \Bugsnag::notifyError('Anomaly', 'More than one theme detected',
                     function (Report $report) use ($themeAlias) {
