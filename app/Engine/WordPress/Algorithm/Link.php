@@ -29,20 +29,20 @@ class Link extends WordPressAbstract
     public function check(SiteAnatomy $siteAnatomy)
     {
         $this->siteAnatomy = $siteAnatomy;
-        $host              = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
+        $host = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
 
         $commonWordPressPaths = $this->commonWordPressPaths();
-        $responses            = $this->launchAsyncRequests($host);
+        $responses = $this->launchAsyncRequests($host);
 
         foreach ($responses as $key => $response) {
             if ($response['state'] == 'fulfilled') {
                 if ($response['value']->getStatusCode() == 200) {
                     if (isset($commonWordPressPaths[$key]['searchFor'])) {
                         if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
-                            $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+                            $this->assertWordPress('commonWordPressPaths-'.$commonWordPressPaths[$key]['searchFor']);
                         }
                     }
-                    $this->assertWordPress('commonWordPressPaths-image-' . $key);
+                    $this->assertWordPress('commonWordPressPaths-image-'.$key);
                 }
             }
         }
@@ -94,12 +94,12 @@ class Link extends WordPressAbstract
      */
     private function launchAsyncRequests($host)
     {
-        $promises     = [];
+        $promises = [];
         $goutteClient = \App::make('goutte');
 
         $commonWordPressPaths = $this->commonWordPressPaths();
         foreach ($commonWordPressPaths as $commonWordPressPath) {
-            $url        = "https://$host/{$commonWordPressPath['path']}";
+            $url = "https://$host/{$commonWordPressPath['path']}";
             $promises[] = $goutteClient->getClient()->getAsync($url);
         }
 
