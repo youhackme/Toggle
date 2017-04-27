@@ -23,7 +23,7 @@ class PluginRepository extends DbScrapeRepositoryAbstract implements ScrapeRepos
     /**
      * @param $model
      */
-    function __construct(PluginModel $model)
+    public function __construct(PluginModel $model)
     {
         $this->model = $model;
     }

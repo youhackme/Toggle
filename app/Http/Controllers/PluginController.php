@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Plugin\PluginRepository;
 
+/**
+ * Class PluginController
+ * @package App\Http\Controllers
+ */
 class PluginController extends Controller
 {
 
@@ -15,12 +19,22 @@ class PluginController extends Controller
     protected $plugin;
 
 
+    /**
+     * PluginController constructor.
+     *
+     * @param PluginRepository $plugin
+     */
     public function __construct(PluginRepository $plugin)
     {
         $this->plugin = $plugin;
     }
 
 
+    /**
+     * Scrape Plugin from themeforest
+     *
+     * @param int $page
+     */
     public function scrapeThemeForest($page = 1)
     {
 
@@ -33,6 +47,9 @@ class PluginController extends Controller
         }
     }
 
+    /**
+     * Scrape plugin from WordPress
+     */
     public function scrapeWordPress()
     {
         (new \App\Scrape\WordPress\Plugin($this->plugin))->scrape();

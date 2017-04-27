@@ -4,6 +4,7 @@ namespace App\Scrape\WordPress;
 
 use App\Repositories\Plugin\PluginRepository;
 use App\Scrape\ScraperInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Created by PhpStorm.
@@ -57,7 +58,7 @@ class Plugin implements ScraperInterface
 
         // The plugin name
         $this->crawler->filter('li')
-                      ->each(function ($pluginName) use (&$plugin) {
+                      ->each(function (Crawler $pluginName) use (&$plugin) {
                           $plugin['name'] = $pluginName->text();
                           $url            = 'https://wordpress.org/plugins/' . $plugin['name'];
 
@@ -67,20 +68,20 @@ class Plugin implements ScraperInterface
                               $url
                           );
 
-                          $plugin['previewlink']      = $url;
-                          $plugin['downloadlink']      = $url;
-                          $plugin['provider'] = 'wordpress.org';
-                          $plugin['type']     = 'free';
+                          $plugin['previewlink']  = $url;
+                          $plugin['downloadlink'] = $url;
+                          $plugin['provider']     = 'wordpress.org';
+                          $plugin['type']         = 'free';
 
 
                           // Get the Preview URL
                           $crawlerPluginfullPage->filter('#main')
-                                                ->each(function ($content) use (& $plugin) {
+                                                ->each(function (Crawler $content) use (& $plugin) {
 
 
                                                     // Get the plugin name
                                                     $content->filter('.plugin-title')
-                                                            ->each(function ($content) use (& $plugin) {
+                                                            ->each(function (Crawler $content) use (& $plugin) {
                                                                 $plugin['name']             = trim($content->text());
                                                                 $plugin['screenshoturl']    = 'https://ps.w.org/' . $plugin['name'] . '/assets/icon-128x128.png';
                                                                 $plugin['uniqueidentifier'] = $plugin['name'];
@@ -89,14 +90,14 @@ class Plugin implements ScraperInterface
 
                                                     // Get the description
                                                     $content->filter('#description')
-                                                            ->each(function ($content) use (& $plugin) {
+                                                            ->each(function (Crawler $content) use (& $plugin) {
                                                                 $plugin['description'] = trim($content->text());
                                                             });
 
                                                     $tags = [];
                                                     // Get the description
                                                     $content->filter('.tags a')
-                                                            ->each(function ($content) use (& $plugin, &$tags) {
+                                                            ->each(function (Crawler $content) use (& $plugin, &$tags) {
                                                                 $tags[] = $content->text();
 
                                                             });

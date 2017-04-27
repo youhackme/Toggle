@@ -11,6 +11,7 @@ namespace App\Scrape\Themeforest;
 
 use App\Repositories\Plugin\PluginRepository;
 use App\Scrape\ScraperInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Scrape plugins from Themeforest
@@ -68,7 +69,7 @@ class Plugin implements ScraperInterface
 
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
-                      ->each(function ($pluginlist) use (&$plugin) {
+                      ->each(function (Crawler $pluginlist) use (&$plugin) {
 
 
                           // The plugin Unique id

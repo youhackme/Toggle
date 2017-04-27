@@ -4,6 +4,7 @@ namespace App\Scrape\WordPress;
 
 use App\Repositories\Theme\ThemeRepository;
 use App\Scrape\ScraperInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Created by PhpStorm.
@@ -36,7 +37,7 @@ class Theme implements ScraperInterface
 
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme        = $theme;
+        $this->theme = $theme;
         $this->goutteClient = \App::make('goutte');
     }
 
@@ -57,7 +58,7 @@ class Theme implements ScraperInterface
 
         // The Theme name
         $this->crawler->filter('li')
-                      ->each(function ($themeName) use (&$theme) {
+                      ->each(function (Crawler $themeName) use (&$theme) {
                           $theme['name'] = $themeName->text();
 
                           $theme['uniqueidentifier'] = $theme['name'];
@@ -78,18 +79,18 @@ class Theme implements ScraperInterface
 
                               // Get the Preview URL
                               $crawlerThemefullPage->filter('.theme-wrap')
-                                                   ->each(function ($content) use (& $theme) {
+                                                   ->each(function (Crawler $content) use (& $theme) {
 
 
                                                        // Get the Theme name
                                                        $content->filter('.theme-name')
-                                                               ->each(function ($content) use (& $theme) {
+                                                               ->each(function (Crawler $content) use (& $theme) {
                                                                    $theme['name'] = trim($content->text());
 
                                                                });
 
                                                        $content->filter('div.screenshot img')
-                                                               ->each(function ($content) use (& $theme) {
+                                                               ->each(function (Crawler $content) use (& $theme) {
                                                                    $theme['screenshotUrl'] = trim($content->attr('src'));
 
                                                                });
@@ -97,14 +98,17 @@ class Theme implements ScraperInterface
 
                                                        // Get the description
                                                        $content->filter('.theme-description')
-                                                               ->each(function ($content) use (& $theme) {
+                                                               ->each(function (Crawler $content) use (& $theme) {
                                                                    $theme['description'] = trim($content->text());
                                                                });
 
                                                        $tags = [];
                                                        // Get the category
                                                        $content->filter('.theme-tags a')
-                                                               ->each(function ($content) use (& $theme, &$tags) {
+                                                               ->each(function (Crawler $content) use (
+                                                                   & $theme,
+                                                                   &$tags
+                                                               ) {
                                                                    $tags[] = $content->text();
 
                                                                });

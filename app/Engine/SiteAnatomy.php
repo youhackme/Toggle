@@ -27,6 +27,7 @@ class SiteAnatomy
     public $status;
     public $css;
     public $innerlinks;
+    public $html;
 
 
     public function __construct($site)
@@ -35,10 +36,21 @@ class SiteAnatomy
 
         $this->goutteClient = App::make('goutte');
 
-        $this->crawler = $this->goutteClient->request(
-            'GET',
-            $url
-        );
+        try {
+
+            $this->crawler = $this->goutteClient->request(
+                'GET',
+                $url
+            );
+
+
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+
+            echo $e->getMessage();
+
+            return;
+        }
+
 
         $this->result();
 
@@ -51,6 +63,7 @@ class SiteAnatomy
      */
     private function getHtml()
     {
+
         return $this->goutteClient->getResponse()->getContent();
     }
 

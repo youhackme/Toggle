@@ -86,8 +86,7 @@ class Link extends WordPressAbstract
             [
                 'path'      => 'api/oembed/1.0/embed',
                 'searchFor' => '/rest_missing_callback_param/i',
-            ]
-            
+            ],
 
 
         ];
@@ -104,8 +103,8 @@ class Link extends WordPressAbstract
      */
     private function launchAsyncRequests($host)
     {
-        $promises             = [];
-        $goutteClient         = \App::make('goutte');
+        $promises     = [];
+        $goutteClient = \App::make('goutte');
 
         $commonWordPressPaths = $this->commonWordPressPaths();
         foreach ($commonWordPressPaths as $commonWordPressPath) {
