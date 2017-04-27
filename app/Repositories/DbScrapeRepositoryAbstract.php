@@ -76,3 +76,4 @@ abstract class DbScrapeRepositoryAbstract
 
     }
 }
+

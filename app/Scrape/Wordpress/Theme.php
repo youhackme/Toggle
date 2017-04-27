@@ -37,7 +37,7 @@ class Theme implements ScraperInterface
 
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme        = $theme;
+        $this->theme = $theme;
         $this->goutteClient = \App::make('goutte');
     }
 
@@ -105,7 +105,10 @@ class Theme implements ScraperInterface
                                                        $tags = [];
                                                        // Get the category
                                                        $content->filter('.theme-tags a')
-                                                               ->each(function (Crawler $content) use (& $theme, &$tags) {
+                                                               ->each(function (Crawler $content) use (
+                                                                   & $theme,
+                                                                   &$tags
+                                                               ) {
                                                                    $tags[] = $content->text();
 
                                                                });

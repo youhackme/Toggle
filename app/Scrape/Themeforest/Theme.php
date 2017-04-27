@@ -69,81 +69,81 @@ class Theme implements ScraperInterface
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
                       ->each(function (Crawler $themelist) use (
-            &
-            $theme
-        ) {
+                          &
+                          $theme
+                      ) {
 
-            // The theme Unique id
-            $theme['uniqueidentifier'] = $themelist->attr('data-item-id');
+                          // The theme Unique id
+                          $theme['uniqueidentifier'] = $themelist->attr('data-item-id');
 
-            // The theme name
-            $theme['name'] = $themelist->filter('h3')->text();
-
-
-            // The theme preview  screenshot
-            $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
+                          // The theme name
+                          $theme['name'] = $themelist->filter('h3')->text();
 
 
-            // Click on each theme name and go to their theme page details
-            if ( ! empty(trim($theme['name']))) {
+                          // The theme preview  screenshot
+                          $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
 
 
-                try {
+                          // Click on each theme name and go to their theme page details
+                          if ( ! empty(trim($theme['name']))) {
 
 
-                    $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
-                    // Navigate to the theme full page
-                    $crawlerThemefullPage = $this->goutteClient->request(
-                        'GET',
-                        'https://' . $theme['provider'] . $themeFullPageUrl
-                    );
+                              try {
 
 
-                    // Then, click on the Preview URL
-                    $theme['downloadlink'] = $crawlerThemefullPage
-                        ->filter('a.live-preview')
-                        ->attr('href');
+                                  $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
+                                  // Navigate to the theme full page
+                                  $crawlerThemefullPage = $this->goutteClient->request(
+                                      'GET',
+                                      'https://' . $theme['provider'] . $themeFullPageUrl
+                                  );
 
 
-                    //to get the Theme description
-                    $theme['description'] = $crawlerThemefullPage
-                        ->filter('div.item-description')
-                        ->text();
-
-                    // Get the preview url of the theme
-                    $livePreviewLink = $crawlerThemefullPage
-                        ->filter('a.live-preview')
-                        ->attr('href');
-
-                    //Click on the preview link button on the theme full page
-                    $crawlerThemepreviewlink = $this->goutteClient->request(
-                        'GET',
-                        $livePreviewLink
-                    );
+                                  // Then, click on the Preview URL
+                                  $theme['downloadlink'] = $crawlerThemefullPage
+                                      ->filter('a.live-preview')
+                                      ->attr('href');
 
 
-                    // Get the initial theme url hosted by the author
-                    // Then attempt to get the deeplink url
-                    $theme['previewlink'] = $this->getRealThemeUrl($crawlerThemepreviewlink
-                        ->filter('div.preview__action--close a')
-                        ->attr('href'));
+                                  //to get the Theme description
+                                  $theme['description'] = $crawlerThemefullPage
+                                      ->filter('div.item-description')
+                                      ->text();
+
+                                  // Get the preview url of the theme
+                                  $livePreviewLink = $crawlerThemefullPage
+                                      ->filter('a.live-preview')
+                                      ->attr('href');
+
+                                  //Click on the preview link button on the theme full page
+                                  $crawlerThemepreviewlink = $this->goutteClient->request(
+                                      'GET',
+                                      $livePreviewLink
+                                  );
 
 
-                    $this->theme->save($theme);
+                                  // Get the initial theme url hosted by the author
+                                  // Then attempt to get the deeplink url
+                                  $theme['previewlink'] = $this->getRealThemeUrl($crawlerThemepreviewlink
+                                      ->filter('div.preview__action--close a')
+                                      ->attr('href'));
 
 
-                } catch (\Exception $e) {
-                    echo "No preview url for theme:." . json_encode($theme['uniqueidentifier']) . br();
-                    echo $e->getMessage() . br();
-                    // Save theme even if we have partial data.
-                    $this->theme->save($theme);
-                }
-            } else {
-                echo "No data for" . $theme['uniqueidentifier'];
-            }
-            unset($theme);
+                                  $this->theme->save($theme);
 
-        });
+
+                              } catch (\Exception $e) {
+                                  echo "No preview url for theme:." . json_encode($theme['uniqueidentifier']) . br();
+                                  echo $e->getMessage() . br();
+                                  // Save theme even if we have partial data.
+                                  $this->theme->save($theme);
+                              }
+                          } else {
+                              echo "No data for" . $theme['uniqueidentifier'];
+                          }
+                          unset($theme);
+
+                      });
 
 
     }
@@ -203,25 +203,25 @@ class Theme implements ScraperInterface
             // Get the theme url hosted by the author
             $crawlerAuthorUrl->filter('iframe')
                              ->each(function (Crawler $iframe) use (&$previewLink) {
-                //Extract iframes only if you do not contain any of these words
-                $iframeBlacklist = [
-                    'vimeo',
-                    'youtube',
-                    'video',
-                    'googletagmanager',
-                    'google.com',
-                    'data:image',
-                    'facebook',
-                    'soundcloud',
-                    'mixcloud',
-                ];
-                $iframeUrl       = $iframe->attr('src');
+                                 //Extract iframes only if you do not contain any of these words
+                                 $iframeBlacklist = [
+                                     'vimeo',
+                                     'youtube',
+                                     'video',
+                                     'googletagmanager',
+                                     'google.com',
+                                     'data:image',
+                                     'facebook',
+                                     'soundcloud',
+                                     'mixcloud',
+                                 ];
+                                 $iframeUrl       = $iframe->attr('src');
 
-                if ( ! str_contains($iframeUrl, $iframeBlacklist)) {
-                    $previewLink = $iframeUrl;
-                }
+                                 if ( ! str_contains($iframeUrl, $iframeBlacklist)) {
+                                     $previewLink = $iframeUrl;
+                                 }
 
-            });
+                             });
 
         }
 

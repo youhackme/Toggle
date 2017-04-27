@@ -68,10 +68,10 @@ class Plugin implements ScraperInterface
                               $url
                           );
 
-                          $plugin['previewlink']      = $url;
-                          $plugin['downloadlink']      = $url;
-                          $plugin['provider'] = 'wordpress.org';
-                          $plugin['type']     = 'free';
+                          $plugin['previewlink']  = $url;
+                          $plugin['downloadlink'] = $url;
+                          $plugin['provider']     = 'wordpress.org';
+                          $plugin['type']         = 'free';
 
 
                           // Get the Preview URL
