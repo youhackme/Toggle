@@ -213,7 +213,8 @@ class Theme implements ScraperInterface
                     'mixcloud',
                 ];
                 $iframeUrl       = $iframe->attr('src');
-                if ( ! containsInList($iframeUrl, $iframeBlacklist)) {
+
+                if ( ! str_contains($iframeUrl, $iframeBlacklist)) {
                     $previewLink = $iframeUrl;
                 }
 

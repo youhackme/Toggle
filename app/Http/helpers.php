@@ -48,12 +48,3 @@ function getMemUsage() {
 function br() {
 	return ( PHP_SAPI === 'cli' ? "\n" : "<br />" );
 }
-
-
-function containsInList($str, array $arr)
-{
-    foreach($arr as $a) {
-        if (stripos($str,$a) !== false) return true;
-    }
-    return false;
-}
