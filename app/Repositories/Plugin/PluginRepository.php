@@ -10,13 +10,12 @@ use App\Repositories\ScrapeRepositoryInterface;
  * Created by PhpStorm.
  * User: Hyder
  * Date: 14/04/2017
- * Time: 20:43
+ * Time: 20:43.
  */
 class PluginRepository extends DbScrapeRepositoryAbstract implements ScrapeRepositoryInterface
 {
-
     /**
-     * Eloquent model
+     * Eloquent model.
      */
     protected $model;
 
@@ -27,5 +26,4 @@ class PluginRepository extends DbScrapeRepositoryAbstract implements ScrapeRepos
     {
         $this->model = $model;
     }
-
 }

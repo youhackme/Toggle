@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Plugin
- * @package App\Models
+ * Class Plugin.
  */
 class Plugin extends Model
 {
-
     /**
      * @var string
      */
     protected $table = 'plugins';
-
 
     /**
      * The attributes that are mass assignable.
@@ -34,7 +31,6 @@ class Plugin extends Model
         'downloadlink',
 
     ];
-
 
     /**
      * @param $value
@@ -67,6 +63,4 @@ class Plugin extends Model
     {
         $this->attributes['previewlink'] = trim(strtolower($value));
     }
-
-
 }

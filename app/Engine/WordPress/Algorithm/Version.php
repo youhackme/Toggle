@@ -3,15 +3,13 @@
  * Created by PhpStorm.
  * User: Hyder
  * Date: 12/04/2017
- * Time: 19:56
+ * Time: 19:56.
  */
 
 namespace App\Engine\WordPress\Algorithm;
 
-
 class Version
 {
-
     //Algorithm for finding WordPress version
     // 1. https://darktips.com/wp-links-opml.php
     // 2. wp-includes/wlwmanifest.xml
