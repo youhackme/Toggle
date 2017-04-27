@@ -86,7 +86,7 @@ abstract class WordPressAbstract
     /**
      * Set plugin name.
      *
-     * @param      $name
+     * @param      string $name
      * @param null $description
      */
     public function setPlugin($name, $description = null)
@@ -113,7 +113,7 @@ abstract class WordPressAbstract
     /**
      * Set theme name.
      *
-     * @param      $name
+     * @param      string $name
      * @param null $description
      */
     public function setTheme($name, $description = null)
@@ -141,7 +141,7 @@ abstract class WordPressAbstract
      * Assert this site is using WordPress.
      *
      * @param      $tag
-     * @param null $description
+     * @param string $description
      */
     public function assertWordPress($tag, $description = null)
     {
@@ -195,8 +195,8 @@ abstract class WordPressAbstract
     /**
      * Set WordPress screenshot.
      *
-     * @param $themealias
-     * @param $screenshot
+     * @param string $themealias
+     * @param string $screenshot
      */
     public function setScreenshot($themealias, $screenshot)
     {

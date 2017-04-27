@@ -51,7 +51,7 @@ class SiteAnatomy
     /**
      * Get the raw HTML.
      *
-     * @return null|object
+     * @return string
      */
     private function getHtml()
     {
