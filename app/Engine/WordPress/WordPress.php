@@ -9,6 +9,7 @@ namespace App\Engine\WordPress;
  * Time: 22:16
  */
 use App\Engine\SiteAnatomy;
+use Bugsnag\Report;
 
 /**
  * Handle the algorithm to detect if a site is using WordPress
@@ -137,7 +138,7 @@ class WordPress
 
             if (count($themeAlias) > 1) {
 
-                \Bugsnag::notifyError('Anomaly', "More than one theme detected", function ($report) use ($themeAlias) {
+                \Bugsnag::notifyError('Anomaly', "More than one theme detected", function (Report $report) use ($themeAlias) {
                     $report->setSeverity('info');
                     $report->setMetaData([
                         'themes' => $themeAlias,
