@@ -50,7 +50,7 @@ class Screenshot extends WordPressAbstract
             foreach ($themeAliases as $themeAlias) {
                 foreach ($allowedScreenshotExtension as $extension) {
                     $screenshotUrl = $host . '/wp-content/themes/' . $themeAlias . '/screenshot' . $extension;
-                    if ($this->UrlExist($screenshotUrl) == 200) {
+                    if ($this->urlExist($screenshotUrl) == 200) {
                         $this->setScreenshot($themeAlias, $screenshotUrl);
                         break;
                     }
@@ -69,7 +69,7 @@ class Screenshot extends WordPressAbstract
      *
      * @return mixed
      */
-    public function UrlExist($screenshotUrl)
+    public function urlExist($screenshotUrl)
     {
 
         $goutteClient = \App::make('goutte');
