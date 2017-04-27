@@ -23,7 +23,7 @@ class ThemeRepository extends DbScrapeRepositoryAbstract implements ScrapeReposi
     /**
      * @param $model
      */
-    function __construct(ThemeModel $model)
+    public function __construct(ThemeModel $model)
     {
         $this->model = $model;
     }
