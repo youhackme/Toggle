@@ -10,7 +10,6 @@ namespace App\Engine\WordPress\Algorithm;
 
 use App\Engine\WordPress\WordPressAbstract;
 use App\Engine\SiteAnatomy;
-use GuzzleHttp\Promise;
 
 
 class Screenshot extends WordPressAbstract
