@@ -42,7 +42,7 @@ class GoutteServiceProvider extends ServiceProvider
             $goutteClient = new GoutteClient();
             $goutteClient->setClient($guzzleClient);
 
-            return  $goutteClient;
+            return $goutteClient;
         });
     }
 

@@ -30,7 +30,7 @@ class SiteAnatomy
 
     public function __construct($site)
     {
-        $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://'.$site;
+        $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
         $this->goutteClient = App::make('goutte');
 
@@ -130,7 +130,7 @@ class SiteAnatomy
         $scripts = [];
         $this->crawler->filterXpath('//script')
                       ->each(function (Crawler $script) use (&$scripts) {
-                          if (!is_null($script->attr('src'))) {
+                          if ( ! is_null($script->attr('src'))) {
                               $scripts[] = $script->attr('src');
                           }
                       });
@@ -160,8 +160,8 @@ class SiteAnatomy
         $cssClasses = [];
         $this->crawler->filterXpath('//*[@class]')
                       ->each(function (Crawler $cssClass) use (&$cssClasses) {
-                          $classes = trim($cssClass->attr('class'));
-                          $classes = explode(' ', $classes);
+                          $classes      = trim($cssClass->attr('class'));
+                          $classes      = explode(' ', $classes);
                           $cssClasses[] = $classes;
                       });
 
@@ -216,18 +216,18 @@ class SiteAnatomy
      */
     private function result()
     {
-        $this->styles = $this->getStyleSheets();
-        $this->scripts = $this->getScripts();
-        $this->metas = $this->metatags();
-        $this->headers = $this->getHeaders();
-        $this->cookies = $this->getCookies();
-        $this->comments = $this->getHtmlComments();
-        $this->status = $this->getStatus();
-        $this->css = [
+        $this->styles     = $this->getStyleSheets();
+        $this->scripts    = $this->getScripts();
+        $this->metas      = $this->metatags();
+        $this->headers    = $this->getHeaders();
+        $this->cookies    = $this->getCookies();
+        $this->comments   = $this->getHtmlComments();
+        $this->status     = $this->getStatus();
+        $this->css        = [
             'classes' => $this->getCssClasses(),
             'ids'     => $this->getCssIds(),
         ];
         $this->innerlinks = $this->getInnnerLinks();
-        $this->html = $this->getHtml();
+        $this->html       = $this->getHtml();
     }
 }

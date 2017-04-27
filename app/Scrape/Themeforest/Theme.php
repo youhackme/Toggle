@@ -37,7 +37,7 @@ class Theme implements ScraperInterface
 
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme = $theme;
+        $this->theme        = $theme;
         $this->goutteClient = \App::make('goutte');
     }
 
@@ -48,7 +48,7 @@ class Theme implements ScraperInterface
      */
     public function scrape($page = 1)
     {
-        $pageToCrawl = 'https://themeforest.net/category/wordpress?page='.$page.'&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
+        $pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
         echo "Scraping page: $pageToCrawl";
         echo br();
 
@@ -60,7 +60,7 @@ class Theme implements ScraperInterface
         $theme = [];
 
         $theme['provider'] = 'themeforest.net';
-        $theme['type'] = 'premium';
+        $theme['type']     = 'premium';
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
                       ->each(function (Crawler $themelist) use (
@@ -77,13 +77,13 @@ class Theme implements ScraperInterface
                           $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
 
                           // Click on each theme name and go to their theme page details
-                          if (!empty(trim($theme['name']))) {
+                          if ( ! empty(trim($theme['name']))) {
                               try {
                                   $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
                                   // Navigate to the theme full page
                                   $crawlerThemefullPage = $this->goutteClient->request(
                                       'GET',
-                                      'https://'.$theme['provider'].$themeFullPageUrl
+                                      'https://' . $theme['provider'] . $themeFullPageUrl
                                   );
 
                                   // Then, click on the Preview URL
@@ -115,13 +115,13 @@ class Theme implements ScraperInterface
 
                                   $this->theme->save($theme);
                               } catch (\Exception $e) {
-                                  echo 'No preview url for theme:.'.json_encode($theme['uniqueidentifier']).br();
-                                  echo $e->getMessage().br();
+                                  echo 'No preview url for theme:.' . json_encode($theme['uniqueidentifier']) . br();
+                                  echo $e->getMessage() . br();
                                   // Save theme even if we have partial data.
                                   $this->theme->save($theme);
                               }
                           } else {
-                              echo 'No data for'.$theme['uniqueidentifier'];
+                              echo 'No data for' . $theme['uniqueidentifier'];
                           }
                           unset($theme);
                       });
@@ -135,7 +135,7 @@ class Theme implements ScraperInterface
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
                 $site = $theme->previewlink;
-                echo 'Author url: '.$site;
+                echo 'Author url: ' . $site;
                 echo br();
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
                 $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
@@ -171,7 +171,7 @@ class Theme implements ScraperInterface
             return $previewLink;
         }
         // Do you have at least one iframe?
-        if (!empty($crawlerAuthorUrl->filter('iframe')->count())) {
+        if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
 
             // Get the theme url hosted by the author
             $crawlerAuthorUrl->filter('iframe')
@@ -188,9 +188,9 @@ class Theme implements ScraperInterface
                                      'soundcloud',
                                      'mixcloud',
                                  ];
-                                 $iframeUrl = $iframe->attr('src');
+                                 $iframeUrl       = $iframe->attr('src');
 
-                                 if (!str_contains($iframeUrl, $iframeBlacklist)) {
+                                 if ( ! str_contains($iframeUrl, $iframeBlacklist)) {
                                      $previewLink = $iframeUrl;
                                  }
                              });
