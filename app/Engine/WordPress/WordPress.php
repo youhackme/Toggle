@@ -138,13 +138,14 @@ class WordPress
 
             if (count($themeAlias) > 1) {
 
-                \Bugsnag::notifyError('Anomaly', "More than one theme detected", function (Report $report) use ($themeAlias) {
-                    $report->setSeverity('info');
-                    $report->setMetaData([
-                        'themes' => $themeAlias,
-                        'other'  => json_encode($this),
-                    ]);
-                });
+                \Bugsnag::notifyError('Anomaly', "More than one theme detected",
+                    function (Report $report) use ($themeAlias) {
+                        $report->setSeverity('info');
+                        $report->setMetaData([
+                            'themes' => $themeAlias,
+                            'other'  => json_encode($this),
+                        ]);
+                    });
 
                 foreach ($themeAlias as $alias => $rubbish) {
                     return $alias;
@@ -165,7 +166,7 @@ class WordPress
      */
     private function version()
     {
-        //@Todo: If more than one different version is found, then something is wrong. Send to bugsnag.
+        // If more than one different version is found, then something is wrong. Send to bugsnag.
         return false;
     }
 
@@ -175,7 +176,7 @@ class WordPress
      */
     private function screenshot()
     {
-        //@Todo: More than one url found? Not normal. Send to bugsnag for further analysis.
+        // More than one url found? Not normal. Send to bugsnag for further analysis.
         return array_unique(array_collapse($this->screenshot));
     }
 
