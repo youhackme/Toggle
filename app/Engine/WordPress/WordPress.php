@@ -2,7 +2,7 @@
 
 namespace App\Engine\WordPress;
 
-/**
+/*
  * Created by PhpStorm.
  * User: Hyder
  * Date: 03/04/2017
@@ -12,51 +12,55 @@ use App\Engine\SiteAnatomy;
 use Bugsnag\Report;
 
 /**
- * Handle the algorithm to detect if a site is using WordPress
- * @package App\Engine\WordPress
+ * Handle the algorithm to detect if a site is using WordPress.
  */
 class WordPress
 {
-
-
     /**
-     * An instance of Site Anatomy
+     * An instance of Site Anatomy.
+     *
      * @var
      */
     public $siteAnatomy;
 
     /**
      * Are you WordPress?!
+     *
      * @var
      */
     private $isWordPress;
 
     /**
-     * Attempt to detect WordPress version
+     * Attempt to detect WordPress version.
+     *
      * @var
      */
     private $version;
 
     /**
-     * Attempt to detect Theme screenshot
+     * Attempt to detect Theme screenshot.
+     *
      * @var
      */
     private $screenshot;
 
     /**
-     * Attempt to make a unique list of plugins out of those algos
+     * Attempt to make a unique list of plugins out of those algos.
+     *
      * @var
      */
     private $plugins;
 
     /**
-     * Attempt to determine the correct theme name out of those algos
+     * Attempt to determine the correct theme name out of those algos.
+     *
      * @var
      */
     private $theme;
 
     /**
-     * The order each algorithm should be checked
+     * The order each algorithm should be checked.
+     *
      * @var array
      */
     protected $algorithms = [
@@ -69,7 +73,6 @@ class WordPress
 
     ];
 
-
     /**
      * WordPress constructor.
      *
@@ -77,38 +80,35 @@ class WordPress
      */
     public function __construct(SiteAnatomy $siteAnatomy)
     {
-
         $this->siteAnatomy = $siteAnatomy;
         $this->detect();
-
     }
 
     /**
-     * Detect CMS based on each algorithm
+     * Detect CMS based on each algorithm.
+     *
      * @return array
      */
     public function detect()
     {
-
         foreach ($this->algorithms as $algorithm) {
-            $wordPress           = (new $algorithm)->check($this->siteAnatomy);
+            $wordPress = (new $algorithm())->check($this->siteAnatomy);
             $this->isWordPress[] = $wordPress->getWordPressAssertions();
-            $this->theme[]       = $wordPress->getTheme();
-            $this->plugins[]     = $wordPress->getPlugin();
-            $this->screenshot[]  = $wordPress->getScreenshot();
-            $this->version[]     = $wordPress->getVersion();
+            $this->theme[] = $wordPress->getTheme();
+            $this->plugins[] = $wordPress->getPlugin();
+            $this->screenshot[] = $wordPress->getScreenshot();
+            $this->version[] = $wordPress->getVersion();
         }
-
     }
 
     /**
      * Are you WordPress? You have the last word!
+     *
      * @return bool
      */
     public function isWordPress()
     {
-
-        if ( ! empty(array_collapse($this->isWordPress))) {
+        if (!empty(array_collapse($this->isWordPress))) {
             return true;
         }
 
@@ -117,7 +117,8 @@ class WordPress
     }
 
     /**
-     * Get the list of plugins being used, again, you have the last Word
+     * Get the list of plugins being used, again, you have the last Word.
+     *
      * @return array
      */
     private function plugins()
@@ -129,16 +130,15 @@ class WordPress
 
     /**
      * Get the theme name, you have the last word, duh.
+     *
      * @return array|bool|int|string
      */
     private function theme()
     {
         $themeAlias = array_collapse($this->theme);
-        if ( ! empty($themeAlias)) {
-
+        if (!empty($themeAlias)) {
             if (count($themeAlias) > 1) {
-
-                \Bugsnag::notifyError('Anomaly', "More than one theme detected",
+                \Bugsnag::notifyError('Anomaly', 'More than one theme detected',
                     function (Report $report) use ($themeAlias) {
                         $report->setSeverity('info');
                         $report->setMetaData([
@@ -161,7 +161,8 @@ class WordPress
     }
 
     /**
-     * Tell us the real WordPress version
+     * Tell us the real WordPress version.
+     *
      * @return bool
      */
     private function version()
@@ -171,7 +172,8 @@ class WordPress
     }
 
     /**
-     * Give us the theme's screeeshot path
+     * Give us the theme's screeeshot path.
+     *
      * @return bool
      */
     private function screenshot()
@@ -181,7 +183,8 @@ class WordPress
     }
 
     /**
-     * Reveal the WordPress Bold N Nuts
+     * Reveal the WordPress Bold N Nuts.
+     *
      * @return string
      */
     public function details()
@@ -194,5 +197,4 @@ class WordPress
             'screenshot' => $this->screenshot(),
         ]);
     }
-
 }

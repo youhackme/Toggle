@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Repositories\Theme\ThemeRepository;
+use Illuminate\Console\Command;
 
 class DetectWordPress extends Command
 {
@@ -22,7 +22,8 @@ class DetectWordPress extends Command
     protected $description = 'detect theme Alias for existing saved data';
 
     /**
-     * An instance of Theme Repository
+     * An instance of Theme Repository.
+     *
      * @var ThemeRepository
      */
     protected $theme;
@@ -45,7 +46,7 @@ class DetectWordPress extends Command
      */
     public function handle()
     {
-        $this->info("Extracting theme Alias");
+        $this->info('Extracting theme Alias');
         (new \App\Http\Controllers\ThemeController($this->theme))->scrapeThemeAlias();
     }
 }

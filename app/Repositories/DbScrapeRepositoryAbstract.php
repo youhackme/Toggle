@@ -3,16 +3,15 @@
  * Created by PhpStorm.
  * User: Hyder
  * Date: 14/04/2017
- * Time: 22:21
+ * Time: 22:21.
  */
 
 namespace App\Repositories;
 
-
 abstract class DbScrapeRepositoryAbstract
 {
     /**
-     * Eloquent model
+     * Eloquent model.
      */
     protected $model;
 
@@ -24,7 +23,6 @@ abstract class DbScrapeRepositoryAbstract
         $this->model = $model;
     }
 
-
     /**
      * Do you exists already in our database?
      *
@@ -34,13 +32,13 @@ abstract class DbScrapeRepositoryAbstract
      */
     public function exist($externalIdentifier)
     {
-        if ( ! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
-            echo "[" . getMemUsage() . "]$externalIdentifier is new.";
+        if (!$this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
+            echo '['.getMemUsage()."]$externalIdentifier is new.";
             echo br();
 
             return true;
         } else {
-            echo "[" . getMemUsage() . "]$externalIdentifier has already been scrapped.";
+            echo '['.getMemUsage()."]$externalIdentifier has already been scrapped.";
             echo br();
 
             return false;
@@ -48,7 +46,7 @@ abstract class DbScrapeRepositoryAbstract
     }
 
     /**
-     * Save data only if it is new
+     * Save data only if it is new.
      *
      * @param array $data
      *
@@ -56,24 +54,17 @@ abstract class DbScrapeRepositoryAbstract
      */
     public function save(array $data)
     {
-
         if ($this->exist(trim($data['uniqueidentifier']))) {
-
             return $this->model->create($data);
         } else {
             return false;
         }
-
     }
 
-
-    public function chunk($chunk = 10, callable $callback)
+    public function chunk($chunk, callable $callback)
     {
-
         return $this->model->where('status', 'unprocessed')
                            ->where('previewlink', '!=', '')
                            ->chunk($chunk, $callback);
-
     }
 }
-

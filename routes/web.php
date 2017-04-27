@@ -11,36 +11,30 @@
 |
 */
 
+ini_set('max_execution_time', 0);
+Route::get('/', function () {
+    return view('welcome');
+});
 
-ini_set( 'max_execution_time', 0 );
-Route::get( '/', function () {
-	return view( 'welcome' );
-} );
-
-
-/**
+/*
  * Scrape plugins from different providers
  */
-Route::get( '/scrape/tf/plugin/page/{page}', 'PluginController@scrapeThemeForest' );
-Route::get( '/scrape/wp/plugin', 'PluginController@scrapeWordPress' );
+Route::get('/scrape/tf/plugin/page/{page}', 'PluginController@scrapeThemeForest');
+Route::get('/scrape/wp/plugin', 'PluginController@scrapeWordPress');
 
-/**
+/*
  * Scrape themes from different providers
  */
-Route::get( '/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest' );
-Route::get( '/scrape/wp/theme', 'ThemeController@scrapeWordPress' );
+Route::get('/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest');
+Route::get('/scrape/wp/theme', 'ThemeController@scrapeWordPress');
 
-/**
+/*
  * Scrape theme alias from different providers
  */
-Route::get( '/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias' );
+Route::get('/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias');
 
-
-/**
+/*
  * Scrape themes from different providers
  */
-Route::get( '/site/{site}', 'SiteController@detect' )
-	->where('site', '(.*)');
-
-
-
+Route::get('/site/{site}', 'SiteController@detect')
+    ->where('site', '(.*)');
