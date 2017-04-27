@@ -86,12 +86,12 @@ abstract class WordPressAbstract
     /**
      * Set plugin name.
      *
-     * @param      string $name
-     * @param null $description
+     * @param string $name
+     * @param null   $description
      */
     public function setPlugin($name, $description = null)
     {
-        if ( ! is_null($name) || ! empty($name)) {
+        if (!is_null($name) || !empty($name)) {
             $this->plugins[$name] = [
                 'description' => $description,
             ];
@@ -113,12 +113,12 @@ abstract class WordPressAbstract
     /**
      * Set theme name.
      *
-     * @param      string $name
-     * @param null $description
+     * @param string $name
+     * @param null   $description
      */
     public function setTheme($name, $description = null)
     {
-        if ( ! is_null($name) || ! empty($name)) {
+        if (!is_null($name) || !empty($name)) {
             $this->themes[$name] = [
                 'description' => $description,
             ];
@@ -140,12 +140,12 @@ abstract class WordPressAbstract
     /**
      * Assert this site is using WordPress.
      *
-     * @param      $tag
+     * @param        $tag
      * @param string $description
      */
     public function assertWordPress($tag, $description = null)
     {
-        if ( ! is_null($tag) || ! empty($tag)) {
+        if (!is_null($tag) || !empty($tag)) {
             $this->assertWordPress[$tag] = [
                 'description' => $description,
             ];
