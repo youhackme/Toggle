@@ -34,8 +34,8 @@ class Robot extends WordPressAbstract
      */
     public function check(SiteAnatomy $siteAnatomy)
     {
-        $this->siteAnatomy = $siteAnatomy;
-        $host = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
+        $this->siteAnatomy     = $siteAnatomy;
+        $host                  = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
         $this->pathToRobotsTxt = "http://$host/robots.txt";
         $this->checkWordPressFootprints($this->getRobotsTxtContent());
 
