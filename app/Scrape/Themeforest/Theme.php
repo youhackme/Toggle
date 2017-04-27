@@ -4,6 +4,7 @@ namespace App\Scrape\Themeforest;
 
 use App\Repositories\Theme\ThemeRepository;
 use App\Scrape\ScraperInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Created by PhpStorm.
@@ -66,7 +67,8 @@ class Theme implements ScraperInterface
         $theme['type']     = 'premium';
 
 
-        $this->crawler->filter('li.js-google-analytics__list-event-container')->each(function ($themelist) use (
+        $this->crawler->filter('li.js-google-analytics__list-event-container')
+                      ->each(function (Crawler $themelist) use (
             &
             $theme
         ) {
@@ -199,7 +201,8 @@ class Theme implements ScraperInterface
         if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
 
             // Get the theme url hosted by the author
-            $crawlerAuthorUrl->filter('iframe')->each(function ($iframe) use (&$previewLink) {
+            $crawlerAuthorUrl->filter('iframe')
+                             ->each(function (Crawler $iframe) use (&$previewLink) {
                 //Extract iframes only if you do not contain any of these words
                 $iframeBlacklist = [
                     'vimeo',
