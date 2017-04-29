@@ -37,7 +37,7 @@ class Plugin extends WordPressAbstract
     public function getPluginFromHtml()
     {
         if (preg_match_all('/\/wp-content\/plugins\/(.+?)\//i', $this->siteAnatomy->html, $matches)) {
-            if ( ! empty($matches[1])) {
+            if (!empty($matches[1])) {
                 $plugins = array_unique($matches[1]);
                 foreach ($plugins as $plugin) {
                     $this->setPlugin($plugin, 'Detected from html source code');
