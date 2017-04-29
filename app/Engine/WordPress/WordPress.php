@@ -178,7 +178,6 @@ class WordPress
      */
     private function screenshot()
     {
-        // More than one url found? Not normal. Send to bugsnag for further analysis.
         return array_unique(array_collapse($this->screenshot));
     }
 

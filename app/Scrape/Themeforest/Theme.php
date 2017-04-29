@@ -138,14 +138,17 @@ class Theme implements ScraperInterface
                 echo 'Author url: ' . $site;
                 echo br();
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
-                $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
+                if ( ! $siteAnatomy->errors()) {
+                    $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 
-                if ($application->isWordPress()) {
-                    echo $application->details();
-                } else {
-                    echo 'Sadly, you are not using WordPress';
+                    if ($application->isWordPress()) {
+                        echo $application->details();
+                    } else {
+                        echo 'Sadly, you are not using WordPress';
+                    }
+                    echo br();
                 }
-                echo br();
+
             }
         });
     }
