@@ -130,7 +130,7 @@ class SiteAnatomy
         $scripts = [];
         $this->crawler->filterXpath('//script')
                       ->each(function (Crawler $script) use (&$scripts) {
-                          if ( ! is_null($script->attr('src'))) {
+                          if (! is_null($script->attr('src'))) {
                               $scripts[] = $script->attr('src');
                           }
                       });

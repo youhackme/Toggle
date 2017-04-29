@@ -36,7 +36,7 @@ class Theme extends WordPressAbstract
     public function getThemeAlias()
     {
         if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $this->siteAnatomy->html, $matches)) {
-            if ( ! empty($matches[1])) {
+            if (! empty($matches[1])) {
                 $templates = array_unique($matches[1]);
                 foreach ($templates as $template) {
                     $this->setTheme($template);
