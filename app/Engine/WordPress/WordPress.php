@@ -178,7 +178,7 @@ class WordPress
      */
     private function screenshot()
     {
-        return array_unique(array_collapse($this->screenshot));
+        return array_collapse($this->screenshot);
     }
 
     /**
