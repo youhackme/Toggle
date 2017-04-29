@@ -40,7 +40,7 @@ class Plugin extends WordPressAbstract
             if ( ! empty($matches[1])) {
                 $plugins = array_unique($matches[1]);
                 foreach ($plugins as $plugin) {
-                    $this->setPlugin($plugin, 'Detected from html souce code');
+                    $this->setPlugin($plugin, 'Detected from html source code');
                 }
             }
         }
