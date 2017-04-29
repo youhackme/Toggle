@@ -27,6 +27,7 @@ class SiteAnatomy
     public $css;
     public $innerlinks;
     public $html;
+    public $errors = [];
 
     public function __construct($site)
     {
@@ -41,12 +42,23 @@ class SiteAnatomy
             );
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             echo $e->getMessage();
+            $this->errors[] = $e->getMessage();
 
-            return;
         }
 
         $this->result();
     }
+
+
+    /**
+     * Read any errors found
+     *
+     */
+    public function errors()
+    {
+        return $this->errors;
+    }
+
 
     /**
      * Get the raw HTML.
@@ -216,18 +228,21 @@ class SiteAnatomy
      */
     private function result()
     {
-        $this->styles     = $this->getStyleSheets();
-        $this->scripts    = $this->getScripts();
-        $this->metas      = $this->metatags();
-        $this->headers    = $this->getHeaders();
-        $this->cookies    = $this->getCookies();
-        $this->comments   = $this->getHtmlComments();
-        $this->status     = $this->getStatus();
-        $this->css        = [
-            'classes' => $this->getCssClasses(),
-            'ids'     => $this->getCssIds(),
-        ];
-        $this->innerlinks = $this->getInnnerLinks();
-        $this->html       = $this->getHtml();
+        if ( ! ($this->errors())) {
+            $this->styles     = $this->getStyleSheets();
+            $this->scripts    = $this->getScripts();
+            $this->metas      = $this->metatags();
+            $this->headers    = $this->getHeaders();
+            $this->cookies    = $this->getCookies();
+            $this->comments   = $this->getHtmlComments();
+            $this->status     = $this->getStatus();
+            $this->css        = [
+                'classes' => $this->getCssClasses(),
+                'ids'     => $this->getCssIds(),
+            ];
+            $this->innerlinks = $this->getInnnerLinks();
+            $this->html       = $this->getHtml();
+        }
+
     }
 }
