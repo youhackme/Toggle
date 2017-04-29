@@ -37,7 +37,7 @@ class Theme implements ScraperInterface
 
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme        = $theme;
+        $this->theme = $theme;
         $this->goutteClient = \App::make('goutte');
     }
 
@@ -59,10 +59,10 @@ class Theme implements ScraperInterface
                           $theme['name'] = $themeName->text();
 
                           $theme['uniqueidentifier'] = $theme['name'];
-                          $url                       = 'https://wordpress.org/themes/' . $theme['name'];
-                          $theme['downloadLink']     = $url;
-                          $theme['PreviewLink']      = $url;
-                          $crawlerThemefullPage      = $this->goutteClient->request(
+                          $url = 'https://wordpress.org/themes/'.$theme['name'];
+                          $theme['downloadLink'] = $url;
+                          $theme['PreviewLink'] = $url;
+                          $crawlerThemefullPage = $this->goutteClient->request(
                               'GET',
                               $url
                           );
@@ -70,7 +70,7 @@ class Theme implements ScraperInterface
                           $responseStatus = $this->goutteClient->getResponse()->getStatus();
                           if ($responseStatus == 200) {
                               $theme['provider'] = 'wordpress.org';
-                              $theme['type']     = 'free';
+                              $theme['type'] = 'free';
 
                               // Get the Preview URL
                               $crawlerThemefullPage->filter('.theme-wrap')
