@@ -200,6 +200,19 @@ abstract class WordPressAbstract
      */
     public function setScreenshot($themealias, $screenshot)
     {
-        $this->screenshot[$themealias] = $screenshot;
+        $this->screenshot[$themealias]['url'] = $screenshot;
+
+        $goutteClient = \App::make('goutte');
+
+        $goutteClient->request(
+            'GET',
+            $screenshot
+        );
+
+        $imageContent = $goutteClient->getResponse()->getContent();
+
+        $this->screenshot[$themealias]['hash'] = md5($imageContent);
     }
+
+
 }
