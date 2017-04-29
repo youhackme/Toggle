@@ -91,7 +91,7 @@ abstract class WordPressAbstract
      */
     public function setPlugin($name, $description = null)
     {
-        if ( ! is_null($name) || ! empty($name)) {
+        if (!is_null($name) || !empty($name)) {
             $this->plugins[$name] = [
                 'description' => $description,
             ];
@@ -118,7 +118,7 @@ abstract class WordPressAbstract
      */
     public function setTheme($name, $description = null)
     {
-        if ( ! is_null($name) || ! empty($name)) {
+        if (!is_null($name) || !empty($name)) {
             $this->themes[$name] = [
                 'description' => $description,
             ];
@@ -145,7 +145,7 @@ abstract class WordPressAbstract
      */
     public function assertWordPress($tag, $description = null)
     {
-        if ( ! is_null($tag) || ! empty($tag)) {
+        if (!is_null($tag) || !empty($tag)) {
             $this->assertWordPress[$tag] = [
                 'description' => $description,
             ];
