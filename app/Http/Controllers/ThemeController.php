@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Theme\ThemeMetaRepository;
 use App\Repositories\Theme\ThemeRepository;
 
 /**
@@ -16,23 +17,29 @@ class ThemeController extends Controller
      */
     protected $theme;
 
+    protected $themeMeta;
+
+
     /**
      * ThemeController constructor.
      *
-     * @param ThemeRepository $theme
+     * @param ThemeRepository     $theme
+     * @param ThemeMetaRepository $themeMeta
      */
-    public function __construct(ThemeRepository $theme)
+    public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta = null)
     {
-        $this->theme = $theme;
+        $this->theme     = $theme;
+        $this->themeMeta = $themeMeta;
     }
 
     /**
-     * Scrape theme from Themeforest.
+     * ThemeMeta theme from Themeforest.
      *
      * @param int $page
      */
-    public function scrapeThemeForest($page = 1)
-    {
+    public function scrapeThemeForest(
+        $page = 1
+    ) {
         $pages = explode('-', $page);
 
         foreach (range($pages[0], $pages[1]) as $page) {
@@ -41,7 +48,7 @@ class ThemeController extends Controller
     }
 
     /**
-     * Scrape WordPress theme.
+     * ThemeMeta WordPress theme.
      */
     public function scrapeWordPress()
     {
@@ -49,10 +56,11 @@ class ThemeController extends Controller
     }
 
     /**
-     * Scrape Theme Alias.
+     * ThemeMeta Theme Alias.
      */
-    public function scrapeThemeAlias()
+    public function scrapeThemeMeta()
     {
-        (new \App\Scrape\Themeforest\Theme($this->theme))->extractThemeAlias();
+        //(new \App\ThemeMeta\Themeforest\Theme($this->theme))->extractThemeAlias();
+        (new \App\Scrape\ThemeMeta($this->theme, $this->themeMeta))->themeforest();
     }
 }
