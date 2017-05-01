@@ -20,8 +20,8 @@ class CreateThememeta extends Migration
             $table->string('slug', 200);
             $table->string('screenshotExternalUrl', 200);
             $table->string('screenshotHash', 32);
-            $table->string('authorname', 50);
-            $table->string('authorurl', 200);
+            $table->string('authorname', 50)->nullable();
+            $table->string('authorurl', 200)->nullable();
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
