@@ -40,19 +40,21 @@ class Screenshot extends WordPressAbstract
      */
     public function findScreenshot()
     {
-        $host                       = $this->siteAnatomy->crawler->getBaseHref();
         $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
-        if (preg_match_all('/wp-content\/themes\/([\w]+)\//im', $this->siteAnatomy->html, $themeAliases)) {
-            $themeAliases = array_unique($themeAliases[1]);
-            foreach ($themeAliases as $themeAlias) {
-                foreach ($allowedScreenshotExtension as $extension) {
-                    $screenshotUrl = $host . '/wp-content/themes/' . $themeAlias . '/screenshot' . $extension;
-                    if ($this->urlExist($screenshotUrl) == 200) {
-                        $this->setScreenshot($themeAlias, $screenshotUrl);
-                        break;
-                    }
+        $regex                      = '/href=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_]+))\/(?:.+?)(?:[\'|"])/im';
+        if (preg_match($regex, $this->siteAnatomy->html, $themeAliases)) {
+
+            $pathToTheme = $themeAliases[1];
+            $themeAlias  = $themeAliases[2];
+            
+            foreach ($allowedScreenshotExtension as $extension) {
+                $screenshotUrl = $pathToTheme . '/screenshot' . $extension;
+                if ($this->urlExist($screenshotUrl) == 200) {
+                    $this->setScreenshot($themeAlias, $screenshotUrl);
+                    break;
                 }
             }
+
         }
     }
 
