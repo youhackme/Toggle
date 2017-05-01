@@ -61,10 +61,31 @@ abstract class DbScrapeRepositoryAbstract
         }
     }
 
+    /**
+     * @param          $chunk
+     * @param callable $callback
+     *
+     * @return mixed
+     */
     public function chunk($chunk, callable $callback)
     {
         return $this->model->where('status', 'unprocessed')
                            ->where('previewlink', '!=', '')
                            ->chunk($chunk, $callback);
+    }
+
+    /**
+     * Update status
+     *
+     * @param $id     The primary key of the theme or plugin
+     * @param $status The status to update
+     *
+     * @return mixed
+     */
+    public function update($id, $status)
+    {
+        return $this->model->where('id', $id)
+                           ->update(['status' => $status]);
+
     }
 }
