@@ -41,7 +41,7 @@ class Screenshot extends WordPressAbstract
     public function findScreenshot()
     {
         $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
-        $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_]+))\/(?:.+?)(?:[\'|"])/im';
+        $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
         if (preg_match($regex, $this->siteAnatomy->html, $themeAliases)) {
 
 
