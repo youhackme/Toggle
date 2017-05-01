@@ -25,4 +25,17 @@ class ThemeMetaRepository
     {
         $this->model = $model;
     }
+
+
+    /**
+     * Save data only if it is new.
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function save(array $data)
+    {
+        return $this->model->create($data);
+    }
 }
