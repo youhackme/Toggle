@@ -44,4 +44,9 @@ class Theme extends WordPressAbstract
             }
         }
     }
+
+    //@TOOD
+    // If a theme is using a plugin such as W3 total cache, it is not possible to determine theme slug
+    // based on html source code, but possible from external style sheet.
+    // e.g http://shopkeeper.getbowtied1.netdna-cdn.com/wp-content/plugins/bwp-minify/cache/minify-b1-woocommerce-layout-696fe48193d4d3919c2d43401e665f18.css?ver=1493635800
 }

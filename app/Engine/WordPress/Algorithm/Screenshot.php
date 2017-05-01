@@ -41,7 +41,7 @@ class Screenshot extends WordPressAbstract
     public function findScreenshot()
     {
         $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
-        $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_]+))\/(?:.+?)(?:[\'|"])/im';
+        $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
         if (preg_match($regex, $this->siteAnatomy->html, $themeAliases)) {
 
 
@@ -69,11 +69,17 @@ class Screenshot extends WordPressAbstract
     public function urlExist($screenshotUrl)
     {
         $goutteClient = \App::make('goutte');
-        $goutteClient->request(
-            'GET',
-            $screenshotUrl
-        );
+        try {
+            $goutteClient->request('GET', $screenshotUrl);
 
-        return $goutteClient->getResponse()->getStatus();
+            return $goutteClient->getResponse()->getStatus();
+
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+
+            echo $e->getMessage();
+
+            return false;
+        }
+
     }
 }
