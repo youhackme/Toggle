@@ -39,9 +39,14 @@ class ThemeMeta
     {
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
+
                 $site = $theme->previewlink;
                 echo 'Author url: ' . $site;
                 echo br();
+
+                $data['themeid'] = $theme->id;
+
+
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
                 if ( ! $siteAnatomy->errors()) {
                     $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
@@ -49,11 +54,18 @@ class ThemeMeta
                     if ($application->isWordPress()) {
                         $result = \GuzzleHttp\json_decode($application->details());
                         foreach ($result->screenshot as $slug => $theme) {
-                            echo $slug;
+                            echo $data['slug'] = $slug;
                             echo br();
-                            echo $theme->url;
-                            $fileName = $slug . '_' . $theme->hash;
-                            $this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl);
+                            $fileName                      = $slug . '_' . $theme->hash;
+                            $data['screenshotExternalUrl'] = $fileName;
+                            $data['screenshotHash']        = $theme->hash;
+                            if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
+
+                                $this->theme->update($data['themeid'], 'detected');
+                                $this->themeMeta->save($data);
+                                // Update table theme
+                                // Add record to theme Alias
+                            }
                             echo br();
                             echo $theme->hash;
                         }
@@ -62,17 +74,21 @@ class ThemeMeta
                         echo 'Sadly, you are not using WordPress';
                     }
                     echo br();
-                    exit();
+
                 }
 
             }
         });
     }
 
+
     /**
      * Save Theme screenshot to FileSystem
-     * @param $fileName The file name
+     *
+     * @param $fileName      The file name
      * @param $screenshotUrl The screenshot url
+     *
+     * @return bool
      */
     public function saveScreenshotToFileSystem($fileName, $screenshotUrl)
     {
@@ -88,8 +104,18 @@ class ThemeMeta
         $filePath    = $storagePath . $fileName;
 
         if ( ! File::exists($filePath)) {
-            Storage::put($fileName, $imageBinary);
+            if (Storage::put($fileName, $imageBinary)) {
+                echo "Screenshot $fileName saved successfully";
+
+                return true;
+            } else {
+                echo 'Could not save screenshot:' . $fileName;
+
+                return false;
+            }
         }
+
+        return false;
 
     }
 
