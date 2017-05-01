@@ -126,33 +126,7 @@ class Theme implements ScraperInterface
                           unset($theme);
                       });
     }
-
-    /**
-     * Extract theme Alias based on the theme Url.
-     */
-    public function extractThemeAlias()
-    {
-        $this->theme->chunk(10, function ($themes) {
-            foreach ($themes as $theme) {
-                $site = $theme->previewlink;
-                echo 'Author url: ' . $site;
-                echo br();
-                $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
-                if ( ! $siteAnatomy->errors()) {
-                    $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
-
-                    if ($application->isWordPress()) {
-                        echo $application->details();
-                    } else {
-                        echo 'Sadly, you are not using WordPress';
-                    }
-                    echo br();
-                }
-
-            }
-        });
-    }
-
+    qa
     /**
      * Attempt to detect the theme demo URL (The one without iframe).
      *

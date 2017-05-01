@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Repositories\Theme\ThemeRepository;
+use App\Repositories\Theme\ThemeMetaRepository;
 use Illuminate\Console\Command;
 
 class DetectWordPress extends Command
@@ -12,14 +13,14 @@ class DetectWordPress extends Command
      *
      * @var string
      */
-    protected $signature = 'detect:themealias';
+    protected $signature = 'detect:ThemeMeta';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'detect theme Alias for existing saved data';
+    protected $description = 'Fetch Theme meta data (screenshot, slug etc.) for existing saved theme';
 
     /**
      * An instance of Theme Repository.
@@ -29,14 +30,23 @@ class DetectWordPress extends Command
     protected $theme;
 
     /**
+     * An instance of ThemeMeta
+     * @var ThemeMetaRepository
+     */
+    protected $themeMeta;
+
+
+    /**
      * DetectWordPress constructor.
      *
-     * @param ThemeRepository $theme
+     * @param ThemeRepository     $theme
+     * @param ThemeMetaRepository $themeMeta
      */
-    public function __construct(ThemeRepository $theme)
+    public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta)
     {
         parent::__construct();
-        $this->theme = $theme;
+        $this->theme     = $theme;
+        $this->themeMeta = $themeMeta;
     }
 
     /**
@@ -46,7 +56,7 @@ class DetectWordPress extends Command
      */
     public function handle()
     {
-        $this->info('Extracting theme Alias');
-        (new \App\Http\Controllers\ThemeController($this->theme))->scrapeThemeAlias();
+        $this->info('Extracting theme meta data(alias, screenshot etc)');
+        (new \App\Http\Controllers\ThemeController($this->theme, $this->themeMeta))->scrapeThemeMeta();
     }
 }
