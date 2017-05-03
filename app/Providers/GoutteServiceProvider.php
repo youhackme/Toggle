@@ -29,17 +29,20 @@ class GoutteServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('goutte', function () {
+
+
+            $userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36';
+
             $guzzleClient = new GuzzleClient([
                 'timeout'         => 60,
                 'allow_redirects' => true,
                 'verify'          => 'false',
                 'headers'         => [
-                    'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-
+                    'User-Agent' => $userAgent,
                 ],
             ]);
 
-            $goutteClient = new GoutteClient();
+            $goutteClient = new GoutteClient(['HTTP_USER_AGENT' => $userAgent]);
             $goutteClient->setClient($guzzleClient);
 
             return $goutteClient;
