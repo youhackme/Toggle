@@ -40,8 +40,6 @@ class SiteAnatomy
                 'GET',
                 $url
             );
-            echo($this->goutteClient->getResponse()->getContent());
-            exit();
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             echo $e->getMessage();
             $this->errors[] = $e->getMessage();
