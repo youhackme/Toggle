@@ -36,7 +36,7 @@ class GoutteServiceProvider extends ServiceProvider
             $guzzleClient = new GuzzleClient([
                 'timeout'         => 60,
                 'allow_redirects' => true,
-                'verify'          => 'false',
+                'verify'          => false,
                 'headers'         => [
                     'User-Agent' => $userAgent,
                 ],
