@@ -48,6 +48,7 @@ class ThemeMeta
 
 
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
+
                 if ( ! $siteAnatomy->errors()) {
                     $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 

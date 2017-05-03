@@ -126,7 +126,7 @@ class Theme implements ScraperInterface
                           unset($theme);
                       });
     }
-    qa
+    
     /**
      * Attempt to detect the theme demo URL (The one without iframe).
      *
