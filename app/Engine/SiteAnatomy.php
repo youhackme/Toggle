@@ -40,6 +40,7 @@ class SiteAnatomy
                 'GET',
                 $url
             );
+
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             echo $e->getMessage();
             $this->errors[] = $e->getMessage();
@@ -123,13 +124,18 @@ class SiteAnatomy
      */
     private function getStyleSheets()
     {
-        $styleSheets = [];
+        $blacklistedDomains = ['googleapis.com'];
+        $styleSheets        = [];
         $this->crawler->filterXpath('//link[@rel="stylesheet"]')
-                      ->each(function (Crawler $styleSheet) use (&$styleSheets) {
-                          $styleSheets[] = $styleSheet->attr('href');
+                      ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
+                          $link = $styleSheet->attr('href');
+                          if ( ! str_contains($link, $blacklistedDomains)) {
+                              $styleSheets[] = $styleSheet->attr('href');
+                          }
+
                       });
 
-        return array_unique($styleSheets);
+        return array_values(array_unique($styleSheets));
     }
 
     /**

@@ -10,6 +10,7 @@ namespace App\Engine\WordPress\Algorithm;
 
 use App\Engine\SiteAnatomy;
 use App\Engine\WordPress\WordPressAbstract;
+use GuzzleHttp\Promise;
 
 class Theme extends WordPressAbstract
 {
@@ -18,31 +19,113 @@ class Theme extends WordPressAbstract
     // -- theme alias => wp-content/themes/theme-name
     // -- meta data in style sheets
 
-    public $theme;
+
     public $siteAnatomy;
 
     public function check(SiteAnatomy $siteAnatomy)
     {
         $this->siteAnatomy = $siteAnatomy;
 
-        $this->theme = $this->getThemeAlias();
+        $this->extractThemeAliasFromHtml();
+
+        $this->extractThemeAliasFromStyleSheets();
+
 
         return $this;
     }
 
     /**
-     * Attempt to extract the theme Alias.
+     * Attempt to extract the theme Alias from Html.
      */
-    public function getThemeAlias()
+    public function extractThemeAliasFromHtml()
     {
-        if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $this->siteAnatomy->html, $matches)) {
-            if ( ! empty($matches[1])) {
-                $templates = array_unique($matches[1]);
-                foreach ($templates as $template) {
-                    $this->setTheme($template);
+        $this->extractThemeAlias($this->siteAnatomy->html);
+    }
+
+
+    /**
+     * Extract Theme alias from stylesheet
+     */
+    public function extractThemeAliasFromStyleSheets()
+    {
+        $responses = $this->launchAsyncRequests();
+
+        foreach ($responses as $key => $response) {
+            $url = $this->siteAnatomy->styles[$key];
+
+            if ($response['state'] == 'fulfilled') {
+                if ($response['value']->getStatusCode() == 200) {
+                    $themes = $this->extractThemeAlias($response['value']->getBody()->getContents());
+                    foreach ($themes as $theme) {
+                        $screenshotPath = $this->buildScreenshotPath($url, $theme);
+                        $this->setTheme($theme);
+                        $this->setScreenshot($theme, $screenshotPath);
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Build screenshot path
+     *
+     * @param $url   The input url that should normally contain 'wp-content'
+     * @param $theme The theme name
+     *
+     * @return string the full path to download the screenshot.png
+     */
+    private function buildScreenshotPath($url, $theme)
+    {
+
+        if (preg_match('/((.*)\/)wp-content\//', $url, $matches)) {
+            $screenshotUrl = $matches[0] . '/themes/' . $theme . '/screenshot.png';
+
+            return $screenshotUrl;
+        }
+    }
+
+    /**
+     * Extract the theme alias bases on the content.
+     *
+     * @param $content it could be the HTML source, css sheet.
+     *
+     * @return array A list of theme found in source code, it could be the parent, child theme or framework
+     */
+    private function extractThemeAlias($content)
+    {
+        $themes = [];
+        if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $content, $matches)) {
+
+            if ( ! empty($matches[1])) {
+                $templates = array_unique($matches[1]);
+
+                foreach ($templates as $template) {
+                    $themes[] = $template;
+                }
+            }
+        }
+
+        return $themes;
+    }
+
+
+    /**
+     * Launch asynchronous requests.
+     *
+     * @param $host The host e.g toggle.me
+     *
+     * @return mixed
+     */
+    private function launchAsyncRequests()
+    {
+        $promises     = [];
+        $goutteClient = \App::make('goutte');
+
+        foreach ($this->siteAnatomy->styles as $styleSheet) {
+            $promises[] = $goutteClient->getClient()->getAsync($styleSheet);
+        }
+
+        return Promise\settle($promises)->wait();
     }
 
     //@TOOD
