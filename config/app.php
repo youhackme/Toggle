@@ -167,7 +167,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        Toggle\Goutte\GoutteServiceProvider::class,
+        //Toggle\Goutte\GoutteServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
@@ -179,6 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\GoutteServiceProvider::class,
 
     ],
 
