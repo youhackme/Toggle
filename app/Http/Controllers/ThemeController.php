@@ -37,9 +37,8 @@ class ThemeController extends Controller
      *
      * @param int $page
      */
-    public function scrapeThemeForest(
-        $page = 1
-    ) {
+    public function scrapeThemeForest($page = 1)
+    {
         $pages = explode('-', $page);
 
         foreach (range($pages[0], $pages[1]) as $page) {
@@ -60,7 +59,6 @@ class ThemeController extends Controller
      */
     public function scrapeThemeMeta()
     {
-        //(new \App\ThemeMeta\Themeforest\Theme($this->theme))->extractThemeAlias();
         (new \App\Scrape\ThemeMeta($this->theme, $this->themeMeta))->themeforest();
     }
 }
