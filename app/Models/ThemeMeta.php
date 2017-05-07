@@ -23,5 +23,4 @@ class ThemeMeta extends Model
     {
         $this->attributes['slug'] = trim(strtolower($value));
     }
-
 }
