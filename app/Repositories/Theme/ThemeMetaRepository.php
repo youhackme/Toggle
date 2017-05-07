@@ -4,7 +4,6 @@ namespace App\Repositories\Theme;
 
 use App\Models\ThemeMeta as ThemeMetaModel;
 
-
 /**
  * Created by PhpStorm.
  * User: Hyder
@@ -25,7 +24,6 @@ class ThemeMetaRepository
     {
         $this->model = $model;
     }
-
 
     /**
      * Save data only if it is new.

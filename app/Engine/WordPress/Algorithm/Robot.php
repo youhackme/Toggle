@@ -34,14 +34,14 @@ class Robot extends WordPressAbstract
      */
     public function check(SiteAnatomy $siteAnatomy)
     {
-        $this->siteAnatomy     = $siteAnatomy;
-        $host                  = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
+        $this->siteAnatomy = $siteAnatomy;
+        $host = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
         $this->pathToRobotsTxt = "http://$host/robots.txt";
         $this->checkWordPressFootprints($this->getRobotsTxtContent());
 
         return $this;
     }
-    
+
     /**
      * Fetch the content of the Robots.txt.
      * @return bool
@@ -51,9 +51,7 @@ class Robot extends WordPressAbstract
         try {
             $goutteClient = \App::make('goutte');
             $goutteClient->request('GET', $this->pathToRobotsTxt);
-
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
-
             echo $e->getMessage();
 
             return false;

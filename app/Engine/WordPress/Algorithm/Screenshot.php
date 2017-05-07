@@ -41,21 +41,18 @@ class Screenshot extends WordPressAbstract
     public function findScreenshot()
     {
         $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
-        $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
+        $regex = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
         if (preg_match($regex, $this->siteAnatomy->html, $themeAliases)) {
-
-
             $pathToTheme = $themeAliases[1];
-            $themeAlias  = $themeAliases[2];
+            $themeAlias = $themeAliases[2];
 
             foreach ($allowedScreenshotExtension as $extension) {
-                $screenshotUrl = $pathToTheme . '/screenshot' . $extension;
+                $screenshotUrl = $pathToTheme.'/screenshot'.$extension;
                 if ($this->urlExist($screenshotUrl) == 200) {
                     $this->setScreenshot($themeAlias, $screenshotUrl);
                     break;
                 }
             }
-
         }
     }
 
@@ -73,13 +70,10 @@ class Screenshot extends WordPressAbstract
             $goutteClient->request('GET', $screenshotUrl);
 
             return $goutteClient->getResponse()->getStatus();
-
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
-
             echo $e->getMessage();
 
             return false;
         }
-
     }
 }

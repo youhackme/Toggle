@@ -12,7 +12,7 @@ class SiteController extends Controller
     public function detect($site)
     {
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
-        if ( ! $siteAnatomy->errors()) {
+        if (! $siteAnatomy->errors()) {
             $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 
             if ($application->isWordPress()) {
@@ -21,6 +21,5 @@ class SiteController extends Controller
                 echo 'Sadly, you are not using WordPress';
             }
         }
-
     }
 }

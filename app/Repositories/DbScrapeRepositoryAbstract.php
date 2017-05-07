@@ -32,13 +32,13 @@ abstract class DbScrapeRepositoryAbstract
      */
     public function exist($externalIdentifier)
     {
-        if ( ! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
-            echo '[' . getMemUsage() . "]$externalIdentifier is new.";
+        if (! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
+            echo '['.getMemUsage()."]$externalIdentifier is new.";
             echo br();
 
             return true;
         } else {
-            echo '[' . getMemUsage() . "]$externalIdentifier has already been scrapped.";
+            echo '['.getMemUsage()."]$externalIdentifier has already been scrapped.";
             echo br();
 
             return false;
@@ -75,7 +75,7 @@ abstract class DbScrapeRepositoryAbstract
     }
 
     /**
-     * Update status
+     * Update status.
      *
      * @param $id     The primary key of the theme or plugin
      * @param $status The status to update
@@ -86,6 +86,5 @@ abstract class DbScrapeRepositoryAbstract
     {
         return $this->model->where('id', $id)
                            ->update(['status' => $status]);
-
     }
 }
