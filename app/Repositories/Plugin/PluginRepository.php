@@ -3,8 +3,8 @@
 namespace App\Repositories\Plugin;
 
 use App\Models\Plugin as PluginModel;
-use App\Repositories\DbScrapeRepositoryAbstract;
 use App\Repositories\ScrapeRepositoryInterface;
+use App\Repositories\DbScrapeRepositoryAbstract;
 
 /**
  * Created by PhpStorm.

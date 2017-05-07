@@ -18,7 +18,6 @@ class ThemeMeta extends Model
         'status',
     ];
 
-
     public function setslugAttribute($value)
     {
         $this->attributes['slug'] = trim(strtolower($value));

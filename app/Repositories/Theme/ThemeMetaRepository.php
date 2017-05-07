@@ -25,7 +25,6 @@ class ThemeMetaRepository
         $this->model = $model;
     }
 
-
     /**
      * Save data only if it is new.
      *

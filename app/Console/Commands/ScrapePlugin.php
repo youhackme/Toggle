@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\Plugin\PluginRepository;
 use Illuminate\Console\Command;
+use App\Repositories\Plugin\PluginRepository;
 
 class ScrapePlugin extends Command
 {
@@ -47,10 +47,10 @@ class ScrapePlugin extends Command
     public function handle()
     {
         $provider = $this->option('provider');
-        $page     = $this->option('page');
+        $page = $this->option('page');
 
         $this->info("Scraping plugins from $provider");
-        $methodName = 'scrape' . ucfirst($provider);
+        $methodName = 'scrape'.ucfirst($provider);
 
         (new \App\Http\Controllers\PluginController($this->plugin))->$methodName($page);
     }

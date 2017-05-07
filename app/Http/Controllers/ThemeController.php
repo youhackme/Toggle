@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Theme\ThemeMetaRepository;
 use App\Repositories\Theme\ThemeRepository;
+use App\Repositories\Theme\ThemeMetaRepository;
 
 /**
  * Class ThemeController.
@@ -19,7 +19,6 @@ class ThemeController extends Controller
 
     protected $themeMeta;
 
-
     /**
      * ThemeController constructor.
      *
@@ -28,7 +27,7 @@ class ThemeController extends Controller
      */
     public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta = null)
     {
-        $this->theme     = $theme;
+        $this->theme = $theme;
         $this->themeMeta = $themeMeta;
     }
 
