@@ -50,7 +50,7 @@ class ScrapePlugin extends Command
         $page = $this->option('page');
 
         $this->info("Scraping plugins from $provider");
-        $methodName = 'scrape'.ucfirst($provider);
+        $methodName = 'scrape' . ucfirst($provider);
 
         (new \App\Http\Controllers\PluginController($this->plugin))->$methodName($page);
     }

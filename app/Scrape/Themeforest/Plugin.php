@@ -75,7 +75,7 @@ class Plugin implements ScraperInterface
                           $plugin['category'] = $pluginlist->filter('[itemprop="genre"]')->text();
 
                           // Click on each plugin name and go to their plugin page details
-                          if ( ! empty(trim($plugin['name']))) {
+                          if (! empty(trim($plugin['name']))) {
 
                               // Navigate to the plugin full page
                               $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
