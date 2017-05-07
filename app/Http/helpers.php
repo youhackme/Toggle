@@ -16,17 +16,17 @@ function bytesToSize($bytes, $precision = 2)
     $terabyte = $gigabyte * 1024;
 
     if (($bytes >= 0) && ($bytes < $kilobyte)) {
-        return $bytes.' B';
+        return $bytes . ' B';
     } elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
-        return round($bytes / $kilobyte, $precision).' KB';
+        return round($bytes / $kilobyte, $precision) . ' KB';
     } elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
-        return round($bytes / $megabyte, $precision).' MB';
+        return round($bytes / $megabyte, $precision) . ' MB';
     } elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
-        return round($bytes / $gigabyte, $precision).' GB';
+        return round($bytes / $gigabyte, $precision) . ' GB';
     } elseif ($bytes >= $terabyte) {
-        return round($bytes / $terabyte, $precision).' TB';
+        return round($bytes / $terabyte, $precision) . ' TB';
     } else {
-        return $bytes.' B';
+        return $bytes . ' B';
     }
 }
 
