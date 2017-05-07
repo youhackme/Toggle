@@ -8,9 +8,9 @@
 
 namespace App\Engine\WordPress\Algorithm;
 
+use GuzzleHttp\Promise;
 use App\Engine\SiteAnatomy;
 use App\Engine\WordPress\WordPressAbstract;
-use GuzzleHttp\Promise;
 
 class Theme extends WordPressAbstract
 {
@@ -18,7 +18,6 @@ class Theme extends WordPressAbstract
     // -- screenshot hash
     // -- theme alias => wp-content/themes/theme-name
     // -- meta data in style sheets
-
 
     public $siteAnatomy;
 
@@ -29,7 +28,6 @@ class Theme extends WordPressAbstract
         $this->extractThemeAliasFromHtml();
 
         $this->extractThemeAliasFromStyleSheets();
-
 
         return $this;
     }
@@ -45,9 +43,8 @@ class Theme extends WordPressAbstract
         }
     }
 
-
     /**
-     * Extract Theme alias from stylesheet
+     * Extract Theme alias from stylesheet.
      */
     public function extractThemeAliasFromStyleSheets()
     {
@@ -70,7 +67,7 @@ class Theme extends WordPressAbstract
     }
 
     /**
-     * Build screenshot path
+     * Build screenshot path.
      *
      * @param $url   The input url that should normally contain 'wp-content'
      * @param $theme The theme name
@@ -79,9 +76,8 @@ class Theme extends WordPressAbstract
      */
     private function buildScreenshotPath($url, $theme)
     {
-
         if (preg_match('/((.*)\/)wp-content\//', $url, $matches)) {
-            $screenshotUrl = $matches[0] . '/themes/' . $theme . '/screenshot.png';
+            $screenshotUrl = $matches[0].'/themes/'.$theme.'/screenshot.png';
 
             return $screenshotUrl;
         }
@@ -98,7 +94,7 @@ class Theme extends WordPressAbstract
     {
         $themes = [];
         if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $content, $matches)) {
-            if ( ! empty($matches[1])) {
+            if (! empty($matches[1])) {
                 $templates = array_unique($matches[1]);
 
                 foreach ($templates as $template) {
@@ -110,7 +106,6 @@ class Theme extends WordPressAbstract
         return $themes;
     }
 
-
     /**
      * Launch asynchronous requests.
      *
@@ -120,7 +115,7 @@ class Theme extends WordPressAbstract
      */
     private function launchAsyncRequests()
     {
-        $promises     = [];
+        $promises = [];
         $goutteClient = \App::make('goutte');
 
         foreach ($this->siteAnatomy->styles as $styleSheet) {

@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Console\Command;
 use App\Repositories\Theme\ThemeRepository;
 use App\Repositories\Theme\ThemeMetaRepository;
-use Illuminate\Console\Command;
 
 class DetectWordPress extends Command
 {
@@ -30,11 +30,10 @@ class DetectWordPress extends Command
     protected $theme;
 
     /**
-     * An instance of ThemeMeta
+     * An instance of ThemeMeta.
      * @var ThemeMetaRepository
      */
     protected $themeMeta;
-
 
     /**
      * DetectWordPress constructor.
@@ -45,7 +44,7 @@ class DetectWordPress extends Command
     public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta)
     {
         parent::__construct();
-        $this->theme     = $theme;
+        $this->theme = $theme;
         $this->themeMeta = $themeMeta;
     }
 
