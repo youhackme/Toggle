@@ -79,7 +79,6 @@ class Theme extends WordPressAbstract
      */
     private function buildScreenshotPath($url, $theme)
     {
-
         if (preg_match('/((.*)\/)wp-content\//', $url, $matches)) {
             $screenshotUrl = $matches[0] . '/themes/' . $theme . '/screenshot.png';
 
@@ -98,7 +97,7 @@ class Theme extends WordPressAbstract
     {
         $themes = [];
         if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $content, $matches)) {
-            if ( ! empty($matches[1])) {
+            if (! empty($matches[1])) {
                 $templates = array_unique($matches[1]);
 
                 foreach ($templates as $template) {

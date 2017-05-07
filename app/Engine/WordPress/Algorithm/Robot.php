@@ -51,9 +51,7 @@ class Robot extends WordPressAbstract
         try {
             $goutteClient = \App::make('goutte');
             $goutteClient->request('GET', $this->pathToRobotsTxt);
-
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
-
             echo $e->getMessage();
 
             return false;

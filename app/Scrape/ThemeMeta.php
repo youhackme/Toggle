@@ -39,7 +39,6 @@ class ThemeMeta
     {
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
-
                 $site = $theme->previewlink;
                 echo 'Author url: ' . $site;
                 echo br();
@@ -49,7 +48,7 @@ class ThemeMeta
 
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
-                if ( ! $siteAnatomy->errors()) {
+                if (! $siteAnatomy->errors()) {
                     $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 
                     if ($application->isWordPress()) {
@@ -61,7 +60,6 @@ class ThemeMeta
                             $data['screenshotExternalUrl'] = $fileName;
                             $data['screenshotHash']        = $theme->hash;
                             if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
-
                                 $this->theme->update($data['themeid'], 'detected');
                                 $this->themeMeta->save($data);
                                 // Update table theme
@@ -70,14 +68,11 @@ class ThemeMeta
                             echo br();
                             echo $theme->hash;
                         }
-
                     } else {
                         echo 'Sadly, you are not using WordPress';
                     }
                     echo br();
-
                 }
-
             }
         });
     }
@@ -93,7 +88,6 @@ class ThemeMeta
      */
     public function saveScreenshotToFileSystem($fileName, $screenshotUrl)
     {
-
         $goutteClient = \App::make('goutte');
         $goutteClient->request('GET', $screenshotUrl);
 
@@ -104,7 +98,7 @@ class ThemeMeta
         $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
         $filePath    = $storagePath . $fileName;
 
-        if ( ! File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             if (Storage::put($fileName, $imageBinary)) {
                 echo "Screenshot $fileName saved successfully";
 
@@ -117,7 +111,5 @@ class ThemeMeta
         }
 
         return false;
-
     }
-
 }

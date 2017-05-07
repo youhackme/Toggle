@@ -43,8 +43,6 @@ class Screenshot extends WordPressAbstract
         $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
         $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
         if (preg_match($regex, $this->siteAnatomy->html, $themeAliases)) {
-
-
             $pathToTheme = $themeAliases[1];
             $themeAlias  = $themeAliases[2];
 
@@ -55,7 +53,6 @@ class Screenshot extends WordPressAbstract
                     break;
                 }
             }
-
         }
     }
 
@@ -73,13 +70,10 @@ class Screenshot extends WordPressAbstract
             $goutteClient->request('GET', $screenshotUrl);
 
             return $goutteClient->getResponse()->getStatus();
-
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
-
             echo $e->getMessage();
 
             return false;
         }
-
     }
 }

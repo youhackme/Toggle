@@ -77,7 +77,7 @@ class Theme implements ScraperInterface
                           $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
 
                           // Click on each theme name and go to their theme page details
-                          if ( ! empty(trim($theme['name']))) {
+                          if (! empty(trim($theme['name']))) {
                               try {
                                   $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
                                   // Navigate to the theme full page
@@ -148,7 +148,7 @@ class Theme implements ScraperInterface
             return $previewLink;
         }
         // Do you have at least one iframe?
-        if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
+        if (! empty($crawlerAuthorUrl->filter('iframe')->count())) {
 
             // Get the theme url hosted by the author
             $crawlerAuthorUrl->filter('iframe')
@@ -167,7 +167,7 @@ class Theme implements ScraperInterface
                                  ];
                                  $iframeUrl       = $iframe->attr('src');
 
-                                 if ( ! str_contains($iframeUrl, $iframeBlacklist)) {
+                                 if (! str_contains($iframeUrl, $iframeBlacklist)) {
                                      $previewLink = $iframeUrl;
                                  }
                              });

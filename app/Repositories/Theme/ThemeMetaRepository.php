@@ -4,7 +4,6 @@ namespace App\Repositories\Theme;
 
 use App\Models\ThemeMeta as ThemeMetaModel;
 
-
 /**
  * Created by PhpStorm.
  * User: Hyder
