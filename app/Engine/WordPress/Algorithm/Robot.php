@@ -41,18 +41,23 @@ class Robot extends WordPressAbstract
 
         return $this;
     }
-
+    
     /**
      * Fetch the content of the Robots.txt.
+     * @return bool
      */
     public function getRobotsTxtContent()
     {
-        $goutteClient = \App::make('goutte');
+        try {
+            $goutteClient = \App::make('goutte');
+            $goutteClient->request('GET', $this->pathToRobotsTxt);
 
-        $goutteClient->request(
-            'GET',
-            $this->pathToRobotsTxt
-        );
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+
+            echo $e->getMessage();
+
+            return false;
+        }
 
         return $goutteClient->getResponse()->getContent();
     }
