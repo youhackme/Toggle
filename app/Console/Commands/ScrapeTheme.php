@@ -51,7 +51,7 @@ class ScrapeTheme extends Command
 
         $this->info("Scraping theme from $provider");
 
-        $methodName = 'scrape' . ucfirst($provider);
+        $methodName = 'scrape'.ucfirst($provider);
 
         (new \App\Http\Controllers\ThemeController($this->theme))->$methodName($page);
     }

@@ -39,10 +39,10 @@ class Link extends WordPressAbstract
                 if ($response['value']->getStatusCode() == 200) {
                     if (isset($commonWordPressPaths[$key]['searchFor'])) {
                         if (preg_match_all($commonWordPressPaths[$key]['searchFor'], $response['value']->getBody())) {
-                            $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
+                            $this->assertWordPress('commonWordPressPaths-'.$commonWordPressPaths[$key]['searchFor']);
                         }
                     }
-                    $this->assertWordPress('commonWordPressPaths-image-' . $key);
+                    $this->assertWordPress('commonWordPressPaths-image-'.$key);
                 }
             }
         }

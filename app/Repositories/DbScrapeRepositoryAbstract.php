@@ -33,12 +33,12 @@ abstract class DbScrapeRepositoryAbstract
     public function exist($externalIdentifier)
     {
         if (! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
-            echo '[' . getMemUsage() . "]$externalIdentifier is new.";
+            echo '['.getMemUsage()."]$externalIdentifier is new.";
             echo br();
 
             return true;
         } else {
-            echo '[' . getMemUsage() . "]$externalIdentifier has already been scrapped.";
+            echo '['.getMemUsage()."]$externalIdentifier has already been scrapped.";
             echo br();
 
             return false;
@@ -86,5 +86,6 @@ abstract class DbScrapeRepositoryAbstract
     {
         return $this->model->where('id', $id)
                            ->update(['status' => $status]);
+
     }
 }

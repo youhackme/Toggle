@@ -77,7 +77,7 @@ class Theme extends WordPressAbstract
     private function buildScreenshotPath($url, $theme)
     {
         if (preg_match('/((.*)\/)wp-content\//', $url, $matches)) {
-            $screenshotUrl = $matches[0] . '/themes/' . $theme . '/screenshot.png';
+            $screenshotUrl = $matches[0].'/themes/'.$theme.'/screenshot.png';
 
             return $screenshotUrl;
         }

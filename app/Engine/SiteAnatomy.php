@@ -40,11 +40,9 @@ class SiteAnatomy
                 'GET',
                 $url
             );
-
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             echo $e->getMessage();
             $this->errors[] = $e->getMessage();
-
         }
 
         $this->result();
@@ -52,7 +50,8 @@ class SiteAnatomy
 
 
     /**
-     * Read any errors found.
+     * Read any errors found
+     *
      */
     public function errors()
     {
@@ -79,9 +78,9 @@ class SiteAnatomy
     {
         $tags = [];
         $this->crawler->filterXpath('//meta[@name="generator"]')
-                        ->each(function(Crawler $metaTags) use (&$tags) {
-                            $tags['generator'][] = $metaTags->attr('content');
-                        });
+                      ->each(function (Crawler $metaTags) use (&$tags) {
+                          $tags['generator'][] = $metaTags->attr('content');
+                      });
 
         return $tags;
     }
@@ -128,10 +127,9 @@ class SiteAnatomy
         $this->crawler->filterXpath('//link[@rel="stylesheet"]')
                       ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
                           $link = $styleSheet->attr('href');
-                          if ( ! str_contains($link, $blacklistedDomains)) {
+                          if (! str_contains($link, $blacklistedDomains)) {
                               $styleSheets[] = $styleSheet->attr('href');
                           }
-
                       });
 
         return array_values(array_unique($styleSheets));
@@ -147,7 +145,7 @@ class SiteAnatomy
         $scripts = [];
         $this->crawler->filterXpath('//script')
                       ->each(function (Crawler $script) use (&$scripts) {
-                          if ( ! is_null($script->attr('src'))) {
+                          if (! is_null($script->attr('src'))) {
                               $scripts[] = $script->attr('src');
                           }
                       });
@@ -233,7 +231,7 @@ class SiteAnatomy
      */
     private function result()
     {
-        if ( ! ($this->errors())) {
+        if (! ($this->errors())) {
             $this->styles     = $this->getStyleSheets();
             $this->scripts    = $this->getScripts();
             $this->metas      = $this->metatags();
@@ -248,6 +246,5 @@ class SiteAnatomy
             $this->innerlinks = $this->getInnnerLinks();
             $this->html       = $this->getHtml();
         }
-
     }
 }

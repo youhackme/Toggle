@@ -27,21 +27,23 @@ class ThemeMeta
     public $screenshotExternalUrl;
     public $screenshotHash;
 
+
     public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta)
     {
-        $this->theme = $theme;
+        $this->theme     = $theme;
         $this->themeMeta = $themeMeta;
     }
 
     public function themeforest()
     {
-        $this->theme->chunk(10, function($themes) {
+        $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
                 $site = $theme->previewlink;
                 echo 'Author url: ' . $site;
                 echo br();
 
                 $data['themeid'] = $theme->id;
+
 
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
@@ -53,9 +55,9 @@ class ThemeMeta
                         foreach ($result->screenshot as $slug => $theme) {
                             echo $data['slug'] = $slug;
                             echo br();
-                            $fileName = $slug . '_' . $theme->hash;
+                            $fileName                      = $slug . '_' . $theme->hash;
                             $data['screenshotExternalUrl'] = $fileName;
-                            $data['screenshotHash'] = $theme->hash;
+                            $data['screenshotHash']        = $theme->hash;
                             if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
                                 $this->theme->update($data['themeid'], 'detected');
                                 $this->themeMeta->save($data);
@@ -74,10 +76,11 @@ class ThemeMeta
         });
     }
 
+
     /**
-     * Save Theme screenshot to FileSystem.
+     * Save Theme screenshot to FileSystem
      *
-     * @param string $fileName      The file name
+     * @param $fileName      The file name
      * @param $screenshotUrl The screenshot url
      *
      * @return bool
@@ -87,11 +90,12 @@ class ThemeMeta
         $goutteClient = \App::make('goutte');
         $goutteClient->request('GET', $screenshotUrl);
 
-        $fileName = strtolower($fileName) . '.png';
+        $fileName    = strtolower($fileName) . '.png';
         $imageBinary = $goutteClient->getResponse()->getContent();
 
+
         $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
-        $filePath = $storagePath . $fileName;
+        $filePath    = $storagePath . $fileName;
 
         if (! File::exists($filePath)) {
             if (Storage::put($fileName, $imageBinary)) {
