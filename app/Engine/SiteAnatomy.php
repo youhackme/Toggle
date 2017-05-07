@@ -31,7 +31,7 @@ class SiteAnatomy
 
     public function __construct($site)
     {
-        $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://'.$site;
+        $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
         $this->goutteClient = App::make('goutte');
 
@@ -75,9 +75,9 @@ class SiteAnatomy
     {
         $tags = [];
         $this->crawler->filterXpath('//meta[@name="generator"]')
-                      ->each(function (Crawler $metaTags) use (&$tags) {
-                          $tags['generator'][] = $metaTags->attr('content');
-                      });
+                        ->each(function (Crawler $metaTags) use (&$tags) {
+                            $tags['generator'][] = $metaTags->attr('content');
+                        });
 
         return $tags;
     }
@@ -122,12 +122,12 @@ class SiteAnatomy
         $blacklistedDomains = ['googleapis.com'];
         $styleSheets = [];
         $this->crawler->filterXpath('//link[@rel="stylesheet"]')
-                      ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
-                          $link = $styleSheet->attr('href');
-                          if (! str_contains($link, $blacklistedDomains)) {
-                              $styleSheets[] = $styleSheet->attr('href');
-                          }
-                      });
+                        ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
+                            $link = $styleSheet->attr('href');
+                            if (! str_contains($link, $blacklistedDomains)) {
+                                $styleSheets[] = $styleSheet->attr('href');
+                            }
+                        });
 
         return array_values(array_unique($styleSheets));
     }
@@ -141,11 +141,11 @@ class SiteAnatomy
     {
         $scripts = [];
         $this->crawler->filterXpath('//script')
-                      ->each(function (Crawler $script) use (&$scripts) {
-                          if (! is_null($script->attr('src'))) {
-                              $scripts[] = $script->attr('src');
-                          }
-                      });
+                        ->each(function (Crawler $script) use (&$scripts) {
+                            if (! is_null($script->attr('src'))) {
+                                $scripts[] = $script->attr('src');
+                            }
+                        });
 
         return array_unique($scripts);
     }
@@ -171,11 +171,11 @@ class SiteAnatomy
     {
         $cssClasses = [];
         $this->crawler->filterXpath('//*[@class]')
-                      ->each(function (Crawler $cssClass) use (&$cssClasses) {
-                          $classes = trim($cssClass->attr('class'));
-                          $classes = explode(' ', $classes);
-                          $cssClasses[] = $classes;
-                      });
+                        ->each(function (Crawler $cssClass) use (&$cssClasses) {
+                            $classes = trim($cssClass->attr('class'));
+                            $classes = explode(' ', $classes);
+                            $cssClasses[] = $classes;
+                        });
 
         $uniqueCssClasses = array_unique(array_flatten($cssClasses));
 
@@ -198,9 +198,9 @@ class SiteAnatomy
     {
         $cssIds = [];
         $this->crawler->filterXpath('//*[@id]')
-                      ->each(function (Crawler $cssId) use (&$cssIds) {
-                          $cssIds[] = trim($cssId->attr('id'));
-                      });
+                        ->each(function (Crawler $cssId) use (&$cssIds) {
+                            $cssIds[] = trim($cssId->attr('id'));
+                        });
 
         $uniqueCssIds = array_unique(array_flatten($cssIds));
 
@@ -228,7 +228,7 @@ class SiteAnatomy
      */
     private function result()
     {
-        if (! ($this->errors())) {
+        if ( ! ($this->errors())) {
             $this->styles = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
             $this->metas = $this->metatags();
