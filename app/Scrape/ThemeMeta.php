@@ -35,7 +35,7 @@ class ThemeMeta
 
     public function themeforest()
     {
-        $this->theme->chunk(10, function($themes) {
+        $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
                 $site = $theme->previewlink;
                 echo 'Author url: ' . $site;
@@ -45,7 +45,7 @@ class ThemeMeta
 
                 $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
-                if ( ! $siteAnatomy->errors()) {
+                if (! $siteAnatomy->errors()) {
                     $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 
                     if ($application->isWordPress()) {
@@ -93,7 +93,7 @@ class ThemeMeta
         $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
         $filePath = $storagePath . $fileName;
 
-        if ( ! File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             if (Storage::put($fileName, $imageBinary)) {
                 echo "Screenshot $fileName saved successfully";
 

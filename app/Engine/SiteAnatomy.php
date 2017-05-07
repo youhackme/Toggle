@@ -228,7 +228,7 @@ class SiteAnatomy
      */
     private function result()
     {
-        if ( ! ($this->errors())) {
+        if (! ($this->errors())) {
             $this->styles = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
             $this->metas = $this->metatags();
