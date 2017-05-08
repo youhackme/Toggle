@@ -18,6 +18,11 @@ class ThemeMeta extends Model
         'status',
     ];
 
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class, 'themeid', 'id');
+    }
+
     public function setslugAttribute($value)
     {
         $this->attributes['slug'] = trim(strtolower($value));
