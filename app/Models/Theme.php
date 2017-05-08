@@ -25,6 +25,14 @@ class Theme extends Model
         'type',
     ];
 
+    /**
+     * Get the meta associated with a theme
+     */
+    public function themeMeta()
+    {
+        return $this->hasMany(ThemeMeta::class, 'themeid', 'id');
+    }
+
     public function setuniqueidentifierAttribute($value)
     {
         $this->attributes['uniqueidentifier'] = trim(strtolower($value));
