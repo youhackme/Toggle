@@ -60,7 +60,7 @@ class Plugin implements ScraperInterface
         $plugin['provider'] = 'codecanyon.net';
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
-                        ->each(function(Crawler $pluginlist) use (&$plugin) {
+                        ->each(function (Crawler $pluginlist) use (&$plugin) {
 
                             // The plugin Unique id
                             $plugin['uniqueidentifier'] = $pluginlist->attr('data-item-id');
@@ -75,7 +75,7 @@ class Plugin implements ScraperInterface
                             $plugin['category'] = $pluginlist->filter('[itemprop="genre"]')->text();
 
                             // Click on each plugin name and go to their plugin page details
-                            if ( ! empty(trim($plugin['name']))) {
+                            if (! empty(trim($plugin['name']))) {
 
                                 // Navigate to the plugin full page
                                 $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
