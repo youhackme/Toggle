@@ -75,7 +75,7 @@ class SiteAnatomy
     {
         $tags = [];
         $this->crawler->filterXpath('//meta[@name="generator"]')
-                        ->each(function(Crawler $metaTags) use (&$tags) {
+                        ->each(function (Crawler $metaTags) use (&$tags) {
                             $tags['generator'][] = $metaTags->attr('content');
                         });
 
@@ -122,9 +122,9 @@ class SiteAnatomy
         $blacklistedDomains = ['googleapis.com'];
         $styleSheets = [];
         $this->crawler->filterXpath('//link[@rel="stylesheet"]')
-                        ->each(function(Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
+                        ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
                             $link = $styleSheet->attr('href');
-                            if ( ! str_contains($link, $blacklistedDomains)) {
+                            if (! str_contains($link, $blacklistedDomains)) {
                                 $styleSheets[] = $styleSheet->attr('href');
                             }
                         });
@@ -141,8 +141,8 @@ class SiteAnatomy
     {
         $scripts = [];
         $this->crawler->filterXpath('//script')
-                        ->each(function(Crawler $script) use (&$scripts) {
-                            if ( ! is_null($script->attr('src'))) {
+                        ->each(function (Crawler $script) use (&$scripts) {
+                            if (! is_null($script->attr('src'))) {
                                 $scripts[] = $script->attr('src');
                             }
                         });
@@ -171,7 +171,7 @@ class SiteAnatomy
     {
         $cssClasses = [];
         $this->crawler->filterXpath('//*[@class]')
-                        ->each(function(Crawler $cssClass) use (&$cssClasses) {
+                        ->each(function (Crawler $cssClass) use (&$cssClasses) {
                             $classes = trim($cssClass->attr('class'));
                             $classes = explode(' ', $classes);
                             $cssClasses[] = $classes;
@@ -198,7 +198,7 @@ class SiteAnatomy
     {
         $cssIds = [];
         $this->crawler->filterXpath('//*[@id]')
-                        ->each(function(Crawler $cssId) use (&$cssIds) {
+                        ->each(function (Crawler $cssId) use (&$cssIds) {
                             $cssIds[] = trim($cssId->attr('id'));
                         });
 

@@ -86,5 +86,6 @@ abstract class DbScrapeRepositoryAbstract
     {
         return $this->model->where('id', $id)
                            ->update(['status' => $status]);
+
     }
 }

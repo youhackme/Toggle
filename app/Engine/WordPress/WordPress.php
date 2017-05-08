@@ -8,8 +8,12 @@ namespace App\Engine\WordPress;
  * Date: 03/04/2017
  * Time: 22:16
  */
-use Bugsnag\Report;
 use App\Engine\SiteAnatomy;
+use Bugsnag\Report;
+use App\Repositories\Theme\ThemeRepository;
+use App\Repositories\Theme\ThemeMetaRepository;
+use App\Models\Theme;
+use App\Models\ThemeMeta;
 
 /**
  * Handle the algorithm to detect if a site is using WordPress.
@@ -92,12 +96,12 @@ class WordPress
     public function detect()
     {
         foreach ($this->algorithms as $algorithm) {
-            $wordPress = (new $algorithm())->check($this->siteAnatomy);
+            $wordPress           = (new $algorithm())->check($this->siteAnatomy);
             $this->isWordPress[] = $wordPress->getWordPressAssertions();
-            $this->theme[] = $wordPress->getTheme();
-            $this->plugins[] = $wordPress->getPlugin();
-            $this->screenshot[] = $wordPress->getScreenshot();
-            $this->version[] = $wordPress->getVersion();
+            $this->theme[]       = $wordPress->getTheme();
+            $this->plugins[]     = $wordPress->getPlugin();
+            $this->screenshot[]  = $wordPress->getScreenshot();
+            $this->version[]     = $wordPress->getVersion();
         }
     }
 
@@ -136,20 +140,17 @@ class WordPress
     private function theme()
     {
         $themeAlias = array_collapse($this->theme);
+
         if ( ! empty($themeAlias)) {
             if (count($themeAlias) > 1) {
                 \Bugsnag::notifyError('Anomaly', 'More than one theme detected',
-                    function(Report $report) use ($themeAlias) {
+                    function (Report $report) use ($themeAlias) {
                         $report->setSeverity('info');
                         $report->setMetaData([
                             'themes' => $themeAlias,
                             'other'  => json_encode($this),
                         ]);
                     });
-
-                foreach ($themeAlias as $alias => $rubbish) {
-                    return $alias;
-                }
             }
 
             return $themeAlias;
@@ -191,9 +192,34 @@ class WordPress
         return json_encode([
             'wordpress'  => true,
             'version'    => $this->version(),
-            'theme'      => $this->theme(),
+            'theme'      => $this->extraInfos(),
             'plugins'    => $this->plugins(),
             'screenshot' => $this->screenshot(),
         ]);
+    }
+
+
+    private function extraInfos()
+    {
+
+        $theme = $this->theme();
+        foreach ($theme as $themeAlias => &$details) {
+            $screenshot     = $this->screenshot();
+            $screenshotHash = $screenshot[$themeAlias]['hash'];
+
+            $themeMeta = \App\Models\ThemeMeta::where('slug', $themeAlias)
+                                              ->where('screenshotHash', $screenshotHash)
+                                              ->get();
+
+            if (isset($themeMeta[0])) {
+                $themeDescription = $themeMeta[0]->theme->description;
+            }
+
+            $details['description'] = $themeDescription;
+
+        }
+
+        return $theme;
+
     }
 }
