@@ -60,7 +60,7 @@ class Plugin implements ScraperInterface
         $plugin['provider'] = 'codecanyon.net';
 
         $this->crawler->filter('li.js-google-analytics__list-event-container')
-                        ->each(function (Crawler $pluginlist) use (&$plugin) {
+                        ->each(function(Crawler $pluginlist) use (&$plugin) {
 
                             // The plugin Unique id
                             $plugin['uniqueidentifier'] = $pluginlist->attr('data-item-id');
@@ -75,14 +75,14 @@ class Plugin implements ScraperInterface
                             $plugin['category'] = $pluginlist->filter('[itemprop="genre"]')->text();
 
                             // Click on each plugin name and go to their plugin page details
-                            if (! empty(trim($plugin['name']))) {
+                            if ( ! empty(trim($plugin['name']))) {
 
                                 // Navigate to the plugin full page
                                 $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
 
                                 $crawlerPluginfullPage = $this->goutteClient->request(
                                     'GET',
-                                    'https://'.$plugin['provider'].$pluginFullPageUrl
+                                    'https://' . $plugin['provider'] . $pluginFullPageUrl
                                 );
 
                                 // Get the plugin description
@@ -112,14 +112,14 @@ class Plugin implements ScraperInterface
                                     $this->plugin->save($plugin);
                                     unset($plugin);
                                 } catch (\InvalidArgumentException $e) {
-                                    echo $e->getMessage().br();
-                                    echo 'This plugin does not have a demo page: '.json_encode($plugin['uniqueidentifier']).br();
+                                    echo $e->getMessage() . br();
+                                    echo 'This plugin does not have a demo page: ' . json_encode($plugin['uniqueidentifier']) . br();
                                     //Save plugin data even if it is partially filled
                                     unset($plugin['previewlink'], $plugin['downloadlink']);
                                     $this->plugin->save($plugin);
                                 }
                             } else {
-                                echo 'No data for'.$plugin['uniqueidentifier'];
+                                echo 'No data for' . $plugin['uniqueidentifier'];
                                 echo "<br/> \n";
                             }
                         });
