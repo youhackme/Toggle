@@ -55,7 +55,7 @@ class Plugin implements ScraperInterface
 
         // The plugin name
         $this->crawler->filter('li')
-                        ->each(function(Crawler $pluginName) use (&$plugin) {
+                        ->each(function (Crawler $pluginName) use (&$plugin) {
                             $plugin['name'] = $pluginName->text();
                             $url = 'https://wordpress.org/plugins/' . $plugin['name'];
 
@@ -71,11 +71,11 @@ class Plugin implements ScraperInterface
 
                             // Get the Preview URL
                             $crawlerPluginfullPage->filter('#main')
-                                                ->each(function(Crawler $content) use (&$plugin) {
+                                                ->each(function (Crawler $content) use (&$plugin) {
 
                                                     // Get the plugin name
                                                     $content->filter('.plugin-title')
-                                                            ->each(function(Crawler $content) use (&$plugin) {
+                                                            ->each(function (Crawler $content) use (&$plugin) {
                                                                 $plugin['name'] = trim($content->text());
                                                                 $plugin['screenshoturl'] = 'https://ps.w.org/' . $plugin['name'] . '/assets/icon-128x128.png';
                                                                 $plugin['uniqueidentifier'] = $plugin['name'];
@@ -83,14 +83,14 @@ class Plugin implements ScraperInterface
 
                                                     // Get the description
                                                     $content->filter('#description')
-                                                            ->each(function(Crawler $content) use (&$plugin) {
+                                                            ->each(function (Crawler $content) use (&$plugin) {
                                                                 $plugin['description'] = trim($content->text());
                                                             });
 
                                                     $tags = [];
                                                     // Get the description
                                                     $content->filter('.tags a')
-                                                            ->each(function(Crawler $content) use (&$plugin, &$tags) {
+                                                            ->each(function (Crawler $content) use (&$plugin, &$tags) {
                                                                 $tags[] = $content->text();
                                                             });
                                                     $plugin['category'] = implode(',', $tags);
