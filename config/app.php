@@ -180,6 +180,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\GoutteServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+
 
     ],
 
@@ -232,6 +234,7 @@ return [
         'Bugsnag'      => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Goutte'       => Toggle\Goutte\GoutteFacade::class,
         'Sentry'       => Sentry\SentryLaravel\SentryFacade::class,
+        'Debugbar'     => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
