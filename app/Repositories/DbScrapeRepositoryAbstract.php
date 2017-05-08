@@ -32,7 +32,7 @@ abstract class DbScrapeRepositoryAbstract
      */
     public function exist($externalIdentifier)
     {
-        if (! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
+        if ( ! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
             echo '[' . getMemUsage() . "]$externalIdentifier is new.";
             echo br();
 
