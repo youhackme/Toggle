@@ -55,7 +55,7 @@ class Theme implements ScraperInterface
 
         // The Theme name
         $this->crawler->filter('li')
-                        ->each(function (Crawler $themeName) use (&$theme) {
+                        ->each(function(Crawler $themeName) use (&$theme) {
                             $theme['name'] = $themeName->text();
 
                             $theme['uniqueidentifier'] = $theme['name'];
@@ -74,29 +74,29 @@ class Theme implements ScraperInterface
 
                                 // Get the Preview URL
                                 $crawlerThemefullPage->filter('.theme-wrap')
-                                                    ->each(function (Crawler $content) use (&$theme) {
+                                                    ->each(function(Crawler $content) use (&$theme) {
 
                                                         // Get the Theme name
                                                         $content->filter('.theme-name')
-                                                                ->each(function (Crawler $content) use (&$theme) {
+                                                                ->each(function(Crawler $content) use (&$theme) {
                                                                     $theme['name'] = trim($content->text());
                                                                 });
 
                                                         $content->filter('div.screenshot img')
-                                                                ->each(function (Crawler $content) use (&$theme) {
+                                                                ->each(function(Crawler $content) use (&$theme) {
                                                                     $theme['screenshotUrl'] = trim($content->attr('src'));
                                                                 });
 
                                                         // Get the description
                                                         $content->filter('.theme-description')
-                                                                ->each(function (Crawler $content) use (&$theme) {
+                                                                ->each(function(Crawler $content) use (&$theme) {
                                                                     $theme['description'] = trim($content->text());
                                                                 });
 
                                                         $tags = [];
                                                         // Get the category
                                                         $content->filter('.theme-tags a')
-                                                                ->each(function (Crawler $content) use (
+                                                                ->each(function(Crawler $content) use (
                                                                     &$theme,
                                                                     &$tags
                                                                 ) {
