@@ -94,7 +94,7 @@ class Theme extends WordPressAbstract
     {
         $themes = [];
         if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $content, $matches)) {
-            if (! empty($matches[1])) {
+            if ( ! empty($matches[1])) {
                 $templates = array_unique($matches[1]);
 
                 foreach ($templates as $template) {
