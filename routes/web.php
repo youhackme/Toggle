@@ -37,4 +37,9 @@ Route::get('/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias');
  * Scrape themes from different providers
  */
 Route::get('/site/{site}', 'SiteController@detect')
-    ->where('site', '(.*)');
+     ->where('site', '(.*)');
+
+
+Route::get('/admin/add/theme', function () {
+    return view('admin/theme');
+});
