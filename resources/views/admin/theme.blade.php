@@ -19,7 +19,7 @@
             <form role="form">
                 <div class="form-group has-feedback">
                     <label for="theme-demo-url">Theme demo Url</label>
-                    <input type="email" class="form-control js-find-application" id="theme-demo-url"
+                    <input type="text" class="form-control js-find-application" id="theme-demo-url"
                            placeholder="http://toggle.me">
                     <span class="js-find-application-spinner glyphicon glyphicon-repeat fast-right-spinner form-control-feedback"
                           style="display: none;"></span>
@@ -87,29 +87,39 @@
 <script>
   $(function () {
     $('.js-find-application').focusout(function () {
-      console.log('hehehe')
 
-      $('.js-find-application-spinner').toggle()
-      axios.get('/site/https://demos.churchthemes.com/risen')
-        .then(function (response) {
+      var themeDemoUrl = $('#theme-demo-url').val();
 
-          $('.js-find-application-spinner').toggle()
+      if (themeDemoUrl != '') {
+        $('.js-find-application-spinner').toggle();
+        axios.get('/site/' + themeDemoUrl)
+          .then(function (response) {
 
-          $.each(response.data.theme, function (themeName, detail) {
-            console.log(themeName)
-            $('#theme-name').val(themeName)
-            $('#theme-description').val(detail.description)
-            return false
+            $('.js-find-application-spinner').toggle();
+            var themeAliases = [];
+
+            $.each(response.data.theme, function (themeAlias, detail) {
+              themeAliases.push(themeAlias);
+              $('#theme-description').val(detail.description);
+            });
+
+            $('#theme-alias').val(themeAliases.join());
+
+            $.each(response.data.screenshot, function (themeAlias, screenshot) {
+              $('#screenshot-hash').val(screenshot.hash);
+              $('#screenshot-url').val(screenshot.url);
+              return false;
+            });
+
+            console.log(response.data);
           })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
 
-          console.log(response.data)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-
-    })
-  })
+    });
+  });
 </script>
 </body>
 </html>
