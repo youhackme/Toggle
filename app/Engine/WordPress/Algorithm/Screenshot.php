@@ -40,18 +40,21 @@ class Screenshot extends WordPressAbstract
      */
     public function findScreenshot()
     {
-        $allowedScreenshotExtension = ['.png', '.jpg', 'jpeg', '.gif'];
-        $regex = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
-        if (preg_match($regex, $this->siteAnatomy->html, $themeAliases)) {
-            $pathToTheme = $themeAliases[1];
-            $themeAlias = $themeAliases[2];
+        $allowedScreenshotExtension = ['.png', '.jpg', '.jpeg', '.gif'];
+        $regex                      = '/(?:href|src)=(?:\'|")((?:\S+)\/wp-content\/themes\/([\w-_.]+))\/(?:.+?)(?:[\'|"])/im';
+        if (preg_match_all($regex, $this->siteAnatomy->html, $themeAliases)) {
 
-            foreach ($allowedScreenshotExtension as $extension) {
-                $screenshotUrl = $pathToTheme . '/screenshot' . $extension;
-                if ($this->urlExist($screenshotUrl) == 200) {
-                    $this->setScreenshot($themeAlias, $screenshotUrl);
-                    break;
+            $pathToThemes = array_values(array_unique($themeAliases[1]));
+            $themeAliases = array_values(array_unique($themeAliases[2]));
+            foreach ($pathToThemes as $key => $pathToTheme) {
+                foreach ($allowedScreenshotExtension as $extension) {
+                    $screenshotUrl = $pathToTheme . '/screenshot' . $extension;
+                    if ($this->urlExist($screenshotUrl) == 200) {
+                        $this->setScreenshot($themeAliases[$key], $screenshotUrl);
+                        break;
+                    }
                 }
+
             }
         }
     }
