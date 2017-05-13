@@ -19,7 +19,7 @@
             <form role="form">
                 <div class="form-group has-feedback">
                     <label for="theme-demo-url">Theme demo Url</label>
-                    <input type="email" class="form-control js-find-application" id="theme-demo-url"
+                    <input type="text" class="form-control js-find-application" id="theme-demo-url"
                            placeholder="http://toggle.me">
                     <span class="js-find-application-spinner glyphicon glyphicon-repeat fast-right-spinner form-control-feedback"
                           style="display: none;"></span>
@@ -85,31 +85,81 @@
 
 </style>
 <script>
-  $(function () {
-    $('.js-find-application').focusout(function () {
-      console.log('hehehe')
+  (function ($) {
+    var o = $({});
+    $.each({
+      on: 'subscribe',
+      trigger: 'publish',
+      off: 'unsubscribe'
+    }, function (key, api) {
+      $[api] = function () {
+        o[key].apply(o, arguments);
+      };
+    });
+  })(jQuery);
 
-      $('.js-find-application-spinner').toggle()
-      axios.get('/site/https://demos.churchthemes.com/risen')
-        .then(function (response) {
+  (function ($) {
 
-          $('.js-find-application-spinner').toggle()
+    var themeForm = {
+      init: function () {
+        $('.js-find-application').focusout(this.findTheme);
+        this.subscriptions();
 
-          $.each(response.data.theme, function (themeName, detail) {
-            console.log(themeName)
-            $('#theme-name').val(themeName)
-            $('#theme-description').val(detail.description)
-            return false
-          })
+      },
+      findTheme: function () {
 
-          console.log(response.data)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+        var themeDemoUrl = $('#theme-demo-url').val();
+        if (themeDemoUrl != '') {
+          this.toggleSpinner;
+          axios.get('/site/' + themeDemoUrl)
+            .then(function (response) {
 
-    })
-  })
+              this.toggleSpinner;
+
+              $.publish('wordpress/results');
+
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+      },
+      save: function () {
+      },
+      validate: function () {
+      },
+      toggleSpinner: function () {
+        $('.js-find-application-spinner').toggle();
+      },
+      renderResults: function () {
+        var themeAliases = [];
+
+        $.each(response.data.theme, function (themeAlias, detail) {
+          themeAliases.push(themeAlias);
+          $('#theme-description').val(detail.description);
+        });
+
+        $('#theme-alias').val(themeAliases.join());
+
+        $.each(response.data.screenshot, function (themeAlias, screenshot) {
+          $('#screenshot-hash').val(screenshot.hash);
+          $('#screenshot-url').val(screenshot.url);
+          return false;
+        });
+
+        console.log(response.data);
+      },
+      subscriptions: function () {
+        $.subscribe('wordpress/results', this.renderResults);
+
+      },
+    };
+
+    themeForm.init();
+
+  })(jQuery);
+
+
 </script>
 </body>
 </html>
