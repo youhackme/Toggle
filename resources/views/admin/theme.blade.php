@@ -22,7 +22,8 @@
                     <input type="text" class="form-control js-find-application" id="theme-demo-url"
                            placeholder="http://toggle.me">
                     <span class="js-find-application-spinner glyphicon glyphicon-repeat fast-right-spinner form-control-feedback"
-                          style="display: none;"></span>
+                          style="display: none;">
+                    </span>
                 </div>
                 <div class="form-group">
                     <label for="theme-name">Theme Name</label>
@@ -32,7 +33,8 @@
                 <div class="form-group">
                     <label for="theme-description">Theme Description</label>
                     <textarea type="text" class="form-control" id="theme-description"
-                              placeholder="This is a bootstrap 4 premium theme."></textarea>
+                              placeholder="This is a bootstrap 4 premium theme.">
+                    </textarea>
                 </div>
                 <div class="form-group">
                     <label for="theme-alias">Theme Alias</label>
@@ -102,57 +104,50 @@
 
     var themeForm = {
       init: function () {
-        $('.js-find-application').focusout(this.findTheme);
+        this.bindEvents();
         this.subscriptions();
 
       },
+      bindEvents: function () {
+        $('.js-find-application').focusout(this.findTheme);
+      },
+      subscriptions: function () {
+        $.subscribe('wordpress/results', this.renderResults);
+      },
       findTheme: function () {
-
+        themeForm.toggleSpinner.call(this);
         var themeDemoUrl = $('#theme-demo-url').val();
         if (themeDemoUrl != '') {
-          this.toggleSpinner;
+
           axios.get('/site/' + themeDemoUrl)
             .then(function (response) {
-
-              this.toggleSpinner;
+              themeForm.toggleSpinner.call(this);
+              themeForm.response = response;
 
               $.publish('wordpress/results');
 
-            })
-            .catch(function (error) {
-              console.log(error);
             });
         }
-      },
-      save: function () {
-      },
-      validate: function () {
       },
       toggleSpinner: function () {
         $('.js-find-application-spinner').toggle();
       },
       renderResults: function () {
         var themeAliases = [];
-
-        $.each(response.data.theme, function (themeAlias, detail) {
+        var self = themeForm;
+        $.each(self.response.data.theme, function (themeAlias, detail) {
           themeAliases.push(themeAlias);
           $('#theme-description').val(detail.description);
         });
 
         $('#theme-alias').val(themeAliases.join());
 
-        $.each(response.data.screenshot, function (themeAlias, screenshot) {
+        $.each(self.response.data.screenshot, function (themeAlias, screenshot) {
           $('#screenshot-hash').val(screenshot.hash);
           $('#screenshot-url').val(screenshot.url);
           return false;
         });
-
-        console.log(response.data);
-      },
-      subscriptions: function () {
-        $.subscribe('wordpress/results', this.renderResults);
-
-      },
+      }
     };
 
     themeForm.init();
