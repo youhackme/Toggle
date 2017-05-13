@@ -85,41 +85,81 @@
 
 </style>
 <script>
-  $(function () {
-    $('.js-find-application').focusout(function () {
-
-      var themeDemoUrl = $('#theme-demo-url').val();
-
-      if (themeDemoUrl != '') {
-        $('.js-find-application-spinner').toggle();
-        axios.get('/site/' + themeDemoUrl)
-          .then(function (response) {
-
-            $('.js-find-application-spinner').toggle();
-            var themeAliases = [];
-
-            $.each(response.data.theme, function (themeAlias, detail) {
-              themeAliases.push(themeAlias);
-              $('#theme-description').val(detail.description);
-            });
-
-            $('#theme-alias').val(themeAliases.join());
-
-            $.each(response.data.screenshot, function (themeAlias, screenshot) {
-              $('#screenshot-hash').val(screenshot.hash);
-              $('#screenshot-url').val(screenshot.url);
-              return false;
-            });
-
-            console.log(response.data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-
+  (function ($) {
+    var o = $({});
+    $.each({
+      on: 'subscribe',
+      trigger: 'publish',
+      off: 'unsubscribe'
+    }, function (key, api) {
+      $[api] = function () {
+        o[key].apply(o, arguments);
+      };
     });
-  });
+  })(jQuery);
+
+  (function ($) {
+
+    var themeForm = {
+      init: function () {
+        $('.js-find-application').focusout(this.findTheme);
+        this.subscriptions();
+
+      },
+      findTheme: function () {
+
+        var themeDemoUrl = $('#theme-demo-url').val();
+        if (themeDemoUrl != '') {
+          this.toggleSpinner;
+          axios.get('/site/' + themeDemoUrl)
+            .then(function (response) {
+
+              this.toggleSpinner;
+
+              $.publish('wordpress/results');
+
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+      },
+      save: function () {
+      },
+      validate: function () {
+      },
+      toggleSpinner: function () {
+        $('.js-find-application-spinner').toggle();
+      },
+      renderResults: function () {
+        var themeAliases = [];
+
+        $.each(response.data.theme, function (themeAlias, detail) {
+          themeAliases.push(themeAlias);
+          $('#theme-description').val(detail.description);
+        });
+
+        $('#theme-alias').val(themeAliases.join());
+
+        $.each(response.data.screenshot, function (themeAlias, screenshot) {
+          $('#screenshot-hash').val(screenshot.hash);
+          $('#screenshot-url').val(screenshot.url);
+          return false;
+        });
+
+        console.log(response.data);
+      },
+      subscriptions: function () {
+        $.subscribe('wordpress/results', this.renderResults);
+
+      },
+    };
+
+    themeForm.init();
+
+  })(jQuery);
+
+
 </script>
 </body>
 </html>
