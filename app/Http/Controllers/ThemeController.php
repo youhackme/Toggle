@@ -17,6 +17,9 @@ class ThemeController extends Controller
      */
     protected $theme;
 
+    /**
+     * @var ThemeMetaRepository
+     */
     protected $themeMeta;
 
     /**
