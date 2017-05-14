@@ -11,7 +11,7 @@
 |
 */
 
-ini_set('max_execution_time', 0);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,6 +40,13 @@ Route::get('/site/{site}', 'SiteController@detect')
      ->where('site', '(.*)');
 
 
-Route::get('/admin/add/theme', function () {
-    return view('admin/theme');
+Route::group(['namespace' => 'Admin'], function () {
+
+    Route::get('/admin/theme', function () {
+        return view('admin/theme');
+    });
+
+    // Controllers Within The "App\Http\Controllers\Admin" Namespace
+    Route::post('/admin/theme/add', 'ThemeController@add');
+
 });
