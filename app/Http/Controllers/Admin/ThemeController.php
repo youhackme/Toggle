@@ -36,6 +36,7 @@ class ThemeController extends Controller
 
     /**
      * Save theme
+     *
      * @param Request $request
      */
     public function add(Request $request)
@@ -96,11 +97,11 @@ class ThemeController extends Controller
 
         if ( ! File::exists($filePath)) {
             if (Storage::put($fileName, $imageBinary)) {
-                echo "Screenshot $fileName saved successfully";
+                //echo "Screenshot $fileName saved successfully";
 
                 return true;
             } else {
-                echo 'Could not save screenshot:' . $fileName;
+                //echo 'Could not save screenshot:' . $fileName;
 
                 return false;
             }
