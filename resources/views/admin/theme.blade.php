@@ -23,6 +23,13 @@
         <div class="col-md-offset-3 col-md-6">
             <h3 class="text-info">Add a Theme</h3>
             <hr>
+
+
+            <div class="alert  js-alert" style="display: none;">
+
+            </div>
+
+
             <form role="form" method="POST" class="js-submit-form">
 
                 <div class="form-group has-feedback">
@@ -196,7 +203,7 @@
         });
       },
       save: function () {
-        console.log('test');
+
         axios.post('/admin/theme/add', {
           uniqueidentifier: $('#uniqueidentifier').val(),
           name: $('#name').val(),
@@ -211,10 +218,26 @@
           type: $('#type').val()
         })
           .then(function (response) {
-            console.log(response);
+            $('div.js-alert')
+              .removeClass('alert-danger')
+              .addClass('alert-success')
+              .html('Theme saved successfully')
+              .show();
           })
           .catch(function (error) {
-            console.log(error);
+            if (error.response.status == 422) {
+              var list = '';
+              $.each(error.response.data, function (key, error) {
+                list = list + '<li>' + error + '</li>';
+              });
+
+              $('div.js-alert')
+                .removeClass('alert-success')
+                .addClass('alert-danger')
+                .html('<ul>' + list + '</ul>')
+                .show();
+
+            }
           });
 
       }

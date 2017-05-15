@@ -41,8 +41,28 @@ class ThemeController extends Controller
      */
     public function add(Request $request)
     {
+
+
+        $this->validate($request, [
+            'uniqueidentifier' => 'required',
+            'name'             => 'required',
+            'screenshoturl'    => 'required',
+            'downloadlink'     => 'required',
+            'description'      => 'required',
+            'previewlink'      => 'required',
+            'provider'         => 'required',
+            'type'             => 'required',
+        ]);
+
+        if (isset($errors)) {
+
+            echo json_encode($errors);
+        }
+
         $screenshotUrl = $request->input('screenshoturl');
-        $result        = $this->theme->save([
+
+
+        $result = $this->theme->save([
             'uniqueidentifier' => $request->input('uniqueidentifier'),
             'name'             => $request->input('name'),
             'screenshoturl'    => $screenshotUrl,
@@ -67,10 +87,14 @@ class ThemeController extends Controller
 
             $this->saveScreenshotToFileSystem($screenshotFileName, $screenshotUrl);
 
-
             echo json_encode($status);
         } else {
-            echo json_encode(['error' => 'Could not save theme']);
+
+            return \Response::json([
+                'error' => ['Could not save theme'],
+            ], 422);
+
+
         }
     }
 
