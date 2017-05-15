@@ -56,7 +56,7 @@
                     <input type="text" class="form-control" id="slug" placeholder="avada">
                 </div>
                 <div class="form-group">
-                    <label for="screenshoturl">Screenshot Url</label>
+                    <label for="screenshoturl">Screenshot Url(For Marketing)</label>
                     <input type="text" class="form-control" id="screenshoturl"
                            placeholder="http://toggle.me/wp-content/themes/avada/screenshot.png">
                 </div>
