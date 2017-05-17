@@ -14,8 +14,6 @@
     "guzzlehttp/guzzle": "^6.2",
     "laravel/framework": "5.4.*",
     "laravel/tinker": "~1.0",
-    "sentry/sentry": "^1.6",
-    "sentry/sentry-laravel": "^0.7.0",
     "toggle/goutte": "^1.0"
   },
   "require-dev": {
