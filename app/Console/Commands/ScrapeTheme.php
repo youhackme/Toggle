@@ -47,8 +47,8 @@ class ScrapeTheme extends Command
     public function handle()
     {
         $provider = $this->option('provider');
-        $page = $this->option('page');
-
+        $page     = $this->option('page');
+        
         $this->info("Scraping theme from $provider");
 
         $methodName = 'scrape' . ucfirst($provider);

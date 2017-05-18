@@ -30,7 +30,7 @@ class ThemeController extends Controller
      */
     public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta = null)
     {
-        $this->theme = $theme;
+        $this->theme     = $theme;
         $this->themeMeta = $themeMeta;
     }
 
@@ -46,6 +46,18 @@ class ThemeController extends Controller
         foreach (range($pages[0], $pages[1]) as $page) {
             (new \App\Scrape\Themeforest\Theme($this->theme))->scrape($page);
         }
+    }
+
+
+    public function scrapeThemeForestV2($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Themeforest\ThemeV2($this->theme))->scrape($page);
+        }
+
     }
 
     /**
