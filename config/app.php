@@ -169,7 +169,6 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         //Toggle\Goutte\GoutteServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
-        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,7 +232,6 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Bugsnag'      => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Goutte'       => Toggle\Goutte\GoutteFacade::class,
-        'Sentry'       => Sentry\SentryLaravel\SentryFacade::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
     ],
 

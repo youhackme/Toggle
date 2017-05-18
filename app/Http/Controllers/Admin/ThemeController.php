@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Theme\ThemeRepository;
 use App\Repositories\Theme\ThemeMetaRepository;
 use Illuminate\Http\Request;
+use File;
+use Storage;
 
 class ThemeController extends Controller
 {
@@ -31,16 +33,39 @@ class ThemeController extends Controller
         $this->themeMeta = $themeMeta;
     }
 
+
     /**
      * Save theme
+     *
+     * @param Request $request
      */
     public function add(Request $request)
     {
 
+
+        $this->validate($request, [
+            'uniqueidentifier' => 'required',
+            'name'             => 'required',
+            'screenshoturl'    => 'required',
+            'downloadlink'     => 'required',
+            'description'      => 'required',
+            'previewlink'      => 'required',
+            'provider'         => 'required',
+            'type'             => 'required',
+        ]);
+
+        if (isset($errors)) {
+
+            echo json_encode($errors);
+        }
+
+        $screenshotUrl = $request->input('screenshoturl');
+
+
         $result = $this->theme->save([
             'uniqueidentifier' => $request->input('uniqueidentifier'),
             'name'             => $request->input('name'),
-            'screenshoturl'    => $request->input('screenshoturl'),
+            'screenshoturl'    => $screenshotUrl,
             'downloadlink'     => $request->input('downloadlink'),
             'description'      => $request->input('description'),
             'previewlink'      => $request->input('previewlink'),
@@ -50,16 +75,63 @@ class ThemeController extends Controller
         ]);
 
         if ($result) {
-            $status = $this->themeMeta->save([
+            $screenshotFileName = $request->input('slug') . '_' . $request->input('screenshotHash');
+            $status             = $this->themeMeta->save([
                 'themeid'               => $result->id,
                 'slug'                  => $request->input('slug'),
-                'screenshotExternalUrl' => $request->input('slug') . '_' . $request->input('screenshotHash'),
+                'screenshotExternalUrl' => $screenshotFileName,
                 'screenshotHash'        => $request->input('screenshotHash'),
                 'status'                => 'active',
             ]);
+
+
+            $this->saveScreenshotToFileSystem($screenshotFileName, $screenshotUrl);
+
             echo json_encode($status);
         } else {
-            echo json_encode(['error' => 'Could not save theme']);
+
+            return \Response::json([
+                'error' => ['Could not save theme'],
+            ], 422);
+
+
         }
     }
+
+
+    /**
+     * @TODO: This function has been duplicted for ease of use. To be refactored.
+     * Save Theme screenshot to FileSystem.
+     *
+     * @param string $fileName      The file name
+     * @param        $screenshotUrl The screenshot url
+     *
+     * @return bool
+     */
+    private function saveScreenshotToFileSystem($fileName, $screenshotUrl)
+    {
+        $goutteClient = \App::make('goutte');
+        $goutteClient->request('GET', $screenshotUrl);
+
+        $fileName    = strtolower($fileName) . '.png';
+        $imageBinary = $goutteClient->getResponse()->getContent();
+
+        $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+        $filePath    = $storagePath . $fileName;
+
+        if ( ! File::exists($filePath)) {
+            if (Storage::put($fileName, $imageBinary)) {
+                //echo "Screenshot $fileName saved successfully";
+
+                return true;
+            } else {
+                //echo 'Could not save screenshot:' . $fileName;
+
+                return false;
+            }
+        }
+
+        return false;
+    }
+
 }
