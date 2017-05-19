@@ -27,8 +27,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+
+        $schedule->command('scrape:theme --page=1-3  --provider=themeforestV2 ')
+                 ->twiceDaily(9, 13);
     }
 
     /**
