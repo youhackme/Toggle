@@ -30,6 +30,10 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('scrape:theme --page=1-3  --provider=themeforestV2 ')
                  ->twiceDaily(9, 13);
+        $schedule->command('scrape:plugin --page=1-3 --provider=themeforest')
+                 ->twiceDaily(9, 13);
+
+
     }
 
     /**
