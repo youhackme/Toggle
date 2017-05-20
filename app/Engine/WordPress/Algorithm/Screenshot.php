@@ -48,10 +48,14 @@ class Screenshot extends WordPressAbstract
             $themeAliases = array_values(array_unique($themeAliases[2]));
             foreach ($pathToThemes as $key => $pathToTheme) {
                 foreach ($allowedScreenshotExtension as $extension) {
+
                     $screenshotUrl = $pathToTheme . '/screenshot' . $extension;
                     if ($this->urlExist($screenshotUrl) == 200) {
-                        $this->setScreenshot($themeAliases[$key], $screenshotUrl);
-                        break;
+                        if (isset($themeAliases[$key])) {
+                            $this->setScreenshot($themeAliases[$key], $screenshotUrl);
+                            break;
+                        }
+
                     }
                 }
 
