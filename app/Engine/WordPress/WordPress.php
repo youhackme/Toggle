@@ -203,25 +203,26 @@ class WordPress
     {
 
         $theme = $this->theme();
-        foreach ($theme as $themeAlias => &$details) {
-            $screenshot     = $this->screenshot();
-            $screenshotHash = '';
-            if (isset($screenshot[$themeAlias]['hash'])) {
-                $screenshotHash = $screenshot[$themeAlias]['hash'];
+        if ( ! empty($theme)) {
+            foreach ($theme as $themeAlias => &$details) {
+                $screenshot     = $this->screenshot();
+                $screenshotHash = '';
+                if (isset($screenshot[$themeAlias]['hash'])) {
+                    $screenshotHash = $screenshot[$themeAlias]['hash'];
+                }
+
+
+                $themeMeta = \App\Models\ThemeMeta::where('slug', $themeAlias)
+                                                  ->where('screenshotHash', $screenshotHash)
+                                                  ->get();
+
+                if (isset($themeMeta[0])) {
+                    $themeDescription       = $themeMeta[0]->theme->description;
+                    $details['description'] = $themeDescription;
+                }
             }
-
-
-            $themeMeta = \App\Models\ThemeMeta::where('slug', $themeAlias)
-                                              ->where('screenshotHash', $screenshotHash)
-                                              ->get();
-
-            if (isset($themeMeta[0])) {
-                $themeDescription       = $themeMeta[0]->theme->description;
-                $details['description'] = $themeDescription;
-            }
-
-
         }
+
 
         return $theme;
 
