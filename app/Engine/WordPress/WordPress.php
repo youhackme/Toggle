@@ -190,25 +190,31 @@ class WordPress
     public function details()
     {
         return json_encode([
-            'wordpress'  => true,
-            'version'    => $this->version(),
-            'theme'      => $this->extraInfos(),
-            'plugins'    => $this->plugins(),
-            'screenshot' => $this->screenshot(),
+            'wordpress' => true,
+            'version'   => $this->version(),
+            'theme'     => $this->extraInfos(),
+            'plugins'   => $this->plugins(),
+            //  'screenshot' => $this->screenshot(),
         ]);
     }
 
 
+    /**
+     * Fetch description from database
+     * @return array|bool|int|string
+     */
     private function extraInfos()
     {
 
-        $theme = $this->theme();
-        if ( ! empty($theme)) {
-            foreach ($theme as $themeAlias => &$details) {
-                $screenshot     = $this->screenshot();
+        $themes = $this->theme();
+
+        if ( ! empty($themes)) {
+            foreach ($themes as $themeAlias => &$details) {
+
                 $screenshotHash = '';
-                if (isset($screenshot[$themeAlias]['hash'])) {
-                    $screenshotHash = $screenshot[$themeAlias]['hash'];
+
+                if (isset($details['screenshot']['hash'])) {
+                    $screenshotHash = $details['screenshot']['hash'];
                 }
 
 
@@ -224,7 +230,7 @@ class WordPress
         }
 
 
-        return $theme;
+        return $themes;
 
     }
 }
