@@ -49,7 +49,6 @@ class ThemeV2 implements ScraperInterface
     public function scrape($page = 1)
     {
 
-        //$pageToCrawl = 'https://api.envato.com/v1/discovery/search/search/item?category=' . $categoryName . '&page=' . $page . '&site=themeforest.net';
         $pageToCrawl = 'https://api.envato.com/v1/discovery/search/search/item?site=themeforest.net&category=wordpress&sort_by=date&page=' . $page . '';
         echo "Page:$page";
         echo br();
