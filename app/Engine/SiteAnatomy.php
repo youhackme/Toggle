@@ -40,7 +40,7 @@ class SiteAnatomy
                 'GET',
                 $url
             );
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (\GuzzleHttp\Exception\TransferException $e) {
             echo $e->getMessage();
             $this->errors[] = $e->getMessage();
         }
