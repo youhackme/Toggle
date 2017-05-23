@@ -87,7 +87,7 @@ abstract class WordPressAbstract
      * Set plugin name.
      *
      * @param      string $name
-     * @param null $description
+     * @param null        $description
      */
     public function setPlugin($name, $description = null)
     {
@@ -114,7 +114,7 @@ abstract class WordPressAbstract
      * Set theme name.
      *
      * @param      string $name
-     * @param null $description
+     * @param null        $description
      */
     public function setTheme($name, $description = null)
     {
@@ -140,7 +140,7 @@ abstract class WordPressAbstract
     /**
      * Assert this site is using WordPress.
      *
-     * @param      $tag
+     * @param        $tag
      * @param string $description
      */
     public function assertWordPress($tag, $description = null)
@@ -200,7 +200,6 @@ abstract class WordPressAbstract
      */
     public function setScreenshot($themealias, $screenshot)
     {
-        $this->screenshot[$themealias]['url'] = $screenshot;
 
         $goutteClient = \App::make('goutte');
 
@@ -209,8 +208,9 @@ abstract class WordPressAbstract
             $screenshot
         );
 
-        $imageContent = $goutteClient->getResponse()->getContent();
+        $imageContent                                    = $goutteClient->getResponse()->getContent();
+        $this->themes[$themealias]['screenshot']['url']  = $screenshot;
+        $this->themes[$themealias]['screenshot']['hash'] = md5($imageContent);
 
-        $this->screenshot[$themealias]['hash'] = md5($imageContent);
     }
 }

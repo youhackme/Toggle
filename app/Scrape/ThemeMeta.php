@@ -38,6 +38,7 @@ class ThemeMeta
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
                 $site = $theme->previewlink;
+
                 echo 'Author url: ' . $site;
                 echo br();
 
@@ -50,20 +51,31 @@ class ThemeMeta
 
                     if ($application->isWordPress()) {
                         $result = \GuzzleHttp\json_decode($application->details());
-                        foreach ($result->screenshot as $slug => $theme) {
-                            echo $data['slug'] = $slug;
-                            echo br();
-                            $fileName                      = $slug . '_' . $theme->hash;
-                            $data['screenshotExternalUrl'] = $fileName;
-                            $data['screenshotHash']        = $theme->hash;
-                            if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
-                                $this->theme->update($data['themeid'], 'detected');
-                                $this->themeMeta->save($data);
-                                // Update table theme
-                                // Add record to theme Alias
+
+                        if ($result->theme) {
+
+                            foreach ($result->theme as $slug => $themeDetail) {
+                                if (isset($themeDetail->screenshot->hash)) {
+
+                                    echo $data['slug'] = $slug;
+                                    echo br();
+                                    $fileName                      = $slug . '_' . $themeDetail->screenshot->hash;
+                                    $data['screenshotExternalUrl'] = $fileName;
+                                    $data['screenshotHash']        = $themeDetail->screenshot->hash;
+                                    if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
+                                        $this->theme->update($data['themeid'], 'detected');
+                                        $this->themeMeta->save($data);
+                                        // Update table theme
+                                        // Add record to theme Alias
+                                    }
+                                    echo br();
+                                    echo $themeDetail->screenshot->hash;
+                                } else {
+                                    echo 'Screenshot path could not be detected.';
+                                }
                             }
-                            echo br();
-                            echo $theme->hash;
+                        } else {
+                            echo "Could not detect theme";
                         }
                     } else {
                         echo 'Sadly, you are not using WordPress';
