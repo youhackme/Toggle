@@ -189,18 +189,18 @@
       renderResults: function () {
         var themeAliases = [];
         var self = themeForm;
-        $.each(self.response.data.theme, function (themeAlias, detail) {
+
+        $.each(self.response.data.theme, function (themeAlias, theme) {
           themeAliases.push(themeAlias);
-          $('#description').val(detail.description);
+
+          $('#description').val(theme.description);
+
+          $('#screenshotHash').val(theme.screenshot.hash);
+          $('#screenshoturl').val(theme.screenshot.url);
         });
 
         $('#slug').val(themeAliases.join());
 
-        $.each(self.response.data.screenshot, function (themeAlias, screenshot) {
-          $('#screenshotHash').val(screenshot.hash);
-          $('#screenshoturl').val(screenshot.url);
-          return false;
-        });
       },
       save: function () {
 
