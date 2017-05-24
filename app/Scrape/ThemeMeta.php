@@ -10,6 +10,7 @@ namespace App\Scrape;
 
 use File;
 use Storage;
+use Bugsnag\Report;
 use App\Repositories\Theme\ThemeRepository;
 use App\Repositories\Theme\ThemeMetaRepository;
 
@@ -37,14 +38,12 @@ class ThemeMeta
     {
         $this->theme->chunk(10, function ($themes) {
             foreach ($themes as $theme) {
-                $site = $theme->previewlink;
 
-                echo 'Author url: ' . $site;
-                echo br();
+                echo 'Author url: ' . $theme->previewlink . br();
 
                 $data['themeid'] = $theme->id;
 
-                $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
+                $siteAnatomy = (new \App\Engine\SiteAnatomy($theme->previewlink));
 
                 if ( ! $siteAnatomy->errors()) {
                     $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
@@ -57,28 +56,27 @@ class ThemeMeta
                             foreach ($result->theme as $slug => $themeDetail) {
                                 if (isset($themeDetail->screenshot->hash)) {
 
-                                    echo $data['slug'] = $slug;
-                                    echo br();
+                                    echo $data['slug'] = $slug . br();
+
                                     $fileName                      = $slug . '_' . $themeDetail->screenshot->hash;
                                     $data['screenshotExternalUrl'] = $fileName;
                                     $data['screenshotHash']        = $themeDetail->screenshot->hash;
                                     if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
                                         $this->theme->update($data['themeid'], 'detected');
                                         $this->themeMeta->save($data);
-                                        // Update table theme
-                                        // Add record to theme Alias
+                                        echo "Theme alias, screenshot and hash added successfully" . br();
                                     }
-                                    echo br();
-                                    echo $themeDetail->screenshot->hash;
+
+
                                 } else {
-                                    echo 'Screenshot path could not be detected.';
+                                    echo 'Screenshot path could not be detected.' . br();
                                 }
                             }
                         } else {
-                            echo "Could not detect theme";
+                            echo "Could not detect theme alias" . br();
                         }
                     } else {
-                        echo 'Sadly, you are not using WordPress';
+                        echo 'Sadly, you are not using WordPress' . br();
                     }
                     echo br();
                 }
@@ -116,6 +114,16 @@ class ThemeMeta
 
                 return false;
             }
+        } else {
+            echo 'Screenshot already exist';
+            \Bugsnag::notifyError('Anomaly', 'Screenshot already exist',
+                function (Report $report) use ($fileName) {
+                    $report->setSeverity('info');
+                    $report->setMetaData([
+                        'filename' => $fileName,
+                        'other'    => json_encode($this),
+                    ]);
+                });
         }
 
         return false;
