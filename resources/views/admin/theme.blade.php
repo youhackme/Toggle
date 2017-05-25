@@ -187,19 +187,31 @@
         $('.js-find-application-spinner').toggle();
       },
       renderResults: function () {
-        var themeAliases = [];
+        var themeAliases = [], descriptions = [], screenshotHashes = [], screenshotUrls = [];
         var self = themeForm;
 
         $.each(self.response.data.theme, function (themeAlias, theme) {
+
+          if (Object.keys(self.response.data.theme).length > 1) {
+            alert('More than one theme found!');
+          }
+
           themeAliases.push(themeAlias);
+          if (typeof theme.description !== 'undefined') {
+            descriptions.push(theme.description);
+          }
+          if (typeof theme.screenshot !== 'undefined') {
+            screenshotHashes.push(theme.screenshot.hash);
+            screenshotUrls.push(theme.screenshot.url);
+          }
 
-          $('#description').val(theme.description);
 
-          $('#screenshotHash').val(theme.screenshot.hash);
-          $('#screenshoturl').val(theme.screenshot.url);
         });
 
         $('#slug').val(themeAliases.join());
+        $('#description').val(descriptions.join());
+        $('#screenshotHash').val(screenshotHashes.join());
+        $('#screenshoturl').val(screenshotUrls.join());
 
       },
       save: function () {
