@@ -194,12 +194,12 @@
         $.each(self.response.data.theme, function (themeAlias, theme) {
 
           if (Object.keys(self.response.data.theme).length > 1) {
-            $('div.js-alert').removeClass('alert-success').addClass('alert-danger')
+            $('div.js-alert').removeClass('alert-success').addClass('alert-warning')
               .html('More than one theme found!')
               .show();
           }
 
-          $(' <label> <input class="js-pick-slug" name="optradio" data-slug="' + themeAlias + ' " type="radio"> ' + themeAlias + ' </label> ')
+          $(' <label class="radio-inline"> <input class="js-pick-slug" name="optradio" data-slug="' + themeAlias + ' " type="radio"> ' + themeAlias + ' </label> ')
             .prependTo('.js-slug');
 
           $(document).on('change', '.js-pick-slug', function () {
