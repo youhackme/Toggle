@@ -58,8 +58,9 @@
                               style="height:200px;"
                     ></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="slug">Theme Slug</label>
+                <div class="form-group js-slug">
+
+
                     <input type="text" class="form-control" id="slug" placeholder="avada">
                 </div>
                 <div class="form-group">
@@ -193,8 +194,19 @@
         $.each(self.response.data.theme, function (themeAlias, theme) {
 
           if (Object.keys(self.response.data.theme).length > 1) {
-            alert('More than one theme found!');
+            $('div.js-alert').removeClass('alert-success').addClass('alert-danger')
+              .html('More than one theme found!')
+              .show();
           }
+
+          $(' <label> <input class="js-pick-slug" name="optradio" data-slug="' + themeAlias + ' " type="radio"> ' + themeAlias + ' </label> ')
+            .prependTo('.js-slug');
+
+          $(document).on('change', '.js-pick-slug', function () {
+            if (this.checked) {
+              $('#slug').val($(this).data('slug'));
+            }
+          });
 
           themeAliases.push(themeAlias);
           if (typeof theme.description !== 'undefined') {
@@ -205,10 +217,8 @@
             screenshotUrls.push(theme.screenshot.url);
           }
 
-
         });
 
-        $('#slug').val(themeAliases.join());
         $('#description').val(descriptions.join());
         $('#screenshotHash').val(screenshotHashes.join());
         $('#screenshoturl').val(screenshotUrls.join());
