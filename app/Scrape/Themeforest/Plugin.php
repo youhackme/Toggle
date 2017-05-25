@@ -1,38 +1,35 @@
 <?php
+
+namespace App\Scrape\Themeforest;
+
+use App\Scrape\ScraperInterface;
+
+use App\Repositories\Plugin\PluginRepository;
+
 /**
  * Created by PhpStorm.
  * User: Hyder
  * Date: 01/04/2017
  * Time: 11:26.
  */
-
-namespace App\Scrape\Themeforest;
-
-use App\Scrape\ScraperInterface;
-use Symfony\Component\DomCrawler\Crawler;
-use App\Repositories\Plugin\PluginRepository;
-
-/**
- * Scrape plugins from Themeforest.
- */
-class Plugin implements ScraperInterface
+class Plugin
 {
     /**
-     * Store plugin meta data.
+     * Store theme meta data.
      *
      * @var array
      */
     private $crawler;
 
     /**
-     * An instance of goutte Client.
+     * Goutte Client.
      *
      * @var
      */
     private $goutteClient;
 
     /**
-     * An instance of Plugin Repository.
+     * An instance of Theme Repository.
      *
      * @var PluginRepository
      */
@@ -40,88 +37,75 @@ class Plugin implements ScraperInterface
 
     public function __construct(PluginRepository $plugin)
     {
-        $this->plugin = $plugin;
+        $this->plugin       = $plugin;
         $this->goutteClient = \App::make('goutte');
     }
 
+    /**
+     * Scrape theme.
+     *
+     * @param int $page
+     */
     public function scrape($page = 1)
     {
-        $pageToCrawl = 'https://codecanyon.net/category/wordpress?page='.$page.'&referrer=search&sort=sales&utf8=✓&view=list';
-        echo "Scraping page: $pageToCrawl";
+        $pageToCrawl = 'https://api.envato.com/v1/discovery/search/search/item?site=codecanyon.net&category=wordpress&sort_by=date&page=' . $page;
+        echo "Page:$pageToCrawl";
         echo br();
 
-        $this->crawler = $this->goutteClient->request(
-            'GET',
-            $pageToCrawl
-        );
+        $client  = \App::make('goutte'); // Goutte Client
+        $request = $client->getClient()->request('GET', $pageToCrawl,
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . env('THEMEFOREST_API_KEY'),
+                ],
+            ]);
 
-        $plugin = [];
-        $plugin['type'] = 'premium';
-        $plugin['provider'] = 'codecanyon.net';
+        $plugins = json_decode($request->getBody()->getContents());
 
-        $this->crawler->filter('li.js-google-analytics__list-event-container')
-                      ->each(function (Crawler $pluginlist) use (&$plugin) {
 
-                          // The plugin Unique id
-                          $plugin['uniqueidentifier'] = $pluginlist->attr('data-item-id');
+        $data = [];
 
-                          // The plugin name
-                          $plugin['name'] = $pluginlist->filter('h3')->text();
 
-                          // The plugin preview  screenshot
-                          $plugin['screenshoturl'] = $pluginlist->filter('img.preload')->attr('data-preview-url');
+        foreach ($plugins->matches as $plugin) {
+            $demoUrl = null;
 
-                          // The plugin category
-                          $plugin['category'] = $pluginlist->filter('[itemprop="genre"]')->text();
+            $keyFound = array_search('demo-url', array_column($plugin->attributes, 'name'));
 
-                          // Click on each plugin name and go to their plugin page details
-                          if (! empty(trim($plugin['name']))) {
 
-                              // Navigate to the plugin full page
-                              $pluginFullPageUrl = $pluginlist->filter('h3 a')->attr('href');
+            if ($keyFound) {
+                $demoUrl = $plugin->attributes[$keyFound]->value;
+            }
 
-                              $crawlerPluginfullPage = $this->goutteClient->request(
-                                  'GET',
-                                  'https://'.$plugin['provider'].$pluginFullPageUrl
-                              );
 
-                              // Get the plugin description
-                              $plugin['description'] = $crawlerPluginfullPage
-                                  ->filter('div.item-description')
-                                  ->text();
+            $screenshotUrl = '';
+            if (isset($plugin->previews->icon_with_landscape_preview->landscape_url)) {
+                $screenshotUrl = $plugin->previews->icon_with_landscape_preview->landscape_url;
+            } elseif (isset($plugin->previews->icon_with_video_preview->landscape_url)) {
+                $screenshotUrl = $plugin->previews->icon_with_video_preview->landscape_url;
+            }
 
-                              try {
 
-                                  // Get the preview url of the plugin
-                                  $livePreviewLink = $crawlerPluginfullPage
-                                      ->filter('.live-preview')
-                                      ->attr('href');
+            $categories               = explode('/', $plugin->classification);
+            $category                 = end($categories);
+            $data['provider']         = 'codecanyon.net';
+            $data['type']             = 'premium';
+            $data['uniqueidentifier'] = $plugin->id;
+            $data['name']             = $plugin->name;
+            $data['screenshoturl']    = $screenshotUrl;
+            $data['downloadlink']     = isset($plugin->previews->live_site) ? $plugin->previews->live_site->url : null;
+            $data['description']      = trim($plugin->description);
+            $data['previewlink']      = $demoUrl;
+            $data['category']         = $category;
 
-                                  $plugin['downloadlink'] = $livePreviewLink;
-                                  //Click on the preview link button on the plugin full page
-                                  $crawlerPluginPreviewLink = $this->goutteClient->request(
-                                      'GET',
-                                      $livePreviewLink
-                                  );
+            if ($this->plugin->save($data)) {
+                echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' saved successfully';
+            } else {
+                echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' already exists in database.';
+            };
+            echo br();
+            unset($data);
 
-                                  // Get the plugin url hosted by the author
-                                  $plugin['previewlink'] = $crawlerPluginPreviewLink
-                                      ->filter('div.preview__action--close a')
-                                      ->attr('href');
+        }
 
-                                  $this->plugin->save($plugin);
-                                  unset($plugin);
-                              } catch (\InvalidArgumentException $e) {
-                                  echo $e->getMessage().br();
-                                  echo 'This plugin does not have a demo page: '.json_encode($plugin['uniqueidentifier']).br();
-                                  //Save plugin data even if it is partially filled
-                                  unset($plugin['previewlink'], $plugin['downloadlink']);
-                                  $this->plugin->save($plugin);
-                              }
-                          } else {
-                              echo 'No data for'.$plugin['uniqueidentifier'];
-                              echo "<br/> \n";
-                          }
-                      });
     }
 }

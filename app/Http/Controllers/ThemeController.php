@@ -34,6 +34,8 @@ class ThemeController extends Controller
         $this->themeMeta = $themeMeta;
     }
 
+
+
     /**
      * ThemeMeta theme from Themeforest.
      *
@@ -43,19 +45,9 @@ class ThemeController extends Controller
     {
         $pages = explode('-', $page);
 
+
         foreach (range($pages[0], $pages[1]) as $page) {
             (new \App\Scrape\Themeforest\Theme($this->theme))->scrape($page);
-        }
-    }
-
-
-    public function scrapeThemeForestV2($page = 1)
-    {
-        $pages = explode('-', $page);
-
-
-        foreach (range($pages[0], $pages[1]) as $page) {
-            (new \App\Scrape\Themeforest\ThemeV2($this->theme))->scrape($page);
         }
 
     }

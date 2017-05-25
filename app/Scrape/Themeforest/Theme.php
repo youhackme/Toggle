@@ -3,7 +3,7 @@
 namespace App\Scrape\Themeforest;
 
 use App\Scrape\ScraperInterface;
-use Symfony\Component\DomCrawler\Crawler;
+
 use App\Repositories\Theme\ThemeRepository;
 
 /**
@@ -49,138 +49,52 @@ class Theme implements ScraperInterface
     public function scrape($page = 1)
     {
 
-        // Sort by best sales
-        $pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&utf8=%E2%9C%93&referrer=search&view=list&sort=sales';
-        //Sort by newest first
-        $pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&referrer=search&utf8=%E2%9C%93&view=list';
-        // Sort by last year
-        $pageToCrawl = 'https://themeforest.net/category/wordpress?date=this-year&page=' . $page . '&referrer=search&utf8=%E2%9C%93&view=list';
-        // Trending items
-        $pageToCrawl = 'https://themeforest.net/category/wordpress?page=' . $page . '&referrer=search&sort=trending&utf8=%E2%9C%93&view=list';
-        echo "Scraping page: $pageToCrawl";
+        $pageToCrawl = 'https://api.envato.com/v1/discovery/search/search/item?site=themeforest.net&category=wordpress&sort_by=date&page=' . $page . '';
+        echo "Page:$page";
         echo br();
 
-        $this->crawler = $this->goutteClient->request(
-            'GET',
-            $pageToCrawl
-        );
+        $client  = \App::make('goutte'); // Goutte Client
+        $request = $client->getClient()->request('GET', $pageToCrawl,
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . env('THEMEFOREST_API_KEY'),
+                ],
+            ]);
 
-        $theme = [];
+        $themes = json_decode($request->getBody()->getContents());
 
-        $theme['provider'] = 'themeforest.net';
-        $theme['type']     = 'premium';
 
-        $this->crawler->filter('li.js-google-analytics__list-event-container')
-                      ->each(function (Crawler $themelist) use (
-                          &$theme
-                      ) {
+        $data = [];
 
-                          // The theme Unique id
-                          $theme['uniqueidentifier'] = $themelist->attr('data-item-id');
 
-                          // The theme name
-                          $theme['name'] = $themelist->filter('h3')->text();
+        foreach ($themes->matches as $theme) {
+            $demoUrl = null;
 
-                          // The theme preview  screenshot
-                          $theme['screenshoturl'] = $themelist->filter('img.preload')->attr('data-preview-url');
+            $keyFound = array_search('demo-url', array_column($theme->attributes, 'name'));
 
-                          // Click on each theme name and go to their theme page details
-                          if ( ! empty(trim($theme['name']))) {
-                              try {
-                                  $themeFullPageUrl = $themelist->filter('h3 a')->attr('href');
-                                  // Navigate to the theme full page
-                                  $crawlerThemefullPage = $this->goutteClient->request(
-                                      'GET',
-                                      'https://' . $theme['provider'] . $themeFullPageUrl
-                                  );
 
-                                  // Then, click on the Preview URL
-                                  $theme['downloadlink'] = $crawlerThemefullPage
-                                      ->filter('a.live-preview')
-                                      ->attr('href');
+            if ($keyFound) {
+                $demoUrl = $theme->attributes[$keyFound]->value;
+            }
 
-                                  //to get the Theme description
-                                  $theme['description'] = $crawlerThemefullPage
-                                      ->filter('div.item-description')
-                                      ->text();
+            $data['provider']         = 'themeforest.net';
+            $data['type']             = 'premium';
+            $data['uniqueidentifier'] = $theme->id;
+            $data['name']             = $theme->name;
+            $data['screenshoturl']    = $theme->previews->icon_with_landscape_preview->landscape_url;
+            $data['downloadlink']     = isset($theme->previews->live_site) ? $theme->previews->live_site->url : null;
+            $data['description']      = trim($theme->description);
+            $data['previewlink']      = $demoUrl;
+            if ($this->theme->save($data)) {
+                echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' saved successfully';
+            } else {
+                echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' already exists in database.';
+            };
+            echo br();
+            unset($data);
 
-                                  // Get the preview url of the theme
-                                  $livePreviewLink = $crawlerThemefullPage
-                                      ->filter('a.live-preview')
-                                      ->attr('href');
 
-                                  //Click on the preview link button on the theme full page
-                                  $crawlerThemepreviewlink = $this->goutteClient->request(
-                                      'GET',
-                                      $livePreviewLink
-                                  );
-
-                                  // Get the initial theme url hosted by the author
-                                  // Then attempt to get the deeplink url
-                                  $theme['previewlink'] = $this->getRealThemeUrl($crawlerThemepreviewlink
-                                      ->filter('div.preview__action--close a')
-                                      ->attr('href'));
-
-                                  $this->theme->save($theme);
-                              } catch (\Exception $e) {
-                                  echo 'No preview url for theme:.' . json_encode($theme['uniqueidentifier']) . br();
-                                  echo $e->getMessage() . br();
-                                  // Save theme even if we have partial data.
-                                  $this->theme->save($theme);
-                              }
-                          } else {
-                              echo 'No data for' . $theme['uniqueidentifier'];
-                          }
-                          unset($theme);
-                      });
-    }
-
-    /**
-     * Attempt to detect the theme demo URL (The one without iframe).
-     *
-     * @param $previewLink
-     *
-     * @return mixed
-     */
-    private function getRealThemeUrl($previewLink)
-    {
-        try {
-            //Crawl the theme preview url
-            $crawlerAuthorUrl = $this->goutteClient->request(
-                'GET',
-                $previewLink
-            );
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            echo $e->getMessage();
-
-            return $previewLink;
-        }
-        // Do you have at least one iframe?
-        if ( ! empty($crawlerAuthorUrl->filter('iframe')->count())) {
-
-            // Get the theme url hosted by the author
-            $crawlerAuthorUrl->filter('iframe')
-                             ->each(function (Crawler $iframe) use (&$previewLink) {
-                                 //Extract iframes only if you do not contain any of these words
-                                 $iframeBlacklist = [
-                                     'vimeo',
-                                     'youtube',
-                                     'video',
-                                     'googletagmanager',
-                                     'google.com',
-                                     'data:image',
-                                     'facebook',
-                                     'soundcloud',
-                                     'mixcloud',
-                                 ];
-                                 $iframeUrl       = $iframe->attr('src');
-
-                                 if ( ! str_contains($iframeUrl, $iframeBlacklist)) {
-                                     $previewLink = $iframeUrl;
-                                 }
-                             });
         }
 
-        return $previewLink;
     }
 }
