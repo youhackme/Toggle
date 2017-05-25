@@ -91,7 +91,7 @@ class ThemeController extends Controller
         } else {
 
             return \Response::json([
-                'error' => ['Could not save theme'],
+                'error' => ['Could not save theme. Already exist'],
             ], 422);
 
 

@@ -36,7 +36,7 @@ class PluginController extends Controller
         $pages = explode('-', $page);
 
         foreach (range($pages[0], $pages[1]) as $page) {
-            (new \App\Scrape\Themeforest\PluginV2($this->plugin))->scrape($page);
+            (new \App\Scrape\Themeforest\Plugin($this->plugin))->scrape($page);
         }
 
     }
