@@ -15,13 +15,6 @@ use App\Repositories\Theme\ThemeRepository;
 class Theme implements ScraperInterface
 {
     /**
-     * Store theme meta data.
-     *
-     * @var array
-     */
-    private $crawler;
-
-    /**
      * Goutte Client.
      *
      * @var
@@ -35,6 +28,11 @@ class Theme implements ScraperInterface
      */
     protected $theme;
 
+    /**
+     * Theme constructor.
+     *
+     * @param ThemeRepository $theme
+     */
     public function __construct(ThemeRepository $theme)
     {
         $this->theme        = $theme;
@@ -89,11 +87,10 @@ class Theme implements ScraperInterface
                 echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' saved successfully';
             } else {
                 echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' already exists in database.';
-            };
+            }
             echo br();
             unset($data);
-
-
+            
         }
 
     }
