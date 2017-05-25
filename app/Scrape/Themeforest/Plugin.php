@@ -14,12 +14,6 @@ use App\Repositories\Plugin\PluginRepository;
  */
 class Plugin
 {
-    /**
-     * Store theme meta data.
-     *
-     * @var array
-     */
-    private $crawler;
 
     /**
      * Goutte Client.
@@ -35,6 +29,11 @@ class Plugin
      */
     protected $plugin;
 
+    /**
+     * Plugin constructor.
+     *
+     * @param PluginRepository $plugin
+     */
     public function __construct(PluginRepository $plugin)
     {
         $this->plugin       = $plugin;
@@ -101,7 +100,7 @@ class Plugin
                 echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' saved successfully';
             } else {
                 echo '[' . getMemUsage() . ']' . $data['name'] . '(' . $data['uniqueidentifier'] . ')' . ' already exists in database.';
-            };
+            }
             echo br();
             unset($data);
 
