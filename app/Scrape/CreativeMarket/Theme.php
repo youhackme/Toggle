@@ -99,6 +99,7 @@ class Theme implements ScraperInterface
                         echo $e->getMessage() . br();
                         // Save theme even if we have partial data.
                         $this->theme->save($theme);
+                        unset($theme);
                     }
 
 
