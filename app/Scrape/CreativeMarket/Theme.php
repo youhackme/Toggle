@@ -65,7 +65,7 @@ class Theme implements ScraperInterface
         $crawler->filter('ul.products li')
                 ->each(function (Crawler $themelist) use (&$theme) {
 
-                    sleep(10);
+
                     $theme['name']             = $themelist->attr('data-title');
                     $theme['uniqueidentifier'] = $themelist->attr('data-id');
                     $theme['screenshoturl']    = $themelist->attr('data-media');
