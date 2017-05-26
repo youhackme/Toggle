@@ -49,6 +49,7 @@ class GoutteServiceProvider extends ServiceProvider
                     'Alexatoolbar-Alx_ns_ph'    => 'AlexaToolbar/alx-4.0.1',
 
                 ],
+                'cookies'         => true,
 
             ]);
 
