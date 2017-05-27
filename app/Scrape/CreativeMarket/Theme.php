@@ -47,7 +47,7 @@ class Theme implements ScraperInterface
     public function scrape($page = 1)
     {
         // Categories: blog, Business,Commerce,Landing,Magazine,Minimal,Non-Profit,Photography,Portfolio,Wedding
-        $pageToCrawl = 'https://creativemarket.com/themes/wordpress/blog/' . $page;
+        $pageToCrawl = 'https://creativemarket.com/themes/wordpress/business/' . $page;
 
         echo "Page: $pageToCrawl" . br();
 
@@ -77,7 +77,7 @@ class Theme implements ScraperInterface
                             'GET',
                             $theme['downloadlink']
                         );
-
+                        sleep(5);
                         $theme['previewlink'] = $crawlerThemefullPage
                             ->filter('a#btn-live-preview')
                             ->attr('href');
