@@ -46,8 +46,8 @@ class Theme implements ScraperInterface
      */
     public function scrape($page = 1)
     {
-        // Categories: blog, Business,Commerce,Landing,Magazine,Minimal,Non-Profit,Photography,Portfolio,Wedding
-        $pageToCrawl = 'https://creativemarket.com/themes/wordpress/business/' . $page;
+        // Categories: blog, business,commerce,landing,magazine,minimal,non-profit,photography,portfolio,wedding
+        $pageToCrawl = 'https://creativemarket.com/themes/wordpress/portfolio/' . $page;
 
         echo "Page: $pageToCrawl" . br();
 
