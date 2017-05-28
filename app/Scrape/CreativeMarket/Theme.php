@@ -95,6 +95,8 @@ class Theme implements ScraperInterface
                         }
                         echo br();
                     } catch (\Exception $e) {
+                        // Remove previous scrapped data before saving
+                        unset($theme['description'], $theme['previewlink']);
                         echo 'No preview url for theme:.' . json_encode($theme['name']) . br();
                         echo $e->getMessage() . br();
                         // Save theme even if we have partial data.
