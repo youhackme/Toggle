@@ -57,6 +57,22 @@ class PluginController extends Controller
     }
 
     /**
+     * Scrape plugin from Mojo
+     *
+     * @param int $page
+     */
+    public function scrapeMojo($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Mojo\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+    /**
      * Scrape plugin from WordPress.
      */
     public function scrapeWordPress()
