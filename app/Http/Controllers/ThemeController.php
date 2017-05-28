@@ -35,9 +35,8 @@ class ThemeController extends Controller
     }
 
 
-
     /**
-     * ThemeMeta theme from Themeforest.
+     * Scrape theme from Themeforest.
      *
      * @param int $page
      */
@@ -52,8 +51,26 @@ class ThemeController extends Controller
 
     }
 
+
     /**
-     * ThemeMeta WordPress theme.
+     * Scrape theme from Creative Market.
+     *
+     * @param int $page
+     */
+    public function scrapeCreativemarket($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\CreativeMarket\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+
+    /**
+     *  Scrape theme from WordPress official repository.
      */
     public function scrapeWordPress()
     {

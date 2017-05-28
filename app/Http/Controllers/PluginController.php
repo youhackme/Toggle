@@ -42,6 +42,21 @@ class PluginController extends Controller
     }
 
     /**
+     * Scrape Plugin from Creative Market.
+     *
+     * @param int $page
+     */
+    public function scrapeCreativemarket($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\CreativeMarket\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+    /**
      * Scrape plugin from WordPress.
      */
     public function scrapeWordPress()
