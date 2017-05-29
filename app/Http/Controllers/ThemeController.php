@@ -86,6 +86,56 @@ class ThemeController extends Controller
 
 
     /**
+     * Scrape theme from Tesla Theme
+     *
+     * @param int $page
+     */
+    public function scrapeTesla($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Tesla\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+
+    /**
+     * Scrape theme from Themify
+     *
+     * @param int $page
+     */
+    public function scrapeThemify($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Themify\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from Studio Press
+     *
+     * @param int $page
+     */
+    public function scrapeStudioPress($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\StudioPress\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+
+    /**
      *  Scrape theme from WordPress official repository.
      */
     public function scrapeWordPress()
