@@ -134,6 +134,86 @@ class ThemeController extends Controller
 
     }
 
+    /**
+     * Scrape theme from Elegant Themes
+     *
+     * @param int $page
+     */
+    public function scrapeElegantThemes($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\ElegantThemes\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from IThemes
+     *
+     * @param int $page
+     */
+    public function scrapeIThemes($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\IThemes\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from My Theme Shop
+     *
+     * @param int $page
+     */
+    public function scrapeMyThemeShop($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\MyThemeShop\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from ThemeFuse
+     *
+     * @param int $page
+     */
+    public function scrapeThemeFuse($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\ThemeFuse\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from WooThemes
+     *
+     * @param int $page
+     */
+    public function scrapeWooThemes($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\WooThemes\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
 
     /**
      *  Scrape theme from WordPress official repository.
