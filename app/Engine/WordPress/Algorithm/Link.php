@@ -42,7 +42,7 @@ class Link extends WordPressAbstract
                             $this->assertWordPress('commonWordPressPaths-' . $commonWordPressPaths[$key]['searchFor']);
                         }
                     }
-                    $this->assertWordPress('commonWordPressPaths-image-' . $key);
+                    //$this->assertWordPress('commonWordPressPaths-image-' . $key);
                 }
             }
         }
