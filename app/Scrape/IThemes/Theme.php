@@ -72,9 +72,8 @@ class Theme implements ScraperInterface
 
                     $theme['uniqueidentifier'] = $uniqueidentifier['4'];
 
-                    $theme['screenshoturl'] = $themelist->filter('img')->attr('src');
+                    $theme['screenshoturl'] = $themelist->filter('.featured-image img')->attr('src');
                     $theme['previewlink']   = $themelist->filter('a.theme-demo')->attr('href');
-
 
                     try {
                         // Navigate to the theme full page
@@ -86,7 +85,7 @@ class Theme implements ScraperInterface
                         $theme['description'] = trim($crawlerThemefullPage
                             ->filter('div#theme-info p')
                             ->text());
-                        
+
 
                         if ($this->theme->save($theme)) {
                             echo '[' . getMemUsage() . ']' . $theme['name'] . '(' . $theme['uniqueidentifier'] . ')' . ' saved successfully';
