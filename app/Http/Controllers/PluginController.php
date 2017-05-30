@@ -89,6 +89,36 @@ class PluginController extends Controller
 
     }
 
+    /**
+     * Scrape plugin from Mojo
+     *
+     * @param int $page
+     */
+    public function scrapeWooThemes($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\WooThemes\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape plugin from MyThemeShop
+     *
+     * @param int $page
+     */
+    public function scrapeMyThemeShop($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\MyThemeShop\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
 
     /**
      * Scrape plugin from WordPress.
