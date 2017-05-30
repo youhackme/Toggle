@@ -12,8 +12,10 @@ interface ScrapeRepositoryInterface
 {
     /**
      * Have we already saved this theme/plugin before? Based on its external unique identifier.
+     * Based on the provider as well
      *
      * @param $externalIdentifier
+     * @param provider
      */
-    public function exist($externalIdentifier);
+    public function exist($externalIdentifier, $provider);
 }

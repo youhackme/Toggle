@@ -23,20 +23,26 @@ abstract class DbScrapeRepositoryAbstract
         $this->model = $model;
     }
 
+
     /**
      * Do you exists already in our database?
      *
      * @param $externalIdentifier
+     * @param $provider
      *
      * @return bool
      */
-    public function exist($externalIdentifier)
+    public function exist($externalIdentifier, $provider)
     {
-        if ( ! $this->model->where('uniqueidentifier', '=', $externalIdentifier)->exists()) {
+        if ( ! $this->model
+            ->where('uniqueidentifier', '=', $externalIdentifier)
+            ->where('provider', '=', $provider)
+            ->exists()
+        ) {
 
             return true;
         } else {
-            
+
             return false;
         }
     }
@@ -50,7 +56,7 @@ abstract class DbScrapeRepositoryAbstract
      */
     public function save(array $data)
     {
-        if ($this->exist(trim($data['uniqueidentifier']))) {
+        if ($this->exist(trim($data['uniqueidentifier']), $data['provider'])) {
             return $this->model->create($data);
         } else {
             return false;
