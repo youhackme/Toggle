@@ -214,6 +214,86 @@ class ThemeController extends Controller
 
     }
 
+    /**
+     * Scrape theme from ThemeIsle
+     *
+     * @param int $page
+     */
+    public function scrapeThemeIsle($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\ThemeIsle\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from CssIgniter
+     *
+     * @param int $page
+     */
+    public function scrapeCssIgniter($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\CssIgniter\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from GraphPaperPress
+     *
+     * @param int $page
+     */
+    public function scrapeGraphPaperPress($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\GraphPaperPress\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from Shape5
+     *
+     * @param int $page
+     */
+    public function scrapeShape5($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Shape5\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape theme from ThemeTrust
+     *
+     * @param int $page
+     */
+    public function scrapeThemeTrust($page = 1)
+    {
+        $pages = explode('-', $page);
+
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\ThemeTrust\Theme($this->theme))->scrape($page);
+        }
+
+    }
+
 
     /**
      *  Scrape theme from WordPress official repository.
