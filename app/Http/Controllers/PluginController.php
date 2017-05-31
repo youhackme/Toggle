@@ -119,6 +119,83 @@ class PluginController extends Controller
 
     }
 
+    /**
+     * Scrape plugin from Themeisle
+     *
+     * @param int $page
+     */
+    public function scrapeThemeIsle($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Themeisle\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape plugin from CssIgniter
+     *
+     * @param int $page
+     */
+    public function scrapeCssIgniter($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\CssIgniter\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+
+    /**
+     * Scrape plugin from Shape5
+     *
+     * @param int $page
+     */
+    public function scrapeShape5($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Shape5\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+
+    /**
+     * Scrape plugin from GraphPaperPress
+     *
+     * @param int $page
+     */
+    public function scrapeGraphPaperPress($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\GraphPaperPress\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
+    /**
+     * Scrape plugin from Themetrust
+     *
+     * @param int $page
+     */
+    public function scrapeThemetrust($page = 1)
+    {
+        $pages = explode('-', $page);
+
+        foreach (range($pages[0], $pages[1]) as $page) {
+            (new \App\Scrape\Themetrust\Plugin($this->plugin))->scrape($page);
+        }
+
+    }
+
 
     /**
      * Scrape plugin from WordPress.
