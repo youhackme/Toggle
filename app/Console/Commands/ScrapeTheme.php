@@ -48,11 +48,11 @@ class ScrapeTheme extends Command
     {
         $provider = $this->option('provider');
         $page     = $this->option('page');
-        
-        $this->info("Scraping theme from $provider");
 
-        $methodName = 'scrape' . ucfirst($provider);
+        $this->info("Scraping plugins from $provider");
 
-        (new \App\Http\Controllers\ThemeController($this->theme))->$methodName($page);
+
+        (new \App\Http\Controllers\ThemeController($this->theme))->scrapeTheme($page, $provider);
+
     }
 }
