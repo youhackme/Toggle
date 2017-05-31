@@ -49,7 +49,7 @@ class ThemeController extends Controller
         $pages    = explode('-', $page);
         $provider = "\\App\\Scrape\\{$provider}\\Theme";
         if ( ! class_exists($provider)) {
-            throw new \Exception('The provider ' . $provider . 'does not exist');
+            throw new \Exception('The theme provider ' . $provider . ' does not exist');
         }
         foreach (range($pages[0], $pages[1]) as $page) {
             (new $provider($this->theme))->scrape($page);
