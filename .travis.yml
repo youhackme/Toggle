@@ -7,3 +7,4 @@ before_script:
   - php -v
   - composer self-update
   - composer install --no-interaction
+  - php artisan key:generate
