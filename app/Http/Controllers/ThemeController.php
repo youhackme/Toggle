@@ -51,9 +51,14 @@ class ThemeController extends Controller
         if ( ! class_exists($provider)) {
             throw new \Exception('The theme provider ' . $provider . ' does not exist');
         }
-        foreach (range($pages[0], $pages[1]) as $page) {
-            (new $provider($this->theme))->scrape($page);
+        if (count($pages) == 1) {
+            (new $provider($this->theme))->scrape($pages);
+        } else {
+            foreach (range($pages[0], $pages[1]) as $page) {
+                (new $provider($this->theme))->scrape($page);
+            }
         }
+
 
     }
 
