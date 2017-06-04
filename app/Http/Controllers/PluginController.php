@@ -44,8 +44,13 @@ class PluginController extends Controller
         if ( ! class_exists($provider)) {
             throw new \Exception('The plugin provider ' . $provider . ' does not exist');
         }
-        foreach (range($pages[0], $pages[1]) as $page) {
-            (new $provider($this->plugin))->scrape($page);
+
+        if (count($pages) == 1) {
+            (new $provider($this->theme))->scrape($page);
+        } else {
+            foreach (range($pages[0], $pages[1]) as $page) {
+                (new $provider($this->theme))->scrape($page);
+            }
         }
 
     }

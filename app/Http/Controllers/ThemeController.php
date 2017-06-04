@@ -46,14 +46,21 @@ class ThemeController extends Controller
     public function scrapeTheme($page = 1, $provider)
     {
 
-        $pages    = explode('-', $page);
+        $pages = explode('-', $page);
+
         $provider = "\\App\\Scrape\\{$provider}\\Theme";
         if ( ! class_exists($provider)) {
             throw new \Exception('The theme provider ' . $provider . ' does not exist');
         }
-        foreach (range($pages[0], $pages[1]) as $page) {
+        if (count($pages) == 1) {
+
             (new $provider($this->theme))->scrape($page);
+        } else {
+            foreach (range($pages[0], $pages[1]) as $page) {
+                (new $provider($this->theme))->scrape($page);
+            }
         }
+
 
     }
 
