@@ -3,7 +3,6 @@
 namespace App\Scrape\YooTheme;
 
 use App\Scrape\ScraperInterface;
-use Symfony\Component\DomCrawler\Crawler;
 use App\Repositories\Theme\ThemeRepository;
 
 /**
@@ -50,7 +49,7 @@ class Theme implements ScraperInterface
         $pageToCrawl = 'https://demo.yootheme.com/wordpress/';
 
         echo "Page: $pageToCrawl" . br();
-        
+
 
         $theme             = [];
         $theme['provider'] = 'yootheme.com';

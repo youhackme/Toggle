@@ -10,10 +10,6 @@ namespace App\Engine\WordPress;
  */
 use App\Engine\SiteAnatomy;
 use Bugsnag\Report;
-use App\Repositories\Theme\ThemeRepository;
-use App\Repositories\Theme\ThemeMetaRepository;
-use App\Models\Theme;
-use App\Models\ThemeMeta;
 
 /**
  * Handle the algorithm to detect if a site is using WordPress.
