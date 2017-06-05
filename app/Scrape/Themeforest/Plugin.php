@@ -12,7 +12,7 @@ use App\Repositories\Plugin\PluginRepository;
  * Date: 01/04/2017
  * Time: 11:26.
  */
-class Plugin
+class Plugin implements ScraperInterface
 {
 
     /**
