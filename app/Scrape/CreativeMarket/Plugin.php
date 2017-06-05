@@ -60,7 +60,7 @@ class Plugin implements ScraperInterface
         $plugin['provider'] = 'creativemarket.com';
         $plugin['type']     = 'premium';
 
-        // dd($crawler->html());
+
         $crawler->filter('ul.products li')
                 ->each(function (Crawler $pluginlist) use (&$plugin) {
 
