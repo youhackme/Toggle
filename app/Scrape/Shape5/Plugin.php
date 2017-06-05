@@ -48,8 +48,6 @@ class Plugin implements ScraperInterface
     {
         if ($page == '1') {
             $pageToCrawl = 'https://www.shape5.com/wordpress/club_plugins/';
-            // Free plugin url
-            //$pageToCrawl = 'https://www.shape5.com/wordpress/free_plugins/';
         } else {
             $pageToCrawl = 'https://www.shape5.com/wordpress/club_plugins/page_' . $page . '.html';
         }
