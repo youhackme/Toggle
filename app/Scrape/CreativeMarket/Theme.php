@@ -61,7 +61,6 @@ class Theme implements ScraperInterface
         $theme['provider'] = 'creativemarket.com';
         $theme['type']     = 'premium';
 
-        // dd($crawler->html());
         $crawler->filter('ul.products li')
                 ->each(function (Crawler $themelist) use (&$theme) {
 
