@@ -13,12 +13,6 @@ use App\Repositories\Theme\ThemeRepository;
  */
 class Theme implements ScraperInterface
 {
-    /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
 
     /**
      * An instance of Theme Repository.
@@ -35,7 +29,6 @@ class Theme implements ScraperInterface
     public function __construct(ThemeRepository $theme)
     {
         $this->theme        = $theme;
-        $this->goutteClient = \App::make('goutte');
     }
 
     /**
