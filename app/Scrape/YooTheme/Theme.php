@@ -50,11 +50,7 @@ class Theme implements ScraperInterface
         $pageToCrawl = 'https://demo.yootheme.com/wordpress/';
 
         echo "Page: $pageToCrawl" . br();
-
-        $crawler = $this->goutteClient->request(
-            'GET',
-            $pageToCrawl
-        );
+        
 
         $theme             = [];
         $theme['provider'] = 'yootheme.com';
