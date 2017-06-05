@@ -12,15 +12,8 @@ use App\Repositories\Plugin\PluginRepository;
  * Date: 01/04/2017
  * Time: 11:26.
  */
-class Plugin
+class Plugin implements ScraperInterface
 {
-
-    /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
 
     /**
      * An instance of Theme Repository.
@@ -36,8 +29,7 @@ class Plugin
      */
     public function __construct(PluginRepository $plugin)
     {
-        $this->plugin       = $plugin;
-        $this->goutteClient = \App::make('goutte');
+        $this->plugin = $plugin;
     }
 
     /**

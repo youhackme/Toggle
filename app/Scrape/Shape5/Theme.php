@@ -48,8 +48,6 @@ class Theme implements ScraperInterface
     {
         if ($page == '1') {
             $pageToCrawl = 'https://www.shape5.com/wordpress/themes/';
-            // Free themes url
-            //$pageToCrawl = 'https://www.shape5.com/wordpress/free_themes/';
         } else {
             $pageToCrawl = 'https://www.shape5.com/wordpress/themes/page_' . $page . '.html';
         }

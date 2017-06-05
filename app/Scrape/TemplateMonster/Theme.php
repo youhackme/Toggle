@@ -3,7 +3,6 @@
 namespace App\Scrape\TemplateMonster;
 
 use App\Scrape\ScraperInterface;
-use GuzzleHttp\Client;
 use App\Repositories\Theme\ThemeRepository;
 
 /**
@@ -125,8 +124,8 @@ class Theme implements ScraperInterface
         $theme['name']             = $crawler->filter('h1.preview-heading')->text();
         $theme['uniqueidentifier'] = $crawler->filter('strong[itemprop="productID"]')->text();
         $theme['screenshoturl']    = $crawler->filter('img.js-preview-scr')->attr('data-original');
-        $theme['downloadlink']   = $downloadLink;
-        $theme['previewlink'] = 'https://livedemo00.template-help.com/wordpress_' . $theme['uniqueidentifier'] . '/';
+        $theme['downloadlink']     = $downloadLink;
+        $theme['previewlink']      = 'https://livedemo00.template-help.com/wordpress_' . $theme['uniqueidentifier'] . '/';
 
 
         if ($crawler->filter('p[itemprop="description"]')->count()) {

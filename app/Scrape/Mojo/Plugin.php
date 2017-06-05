@@ -13,12 +13,6 @@ use App\Repositories\Plugin\PluginRepository;
  */
 class Plugin implements ScraperInterface
 {
-    /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
 
     /**
      * An instance of Plugin Repository.
@@ -34,8 +28,7 @@ class Plugin implements ScraperInterface
      */
     public function __construct(PluginRepository $plugin)
     {
-        $this->plugin       = $plugin;
-        $this->goutteClient = \App::make('goutte');
+        $this->plugin = $plugin;
     }
 
     /**
