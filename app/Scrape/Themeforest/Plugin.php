@@ -16,13 +16,6 @@ class Plugin
 {
 
     /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
-
-    /**
      * An instance of Theme Repository.
      *
      * @var PluginRepository
@@ -36,8 +29,7 @@ class Plugin
      */
     public function __construct(PluginRepository $plugin)
     {
-        $this->plugin       = $plugin;
-        $this->goutteClient = \App::make('goutte');
+        $this->plugin = $plugin;
     }
 
     /**
