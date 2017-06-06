@@ -28,9 +28,6 @@ Route::get('/scrape/wp/plugin', 'PluginController@scrapeWordPress');
 Route::get('/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest');
 Route::get('/scrape/wp/theme', 'ThemeController@scrapeWordPress');
 
-// Scrape themeforest V2
-Route::get('/scrape/tfV2/theme/page/{page}', 'ThemeController@scrapeThemeForestV2');
-
 /*
  * Scrape theme alias from different providers
  */
