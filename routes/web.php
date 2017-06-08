@@ -28,13 +28,11 @@ Route::get('/scrape/wp/plugin', 'PluginController@scrapeWordPress');
 Route::get('/scrape/tf/theme/page/{page}', 'ThemeController@scrapeThemeForest');
 Route::get('/scrape/wp/theme', 'ThemeController@scrapeWordPress');
 
-// Scrape themeforest V2
-Route::get('/scrape/tfV2/theme/page/{page}', 'ThemeController@scrapeThemeForestV2');
-
 /*
  * Scrape theme alias from different providers
  */
 Route::get('/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias');
+
 
 /*
  * Scrape themes from different providers
@@ -51,5 +49,13 @@ Route::group(['namespace' => 'Admin'], function () {
 
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     Route::post('/admin/theme/add', 'ThemeController@add');
+
+
+    Route::get('/admin/plugin/list/{plugin}', function (\App\Models\Plugin $plugin) {
+        return view('admin/plugin', ['plugin' => $plugin]);
+    });
+
+    // Controllers Within The "App\Http\Controllers\Admin" Namespace
+    Route::post('/admin/plugin/add', 'PluginController@add');
 
 });
