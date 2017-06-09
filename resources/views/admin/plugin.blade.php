@@ -245,7 +245,32 @@
       }
     };
 
+    var navigation = {
+
+      init: function () {
+        this.bindEvents();
+      },
+      bindEvents: function () {
+        var self = this;
+        $(document).keyup(function (event) {
+          if (event.which == '39') {
+            self.next();
+          } else if (event.which == '37') {
+            self.previous();
+          }
+        });
+
+      },
+      next: function () {
+        window.location = '/admin/plugin/list/{{$next}}';
+      },
+      previous: function () {
+        window.location = '/admin/plugin/list/{{$previous}}';
+      }
+    };
+
     themeForm.init();
+    navigation.init();
 
   })(jQuery);
 
