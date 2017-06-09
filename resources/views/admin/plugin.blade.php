@@ -74,7 +74,7 @@
                     <label for="downloadlink">Download Link</label>
                     <input type="text" class="form-control" id="downloadlink"
                            placeholder="http://themeforest.net/theme"
-                           value="https://{{$plugin->provider}}{{$plugin->downloadlink}}">
+                           value="{{$plugin->previewlink}}">
                 </div>
                 <input type="hidden" id="id" value="{{$plugin->id}}">
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
