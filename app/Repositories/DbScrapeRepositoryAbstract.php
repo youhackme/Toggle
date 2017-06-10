@@ -76,18 +76,17 @@ abstract class DbScrapeRepositoryAbstract
                            ->chunk($chunk, $callback);
     }
 
+
     /**
-     * Update status.
-     *
-     * @param $id     The primary key of the theme or plugin
-     * @param $status The status to update
+     * @param       $id   The primary key of the theme or plugin
+     * @param array $data Any data to update in key-value pair
      *
      * @return mixed
      */
-    public function update($id, $status)
+    public function update($id, Array $data)
     {
         return $this->model->where('id', $id)
-                           ->update(['status' => $status]);
+                           ->update($data);
 
     }
 }
