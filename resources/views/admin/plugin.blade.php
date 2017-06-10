@@ -36,7 +36,8 @@
                     <label for="previewlink">Plugin Preview Url</label>
                     <input type="text" class="form-control" id="previewlink"
                            placeholder="http://toggle.me"
-                           value="https://{{$plugin->provider}}{{$plugin->downloadlink}}">
+                           value="{{$plugin->previewlink}}"
+                    >
                     <span class="js-find-application-spinner glyphicon glyphicon-repeat fast-right-spinner form-control-feedback"
                           style="display: none;">
                     </span>
@@ -74,7 +75,7 @@
                     <label for="downloadlink">Download Link</label>
                     <input type="text" class="form-control" id="downloadlink"
                            placeholder="http://themeforest.net/theme"
-                           value="{{$plugin->previewlink}}">
+                           value="https://{{$plugin->provider}}{{$plugin->downloadlink}}">
                 </div>
                 <input type="hidden" id="id" value="{{$plugin->id}}">
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -130,7 +131,7 @@
 
   (function ($) {
 
-    var themeForm = {
+    var pluginForm = {
       init: function () {
         this.bindEvents();
         this.subscriptions();
@@ -141,7 +142,7 @@
         $('.js-submit-form').submit(function (event) {
           event.preventDefault();
           console.log('triggered');
-          themeForm.save.call(this);
+          pluginForm.save.call(this);
 
         });
 
@@ -149,15 +150,16 @@
       subscriptions: function () {
         $.subscribe('wordpress/results', this.renderResults);
       },
-      findTheme: function () {
-        themeForm.toggleSpinner.call(this);
+      findPlugin: function () {
+        pluginForm.toggleSpinner.call(this);
         var themeDemoUrl = $('#previewlink').val();
         if (themeDemoUrl != '') {
 
           axios.get('/site/' + themeDemoUrl)
             .then(function (response) {
-              themeForm.toggleSpinner.call(this);
-              themeForm.response = response;
+              console.log(response);
+              pluginForm.toggleSpinner.call(this);
+              pluginForm.response = response;
 
               $.publish('wordpress/results');
 
@@ -168,18 +170,14 @@
         $('.js-find-application-spinner').toggle();
       },
       renderResults: function () {
-        var themeAliases = [], descriptions = [], screenshotHashes = [], screenshotUrls = [];
-        var self = themeForm;
+        var pluginAlias = [];
+        var self = pluginForm;
 
-        $.each(self.response.data.theme, function (themeAlias, theme) {
+        $.each(self.response.data.plugins, function (pluginAlias, plugin) {
+          console.log(pluginAlias);
+          console.log(plugin);
 
-          if (Object.keys(self.response.data.theme).length > 1) {
-            $('div.js-alert').removeClass('alert-success').addClass('alert-warning')
-              .html('More than one theme found!')
-              .show();
-          }
-
-          $(' <label class="radio-inline"> <input class="js-pick-slug" name="optradio" data-slug="' + themeAlias + ' " type="radio"> ' + themeAlias + ' </label> ')
+          $(' <label class="radio-inline"> <input class="js-pick-slug" name="optradio" data-slug="' + pluginAlias + ' " type="radio"> ' + pluginAlias + ' </label> ')
             .prependTo('.js-slug');
 
           $(document).on('change', '.js-pick-slug', function () {
@@ -188,20 +186,12 @@
             }
           });
 
-          themeAliases.push(themeAlias);
-          if (typeof theme.description !== 'undefined') {
-            descriptions.push(theme.description);
-          }
-          if (typeof theme.screenshot !== 'undefined') {
-            screenshotHashes.push(theme.screenshot.hash);
-            screenshotUrls.push(theme.screenshot.url);
+          pluginAlias.push(pluginAlias);
+          if (typeof plugin.description !== 'undefined') {
+            descriptions.push(plugin.description);
           }
 
         });
-
-        $('#description').val(descriptions.join());
-        $('#screenshotHash').val(screenshotHashes.join());
-        $('#screenshoturl').val(screenshotUrls.join());
 
       },
       save: function () {
@@ -253,10 +243,17 @@
       bindEvents: function () {
         var self = this;
         $(document).keyup(function (event) {
-          if (event.which == '39') {
-            self.next();
-          } else if (event.which == '37') {
-            self.previous();
+
+          switch (event.which) {
+            case 37:
+              self.previous();
+              break;
+            case 39:
+              self.next();
+              break;
+            case 70:
+              self.scan();
+              break;
           }
         });
 
@@ -266,10 +263,13 @@
       },
       previous: function () {
         window.location = '/admin/plugin/list/{{$previous}}';
+      },
+      scan: function () {
+        pluginForm.findPlugin();
       }
     };
 
-    themeForm.init();
+    pluginForm.init();
     navigation.init();
 
   })(jQuery);
