@@ -62,7 +62,11 @@
                     >{{$plugin->description}}</textarea>
                 </div>
                 <div class="form-group js-slug">
-                    <input type="text" class="form-control" id="slug" placeholder="optinmonster">
+                    <input type="text" class="form-control"
+                           id="slug"
+                           placeholder="optinmonster"
+                           value="{{$plugin->pluginMeta->implode('slug', ', ')}}"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="screenshoturl">Screenshot Url(For Marketing)</label>
@@ -75,7 +79,7 @@
                     <label for="downloadlink">Download Link</label>
                     <input type="text" class="form-control" id="downloadlink"
                            placeholder="http://themeforest.net/theme"
-                           value="https://{{$plugin->provider}}{{$plugin->downloadlink}}">
+                           value="{{$plugin->downloadlink}}">
                 </div>
                 <input type="hidden" id="id" value="{{$plugin->id}}">
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -157,7 +161,7 @@
 
           axios.get('/site/' + themeDemoUrl)
             .then(function (response) {
-              console.log(response);
+
               pluginForm.toggleSpinner.call(this);
               pluginForm.response = response;
 
@@ -170,33 +174,30 @@
         $('.js-find-application-spinner').toggle();
       },
       renderResults: function () {
-        var pluginAlias = [];
+
         var self = pluginForm;
 
         $.each(self.response.data.plugins, function (pluginAlias, plugin) {
-          console.log(pluginAlias);
-          console.log(plugin);
+          //  console.log(pluginAlias);
+          //  console.log(plugin);
 
           $(' <label class="radio-inline"> <input class="js-pick-slug" name="optradio" data-slug="' + pluginAlias + ' " type="radio"> ' + pluginAlias + ' </label> ')
             .prependTo('.js-slug');
 
+          // When picking one, add to textbox.
           $(document).on('change', '.js-pick-slug', function () {
             if (this.checked) {
               $('#slug').val($(this).data('slug'));
             }
           });
 
-          pluginAlias.push(pluginAlias);
-          if (typeof plugin.description !== 'undefined') {
-            descriptions.push(plugin.description);
-          }
-
         });
 
       },
       save: function () {
 
-        axios.post('/admin/theme/add', {
+        axios.post('/admin/plugin/add', {
+          id: $('#id').val(),
           uniqueidentifier: $('#uniqueidentifier').val(),
           name: $('#name').val(),
           slug: $('#slug').val(),
@@ -210,11 +211,21 @@
           type: $('#type').val()
         })
           .then(function (response) {
-            $('div.js-alert')
-              .removeClass('alert-danger')
-              .addClass('alert-success')
-              .html('Theme saved successfully')
-              .show();
+            console.log(response.data);
+            if (response.data == false) {
+              $('div.js-alert')
+                .removeClass('alert-success')
+                .addClass('alert-danger')
+                .html('This plugin slug already exist')
+                .show();
+            } else {
+              $('div.js-alert')
+                .removeClass('alert-danger')
+                .addClass('alert-success')
+                .html('Plugin saved successfully')
+                .show();
+            }
+
           })
           .catch(function (error) {
             if (error.response.status == 422) {

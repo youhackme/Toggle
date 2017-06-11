@@ -50,25 +50,7 @@ Route::group(['namespace' => 'Admin'], function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     Route::post('/admin/theme/add', 'ThemeController@add');
 
-
-    Route::get('/admin/plugin/list/{plugin}', function (\App\Models\Plugin $plugin) {
-
-        $next = DB::table('plugins')
-                  ->where('id', '>', $plugin->id)
-                  ->take(1)->get();
-        $next = isset($next['0']->id) ? $next['0']->id : '1';
-
-        $previous = DB::table('plugins')
-                      ->where('id', '<', $plugin->id)
-                      ->take(1)->get();
-        $previous = isset($previous['0']->id) ? $previous['0']->id : '1';
-
-        return view('admin/plugin')
-            ->with('plugin', $plugin)
-            ->with('next', $next)
-            ->with('previous', $previous);
-
-    });
+    Route::get('/admin/plugin/list/{plugin}', 'PluginController@show');
 
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     Route::post('/admin/plugin/add', 'PluginController@add');
