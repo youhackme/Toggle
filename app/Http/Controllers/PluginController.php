@@ -46,10 +46,10 @@ class PluginController extends Controller
         }
 
         if (count($pages) == 1) {
-            (new $provider($this->theme))->scrape($page);
+            (new $provider($this->plugin))->scrape($page);
         } else {
             foreach (range($pages[0], $pages[1]) as $page) {
-                (new $provider($this->theme))->scrape($page);
+                (new $provider($this->plugin))->scrape($page);
             }
         }
 
