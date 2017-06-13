@@ -50,10 +50,7 @@ Route::group(['namespace' => 'Admin'], function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     Route::post('/admin/theme/add', 'ThemeController@add');
 
-
-    Route::get('/admin/plugin/list/{plugin}', function (\App\Models\Plugin $plugin) {
-        return view('admin/plugin', ['plugin' => $plugin]);
-    });
+    Route::get('/admin/plugin/list/{plugin}', 'PluginController@show');
 
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     Route::post('/admin/plugin/add', 'PluginController@add');

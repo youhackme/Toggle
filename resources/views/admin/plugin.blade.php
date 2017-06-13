@@ -36,7 +36,8 @@
                     <label for="previewlink">Plugin Preview Url</label>
                     <input type="text" class="form-control" id="previewlink"
                            placeholder="http://toggle.me"
-                           value="https://{{$plugin->provider}}{{$plugin->downloadlink}}">
+                           value="{{$plugin->previewlink}}"
+                    >
                     <span class="js-find-application-spinner glyphicon glyphicon-repeat fast-right-spinner form-control-feedback"
                           style="display: none;">
                     </span>
@@ -61,7 +62,11 @@
                     >{{$plugin->description}}</textarea>
                 </div>
                 <div class="form-group js-slug">
-                    <input type="text" class="form-control" id="slug" placeholder="optinmonster">
+                    <input type="text" class="form-control"
+                           id="slug"
+                           placeholder="optinmonster"
+                           value="{{$plugin->pluginMeta->implode('slug', ', ')}}"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="screenshoturl">Screenshot Url(For Marketing)</label>
@@ -74,7 +79,7 @@
                     <label for="downloadlink">Download Link</label>
                     <input type="text" class="form-control" id="downloadlink"
                            placeholder="http://themeforest.net/theme"
-                           value="https://{{$plugin->provider}}{{$plugin->downloadlink}}">
+                           value="{{$plugin->downloadlink}}">
                 </div>
                 <input type="hidden" id="id" value="{{$plugin->id}}">
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -130,7 +135,7 @@
 
   (function ($) {
 
-    var themeForm = {
+    var pluginForm = {
       init: function () {
         this.bindEvents();
         this.subscriptions();
@@ -141,7 +146,7 @@
         $('.js-submit-form').submit(function (event) {
           event.preventDefault();
           console.log('triggered');
-          themeForm.save.call(this);
+          pluginForm.save.call(this);
 
         });
 
@@ -149,15 +154,16 @@
       subscriptions: function () {
         $.subscribe('wordpress/results', this.renderResults);
       },
-      findTheme: function () {
-        themeForm.toggleSpinner.call(this);
+      findPlugin: function () {
+        pluginForm.toggleSpinner.call(this);
         var themeDemoUrl = $('#previewlink').val();
         if (themeDemoUrl != '') {
 
           axios.get('/site/' + themeDemoUrl)
             .then(function (response) {
-              themeForm.toggleSpinner.call(this);
-              themeForm.response = response;
+
+              pluginForm.toggleSpinner.call(this);
+              pluginForm.response = response;
 
               $.publish('wordpress/results');
 
@@ -168,45 +174,30 @@
         $('.js-find-application-spinner').toggle();
       },
       renderResults: function () {
-        var themeAliases = [], descriptions = [], screenshotHashes = [], screenshotUrls = [];
-        var self = themeForm;
 
-        $.each(self.response.data.theme, function (themeAlias, theme) {
+        var self = pluginForm;
 
-          if (Object.keys(self.response.data.theme).length > 1) {
-            $('div.js-alert').removeClass('alert-success').addClass('alert-warning')
-              .html('More than one theme found!')
-              .show();
-          }
+        $.each(self.response.data.plugins, function (pluginAlias, plugin) {
+          //  console.log(pluginAlias);
+          //  console.log(plugin);
 
-          $(' <label class="radio-inline"> <input class="js-pick-slug" name="optradio" data-slug="' + themeAlias + ' " type="radio"> ' + themeAlias + ' </label> ')
+          $(' <label class="radio-inline"> <input class="js-pick-slug" name="optradio" data-slug="' + pluginAlias + ' " type="radio"> ' + pluginAlias + ' </label> ')
             .prependTo('.js-slug');
 
+          // When picking one, add to textbox.
           $(document).on('change', '.js-pick-slug', function () {
             if (this.checked) {
               $('#slug').val($(this).data('slug'));
             }
           });
 
-          themeAliases.push(themeAlias);
-          if (typeof theme.description !== 'undefined') {
-            descriptions.push(theme.description);
-          }
-          if (typeof theme.screenshot !== 'undefined') {
-            screenshotHashes.push(theme.screenshot.hash);
-            screenshotUrls.push(theme.screenshot.url);
-          }
-
         });
-
-        $('#description').val(descriptions.join());
-        $('#screenshotHash').val(screenshotHashes.join());
-        $('#screenshoturl').val(screenshotUrls.join());
 
       },
       save: function () {
 
-        axios.post('/admin/theme/add', {
+        axios.post('/admin/plugin/add', {
+          id: $('#id').val(),
           uniqueidentifier: $('#uniqueidentifier').val(),
           name: $('#name').val(),
           slug: $('#slug').val(),
@@ -220,11 +211,21 @@
           type: $('#type').val()
         })
           .then(function (response) {
-            $('div.js-alert')
-              .removeClass('alert-danger')
-              .addClass('alert-success')
-              .html('Theme saved successfully')
-              .show();
+            console.log(response.data);
+            if (response.data == false) {
+              $('div.js-alert')
+                .removeClass('alert-success')
+                .addClass('alert-danger')
+                .html('This plugin slug already exist')
+                .show();
+            } else {
+              $('div.js-alert')
+                .removeClass('alert-danger')
+                .addClass('alert-success')
+                .html('Plugin saved successfully')
+                .show();
+            }
+
           })
           .catch(function (error) {
             if (error.response.status == 422) {
@@ -245,7 +246,42 @@
       }
     };
 
-    themeForm.init();
+    var navigation = {
+
+      init: function () {
+        this.bindEvents();
+      },
+      bindEvents: function () {
+        var self = this;
+        $(document).keyup(function (event) {
+
+          switch (event.which) {
+            case 37:
+              self.previous();
+              break;
+            case 39:
+              self.next();
+              break;
+            case 70:
+              self.scan();
+              break;
+          }
+        });
+
+      },
+      next: function () {
+        window.location = '/admin/plugin/list/{{$next}}';
+      },
+      previous: function () {
+        window.location = '/admin/plugin/list/{{$previous}}';
+      },
+      scan: function () {
+        pluginForm.findPlugin();
+      }
+    };
+
+    pluginForm.init();
+    navigation.init();
 
   })(jQuery);
 

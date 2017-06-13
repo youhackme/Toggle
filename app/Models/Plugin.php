@@ -32,6 +32,15 @@ class Plugin extends Model
 
     ];
 
+
+    /**
+     * Get the meta associated with a theme
+     */
+    public function pluginMeta()
+    {
+        return $this->hasMany(PluginMeta::class, 'pluginid', 'id');
+    }
+
     /**
      * @param $value
      */

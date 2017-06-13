@@ -12,7 +12,7 @@ use File;
 use Storage;
 use Bugsnag\Report;
 use App\Repositories\Theme\ThemeRepository;
-use App\Repositories\Theme\ThemeMetaRepository;
+use App\Repositories\Theme\PluginMetaRepository;
 
 /**
  * Advanced scrapping of theme:
@@ -28,7 +28,7 @@ class ThemeMeta
     public $screenshotExternalUrl;
     public $screenshotHash;
 
-    public function __construct(ThemeRepository $theme, ThemeMetaRepository $themeMeta)
+    public function __construct(ThemeRepository $theme, PluginMetaRepository $themeMeta)
     {
         $this->theme     = $theme;
         $this->themeMeta = $themeMeta;
@@ -62,7 +62,7 @@ class ThemeMeta
                                     $data['screenshotExternalUrl'] = $fileName;
                                     $data['screenshotHash']        = $themeDetail->screenshot->hash;
                                     if ($this->saveScreenshotToFileSystem($fileName, $this->screenshotExternalUrl)) {
-                                        $this->theme->update($data['themeid'], 'detected');
+                                        $this->theme->update($data['themeid'], ['status' => 'detected']);
                                         $this->themeMeta->save($data);
                                         echo "Theme alias, screenshot and hash added successfully" . br();
                                     }
