@@ -87,15 +87,14 @@ class ThemeController extends Controller
 
             $this->saveScreenshotToFileSystem($screenshotFileName, $screenshotUrl);
 
-            echo json_encode($status);
-        } else {
-
-            return \Response::json([
-                'error' => ['Could not save theme. Already exist'],
-            ], 422);
-
-
+            return json_encode($status);
         }
+
+        return \Response::json([
+            'error' => ['Could not save theme. Already exist'],
+        ], 422);
+
+
     }
 
 

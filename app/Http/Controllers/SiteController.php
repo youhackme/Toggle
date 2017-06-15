@@ -8,6 +8,8 @@ class SiteController extends Controller
      * Discover whether this site is using WordPress or not.
      *
      * @param $site
+     *
+     * @return string
      */
     public function detect($site)
     {
@@ -16,10 +18,10 @@ class SiteController extends Controller
             $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
 
             if ($application->isWordPress()) {
-                echo $application->details();
-            } else {
-                echo 'Sadly, you are not using WordPress';
+                return $application->details();
             }
+
+            return 'Sadly, you are not using WordPress';
         }
     }
 }
