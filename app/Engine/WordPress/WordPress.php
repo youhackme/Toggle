@@ -169,16 +169,6 @@ class WordPress
     }
 
     /**
-     * Give us the theme's screeeshot path.
-     *
-     * @return bool
-     */
-    private function screenshot()
-    {
-        return array_collapse($this->screenshot);
-    }
-
-    /**
      * Reveal the WordPress Bold N Nuts.
      *
      * @return string
