@@ -54,7 +54,7 @@ class Html extends WordPressAbstract
      */
     public function checkUri()
     {
-        if (preg_match('/wp-content|wp-includes/i', $this->siteAnatomy->html, $matches)) {
+        if (preg_match('/wp-content|wp-includes/i', $this->siteAnatomy->html)) {
             $this->assertWordPress('uri');
         }
     }
