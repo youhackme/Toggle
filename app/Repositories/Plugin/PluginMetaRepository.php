@@ -37,9 +37,9 @@ class PluginMetaRepository
     {
         if ($this->exist(trim($data['pluginid']), $data['slug'])) {
             return $this->model->create($data);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

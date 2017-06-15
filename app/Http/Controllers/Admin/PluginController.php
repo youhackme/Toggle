@@ -82,14 +82,12 @@ class PluginController extends Controller
                 'status'   => 'active',
             ]);
 
-            echo json_encode($status);
-        } else {
-
-            return \Response::json([
-                'error' => ['Could not save plugin. Already exist'],
-            ], 422);
-
+            return json_encode($status);
         }
+
+        return \Response::json([
+            'error' => ['Could not save plugin. Already exist'],
+        ], 422);
     }
 
 

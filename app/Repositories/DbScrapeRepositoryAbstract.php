@@ -41,10 +41,9 @@ abstract class DbScrapeRepositoryAbstract
         ) {
 
             return true;
-        } else {
-
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -58,9 +57,9 @@ abstract class DbScrapeRepositoryAbstract
     {
         if ($this->exist(trim($data['uniqueidentifier']), $data['provider'])) {
             return $this->model->create($data);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

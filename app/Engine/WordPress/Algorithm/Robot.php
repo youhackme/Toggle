@@ -34,8 +34,8 @@ class Robot extends WordPressAbstract
      */
     public function check(SiteAnatomy $siteAnatomy)
     {
-        $this->siteAnatomy = $siteAnatomy;
-        $host = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
+        $this->siteAnatomy     = $siteAnatomy;
+        $host                  = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
         $this->pathToRobotsTxt = "http://$host/robots.txt";
         $this->checkWordPressFootprints($this->getRobotsTxtContent());
 
@@ -67,7 +67,7 @@ class Robot extends WordPressAbstract
      */
     public function checkWordPressFootprints($content)
     {
-        if (preg_match('/(wp-admin|admin-ajax.php|wp-content)/i', $content, $matches)) {
+        if (preg_match('/(wp-admin|admin-ajax.php|wp-content)/i', $content)) {
             $this->assertWordPress('robot');
         }
     }
