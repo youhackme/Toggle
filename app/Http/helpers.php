@@ -25,9 +25,9 @@ function bytesToSize($bytes, $precision = 2)
         return round($bytes / $gigabyte, $precision) . ' GB';
     } elseif ($bytes >= $terabyte) {
         return round($bytes / $terabyte, $precision) . ' TB';
-    } else {
-        return $bytes . ' B';
     }
+
+    return $bytes . ' B';
 }
 
 /**

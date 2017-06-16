@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Theme\ThemeRepository;
 use App\Repositories\Theme\ThemeMetaRepository;
-use Illuminate\Http\Request;
+use App\Repositories\Theme\ThemeRepository;
 use File;
+use Illuminate\Http\Request;
 use Storage;
 
 class ThemeController extends Controller
@@ -121,9 +121,9 @@ class ThemeController extends Controller
         if ( ! File::exists($filePath)) {
             if (Storage::put($fileName, $imageBinary)) {
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
         }
 
         return false;

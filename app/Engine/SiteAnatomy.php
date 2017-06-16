@@ -29,6 +29,11 @@ class SiteAnatomy
     public $html;
     public $errors = [];
 
+    /**
+     * SiteAnatomy constructor.
+     *
+     * @param $site
+     */
     public function __construct($site)
     {
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
@@ -212,13 +217,6 @@ class SiteAnatomy
         }
 
         return $finalCssIds;
-    }
-
-    /**
-     * Find inner links of a domain to make further analysis.
-     */
-    private function getInnnerLinks()
-    {
     }
 
     /**
