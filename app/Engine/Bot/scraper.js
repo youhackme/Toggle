@@ -62,10 +62,10 @@
       log: function (args) {
         if (args.type === 'error') {
           if (!quiet) {
-            //   require('system').stderr.write(args.message + '\n');
+            //require('system').stderr.write(args.message + '\n');
           }
         } else if (debug || args.type !== 'debug') {
-          // require('system').stdout.write(args.message + '\n');
+          //require('system').stdout.write(args.message + '\n');
         }
       },
 
@@ -76,7 +76,7 @@
         apps = apps || [];
         require('system').stdout.write(JSON.stringify(apps) + '\n');
         phantom.exit(1);
-      //  require('system').stdout.write(JSON.stringify({url: url, originalUrl: originalUrl, applications: apps}) + '\n');
+        //  require('system').stdout.write(JSON.stringify({url: url, originalUrl: originalUrl, applications: apps}) + '\n');
       },
 
       /**
@@ -84,8 +84,9 @@
        */
       init: function () {
         var
-          page, hostname,
+          page, hostname, responseStatus,
           headers = {},
+          responseCookies = {},
           a = document.createElement('a');
 
         a.href = url.replace(/#.*$/, '');
@@ -118,7 +119,10 @@
               return;
             }
 
+            responseStatus = response.status;
+
             if (response.stage === 'end' && response.status === 200 && response.contentType.indexOf('text/html') !== -1) {
+
               response.headers.forEach(function (header) {
                 headers[header.name.toLowerCase()] = header.value;
               });
@@ -136,8 +140,13 @@
           if (status === 'success') {
             html = page.content;
 
-            if (html.length > 50000) {
-              html = html.substring(0, 25000) + html.substring(html.length - 25000, html.length);
+            // Collect cookies
+
+            var cookies = page.cookies;
+            for (var i in cookies) {
+
+              responseCookies[cookies[i].name.toLowerCase()] = cookies[i].value;
+              // console.log(cookies[i].name + '=' + cookies[i].value);
             }
 
             // Collect environment variables
@@ -160,11 +169,13 @@
               url: url,
               html: html,
               headers: headers,
-              env: environmentVars
+              status: responseStatus,
+              env: environmentVars,
+              cookies: responseCookies,
             };
 
             toggleBot.sendResponse(result);
-           // console.log(JSON.stringify(result));
+            // console.log(JSON.stringify(result));
 
             // toggleBot.analyze(hostname, url, {
             //   html: html,

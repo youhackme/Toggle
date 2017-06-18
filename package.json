@@ -14,5 +14,8 @@
     "jquery": "^3.1.1",
     "laravel-mix": "^0.8.3",
     "lodash": "^4.17.4"
+  },
+  "dependencies": {
+    "wappalyzer": "^4.1.0"
   }
 }
