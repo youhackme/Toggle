@@ -38,19 +38,31 @@ class SiteAnatomy
     {
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
-        $this->goutteClient = App::make('goutte');
+        $bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\PhantomJS());
+        //$bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\Curl());
+        $result        = json_decode($bot->crawl($url));
 
-        try {
-            $this->crawler = $this->goutteClient->request(
-                'GET',
-                $url
-            );
-        } catch (\GuzzleHttp\Exception\TransferException $e) {
-            echo $e->getMessage();
-            $this->errors[] = $e->getMessage();
-        }
-
+        $this->html    = $result->html;
+        $this->headers = $result->headers;
         $this->result();
+
+//        exit();
+//
+//
+//        dd($url);
+//        $this->goutteClient = App::make('goutte');
+//
+//        try {
+//            $this->crawler = $this->goutteClient->request(
+//                'GET',
+//                $url
+//            );
+//        } catch (\GuzzleHttp\Exception\TransferException $e) {
+//            echo $e->getMessage();
+//            $this->errors[] = $e->getMessage();
+//        }
+//
+//        $this->result();
     }
 
     /**
@@ -80,9 +92,9 @@ class SiteAnatomy
     {
         $tags = [];
         $this->crawler->filterXpath('//meta[@name="generator"]')
-                        ->each(function (Crawler $metaTags) use (&$tags) {
-                            $tags['generator'][] = $metaTags->attr('content');
-                        });
+                      ->each(function (Crawler $metaTags) use (&$tags) {
+                          $tags['generator'][] = $metaTags->attr('content');
+                      });
 
         return $tags;
     }
@@ -94,7 +106,7 @@ class SiteAnatomy
      */
     private function getHeaders()
     {
-        return $this->goutteClient->getResponse()->getHeaders();
+        return $this->headers;
     }
 
     /**
@@ -125,14 +137,14 @@ class SiteAnatomy
     private function getStyleSheets()
     {
         $blacklistedDomains = ['googleapis.com'];
-        $styleSheets = [];
+        $styleSheets        = [];
         $this->crawler->filterXpath('//link[@rel="stylesheet"]')
-                        ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
-                            $link = $styleSheet->attr('href');
-                            if (! str_contains($link, $blacklistedDomains)) {
-                                $styleSheets[] = $styleSheet->attr('href');
-                            }
-                        });
+                      ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
+                          $link = $styleSheet->attr('href');
+                          if ( ! str_contains($link, $blacklistedDomains)) {
+                              $styleSheets[] = $styleSheet->attr('href');
+                          }
+                      });
 
         return array_values(array_unique($styleSheets));
     }
@@ -146,11 +158,11 @@ class SiteAnatomy
     {
         $scripts = [];
         $this->crawler->filterXpath('//script')
-                        ->each(function (Crawler $script) use (&$scripts) {
-                            if (! is_null($script->attr('src'))) {
-                                $scripts[] = $script->attr('src');
-                            }
-                        });
+                      ->each(function (Crawler $script) use (&$scripts) {
+                          if ( ! is_null($script->attr('src'))) {
+                              $scripts[] = $script->attr('src');
+                          }
+                      });
 
         return array_unique($scripts);
     }
@@ -162,7 +174,7 @@ class SiteAnatomy
      */
     private function getHtmlComments()
     {
-        if (preg_match_all('/<!-- ([\\s\\S])*?-->/uim', $this->getHtml(), $comments)) {
+        if (preg_match_all('/<!-- ([\\s\\S])*?-->/uim', $this->html, $comments)) {
             return $comments[0];
         }
     }
@@ -176,11 +188,11 @@ class SiteAnatomy
     {
         $cssClasses = [];
         $this->crawler->filterXpath('//*[@class]')
-                        ->each(function (Crawler $cssClass) use (&$cssClasses) {
-                            $classes = trim($cssClass->attr('class'));
-                            $classes = explode(' ', $classes);
-                            $cssClasses[] = $classes;
-                        });
+                      ->each(function (Crawler $cssClass) use (&$cssClasses) {
+                          $classes      = trim($cssClass->attr('class'));
+                          $classes      = explode(' ', $classes);
+                          $cssClasses[] = $classes;
+                      });
 
         $uniqueCssClasses = array_unique(array_flatten($cssClasses));
 
@@ -203,9 +215,9 @@ class SiteAnatomy
     {
         $cssIds = [];
         $this->crawler->filterXpath('//*[@id]')
-                        ->each(function (Crawler $cssId) use (&$cssIds) {
-                            $cssIds[] = trim($cssId->attr('id'));
-                        });
+                      ->each(function (Crawler $cssId) use (&$cssIds) {
+                          $cssIds[] = trim($cssId->attr('id'));
+                      });
 
         $uniqueCssIds = array_unique(array_flatten($cssIds));
 
@@ -227,19 +239,22 @@ class SiteAnatomy
     private function result()
     {
         if ( ! ($this->errors())) {
-            $this->styles = $this->getStyleSheets();
+
+            $this->crawler = new Crawler($this->html);
+
+            $this->styles  = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
-            $this->metas = $this->metatags();
+            $this->metas   = $this->metatags();
             $this->headers = $this->getHeaders();
-            $this->cookies = $this->getCookies();
+            // $this->cookies  = $this->getCookies();
             $this->comments = $this->getHtmlComments();
-            $this->status = $this->getStatus();
+            // $this->status   = $this->getStatus();
             $this->css = [
                 'classes' => $this->getCssClasses(),
                 'ids'     => $this->getCssIds(),
             ];
-            $this->innerlinks = $this->getInnnerLinks();
-            $this->html = $this->getHtml();
+            //$this->innerlinks = $this->getInnnerLinks();
+            //$this->html       = $this->getHtml();
         }
     }
 }
