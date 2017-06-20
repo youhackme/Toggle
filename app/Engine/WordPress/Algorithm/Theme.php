@@ -8,9 +8,9 @@
 
 namespace App\Engine\WordPress\Algorithm;
 
-use GuzzleHttp\Promise;
 use App\Engine\SiteAnatomy;
 use App\Engine\WordPress\WordPressAbstract;
+use GuzzleHttp\Promise;
 
 class Theme extends WordPressAbstract
 {
@@ -115,14 +115,18 @@ class Theme extends WordPressAbstract
      */
     private function launchAsyncRequests()
     {
-        $promises = [];
+        $promises     = [];
         $goutteClient = \App::make('goutte');
+        if (isset($this->siteAnatomy->styles)) {
+            foreach ($this->siteAnatomy->styles as $styleSheet) {
+                $promises[] = $goutteClient->getClient()->getAsync($styleSheet);
+            }
 
-        foreach ($this->siteAnatomy->styles as $styleSheet) {
-            $promises[] = $goutteClient->getClient()->getAsync($styleSheet);
+            return Promise\settle($promises)->wait();
         }
 
-        return Promise\settle($promises)->wait();
+        return false;
+
     }
 
     //@TOOD
