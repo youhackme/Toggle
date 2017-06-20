@@ -28,6 +28,9 @@ class SiteAnatomy
     public $innerlinks;
     public $html;
     public $errors = [];
+    public $url;
+    public $host;
+    public $environment = null;
 
     /**
      * SiteAnatomy constructor.
@@ -38,31 +41,21 @@ class SiteAnatomy
     {
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
-        $bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\PhantomJS());
-        //$bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\Curl());
-        $result        = json_decode($bot->crawl($url));
 
-        $this->html    = $result->html;
-        $this->headers = $result->headers;
-        $this->result();
+        try {
+            $bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\PhantomJS());
 
-//        exit();
-//
-//
-//        dd($url);
-//        $this->goutteClient = App::make('goutte');
-//
-//        try {
-//            $this->crawler = $this->goutteClient->request(
-//                'GET',
-//                $url
-//            );
-//        } catch (\GuzzleHttp\Exception\TransferException $e) {
-//            echo $e->getMessage();
-//            $this->errors[] = $e->getMessage();
-//        }
-//
-//        $this->result();
+            $data = $bot->crawl($url);
+
+            $this->result($data);
+
+
+        } catch (\Exception $e) {
+
+            echo $e->getMessage();
+
+            $this->errors[] = $e->getMessage();
+        }
     }
 
     /**
@@ -234,18 +227,32 @@ class SiteAnatomy
     /**
      * Get the result.
      *
-     * @return array
+     * @param $data
+     *
+     * @return $this
      */
-    private function result()
+    private function result($data)
     {
+
+
         if ( ! ($this->errors())) {
 
+            $this->html = $data->html();
+
             $this->crawler = new Crawler($this->html);
+
+            $this->url         = $data->url();
+            $this->headers     = $data->headers();
+            $this->cookies     = $data->cookies();
+            $this->environment = $data->environment();
+            $this->status      = $data->status();
+            $this->host        = $data->host();
+
 
             $this->styles  = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
             $this->metas   = $this->metatags();
-            $this->headers = $this->getHeaders();
+            // $this->headers = $this->getHeaders();
             // $this->cookies  = $this->getCookies();
             $this->comments = $this->getHtmlComments();
             // $this->status   = $this->getStatus();
@@ -253,8 +260,12 @@ class SiteAnatomy
                 'classes' => $this->getCssClasses(),
                 'ids'     => $this->getCssIds(),
             ];
+
+            return $this;
+
+
             //$this->innerlinks = $this->getInnnerLinks();
-            //$this->html       = $this->getHtml();
+            //$this->response->html       = $this->getHtml();
         }
     }
 }

@@ -8,9 +8,9 @@
 
 namespace App\Engine\WordPress\Algorithm;
 
-use GuzzleHttp\Promise;
 use App\Engine\SiteAnatomy;
 use App\Engine\WordPress\WordPressAbstract;
+use GuzzleHttp\Promise;
 
 class Link extends WordPressAbstract
 {
@@ -29,10 +29,9 @@ class Link extends WordPressAbstract
     public function check(SiteAnatomy $siteAnatomy)
     {
         $this->siteAnatomy = $siteAnatomy;
-        $host              = parse_url($this->siteAnatomy->crawler->getBaseHref(), PHP_URL_HOST);
 
         $commonWordPressPaths = $this->commonWordPressPaths();
-        $responses            = $this->launchAsyncRequests($host);
+        $responses            = $this->launchAsyncRequests($this->siteAnatomy->host);
 
         foreach ($responses as $key => $response) {
             if ($response['state'] == 'fulfilled') {

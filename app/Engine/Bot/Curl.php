@@ -18,7 +18,7 @@ class Curl implements BotInterface
 
     public function request($url)
     {
-        echo 'Scrape ' . $url . ' using Curl via Guzzle';
+        //echo 'Scrape ' . $url . ' using Curl via Guzzle';
         $site = str_contains($url, ['http://', 'https://']) ? $url : 'http://' . $url;
 
         $this->goutteClient = App::make('goutte');
@@ -29,22 +29,64 @@ class Curl implements BotInterface
                 $site
             );
 
-            return json_encode(
-                [
-                    'html'    => $this->goutteClient->getResponse()->getContent(),
-                    'headers' => $this->getHeaders(),
-                ]
-            );
+            return $this;
 
 
         } catch (\GuzzleHttp\Exception\TransferException $e) {
+            echo $e->getMessage();
+
             return $e->getMessage();
         }
     }
 
-    private function getHeaders()
+    public function headers()
     {
         return $this->goutteClient->getResponse()->getHeaders();
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function cookies()
+    {
+        return $this->goutteClient->getCookieJar();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function status()
+    {
+        return $this->goutteClient->getResponse()->getStatus();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function url()
+    {
+        return $this->crawler->getBaseHref();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function host()
+    {
+        return parse_url($this->url(), PHP_URL_HOST);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function html()
+    {
+        return $this->goutteClient->getResponse()->getContent();
+    }
+
+    public function environment()
+    {
+        return [];
+    }
 }

@@ -123,9 +123,8 @@
 
             if (response.stage === 'end' && response.status === 200 && response.contentType.indexOf('text/html') !== -1) {
 
-              response.headers.forEach(function (header) {
-                headers[header.name.toLowerCase()] = header.value;
-              });
+              headers = JSON.stringify(response.headers);
+              
             }
           }
         };
@@ -199,7 +198,7 @@
   } catch (e) {
     // console.log(e);
     //toggleBot.log(e, 'error');
-    //toggleBot.sendResponse();
+    toggleBot.sendResponse();
     phantom.exit(1);
   }
 })();
