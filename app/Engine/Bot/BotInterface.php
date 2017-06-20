@@ -13,4 +13,15 @@ interface BotInterface
 {
     public function request($url);
 
+    public function headers();
+
+    public function cookies();
+
+    public function status();
+
+    public function url();
+
+    public function host();
+
+    public function html();
 }
