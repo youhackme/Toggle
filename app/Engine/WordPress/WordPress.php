@@ -9,6 +9,7 @@ namespace App\Engine\WordPress;
  * Time: 22:16
  */
 use App\Engine\SiteAnatomy;
+use App\Engine\Togglyzer;
 use Bugsnag\Report;
 
 /**
@@ -176,11 +177,11 @@ class WordPress
     public function details()
     {
         return json_encode([
-            'wordpress' => true,
-            'version'   => $this->version(),
-            'theme'     => $this->extraInfos(),
-            'plugins'   => $this->plugins(),
-            //  'screenshot' => $this->screenshot(),
+            'wordpress'    => true,
+            'version'      => $this->version(),
+            'theme'        => $this->extraInfos(),
+            'plugins'      => $this->plugins(),
+            'technologies' => $this->technologies(),
         ]);
     }
 
@@ -218,5 +219,11 @@ class WordPress
 
         return $themes;
 
+    }
+
+
+    public function technologies()
+    {
+        return (new Togglyzer($this->siteAnatomy))->check();
     }
 }
