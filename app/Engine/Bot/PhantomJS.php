@@ -25,9 +25,12 @@ class PhantomJS implements BotInterface
     public function request($url)
     {
         $scraperPath = app_path() . '/Engine/Bot/scraper.js';
+        //$scraperPath = app_path() . '/Engine/Bot/async.js';
         //echo 'Scrape ' . $url . ' using PhantomJS';
 
         $process = new Process('phantomjs ' . $scraperPath . ' ' . $url);
+        //dd('node ' . $scraperPath . ' ' . $url);
+        //$process = new Process('node ' . $scraperPath . ' ' . $url);
         $process->run();
 
         // executes after the command finishes
