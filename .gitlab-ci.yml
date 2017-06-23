@@ -8,7 +8,8 @@ before_script:
   - ssh-add /root/.ssh/id_rsa
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  - php -v
+  - npm install
+  - npm run dev
   - php /composer.phar self-update
   - php /composer.phar -V
   - php /composer.phar install --no-progress
