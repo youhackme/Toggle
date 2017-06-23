@@ -21,7 +21,7 @@ alpha:
     url: https://alpha.toggle.me
   only:
     - themescraping
-demo:
+prod:
   stage: deploy
   script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/toggle.me/public_html
