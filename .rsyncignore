@@ -10,3 +10,4 @@ travis.yml
 .env.travis
 .env.example
 tests
+storage/app/other/t_info.xml
