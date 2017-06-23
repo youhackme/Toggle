@@ -124,7 +124,7 @@
             if (response.stage === 'end' && response.status === 200 && response.contentType.indexOf('text/html') !== -1) {
 
               headers = JSON.stringify(response.headers);
-              
+
             }
           }
         };
