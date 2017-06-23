@@ -1,27 +1,33 @@
-image: registry.gitlab.com/youhackme/zekler-wordpress:latest
+image: registry.gitlab.com/youhackme/togglex:latest
 stages:
-  - deploy
+  - alpha
+  - production
 before_script:
   # load SSH Key to allow rsync to production server
   - eval $(ssh-agent -s)
   - ssh-add /root/.ssh/id_rsa
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  - php -v
+  - npm install
+  - npm run dev
   - php /composer.phar self-update
   - php /composer.phar -V
   - php /composer.phar install --no-progress
 demo:
-  stage: deploy
+  stage: alpha
   script:
-    #- npm install
-    # - gulp gitlab
-    # - composer install
-    # Push source files to server
+    - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/alpha.toggle.me/public_html
+  environment:
+    name: Alpha
+    url: https://alpha.toggle.me
+  only:
+    - themescraping
+demo:
+  stage: production
+  script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/toggle.me/public_html
   environment:
-    name: WIP
+    name: Production
     url: https://toggle.me
   only:
     - master
-    - themescraping
