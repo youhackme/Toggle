@@ -12,7 +12,7 @@ before_script:
   - php /composer.phar self-update
   - php /composer.phar -V
   - php /composer.phar install --no-progress
-demo:
+alpha:
   stage: deploy
   script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/alpha.toggle.me/public_html
