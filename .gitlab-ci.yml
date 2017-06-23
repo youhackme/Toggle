@@ -1,4 +1,4 @@
-image: registry.gitlab.com/youhackme/zekler-wordpress:latest
+image: registry.gitlab.com/youhackme/togglex:latest
 stages:
   - alpha
   - production
