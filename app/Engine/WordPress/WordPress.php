@@ -170,7 +170,7 @@ class WordPress
     }
 
     /**
-     * Reveal the WordPress Bold N Nuts.
+     * Reveal the WordPress Bolt N Nuts.
      *
      * @return string
      */
