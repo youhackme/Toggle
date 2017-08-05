@@ -18,6 +18,9 @@ class PluginMeta extends Model
 
     public function plugin()
     {
-        return $this->belongsTo(Plugin::class, 'pluginid', 'id');
+        return $this->belongsTo(Plugin::class, 'pluginid', 'id')->withDefault([
+            'name'        => null,
+            'description' => null,
+        ]);
     }
 }

@@ -124,7 +124,32 @@ class WordPress
      */
     private function plugins()
     {
-        return array_collapse($this->plugins);
+        // return array_collapse($this->plugins);
+
+        $plugins = array_collapse($this->plugins);
+
+        if ( ! empty($plugins)) {
+            foreach ($plugins as &$plugin) {
+                $plugin['description'] = null;
+                $plugin['name']        = null;
+                $slug                  = $plugin['slug'];
+
+
+                $pluginMeta = \App\Models\PluginMeta::where('slug', $slug)
+                                                    ->get();
+
+                if (isset($pluginMeta[0])) {
+
+                    $plugin['description'] = $pluginMeta[0]->plugin->description;
+                    $plugin['name']        = $pluginMeta[0]->plugin->name;
+                }
+            }
+        }
+
+
+        return $plugins;
+
+
         // Cycle through each algorithm and find out through getPlugin
         // Find more information from plugin database now
     }
@@ -170,14 +195,14 @@ class WordPress
     }
 
     /**
-     * Reveal the WordPress Bold N Nuts.
+     * Reveal the WordPress Bolt N Nuts.
      *
      * @return string
      */
     public function details()
     {
         return json_encode([
-            'wordpress'    => true,
+            'application'  => 'wordpress',
             'version'      => $this->version(),
             'theme'        => $this->extraInfos(),
             'plugins'      => $this->plugins(),

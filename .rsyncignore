@@ -3,3 +3,11 @@ Homestead.json
 Homestead.yaml
 .env
 .git
+travis.yml
+.gitlab-ci.yml
+.gitignore
+.gitattributes
+.env.travis
+.env.example
+tests
+storage/app/other/t_info.xml

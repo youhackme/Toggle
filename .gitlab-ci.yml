@@ -1,7 +1,6 @@
 image: registry.gitlab.com/youhackme/togglex:latest
 stages:
-  - alpha
-  - production
+  - deploy
 before_script:
   # load SSH Key to allow rsync to production server
   - eval $(ssh-agent -s)
@@ -13,19 +12,21 @@ before_script:
   - php /composer.phar self-update
   - php /composer.phar -V
   - php /composer.phar install --no-progress
-demo:
-  stage: alpha
+alpha:
+  stage: deploy
   script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/alpha.toggle.me/public_html
+    - ssh hyder@163.172.90.99 "cd /var/www/alpha.toggle.me/public_html && php artisan migrate --force"
   environment:
     name: Alpha
     url: https://alpha.toggle.me
   only:
     - themescraping
-demo:
-  stage: production
+prod:
+  stage: deploy
   script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/toggle.me/public_html
+    - ssh hyder@163.172.90.99 "cd /var/www/toggle.me/public_html && php artisan migrate --force"
   environment:
     name: Production
     url: https://toggle.me
