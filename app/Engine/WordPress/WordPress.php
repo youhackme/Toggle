@@ -124,7 +124,32 @@ class WordPress
      */
     private function plugins()
     {
-        return array_collapse($this->plugins);
+        // return array_collapse($this->plugins);
+
+        $plugins = array_collapse($this->plugins);
+
+        if ( ! empty($plugins)) {
+            foreach ($plugins as &$plugin) {
+                $plugin['description'] = null;
+                $plugin['name']        = null;
+                $slug                  = $plugin['slug'];
+
+
+                $pluginMeta = \App\Models\PluginMeta::where('slug', $slug)
+                                                    ->get();
+
+                if (isset($pluginMeta[0])) {
+
+                    $plugin['description'] = $pluginMeta[0]->plugin->description;
+                    $plugin['name']        = $pluginMeta[0]->plugin->name;
+                }
+            }
+        }
+
+
+        return $plugins;
+
+
         // Cycle through each algorithm and find out through getPlugin
         // Find more information from plugin database now
     }
@@ -177,7 +202,7 @@ class WordPress
     public function details()
     {
         return json_encode([
-            'application'   => 'wordpress',
+            'application'  => 'wordpress',
             'version'      => $this->version(),
             'theme'        => $this->extraInfos(),
             'plugins'      => $this->plugins(),
