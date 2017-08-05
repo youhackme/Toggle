@@ -177,7 +177,7 @@ class WordPress
     public function details()
     {
         return json_encode([
-            'wordpress'    => true,
+            'application'   => 'wordpress',
             'version'      => $this->version(),
             'theme'        => $this->extraInfos(),
             'plugins'      => $this->plugins(),
