@@ -92,7 +92,8 @@ abstract class WordPressAbstract
     public function setPlugin($name, $description = null)
     {
         if ( ! is_null($name) || ! empty($name)) {
-            $this->plugins[$name] = [
+            $this->plugins[] = [
+                'slug'        => $name,
                 'description' => $description,
             ];
 
