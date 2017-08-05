@@ -130,9 +130,10 @@ class WordPress
 
         if ( ! empty($plugins)) {
             foreach ($plugins as &$plugin) {
-                $plugin['description'] = null;
-                $plugin['name']        = null;
+
                 $slug                  = $plugin['slug'];
+                $plugin['description'] = null;
+                $plugin['name']        = $slug;
 
 
                 $pluginMeta = \App\Models\PluginMeta::where('slug', $slug)
