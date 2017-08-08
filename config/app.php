@@ -179,7 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\GoutteServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+       // Barryvdh\Debugbar\ServiceProvider::class,
 
 
     ],
