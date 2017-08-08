@@ -3,6 +3,7 @@
 namespace App\Engine;
 
 use App;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -40,6 +41,26 @@ class SiteAnatomy
     public function __construct($site)
     {
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
+
+        $this->crawl($url);
+    }
+
+    public function crawl($url)
+    {
+
+
+        if (Cache::has('site:' . $url)) {
+
+            $datas = json_decode(Cache::get('site:' . $url), true);
+
+
+            foreach ($datas as $key => $value) {
+
+                $this->$key = $value;
+            }
+
+            return $this;
+        }
 
 
         try {
@@ -234,7 +255,6 @@ class SiteAnatomy
     private function result($data)
     {
 
-
         if ( ! ($this->errors())) {
 
             $this->html = $data->html();
@@ -261,6 +281,9 @@ class SiteAnatomy
                 'ids'     => $this->getCssIds(),
             ];
 
+
+            Cache::put('site:' . $this->url, json_encode($this), 60);
+
             return $this;
 
 
@@ -268,4 +291,6 @@ class SiteAnatomy
             //$this->response->html       = $this->getHtml();
         }
     }
+
+
 }
