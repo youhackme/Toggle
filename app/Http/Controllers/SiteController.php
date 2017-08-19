@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Engine\Togglyzer;
+
 class SiteController extends Controller
 {
     /**
@@ -21,7 +23,15 @@ class SiteController extends Controller
                 return $application->details();
             }
 
-            return 'Sadly, you are not using WordPress';
+            return response()->json([
+                'application'  => false,
+                'version'      => false,
+                'theme'        => false,
+                'plugins'      => false,
+                'technologies' => (new Togglyzer($siteAnatomy))->check(),
+            ]);
+
+
         }
     }
 }
