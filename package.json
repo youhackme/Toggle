@@ -16,7 +16,8 @@
     "lodash": "^4.17.4"
   },
   "dependencies": {
-    "phantom": "^4.0.4",
+    "phantom": "^4.0.5",
+    "redis": "^2.8.0",
     "wappalyzer": "^4.1.0"
   }
 }
