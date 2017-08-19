@@ -3,7 +3,7 @@
 namespace App\Engine;
 
 use App;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -49,9 +49,10 @@ class SiteAnatomy
     {
 
 
-        if (Cache::has('site:' . $url)) {
+        if (Redis::EXISTS('site:' . $url)) {
 
-            $datas = json_decode(Cache::get('site:' . $url), true);
+
+            $datas = json_decode(Redis::get('site:' . $url), true);
 
 
             foreach ($datas as $key => $value) {
@@ -72,7 +73,6 @@ class SiteAnatomy
 
 
         } catch (\Exception $e) {
-
             echo $e->getMessage();
 
             $this->errors[] = $e->getMessage();
@@ -282,8 +282,8 @@ class SiteAnatomy
             ];
 
 
-            Cache::put('site:' . $this->url, json_encode($this), 60);
-
+            Redis::set('site:' . $this->url, json_encode($this));
+            Redis::expire('site:' . $this->url, 3600);
             return $this;
 
 
