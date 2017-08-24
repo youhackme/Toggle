@@ -58,7 +58,12 @@ class PhantomJS implements BotInterface
      */
     public function headers()
     {
-        $filteredHeaders  = [];
+        $filteredHeaders = [];
+
+
+        if (empty((array)$this->response->headers)) {
+            return $filteredHeaders;
+        }
         $headers          = json_decode($this->response->headers);
         $blacklistHeaders = ['Expires', 'Cache-Control'];
         foreach ($headers as $header) {
