@@ -60,7 +60,6 @@ class PhantomJS implements BotInterface
     {
         $filteredHeaders = [];
 
-
         if (empty((array)$this->response->headers)) {
             return $filteredHeaders;
         }
