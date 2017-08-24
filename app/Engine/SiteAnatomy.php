@@ -3,6 +3,7 @@
 namespace App\Engine;
 
 use App;
+use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -41,6 +42,27 @@ class SiteAnatomy
     {
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
+        $this->crawl($url);
+    }
+
+    public function crawl($url)
+    {
+
+
+        if (Redis::EXISTS('site:' . $url)) {
+
+
+            $datas = json_decode(Redis::get('site:' . $url), true);
+
+
+            foreach ($datas as $key => $value) {
+
+                $this->$key = $value;
+            }
+
+            return $this;
+        }
+
 
         try {
             $bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\PhantomJS());
@@ -51,7 +73,6 @@ class SiteAnatomy
 
 
         } catch (\Exception $e) {
-
             echo $e->getMessage();
 
             $this->errors[] = $e->getMessage();
@@ -234,7 +255,6 @@ class SiteAnatomy
     private function result($data)
     {
 
-
         if ( ! ($this->errors())) {
 
             $this->html = $data->html();
@@ -261,6 +281,9 @@ class SiteAnatomy
                 'ids'     => $this->getCssIds(),
             ];
 
+
+            Redis::set('site:' . $this->url, json_encode($this));
+            Redis::expire('site:' . $this->url, 3600);
             return $this;
 
 
@@ -268,4 +291,6 @@ class SiteAnatomy
             //$this->response->html       = $this->getHtml();
         }
     }
+
+
 }

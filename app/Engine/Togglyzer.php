@@ -59,6 +59,11 @@ class Togglyzer
         }
 
         $response = json_decode($process->getOutput());
+        if (isset($response->applications)) {
+            foreach ($response->applications as &$application) {
+                $application->icon = env('APP_URL').'/storage/icons/'.$application->icon;
+            }
+        }
 
         return $response;
     }
