@@ -55,3 +55,10 @@ Route::group(['namespace' => 'Admin'], function () {
     Route::post('/admin/plugin/add', 'PluginController@add');
 
 });
+
+
+Route::group(['namespace' => 'Plugin'], function () {
+
+    Route::get('/scan', 'PluginController@scan');
+
+});
