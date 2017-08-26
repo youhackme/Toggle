@@ -78,49 +78,113 @@
             border-radius: 0;
         }
 
+        .panel-heading {
+            background-color: #F7F8FB !important;
+        }
 
+        .panel-body {
+            padding: 0px;
+        }
+
+        h6.panel-title {
+            color: #b3b3b3;
+        }
+
+        div.panel-group {
+            margin-bottom: 0px;
+        }
+
+        li.list-group-item h5 {
+            margin-bottom: 5px;
+        }
+
+        .extension-wrapper {
+            height: 460px;
+        }
+
+        div.overview {
+            background-color: #ffffff;
+            padding-right: 0;
+            padding-left: 0;
+            height: 460px;
+            border-right: 1px solid #C9D2D5
+        }
+
+        div.overview li {
+            border: none;
+        }
+
+        div.overview li h6 {
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        div.details {
+            background: #ffffff;
+            padding-right: 0;
+            padding-left: 0;
+            height: 460px;
+        }
+
+        table.table {
+            margin-bottom: 0px;
+            border: none;
+        }
+
+        div.icon-holder {
+            padding-right: 15px;
+            padding-top: 10px;
+        }
+
+        div.plugin-details h5 {
+            margin-bottom: 0px;
+        }
+
+        tr.zebra-color {
+            background-color: #fafafa;
+        }
+
+        tr > td {
+            border: none !important;
+        }
     </style>
 </head>
 <body>
 
-<div class="container-fluid" style="height:460px;">
+<div class="container-fluid extension-wrapper">
     <div class="row">
-        <div style="background-color: #ffffff;padding-right:0;padding-left: 0;height:460px;border-right:1px solid #C9D2D5"
-             class="col-xs-5">
+        <div class="col-xs-5 overview">
             <ul class="list-group">
-                <li class="list-group-item" style="border:none;">
-                    <h6 class="panel-title"
-                        style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
+                <li class="list-group-item">
+                    <h6 class="panel-title">
                         Domain
                     </h6>
                     <h5>
-                        <!--  <img class="favicon animated fadeIn"
-                               src="//www.google.com/s2/favicons?domain=w3schools.com">-->
+                        <img class="favicon animated fadeIn"
+                             src="https://www.google.com/s2/favicons?domain=w3schools.com">
                         www.darktips.com
                     </h5>
 
                 </li>
-                <li class="list-group-item" style="border:none;">
-                    <h6 class="panel-title"
-                        style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
+                <li class="list-group-item">
+                    <h6 class="panel-title">
                         Application
                     </h6>
                     <h5>
                         WordPress
                     </h5>
                 </li>
-                <li class="list-group-item" style="border:none;">
-                    <h6 class="panel-title"
-                        style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
+                <li class="list-group-item">
+                    <h6 class="panel-title">
                         Theme name
                     </h6>
                     <h5>
                         Progressive Theme
                     </h5>
                 </li>
-                <li class="list-group-item" style="border:none;">
-                    <h6 class="panel-title"
-                        style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
+                <li class="list-group-item">
+                    <h6 class="panel-title">
                         Technologies found
                     </h6>
                     <h5>
@@ -129,30 +193,29 @@
                 </li>
             </ul>
         </div>
-        <div style="background: #ffffff;padding-right:0;padding-left: 0;height:460px" class="col-xs-7">
-            <div class="panel-group" id="plugins" style="margin-bottom:0px;">
+        <div class="col-xs-7 details">
+            <div class="panel-group" id="plugins">
                 <div class="panel panel-default">
-                    <div class="panel-heading"
-                         style="background-color: #EBEDF0;cursor: pointer;">
+                    <div class="panel-heading">
                         <h4 class="panel-title">
                             <a>WordPresss Plugins</a>
                         </h4>
                     </div>
                     <div class="panel-collapse collapse in">
-                        <div class="panel-body" style="padding:0px;">
-                            <table class="table table-bordered" style="margin-bottom:0px;border:none;">
+                        <div class="panel-body">
+                            <table class="table table-bordered">
                                 <tbody>
                                 <tr>
-                                    <td style="border:none;">
+                                    <td>
 
                                         <div class="wrapper">
-                                            <div class="pull-left" style="padding-right: 15px;padding-top:10px;">
+                                            <div class="icon-holder pull-left">
                                                 <span class="circle">
                                                   G
                                                 </span>
                                             </div>
-                                            <div class="pull-left">
-                                                <h5 style="margin-bottom: 0px;">Google Analytics</h5>
+                                            <div class="plugin-details pull-left">
+                                                <h5>Google Analytics</h5>
                                                 <small>Track visitors on your website.</small>
                                             </div>
                                         </div>
@@ -160,18 +223,18 @@
 
                                     </td>
                                 </tr>
-                                <tr style="background-color:#fafafa;">
-                                    <td style="border:none;">
+                                <tr class="zebra-color">
+                                    <td>
 
                                         <div class="wrapper">
-                                            <div class="pull-left" style="padding-right: 15px;padding-top:10px;">
+                                            <div class="icon-holder pull-left">
                                                 <span class="circle">
                                                   P
                                                 </span>
 
                                             </div>
-                                            <div class="pull-left">
-                                                <h5 style="margin-bottom: 0px;">Piwik</h5>
+                                            <div class="plugin-details pull-left">
+                                                <h5>Piwik</h5>
                                                 <small>Track visitors on your website.</small>
                                             </div>
                                         </div>
@@ -180,17 +243,17 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="border:none;">
+                                    <td>
 
                                         <div class="wrapper">
-                                            <div class="pull-left" style="padding-right: 15px;padding-top:10px;">
+                                            <div class="icon-holder pull-left">
                                                 <span class="circle">
                                                   K
                                                 </span>
 
                                             </div>
-                                            <div class="pull-left">
-                                                <h5 style="margin-bottom: 0px;">Kissmetrics</h5>
+                                            <div class="plugin-details pull-left">
+                                                <h5>Kissmetrics</h5>
                                                 <small>Track visitors on your website.</small>
                                             </div>
                                         </div>
@@ -202,10 +265,9 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-group" id="technologies" style="margin-bottom:0px;">
+            <div class="panel-group" id="technologies">
                 <div class="panel panel-default">
-                    <div class="panel-heading"
-                         style="background-color: #EBEDF0;cursor: pointer;">
+                    <div class="panel-heading">
                         <h4 class="panel-title">
                             <a>Technologies</a>
                         </h4>
