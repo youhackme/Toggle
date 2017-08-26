@@ -37,7 +37,7 @@
         }
 
         .button.application {
-            margin: .75rem;
+            margin: 5px 0px 0px 5px;
         }
 
         .button {
@@ -45,7 +45,7 @@
             border-radius: 3px;
             box-shadow: none;
             display: inline-flex;
-            font-size: 1rem;
+            font-size: 12px;
             height: 2.285em;
             position: relative;
             vertical-align: top;
@@ -68,6 +68,16 @@
             vertical-align: baseline;
         }
 
+        .panel-default {
+            border-color: #ffffff;
+        }
+
+        .panel {
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+        }
+
 
     </style>
 </head>
@@ -75,7 +85,7 @@
 
 <div class="container-fluid" style="height:460px;">
     <div class="row">
-        <div style="background-color: #ffffff;padding-right:0;padding-left: 0;height:460px;border-right:1px solid red"
+        <div style="background-color: #ffffff;padding-right:0;padding-left: 0;height:460px;border-right:1px solid #C9D2D5"
              class="col-xs-5">
             <ul class="list-group">
                 <li class="list-group-item" style="border:none;">
@@ -83,11 +93,11 @@
                         style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
                         Domain
                     </h6>
-                    <h4>
+                    <h5>
                         <!--  <img class="favicon animated fadeIn"
                                src="//www.google.com/s2/favicons?domain=w3schools.com">-->
                         www.darktips.com
-                    </h4>
+                    </h5>
 
                 </li>
                 <li class="list-group-item" style="border:none;">
@@ -95,31 +105,31 @@
                         style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
                         Application
                     </h6>
-                    <h4>
+                    <h5>
                         WordPress
-                    </h4>
+                    </h5>
                 </li>
                 <li class="list-group-item" style="border:none;">
                     <h6 class="panel-title"
                         style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
                         Theme name
                     </h6>
-                    <h4>
+                    <h5>
                         Progressive Theme
-                    </h4>
+                    </h5>
                 </li>
                 <li class="list-group-item" style="border:none;">
                     <h6 class="panel-title"
                         style="text-transform: uppercase;font-size: 12px;font-weight: normal;">
                         Technologies found
                     </h6>
-                    <h4>
+                    <h5>
                         17
-                    </h4>
+                    </h5>
                 </li>
             </ul>
         </div>
-        <div style="background: #cccccc;padding-right:0;padding-left: 0;height:460px" class="col-xs-7">
+        <div style="background: #ffffff;padding-right:0;padding-left: 0;height:460px" class="col-xs-7">
             <div class="panel-group" id="plugins" style="margin-bottom:0px;">
                 <div class="panel panel-default">
                     <div class="panel-heading"
@@ -202,6 +212,46 @@
                     </div>
                     <div class="panel-collapse collapse in">
                         <div class="panel-body" style="padding:0px;">
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
+                            <a class="button application" href="/applications/adinfinity">
+                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
+                                     alt="AdInfinity">
+                                AdInfinity
+                            </a>
                             <a class="button application" href="/applications/adinfinity">
                                 <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
                                      alt="AdInfinity">
