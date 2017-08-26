@@ -23,7 +23,6 @@
         }
 
         span.circle {
-
             display: block;
             height: 30px;
             width: 30px;
@@ -33,7 +32,7 @@
             background-color: #C36497;
             color: white;
             text-align: center;
-            font-size: 18px;
+            font-size: 15px;
         }
 
         .button.application {
@@ -135,6 +134,12 @@
         div.icon-holder {
             padding-right: 15px;
             padding-top: 10px;
+            width: 6%;
+        }
+
+        div.plugin-details {
+            width: 94%;
+            padding-left: 15px;
         }
 
         div.plugin-details h5 {
@@ -175,7 +180,7 @@
                         @if (!$response->application)
                             Unknown
                         @else
-                            {{$response->application}}
+                            {{strtoupper($response->application)}}
                         @endif
 
                     </h5>
@@ -228,7 +233,7 @@
                                                 <div class="wrapper">
                                                     <div class="icon-holder pull-left">
                                                 <span class="circle">
-                                                  {{$plugin->name['0']}}
+                                                  {{strtoupper($plugin->name['0'])}}
                                                 </span>
                                                     </div>
                                                     <div class="plugin-details pull-left">
@@ -237,7 +242,7 @@
                                                             @if(is_null($plugin->description))
                                                                 No description.
                                                             @else
-                                                                {{str_limit($plugin->description,100)}}
+                                                                {{str_limit(trim($plugin->description),120)}}
                                                             @endif
                                                         </small>
                                                     </div>
