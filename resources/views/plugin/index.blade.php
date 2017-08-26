@@ -162,8 +162,8 @@
                     </h6>
                     <h5>
                         <img class="favicon animated fadeIn"
-                             src="https://www.google.com/s2/favicons?domain=w3schools.com">
-                        www.darktips.com
+                             src="https://www.google.com/s2/favicons?domain={{$response->technologies->url}}">
+                        {{$response->technologies->url}}
                     </h5>
 
                 </li>
@@ -172,99 +172,90 @@
                         Application
                     </h6>
                     <h5>
-                        WordPress
+                        @if (!$response->application)
+                            Unknown
+                        @else
+                            {{$response->application}}
+                        @endif
+
                     </h5>
                 </li>
-                <li class="list-group-item">
-                    <h6 class="panel-title">
-                        Theme name
-                    </h6>
-                    <h5>
-                        Progressive Theme
-                    </h5>
-                </li>
+
+                @if (strtolower($response->application)=='wordpress')
+                    <li class="list-group-item">
+                        <h6 class="panel-title">
+                            Theme name
+                        </h6>
+                        <h5>
+                            Not dynamic yet
+                        </h5>
+                    </li>
+                @endif
+
+
                 <li class="list-group-item">
                     <h6 class="panel-title">
                         Technologies found
                     </h6>
                     <h5>
-                        17
+                        @if (count($response->technologies->applications)>0)
+                            {{count($response->technologies->applications)}}
+                        @else
+                            0
+                        @endif
                     </h5>
                 </li>
             </ul>
         </div>
         <div class="col-xs-7 details">
-            <div class="panel-group" id="plugins">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a>WordPresss Plugins</a>
-                        </h4>
-                    </div>
-                    <div class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <td>
 
-                                        <div class="wrapper">
-                                            <div class="icon-holder pull-left">
+            @if ($response->plugins)
+                <div class="panel-group" id="plugins">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a>WordPresss Plugins</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <tbody>
+
+                                    @foreach ($response->plugins as $key=>$plugin)
+                                        <tr @if($key%2==0)class="zebra-color" @endif>
+                                            <td>
+                                                <div class="wrapper">
+                                                    <div class="icon-holder pull-left">
                                                 <span class="circle">
-                                                  G
+                                                  {{$plugin->name['0']}}
                                                 </span>
-                                            </div>
-                                            <div class="plugin-details pull-left">
-                                                <h5>Google Analytics</h5>
-                                                <small>Track visitors on your website.</small>
-                                            </div>
-                                        </div>
-
-
-                                    </td>
-                                </tr>
-                                <tr class="zebra-color">
-                                    <td>
-
-                                        <div class="wrapper">
-                                            <div class="icon-holder pull-left">
-                                                <span class="circle">
-                                                  P
-                                                </span>
-
-                                            </div>
-                                            <div class="plugin-details pull-left">
-                                                <h5>Piwik</h5>
-                                                <small>Track visitors on your website.</small>
-                                            </div>
-                                        </div>
-
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-
-                                        <div class="wrapper">
-                                            <div class="icon-holder pull-left">
-                                                <span class="circle">
-                                                  K
-                                                </span>
-
-                                            </div>
-                                            <div class="plugin-details pull-left">
-                                                <h5>Kissmetrics</h5>
-                                                <small>Track visitors on your website.</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                                    </div>
+                                                    <div class="plugin-details pull-left">
+                                                        <h5>{{ucfirst($plugin->name)}}</h5>
+                                                        <small>
+                                                            @if(is_null($plugin->description))
+                                                                No description.
+                                                            @else
+                                                                {{str_limit($plugin->description,100)}}
+                                                            @endif
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+
+            @endif
+
+
             <div class="panel-group" id="technologies">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -274,51 +265,22 @@
                     </div>
                     <div class="panel-collapse collapse in">
                         <div class="panel-body" style="padding:0px;">
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
-                            <a class="button application" href="/applications/adinfinity">
-                                <img class="app-icon" src="https://wappalyzer.com/images/icons/AdInfinity.png"
-                                     alt="AdInfinity">
-                                AdInfinity
-                            </a>
+
+                            @if (count($response->technologies->applications)>0)
+                                @foreach ($response->technologies->applications as $application)
+                                    <a class="button application" href="{{ $application->website }}">
+                                        <img class="app-icon" src="{{ $application->icon }}"
+                                             alt="{{ $application->name }}">
+                                        {{ $application->name }}
+                                    </a>
+                                @endforeach
+
+                            @else
+                                <p style="color:#949494;font-size:16px;text-align: center;padding: 40px 0 40px 0;">
+                                    No Technology found on this page.
+                                </p>
+                            @endif
+
                         </div>
                     </div>
                 </div>
