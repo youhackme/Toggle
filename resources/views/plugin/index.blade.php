@@ -273,7 +273,7 @@
 
                             @if (count($response->technologies->applications)>0)
                                 @foreach ($response->technologies->applications as $application)
-                                    <a class="button application" href="{{ $application->website }}">
+                                    <a class="button application" target="_blank" href="{{ $application->website }}">
                                         <img class="app-icon" src="{{ $application->icon }}"
                                              alt="{{ $application->name }}">
                                         {{ $application->name }}
