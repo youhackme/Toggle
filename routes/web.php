@@ -37,8 +37,7 @@ Route::get('/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias');
 /*
  * Scrape themes from different providers
  */
-Route::get('/site/{site}', 'SiteController@detect')
-     ->where('site', '(.*)');
+Route::get('/site/', 'SiteController@detect');
 
 
 Route::group(['namespace' => 'Admin'], function () {
@@ -54,5 +53,12 @@ Route::group(['namespace' => 'Admin'], function () {
 
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     Route::post('/admin/plugin/add', 'PluginController@add');
+
+});
+
+
+Route::group(['namespace' => 'Plugin'], function () {
+
+    Route::get('/scan', 'PluginController@scan');
 
 });

@@ -9,12 +9,12 @@ class SiteController extends Controller
     /**
      * Discover whether this site is using WordPress or not.
      *
-     * @param $site
-     *
      * @return string
      */
-    public function detect($site)
+    public function detect()
     {
+        $site = \Request::get('url');
+
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
         if ( ! $siteAnatomy->errors()) {
             $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));

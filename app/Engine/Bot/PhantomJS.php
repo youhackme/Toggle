@@ -8,6 +8,7 @@
 
 namespace App\Engine\Bot;
 
+
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -59,7 +60,6 @@ class PhantomJS implements BotInterface
     public function headers()
     {
         $filteredHeaders = [];
-
 
         if (empty((array)$this->response->headers)) {
             return $filteredHeaders;
