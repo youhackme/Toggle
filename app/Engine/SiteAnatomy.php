@@ -60,6 +60,7 @@ class SiteAnatomy
                 $this->$key = $value;
             }
 
+
             return $this;
         }
 
@@ -73,7 +74,6 @@ class SiteAnatomy
 
 
         } catch (\Exception $e) {
-            echo $e->getMessage();
 
             $this->errors[] = $e->getMessage();
         }
@@ -284,6 +284,7 @@ class SiteAnatomy
 
             Redis::set('site:' . $this->url, json_encode($this));
             Redis::expire('site:' . $this->url, 3600);
+
             return $this;
 
 
