@@ -66,7 +66,7 @@ class Link extends WordPressAbstract
             ],
             [
                 'path'      => 'wp-links-opml.php',
-                'searchFor' => '/WordPress|opml/i',
+                'searchFor' => '/generator="WordPress|<\/opml>/i',
             ],
             [
                 'path'      => 'wp-json',
