@@ -192,7 +192,13 @@
                             Theme name
                         </h6>
                         <h5>
-                            Not dynamic yet
+                            @if ($response->theme)
+                                @foreach($response->theme as $theme=>$detail)
+                                    {{ucfirst($theme)}}
+                                @endforeach
+                            @else
+                                Custom Theme
+                            @endif
                         </h5>
                     </li>
                 @endif
