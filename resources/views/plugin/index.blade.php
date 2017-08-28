@@ -124,6 +124,7 @@
             padding-right: 0;
             padding-left: 0;
             height: 460px;
+            overflow:scroll;
         }
 
         table.table {
