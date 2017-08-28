@@ -124,7 +124,7 @@
             padding-right: 0;
             padding-left: 0;
             height: 460px;
-            overflow:scroll;
+            overflow: scroll;
         }
 
         table.table {
@@ -157,152 +157,165 @@
     </style>
 </head>
 <body>
-
 <div class="container-fluid extension-wrapper">
-    <div class="row">
-        <div class="col-xs-5 overview">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <h6 class="panel-title">
-                        Domain
-                    </h6>
-                    <h5>
-                        <img class="favicon animated fadeIn"
-                             src="https://www.google.com/s2/favicons?domain={{$response->technologies->url}}">
-                        {{$response->technologies->url}}
-                    </h5>
+    @if(!isset($response->error))
 
-                </li>
-                <li class="list-group-item">
-                    <h6 class="panel-title">
-                        Application
-                    </h6>
-                    <h5>
-                        @if (!$response->application)
-                            Unknown
-                        @else
-                            {{strtoupper($response->application)}}
-                        @endif
 
-                    </h5>
-                </li>
-
-                @if (strtolower($response->application)=='wordpress')
+        <div class="row">
+            <div class="col-xs-5 overview">
+                <ul class="list-group">
                     <li class="list-group-item">
                         <h6 class="panel-title">
-                            Theme name
+                            Domain
                         </h6>
                         <h5>
-                            @if ($response->theme)
-                                @foreach($response->theme as $theme=>$detail)
-                                    {{ucfirst($theme)}}
-                                @endforeach
+
+                            <img class="favicon animated fadeIn"
+                                 src="https://www.google.com/s2/favicons?domain={{$response->technologies->url}}">
+                            {{$response->technologies->url}}
+                        </h5>
+
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="panel-title">
+                            Application
+                        </h6>
+                        <h5>
+                            @if (!$response->application)
+                                Unknown
                             @else
-                                Custom Theme
+                                {{strtoupper($response->application)}}
+                            @endif
+
+                        </h5>
+                    </li>
+
+                    @if (strtolower($response->application)=='wordpress')
+                        <li class="list-group-item">
+                            <h6 class="panel-title">
+                                Theme name
+                            </h6>
+                            <h5>
+                                @if ($response->theme)
+                                    @foreach($response->theme as $theme=>$detail)
+                                        {{ucfirst($theme)}}
+                                    @endforeach
+                                @else
+                                    Custom Theme
+                                @endif
+                            </h5>
+                        </li>
+                    @endif
+
+
+                    <li class="list-group-item">
+                        <h6 class="panel-title">
+                            Technologies found
+                        </h6>
+                        <h5>
+                            @if (count($response->technologies->applications)>0)
+                                {{count($response->technologies->applications)}}
+                            @else
+                                0
                             @endif
                         </h5>
                     </li>
-                @endif
+                </ul>
+            </div>
+            <div class="col-xs-7 details">
 
+                @if ($response->plugins)
+                    <div class="panel-group" id="plugins">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a>WordPresss Plugins</a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tbody>
 
-                <li class="list-group-item">
-                    <h6 class="panel-title">
-                        Technologies found
-                    </h6>
-                    <h5>
-                        @if (count($response->technologies->applications)>0)
-                            {{count($response->technologies->applications)}}
-                        @else
-                            0
-                        @endif
-                    </h5>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-7 details">
-
-            @if ($response->plugins)
-                <div class="panel-group" id="plugins">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a>WordPresss Plugins</a>
-                            </h4>
-                        </div>
-                        <div class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <table class="table table-bordered">
-                                    <tbody>
-
-                                    @foreach ($response->plugins as $key=>$plugin)
-                                        <tr @if($key%2==0)class="zebra-color" @endif>
-                                            <td>
-                                                <div class="wrapper">
-                                                    <div class="icon-holder pull-left">
+                                        @foreach ($response->plugins as $key=>$plugin)
+                                            <tr @if($key%2==0)class="zebra-color" @endif>
+                                                <td>
+                                                    <div class="wrapper">
+                                                        <div class="icon-holder pull-left">
                                                 <span class="circle">
                                                   {{strtoupper($plugin->name['0'])}}
                                                 </span>
+                                                        </div>
+                                                        <div class="plugin-details pull-left">
+                                                            <h5>{{ucfirst($plugin->name)}}</h5>
+                                                            <small>
+                                                                @if(is_null($plugin->description))
+                                                                    No description.
+                                                                @else
+                                                                    {{str_limit(trim($plugin->description),120)}}
+                                                                @endif
+                                                            </small>
+                                                        </div>
                                                     </div>
-                                                    <div class="plugin-details pull-left">
-                                                        <h5>{{ucfirst($plugin->name)}}</h5>
-                                                        <small>
-                                                            @if(is_null($plugin->description))
-                                                                No description.
-                                                            @else
-                                                                {{str_limit(trim($plugin->description),120)}}
-                                                            @endif
-                                                        </small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
 
-            @endif
+                @endif
 
 
-            <div class="panel-group" id="technologies">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a>Technologies</a>
-                        </h4>
-                    </div>
-                    <div class="panel-collapse collapse in">
-                        <div class="panel-body" style="padding:0px;">
+                <div class="panel-group" id="technologies">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a>Technologies</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in">
+                            <div class="panel-body" style="padding:0px;">
 
-                            @if (count($response->technologies->applications)>0)
-                                @foreach ($response->technologies->applications as $application)
-                                    <a class="button application" target="_blank" href="{{ $application->website }}">
-                                        <img class="app-icon" src="{{ $application->icon }}"
-                                             alt="{{ $application->name }}">
-                                        {{ $application->name }}
-                                    </a>
-                                @endforeach
+                                @if (count($response->technologies->applications)>0)
+                                    @foreach ($response->technologies->applications as $application)
+                                        <a class="button application" target="_blank"
+                                           href="{{ $application->website }}">
+                                            <img class="app-icon" src="{{ $application->icon }}"
+                                                 alt="{{ $application->name }}">
+                                            {{ $application->name }}
+                                        </a>
+                                    @endforeach
 
-                            @else
-                                <p style="color:#949494;font-size:16px;text-align: center;padding: 40px 0 40px 0;">
-                                    No Technology found on this page.
-                                </p>
-                            @endif
+                                @else
+                                    <p style="color:#949494;font-size:16px;text-align: center;padding: 40px 0 40px 0;">
+                                        No Technology found on this page.
+                                    </p>
+                                @endif
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
+    @else
+
+
+        <p style="font-size:16px;font-weight:700;text-align: center;padding:40px;">
+            Sorry, we are unable to uncover technologies for this website. Please try again later.
+        </p>
 
 
 </div>
 
+@endif
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
