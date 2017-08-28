@@ -308,7 +308,7 @@
     @else
 
 
-        <p style="font-size:16px;font-weight:700;text-align: center;padding:40px;">
+        <p style="font-size:17px;font-weight:700;text-align: center;padding:100px;">
             Sorry, we are unable to uncover technologies for this website. Please try again later.
         </p>
 
