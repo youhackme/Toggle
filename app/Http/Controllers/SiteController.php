@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Engine\Togglyzer;
+use Illuminate\Support\Facades\Redis;
 
 class SiteController extends Controller
 {
@@ -42,6 +43,26 @@ class SiteController extends Controller
             return response()->json([
                 'error' => 'Failed to connect to ' . $site,
             ]);
+        }
+    }
+
+
+    public function cache(){
+        $url     = \Request::get('url');
+
+        if (Redis::EXISTS('site:' . $url)) {
+
+
+            $datas = json_decode(Redis::get('site:' . $url), true);
+
+
+            foreach ($datas as $key => $value) {
+
+                $this->$key = $value;
+            }
+            return response()->json($this);
+
+           // return json_encode($this);
         }
     }
 }

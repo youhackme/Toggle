@@ -62,3 +62,6 @@ Route::group(['namespace' => 'Plugin'], function () {
     Route::get('/scan', 'PluginController@scan');
 
 });
+
+
+Route::get('/cache', 'SiteController@cache');
