@@ -46,9 +46,11 @@ class Togglyzer
 
     public function check()
     {
-        $wappalyzerPath = app_path() . '/../node_modules/wappalyzer/index.js';
-        //echo "Togglyzing through {$this->siteAnatomy->url}";
-        $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . $this->siteAnatomy->url;
+       // $wappalyzerPath = app_path() . '/../node_modules/wappalyzer/index.js';
+        $wappalyzerPath = app_path() . '/../node_modules/togglyzer/index.js';
+
+
+        $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . env('APP_URL') . '/cache?url=' . $this->siteAnatomy->url;
 
         $process = new Process($wappylyzerCommand);
         $process->run();
