@@ -16,6 +16,8 @@ class SiteController extends Controller
     {
         $site = \Request::get('url');
 
+        $site = str_replace(' ', '%20', $site);
+
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
         if ( ! $siteAnatomy->errors()) {
@@ -47,8 +49,10 @@ class SiteController extends Controller
     }
 
 
-    public function cache(){
-        $url     = \Request::get('url');
+    public function cache()
+    {
+        $url = \Request::get('url');
+        $url = str_replace(' ', '%20', $url);
 
         if (Redis::EXISTS('site:' . $url)) {
 
@@ -60,9 +64,12 @@ class SiteController extends Controller
 
                 $this->$key = $value;
             }
-            return response()->json($this);
 
-           // return json_encode($this);
+            return response()->json($this);
         }
+
+        \Bugsnag::notifyError('Error', json_encode($this));
+
+        return response()->json(['error' => 'Unable to find this key in redis.']);
     }
 }
