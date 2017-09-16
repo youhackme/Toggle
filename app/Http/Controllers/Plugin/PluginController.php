@@ -12,13 +12,18 @@ class PluginController extends Controller
     public function scan()
     {
 
-        $site     = \Request::get('url');
+        $site = \Request::get('url');
+
+        $debug = isset(\Request::get('debug') ? true : false;
+
         $client   = new Client();
         $response = $client->request('GET', env('APP_URL') . '/site/?url=' . $site);
         $response = json_decode($response->getBody()->getContents());
 
         return view('plugin/index')
-            ->with('response', $response);
-        
+            ->with('response', $response)
+            ->with('debug', $debug);
+
+
     }
 }
