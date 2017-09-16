@@ -14,7 +14,8 @@ class PluginController extends Controller
 
         $site = \Request::get('url');
 
-        $debug = isset(\Request::get('debug') ? true : false;
+        $debug = \Request::get('debug');
+        $debug = is_null($debug) ? false : true;
 
         $client   = new Client();
         $response = $client->request('GET', env('APP_URL') . '/site/?url=' . $site);
