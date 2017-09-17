@@ -219,7 +219,6 @@ class SiteAnatomy
 
             $this->html = $data->html();
 
-            $this->crawler = new Crawler($this->html);
 
             $this->url         = $data->url();
             $this->headers     = $data->headers();
@@ -228,7 +227,7 @@ class SiteAnatomy
             $this->status      = $data->status();
             $this->host        = $data->host();
 
-
+            $this->crawler = new Crawler($this->html);
             $this->styles  = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
             $this->metas   = $this->metatags();
@@ -245,12 +244,8 @@ class SiteAnatomy
             Redis::set('site:' . $this->url, json_encode($this));
             Redis::expire('site:' . $this->url, 3600);
 
-
             return $this;
 
-
-            //$this->innerlinks = $this->getInnnerLinks();
-            //$this->response->html       = $this->getHtml();
         }
     }
 
