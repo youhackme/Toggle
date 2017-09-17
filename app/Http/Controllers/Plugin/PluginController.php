@@ -12,9 +12,9 @@ class PluginController extends Controller
     public function scan()
     {
 
-        $site = \Request::get('url');
+        $site = \Request::post('url');
 
-        $debug = \Request::get('debug');
+        $debug = \Request::post('debug');
         $debug = is_null($debug) ? false : true;
 
         $client   = new Client();
