@@ -48,7 +48,6 @@ class SiteAnatomy
     public function crawl($url)
     {
 
-
         if (Redis::EXISTS('site:' . $url)) {
 
 
@@ -88,16 +87,6 @@ class SiteAnatomy
     }
 
     /**
-     * Get the raw HTML.
-     *
-     * @return string
-     */
-    private function getHtml()
-    {
-        return $this->goutteClient->getResponse()->getContent();
-    }
-
-    /**
      * Get meta tags.
      *
      * @return array
@@ -113,35 +102,6 @@ class SiteAnatomy
         return $tags;
     }
 
-    /**
-     * Get HTTP Headers.
-     *
-     * @return mixed
-     */
-    private function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Get HTTP Response code.
-     *
-     * @return mixed
-     */
-    private function getStatus()
-    {
-        return $this->goutteClient->getResponse()->getStatus();
-    }
-
-    /**
-     * Get cookie jar.
-     *
-     * @return \Symfony\Component\BrowserKit\CookieJar
-     */
-    private function getCookies()
-    {
-        return $this->goutteClient->getCookieJar();
-    }
 
     /**
      * List CSS Sheets.
@@ -284,6 +244,7 @@ class SiteAnatomy
 
             Redis::set('site:' . $this->url, json_encode($this));
             Redis::expire('site:' . $this->url, 3600);
+
 
             return $this;
 
