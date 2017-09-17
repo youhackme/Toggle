@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Plugin;
+namespace App\Http\Controllers\Extension;
 
 use App\Http\Controllers\Controller;
 use DB;
 use GuzzleHttp\Client;
 
 
-class PluginController extends Controller
+class ExtensionController extends Controller
 {
     public function scan()
     {

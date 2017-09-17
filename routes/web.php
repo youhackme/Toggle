@@ -57,9 +57,9 @@ Route::group(['namespace' => 'Admin'], function () {
 });
 
 
-Route::group(['namespace' => 'Plugin'], function () {
+Route::group(['namespace' => 'Extension'], function () {
 
-    Route::post('/scan', 'PluginController@scan');
+    Route::post('/scan', 'ExtensionController@scan');
 
 });
 
