@@ -37,18 +37,11 @@ class Togglyzer
 
         $this->siteAnatomy = $siteAnatomy;
 
-        // Make sure we have an html object
-        // Make sure we have a env object
-        // Then execute it through wappalyser js
-        //$this->technology = $togglyzerResult;
-
     }
 
     public function check()
     {
-       // $wappalyzerPath = app_path() . '/../node_modules/wappalyzer/index.js';
         $wappalyzerPath = app_path() . '/../node_modules/togglyzer/index.js';
-
 
         $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . env('APP_URL') . '/cache?url=' . $this->siteAnatomy->url;
 
@@ -63,7 +56,7 @@ class Togglyzer
         $response = json_decode($process->getOutput());
         if (isset($response->applications)) {
             foreach ($response->applications as &$application) {
-                $application->icon = env('APP_URL').'/storage/icons/'.$application->icon;
+                $application->icon = env('APP_URL') . '/storage/icons/' . $application->icon;
             }
         }
 
