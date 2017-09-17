@@ -48,7 +48,6 @@ class SiteAnatomy
     public function crawl($url)
     {
 
-
         if (Redis::EXISTS('site:' . $url)) {
 
 
@@ -88,16 +87,6 @@ class SiteAnatomy
     }
 
     /**
-     * Get the raw HTML.
-     *
-     * @return string
-     */
-    private function getHtml()
-    {
-        return $this->goutteClient->getResponse()->getContent();
-    }
-
-    /**
      * Get meta tags.
      *
      * @return array
@@ -113,35 +102,6 @@ class SiteAnatomy
         return $tags;
     }
 
-    /**
-     * Get HTTP Headers.
-     *
-     * @return mixed
-     */
-    private function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Get HTTP Response code.
-     *
-     * @return mixed
-     */
-    private function getStatus()
-    {
-        return $this->goutteClient->getResponse()->getStatus();
-    }
-
-    /**
-     * Get cookie jar.
-     *
-     * @return \Symfony\Component\BrowserKit\CookieJar
-     */
-    private function getCookies()
-    {
-        return $this->goutteClient->getCookieJar();
-    }
 
     /**
      * List CSS Sheets.
@@ -259,7 +219,6 @@ class SiteAnatomy
 
             $this->html = $data->html();
 
-            $this->crawler = new Crawler($this->html);
 
             $this->url         = $data->url();
             $this->headers     = $data->headers();
@@ -268,7 +227,7 @@ class SiteAnatomy
             $this->status      = $data->status();
             $this->host        = $data->host();
 
-
+            $this->crawler = new Crawler($this->html);
             $this->styles  = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
             $this->metas   = $this->metatags();
@@ -287,9 +246,6 @@ class SiteAnatomy
 
             return $this;
 
-
-            //$this->innerlinks = $this->getInnnerLinks();
-            //$this->response->html       = $this->getHtml();
         }
     }
 
