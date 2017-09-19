@@ -39,6 +39,7 @@ Route::get('/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias');
  */
 Route::get('/site/', 'SiteController@detect');
 
+Route::post('/site/ScanOfflineMode/', 'SiteController@detectTechnologyOfflineMode');
 
 Route::group(['namespace' => 'Admin'], function () {
 
