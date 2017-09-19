@@ -6,9 +6,10 @@
  * Time: 15:39
  */
 
-namespace App\Engine\Bot;
+namespace App\Engine\Bot\Driver;
 
 use App;
+use App\Engine\Bot\BotInterface;
 
 class Curl implements BotInterface
 {

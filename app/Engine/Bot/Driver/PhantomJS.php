@@ -6,12 +6,12 @@
  * Time: 15:39
  */
 
-namespace App\Engine\Bot;
+namespace App\Engine\Bot\Driver;
 
 
+use App\Engine\Bot\BotInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-
 
 class PhantomJS implements BotInterface
 {
@@ -27,7 +27,7 @@ class PhantomJS implements BotInterface
     {
         $scraperPath = app_path() . '/Engine/Bot/scraper.js';
         $command     = 'phantomjs --ignore-ssl-errors=true ' . $scraperPath . ' ' . $url;
-        $process = new Process($command);
+        $process     = new Process($command);
         $process->run();
 
         // executes after the command finishes
