@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Engine\Togglyzer;
 use Illuminate\Support\Facades\Redis;
+use Request;
 
 class SiteController extends Controller
 {
@@ -14,7 +15,8 @@ class SiteController extends Controller
      */
     public function detect()
     {
-        $site = \Request::get('url');
+
+        $site = Request::get('url');
 
         $site = str_replace(' ', '%20', $site);
 
@@ -48,10 +50,13 @@ class SiteController extends Controller
         }
     }
 
-
+    /**
+     * Fetch Cached result from redis
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cache()
     {
-        $url = \Request::get('url');
+        $url = Request::get('url');
         $url = str_replace(' ', '%20', $url);
 
         if (Redis::EXISTS('site:' . $url)) {
@@ -68,8 +73,36 @@ class SiteController extends Controller
             return response()->json($this);
         }
 
-        \Bugsnag::notifyError('Error', json_encode($this));
+        Bugsnag::notifyError('Error', json_encode($this));
 
         return response()->json(['error' => 'Unable to find this key in redis.']);
+    }
+
+    /**
+     * Detect technology by using togglyzer engine only. No external call. Period.
+     */
+    public function detectTechnologyOfflineMode()
+    {
+
+
+        $site = Request::get('url');
+        $site = str_replace(' ', '%20', $site);
+
+        $requestInfo = Request::all();
+        $siteAnatomy = (new \App\Engine\SiteAnatomy($site, $requestInfo));
+
+        if ( ! $siteAnatomy->errors()) {
+
+            return response()->json([
+                'technologies' => (new Togglyzer($siteAnatomy))->check(),
+            ]);
+
+        } else {
+
+            return response()->json([
+                'error' => 'Unable to simulate crawling in offline mode for ' . $site,
+            ]);
+        }
+
     }
 }

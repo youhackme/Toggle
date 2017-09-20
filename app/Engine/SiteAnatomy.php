@@ -3,6 +3,8 @@
 namespace App\Engine;
 
 use App;
+use App\Engine\Bot\Driver\BrowserSimulator;
+use App\Engine\Bot\Driver\PhantomJS;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -33,18 +35,57 @@ class SiteAnatomy
     public $host;
     public $environment = null;
 
+
     /**
      * SiteAnatomy constructor.
      *
-     * @param $site
+     * @param      $site
+     * @param null $requestInfo
      */
-    public function __construct($site)
+    public function __construct($site, $requestInfo = null)
     {
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
-        $this->crawl($url);
+        if (is_null($requestInfo)) {
+            $this->crawl($url);
+        } else {
+
+            // Browser simulation
+            $this->simulateCrawl($requestInfo);
+        }
+
     }
 
+    /**
+     * Simulate site crawling
+     *
+     * @param $requestInfo
+     */
+    public function simulateCrawl($requestInfo)
+    {
+
+        try {
+
+            $bot = new \App\Engine\Bot\Bot(new BrowserSimulator());
+
+            $data = $bot->crawl($requestInfo);
+
+            $this->result($data);
+
+
+        } catch (\Exception $e) {
+
+            $this->errors[] = $e->getMessage();
+        }
+    }
+
+    /**
+     * Crawl a url
+     *
+     * @param $url
+     *
+     * @return $this
+     */
     public function crawl($url)
     {
 
@@ -65,7 +106,7 @@ class SiteAnatomy
 
 
         try {
-            $bot = new \App\Engine\Bot\Bot(new \App\Engine\Bot\PhantomJS());
+            $bot = new \App\Engine\Bot\Bot(new PhantomJS());
 
             $data = $bot->crawl($url);
 
