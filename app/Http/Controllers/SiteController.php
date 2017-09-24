@@ -73,7 +73,7 @@ class SiteController extends Controller
             return response()->json($this);
         }
 
-        Bugsnag::notifyError('Error', json_encode($this));
+        \Bugsnag::notifyError('Error', json_encode($this));
 
         return response()->json(['error' => 'Unable to find this key in redis.']);
     }
@@ -83,7 +83,6 @@ class SiteController extends Controller
      */
     public function detectTechnologyOfflineMode()
     {
-
 
         $site = Request::get('url');
         $site = str_replace(' ', '%20', $site);
