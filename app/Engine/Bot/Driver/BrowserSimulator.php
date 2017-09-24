@@ -15,19 +15,21 @@ class BrowserSimulator implements BotInterface
 
     public $response;
 
+
     /**
-     * @param $url
+     * @param $requestInfo
      *
-     * @return string
+     * @return $this
      */
     public function request($requestInfo)
     {
+
 
         $this->response = (Object)[
             'html'     => $requestInfo['html'],
             'hostname' => $requestInfo['url'],
             'url'      => $requestInfo['url'],
-            'headers'  => '[{"name":"Date","value":"Mon, 18 Sep 2017 17:04:54 GMT"},{"name":"Link","value":"<https://darktips.com/api/>; rel=\"https://api.w.org/\""},{"name":"Pragma","value":"public"},{"name":"Cache-Control","value":"max-age=0, no-cache, must-revalidate, proxy-revalidate"},{"name":"Vary","value":"Accept-Encoding"},{"name":"X-Mod-Pagespeed","value":"1.11.33.5-0"},{"name":"Content-Encoding","value":"gzip"},{"name":"strict-transport-security","value":"max-age=31536000"},{"name":"Keep-Alive","value":"timeout=5, max=100"},{"name":"Connection","value":"Keep-Alive"},{"name":"Content-Type","value":"text/html; charset=UTF-8"}]',
+            'headers'  => $requestInfo['headers'],
             'env'      => explode(' ', $requestInfo['environment']),
             "status"   => $requestInfo['status'],
         ];
@@ -69,11 +71,12 @@ class BrowserSimulator implements BotInterface
         if (empty((array)$this->response->headers)) {
             return $filteredHeaders;
         }
-        $headers          = json_decode($this->response->headers);
+        $headers          = $this->response->headers;
         $blacklistHeaders = ['Expires', 'Cache-Control'];
-        foreach ($headers as $header) {
-            $headerName  = $header->name;
-            $headerValue = $header->value;
+
+
+        foreach ($headers as $headerName => $headerValue) {
+
             if ( ! in_array($headerName, $blacklistHeaders)) {
                 $headerValue = explode(',', $headerValue);
             } else {
