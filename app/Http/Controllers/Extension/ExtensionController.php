@@ -25,37 +25,42 @@ class ExtensionController extends Controller
         // Fetch result from external call
         $responseFromExternalScan = (new Client())->request('GET', env('APP_URL') . '/site/?url=' . $url);
         $responseFromExternalScan = json_decode($responseFromExternalScan->getBody()->getContents());
+        $externalTechnologies     = $technologies = $responseFromExternalScan->technologies->applications;
+        
+        if (isset($html)) {
 
 
-        //Fetch result from internal togglyzer engine
-        $responseFromInternalScan = (new Client())->request('POST', env('APP_URL') . '/site/ScanOfflineMode', [
-            'form_params' => [
-                'url'         => $url,
-                'html'        => $html,
-                'environment' => $environment,
-                'headers'     => $headers,
-                'status'      => 200,
-            ],
-        ]);
-
-        $responseFromInternalScan = json_decode($responseFromInternalScan->getBody()->getContents());
-
-        //TODO: Merge the two technologies result
-        $externalTechnologies = $responseFromExternalScan->technologies->applications;
-        $internalTechnologies = $responseFromInternalScan->technologies->applications;
+            //Fetch result from internal togglyzer engine
+            $responseFromInternalScan = (new Client())->request('POST', env('APP_URL') . '/site/ScanOfflineMode', [
+                'form_params' => [
+                    'url'         => $url,
+                    'html'        => $html,
+                    'environment' => $environment,
+                    'headers'     => $headers,
+                    'status'      => 200,
+                ],
+            ]);
 
 
-        $result = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
+            $responseFromInternalScan = json_decode($responseFromInternalScan->getBody()->getContents());
+
+            $internalTechnologies = $responseFromInternalScan->technologies->applications;
+
+            $technologies = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
+
+        }
 
         $uniqueApplications = [];
-        foreach ($result as $application) {
-            $applicationName                      = $application->name;
-            $uniqueApplications[$applicationName] = $application;
+        foreach ($technologies as $technology) {
+            $applicationName                      = $technology->name;
+            $uniqueApplications[$applicationName] = $technology;
         }
-        dd($uniqueApplications);
+
+        $responseFromExternalScan->technologies->applications = $uniqueApplications;
+
 
         return view('plugin/index')
-            ->with('response', $response)
+            ->with('response', $responseFromExternalScan)
             ->with('debug', $debug);
 
 
