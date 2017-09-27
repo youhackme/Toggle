@@ -18,6 +18,6 @@
   "dependencies": {
     "phantom": "^4.0.5",
     "redis": "^2.8.0",
-    "togglyzer": "^1.0.3"
+    "togglyzer": "^1.0.4"
   }
 }
