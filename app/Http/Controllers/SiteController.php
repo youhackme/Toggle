@@ -42,7 +42,7 @@ class SiteController extends Controller
 
         } else {
 
-            \Bugsnag::notifyError('Error', json_encode($siteAnatomy->errors()));
+            \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
 
             return response()->json([
                 'error' => 'Failed to connect to ' . $site,
