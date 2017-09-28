@@ -25,8 +25,13 @@ class ExtensionController extends Controller
         // Fetch result from external call
         $responseFromExternalScan = (new Client())->request('GET', env('APP_URL') . '/site/?url=' . $url);
         $responseFromExternalScan = json_decode($responseFromExternalScan->getBody()->getContents());
-        $externalTechnologies     = $technologies = $responseFromExternalScan->technologies->applications;
-        
+        $externalTechnologies     = $technologies = [];
+        //If there's no error
+        if ( ! isset($responseFromExternalScan->error)) {
+            $externalTechnologies = $technologies = $response = $responseFromExternalScan->technologies->applications;
+        }
+
+
         if (isset($html)) {
 
 
@@ -44,23 +49,38 @@ class ExtensionController extends Controller
 
             $responseFromInternalScan = json_decode($responseFromInternalScan->getBody()->getContents());
 
-            $internalTechnologies = $responseFromInternalScan->technologies->applications;
+            $internalTechnologies = $response = $responseFromInternalScan->technologies->applications;
 
             $technologies = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
 
         }
 
+
         $uniqueApplications = [];
-        foreach ($technologies as $technology) {
-            $applicationName                      = $technology->name;
-            $uniqueApplications[$applicationName] = $technology;
+        if ( ! empty($technologies)) {
+            foreach ($technologies as $technology) {
+                $applicationName                      = $technology->name;
+                $uniqueApplications[$applicationName] = $technology;
+            }
         }
 
-        $responseFromExternalScan->technologies->applications = $uniqueApplications;
+
+        if ( ! isset($responseFromExternalScan->error)) {
+            $responseFromExternalScan->technologies->applications = $uniqueApplications;
+            $response                                             = $responseFromExternalScan;
+        } else {
+
+            $responseFromInternalScan->application                = false;
+            $responseFromInternalScan->version                    = false;
+            $responseFromInternalScan->theme                      = false;
+            $responseFromInternalScan->plugins                    = false;
+            $responseFromInternalScan->technologies->applications = $uniqueApplications;
+            $response                                             = $responseFromInternalScan;
+        }
 
 
         return view('plugin/index')
-            ->with('response', $responseFromExternalScan)
+            ->with('response', $response)
             ->with('debug', $debug);
 
 
