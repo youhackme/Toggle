@@ -26,7 +26,7 @@ class PhantomJS implements BotInterface
     public function request($url)
     {
         $scraperPath = app_path() . '/Engine/Bot/scraper.js';
-        $command     = 'phantomjs --ignore-ssl-errors=true ' . $scraperPath . ' ' . $url;
+        $command     = 'phantomjs --ignore-ssl-errors=true --load-images=false ' . $scraperPath . ' ' . $url;
         $process     = new Process($command);
         $process->run();
 

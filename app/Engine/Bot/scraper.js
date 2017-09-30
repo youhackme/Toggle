@@ -96,7 +96,7 @@
         page = require('webpage').create();
 
         page.settings.loadImages = false;
-        page.settings.userAgent = 'Mozilla/5.0';
+        page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36';
         page.settings.resourceTimeout = resourceTimeout;
 
         page.onError = function (message) {

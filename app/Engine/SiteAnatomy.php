@@ -115,7 +115,7 @@ class SiteAnatomy
 
         } catch (\Exception $e) {
 
-            $this->errors[] = $e->getMessage();
+            $this->errors[] = $e;
         }
     }
 
