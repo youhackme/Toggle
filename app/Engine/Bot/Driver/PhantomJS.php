@@ -91,7 +91,7 @@ class PhantomJS implements BotInterface
      */
     public function status()
     {
-        return $this->response->status;
+        return isset($this->response->status) ? $this->response->status : null;
     }
 
     /**
