@@ -79,10 +79,15 @@ class ExtensionController extends Controller
         }
 
 
-        return view('plugin/index')
+        return view('extension/index')
             ->with('response', $response)
             ->with('debug', $debug);
 
 
+    }
+
+    public function scanv2()
+    {
+        return view('extension/indexV2');
     }
 }
