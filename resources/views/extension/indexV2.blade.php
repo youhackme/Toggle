@@ -109,7 +109,7 @@
         }
 
         div.item h5 {
-            font-weight: 700;
+            font-weight: 800;
         }
 
     </style>
