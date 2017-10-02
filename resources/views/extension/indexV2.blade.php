@@ -59,6 +59,7 @@
         ul.plugins li {
             float: left;
             width: 33.33%;
+            margin-top:7px;
             text-align: left;
         }
 
@@ -86,6 +87,10 @@
             list-style-type: none;
             padding: 0;
             color: #7A7A7A;
+        }
+
+        div.item ul li{
+            margin-top:7px;
         }
 
         .color {
