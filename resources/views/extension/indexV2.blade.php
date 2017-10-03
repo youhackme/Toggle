@@ -7,16 +7,19 @@
 
     <title>Toggle.me</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+    <!-- Fonts
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
 
 
     <style>
+
+    </style>
+    <style>
         html, body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Proxima Nova', sans-serif;
         }
 
         a:focus, a:hover {
@@ -27,7 +30,13 @@
             color: #7A7A7A;
         }
 
+        dt {
+            font-family: 'proxima_nova_ltsemibold', sans-serif;
+            font-weight: 500;
+        }
+
         dl dd {
+
             color: #7A7A7A;
             font-weight: 500;
         }
@@ -59,7 +68,7 @@
         ul.plugins li {
             float: left;
             width: 33.33%;
-            margin-top:7px;
+            margin-top: 7px;
             text-align: left;
         }
 
@@ -89,8 +98,8 @@
             color: #7A7A7A;
         }
 
-        div.item ul li{
-            margin-top:7px;
+        div.item ul li {
+            margin-top: 7px;
         }
 
         .color {
@@ -109,7 +118,11 @@
         }
 
         div.item h5 {
-            font-weight: 800;
+            font-weight: 600;
+        }
+
+        .m-top-10 {
+            margin-top: 10px;
         }
 
     </style>
@@ -125,7 +138,7 @@
                 </h4>
             </div>
         </div>
-        <div class="row">
+        <div class="row m-top-10">
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <dl>
                     <dt>Application</dt>
@@ -154,7 +167,7 @@
 
     </div>
 
-    <div class="plugins">
+    <div class="plugins m-top-10">
         <div class="row">
             <div class="col-md-12">
                 <h4>WordPress Plugins
@@ -181,7 +194,7 @@
     </div>
 
 
-    <div class="technologies" style="margin-top: 10px;">
+    <div class="technologies" style="margin-top: 25px;">
         <div class="row">
             <div class="col-md-12">
                 <h4>Technologies
