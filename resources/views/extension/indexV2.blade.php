@@ -67,15 +67,15 @@
 
         ul.plugins li {
             float: left;
-            width: 33.33%;
+            width: 50%;
             margin-top: 7px;
             text-align: left;
         }
 
-        ul.plugins li:hover {
-            background-color: red;
-            cursor: pointer;
-        }
+        /*ul.plugins li:hover {*/
+        /*background-color: red;*/
+        /*cursor: pointer;*/
+        /*}*/
 
         .row.grid {
             column-width: 19em;
@@ -184,18 +184,18 @@
                     </dd>
                 </dl>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3">
-                <dl>
-                    <dt>Technologies</dt>
-                    <dd>
-                        @if (count($response->technologies->applications)>0)
-                            {{count($response->technologies->applications)}}
-                        @else
-                            0
-                        @endif
-                    </dd>
-                </dl>
-            </div>
+            {{--<div class="col-md-3 col-sm-3 col-xs-3">--}}
+            {{--<dl>--}}
+            {{--<dt>Technologies</dt>--}}
+            {{--<dd>--}}
+            {{--@if (count($response->technologies->applications)>0)--}}
+            {{--{{count($response->technologies->applications)}}--}}
+            {{--@else--}}
+            {{--0--}}
+            {{--@endif--}}
+            {{--</dd>--}}
+            {{--</dl>--}}
+            {{--</div>--}}
         </div>
 
     </div>
@@ -245,17 +245,19 @@
 
         @if (count($response->technologies->applications)>0)
             <div class="row grid">
-                <div class="item well">
+
 
                     @foreach ($response->technologies->applications as $category=>$applications)
+                    <div class="item well">
                         <h5 class="color">{{$category}}</h5>
                         <ul>
                             @foreach ($applications as $application)
-                                <li>{{ucfirst($application->name)}}</li>
+                                <li>{{ucfirst($application->name)}} {{$application->version}}</li>
                             @endforeach
                         </ul>
+                    </div>
                     @endforeach
-                </div>
+
             </div>
         @endif
 
