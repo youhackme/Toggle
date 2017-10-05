@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         '/scan',
+        '/scanv2',
         '/site/ScanOfflineMode',
         '/site',
     ];
