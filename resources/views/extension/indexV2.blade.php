@@ -72,6 +72,11 @@
             text-align: left;
         }
 
+        ul.plugins li:hover {
+            background-color: red;
+            cursor: pointer;
+        }
+
         .row.grid {
             column-width: 19em;
             -moz-column-width: 19em;
@@ -134,7 +139,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h4>Overview
-                    <small>https://darktips.com</small>
+                    <small>{{$response->technologies->url}}</small>
                 </h4>
             </div>
         </div>
@@ -142,25 +147,53 @@
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <dl>
                     <dt>Application</dt>
-                    <dd>WordPress</dd>
+                    <dd>
+                        @if (!$response->application)
+                            Unknown
+                        @else
+                            {{strtoupper($response->application)}}
+                        @endif
+                    </dd>
                 </dl>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3">
-                <dl>
-                    <dt>Theme name</dt>
-                    <dd>Progressive</dd>
-                </dl>
-            </div>
+            @if (strtolower($response->application)=='wordpress')
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <dl>
+                        <dt>Theme name</dt>
+                        <dd>
+                            @if ($response->theme)
+                                @foreach($response->theme as $theme=>$detail)
+                                    {{ucfirst($theme)}}
+                                @endforeach
+                            @else
+                                Custom Theme
+                            @endif
+                        </dd>
+                    </dl>
+                </div>
+            @endif
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <dl>
                     <dt>Plugins</dt>
-                    <dd>12</dd>
+                    <dd>
+                        @if (count($response->plugins)>0)
+                            {{count($response->plugins)}}
+                        @else
+                            0
+                        @endif
+                    </dd>
                 </dl>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <dl>
                     <dt>Technologies</dt>
-                    <dd>14</dd>
+                    <dd>
+                        @if (count($response->technologies->applications)>0)
+                            {{count($response->technologies->applications)}}
+                        @else
+                            0
+                        @endif
+                    </dd>
                 </dl>
             </div>
         </div>
@@ -171,26 +204,27 @@
         <div class="row">
             <div class="col-md-12">
                 <h4>WordPress Plugins
-                    <span class="badge">12</span>
+                    <span class="badge">
+                         @if (count($response->plugins)>0)
+                            {{count($response->plugins)}}
+                        @else
+                            0
+                        @endif
+                    </span>
                 </h4>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="plugins">
-                    <li>Akismet</li>
-                    <li>Slider Revolution</li>
-                    <li>Royal Slider</li>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                    <li>WPForms</li>
-                    <li>Sucuri</li>
-                    <li>W3 Total Cache</li>
-                    <li>Jetpack</li>
-                </ul>
+        @if ($response->plugins)
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="plugins">
+                        @foreach ($response->plugins as $key=>$plugin)
+                            <li>{{ucfirst($plugin->name)}}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 
 
@@ -198,108 +232,33 @@
         <div class="row">
             <div class="col-md-12">
                 <h4>Technologies
-                    <span class="badge">15</span>
+                    <span class="badge">
+                        @if (count($response->technologies->applications)>0)
+                            {{count($response->technologies->applications)}}
+                        @else
+                            0
+                        @endif
+                    </span>
                 </h4>
             </div>
         </div>
 
+        @if (count($response->technologies->applications)>0)
+            <div class="row grid">
+                <div class="item well">
 
-        <div class="row grid">
-            <div class="item well">
-                <h5 class="color">Analytics</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                    <li>WPForms</li>
-                    <li>Sucuri</li>
-                    <li>W3 Total Cache</li>
-                    <li>Jetpack</li>
-                </ul>
+                    @foreach ($response->technologies->applications as $category=>$applications)
+                        <h5 class="color">{{$category}}</h5>
+                        <ul>
+                            @foreach ($applications as $application)
+                                <li>{{ucfirst($application->name)}}</li>
+                            @endforeach
+                        </ul>
+                    @endforeach
+                </div>
             </div>
-            <div class="item well">
-                <h5 class="color">Chat</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Javascript Libraries</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
+        @endif
 
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">CMS</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                    <li>WPForms</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Web Server</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Tracking</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>Sucuri</li>
-                    <li>W3 Total Cache</li>
-                    <li>Jetpack</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Another One</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Analytics</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                    <li>WPForms</li>
-                    <li>Sucuri</li>
-                    <li>W3 Total Cache</li>
-                    <li>Jetpack</li>
-                    <li>Sucuri</li>
-                    <li>W3 Total Cache</li>
-                    <li>Jetpack</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Security</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                    <li>BackupBuddy</li>
-                    <li>OptinMonster</li>
-                    <li>WPForms</li>
-                    <li>WPForms</li>
-                </ul>
-            </div>
-            <div class="item well">
-                <h5 class="color">Marketing</h5>
-                <ul>
-                    <li>Visual Composer</li>
-                </ul>
-            </div>
-        </div>
     </div>
 
 </div>
