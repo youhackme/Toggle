@@ -26,6 +26,10 @@
             text-decoration: none;
         }
 
+        div.extension-wrapper {
+            padding-top: 25px;
+        }
+
         h4 {
             color: #7A7A7A;
         }
@@ -130,6 +134,11 @@
             margin-top: 10px;
         }
 
+        img.applicationIcon {
+            max-width: 20px;
+            max-height: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -144,12 +153,14 @@
             </div>
         </div>
         <div class="row m-top-10">
-            <div class="col-md-3 col-sm-3 col-xs-3">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 <dl>
                     <dt>Application</dt>
                     <dd>
                         @if (!$response->application)
                             Unknown
+                        @elseif(strtolower($response->application)=='wordpress')
+                            WordPress
                         @else
                             {{strtoupper($response->application)}}
                         @endif
@@ -157,13 +168,14 @@
                 </dl>
             </div>
             @if (strtolower($response->application)=='wordpress')
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-4 col-sm-4 col-xs-4">
                     <dl>
                         <dt>Theme name</dt>
                         <dd>
                             @if ($response->theme)
                                 @foreach($response->theme as $theme=>$detail)
                                     {{ucfirst($theme)}}
+                                    <br/>
                                 @endforeach
                             @else
                                 Custom Theme
@@ -172,61 +184,52 @@
                     </dl>
                 </div>
             @endif
-            <div class="col-md-3 col-sm-3 col-xs-3">
-                <dl>
-                    <dt>Plugins</dt>
-                    <dd>
-                        @if (count($response->plugins)>0)
-                            {{count($response->plugins)}}
-                        @else
-                            0
-                        @endif
-                    </dd>
-                </dl>
-            </div>
-            {{--<div class="col-md-3 col-sm-3 col-xs-3">--}}
-            {{--<dl>--}}
-            {{--<dt>Technologies</dt>--}}
-            {{--<dd>--}}
-            {{--@if (count($response->technologies->applications)>0)--}}
-            {{--{{count($response->technologies->applications)}}--}}
-            {{--@else--}}
-            {{--0--}}
-            {{--@endif--}}
-            {{--</dd>--}}
-            {{--</dl>--}}
-            {{--</div>--}}
+            @if ($response->plugins)
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <dl>
+                        <dt>Plugins</dt>
+                        <dd>
+                            @if (count($response->plugins)>0)
+                                {{count($response->plugins)}}
+                            @else
+                                0
+                            @endif
+                        </dd>
+                    </dl>
+                </div>
+            @endif
         </div>
 
     </div>
 
-    <div class="plugins m-top-10">
-        <div class="row">
-            <div class="col-md-12">
-                <h4>WordPress Plugins
-                    <span class="badge">
-                         @if (count($response->plugins)>0)
-                            {{count($response->plugins)}}
-                        @else
-                            0
-                        @endif
-                    </span>
-                </h4>
-            </div>
-        </div>
-        @if ($response->plugins)
+    @if ($response->plugins)
+        <div class="plugins m-top-10">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="plugins">
-                        @foreach ($response->plugins as $key=>$plugin)
-                            <li>{{ucfirst($plugin->name)}}</li>
-                        @endforeach
-                    </ul>
+                    <h4>WordPress Plugins
+                        <span class="badge">
+                         @if (count($response->plugins)>0)
+                                {{count($response->plugins)}}
+                            @else
+                                0
+                            @endif
+                    </span>
+                    </h4>
                 </div>
             </div>
-        @endif
-    </div>
-
+            @if ($response->plugins)
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="plugins">
+                            @foreach ($response->plugins as $key=>$plugin)
+                                <li>{{str_limit(ucfirst($plugin->name),25)}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+        </div>
+    @endif
 
     <div class="technologies" style="margin-top: 25px;">
         <div class="row">
@@ -247,16 +250,20 @@
             <div class="row grid">
 
 
-                    @foreach ($response->technologies->applications as $category=>$applications)
+                @foreach ($response->technologies->applications as $category=>$applications)
                     <div class="item well">
                         <h5 class="color">{{$category}}</h5>
                         <ul>
                             @foreach ($applications as $application)
-                                <li>{{ucfirst($application->name)}} {{$application->version}}</li>
+                                <li>
+                                    <img src="{{$application->icon}}" class="applicationIcon"
+                                         alt=""/>
+                                    {{ucfirst($application->name)}} {{$application->version}}
+                                </li>
                             @endforeach
                         </ul>
                     </div>
-                    @endforeach
+                @endforeach
 
             </div>
         @endif
