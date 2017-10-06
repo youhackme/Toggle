@@ -28,6 +28,7 @@
 
         div.extension-wrapper {
             padding-top: 25px;
+            padding-bottom: 25px;
         }
 
         h4 {
