@@ -156,19 +156,19 @@
         <div class="row m-top-10">
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <dl>
-                    <dt>Application</dt>
+                    <dt>Powered By</dt>
                     <dd>
                         @if (!$response->application)
                             Unknown
-                        @elseif(strtolower($response->application)=='wordpress')
+                        @elseif(in_array('wordpress',$response->application))
                             WordPress
                         @else
-                            {{ucfirst($response->application)}}
+                            {{implode(', ',$response->application)}}
                         @endif
                     </dd>
                 </dl>
             </div>
-            @if (strtolower($response->application)=='wordpress')
+            @if (in_array('wordpress',$response->application))
                 <div class="col-md-4 col-sm-4 col-xs-4">
                     <dl>
                         <dt>Theme name</dt>
@@ -237,8 +237,8 @@
             <div class="col-md-12">
                 <h4>Technologies
                     <span class="badge">
-                        @if (count($response->technologies->applications)>0)
-                            {{count($response->technologies->applications)}}
+                        @if (count(array_collapse($response->technologies->applications))>0)
+                            {{count(array_collapse($response->technologies->applications))}}
                         @else
                             0
                         @endif

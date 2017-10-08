@@ -16,7 +16,7 @@ class Application
      * What category should be displayed as main application?
      * @var array
      */
-    public $mainApplication = 'CMS';
+    public $mainApplications = ['CMS', 'Ecommerce'];
 
     /**
      * Instance of  Illuminate\Http\Request
@@ -108,27 +108,35 @@ class Application
             $response                                             = $responseFromInternalScan;
         }
 
-        // Well, main application is not WordPress? Then define the main application from togglyzer
-        if ( ! $response->application) {
-            foreach ($response->technologies->applications as $name => $application) {
 
-                if (array_search($this->mainApplication, $application->categories) !== false) {
+        $poweredBy = [];
+        // For each technology detected
+        foreach ($response->technologies->applications as $name => $application) {
+            //Remove every category that is defined as main application
+            foreach ($this->mainApplications as $mainApplication) {
+
+                if (array_search($mainApplication, $application->categories) !== false) {
                     // Add this technology as the main application
-                    $response->application = $application->name . ' ' . $application->version;
+                    $poweredBy[] = $application->name . ' ' . $application->version;
                     // Do not consider the main application as a technology as from now
                     unset($response->technologies->applications[$name]);
-                    break;
                 }
             }
         }
+
+        // Well, main application is not WordPress? Then define the main application from togglyzer
+        if ( ! $response->application) {
+
+            $response->application = $poweredBy;
+        }
+
 
         $applicationByCategory = $this->sortApplicationByCategory($response);
 
         if ( ! empty($applicationByCategory)) {
             $response->technologies->applications = $applicationByCategory;
         }
-
-
+        
         return $response;
     }
 
