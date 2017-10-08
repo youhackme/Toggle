@@ -163,7 +163,7 @@
                         @elseif(strtolower($response->application)=='wordpress')
                             WordPress
                         @else
-                            {{strtoupper($response->application)}}
+                            {{ucfirst($response->application)}}
                         @endif
                     </dd>
                 </dl>
