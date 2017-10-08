@@ -16,7 +16,7 @@ class Application
      * What category should be displayed as main application?
      * @var array
      */
-    public $mainApplications = ['CMS', 'Ecommerce'];
+    public $mainApplications = ['CMS', 'Ecommerce','Message Boards'];
 
     /**
      * Instance of  Illuminate\Http\Request
@@ -136,7 +136,7 @@ class Application
         if ( ! empty($applicationByCategory)) {
             $response->technologies->applications = $applicationByCategory;
         }
-        
+
         return $response;
     }
 
