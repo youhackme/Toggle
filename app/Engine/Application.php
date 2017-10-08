@@ -12,6 +12,11 @@ use GuzzleHttp\Client;
 
 class Application
 {
+    /**
+     * What category should be displayed as main application?
+     * @var array
+     */
+    public $mainApplication = 'CMS';
 
     /**
      * Instance of  Illuminate\Http\Request
@@ -19,6 +24,10 @@ class Application
      */
     public $request;
 
+    /**
+     * response from togglyzer result
+     * @var
+     */
     public $response;
 
     /**
@@ -58,6 +67,7 @@ class Application
             $externalTechnologies = $technologies = $response = $responseFromExternalScan->technologies->applications;
         }
 
+        $internalTechnologies = [];
 
         if (isset($html)) {
             $responseFromInternalScan = $this->internalScan([
@@ -67,9 +77,10 @@ class Application
                 'headers'     => $headers,
                 'status'      => 200,
             ]);
+            $internalTechnologies     = $response = $responseFromInternalScan->technologies->applications;
+
         }
 
-        $internalTechnologies = $response = $responseFromInternalScan->technologies->applications;
 
         // Contains duplicate technlogies when combining offline and online scan
         $technologies = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
@@ -80,6 +91,7 @@ class Application
             foreach ($technologies as $technology) {
                 $applicationName                      = $technology->name;
                 $uniqueApplications[$applicationName] = $technology;
+
             }
         }
 
@@ -96,11 +108,26 @@ class Application
             $response                                             = $responseFromInternalScan;
         }
 
+        // Well, main application is not WordPress? Then define the main application from togglyzer
+        if ( ! $response->application) {
+            foreach ($response->technologies->applications as $name => $application) {
+
+                if (array_search($this->mainApplication, $application->categories) !== false) {
+                    // Add this technology as the main application
+                    $response->application = $application->name . ' ' . $application->version;
+                    // Do not consider the main application as a technology as from now
+                    unset($response->technologies->applications[$name]);
+                    break;
+                }
+            }
+        }
+
         $applicationByCategory = $this->sortApplicationByCategory($response);
 
         if ( ! empty($applicationByCategory)) {
             $response->technologies->applications = $applicationByCategory;
         }
+
 
         return $response;
     }
