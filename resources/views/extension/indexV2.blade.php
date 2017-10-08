@@ -28,6 +28,7 @@
 
         div.extension-wrapper {
             padding-top: 25px;
+            padding-bottom: 25px;
         }
 
         h4 {
@@ -162,7 +163,7 @@
                         @elseif(strtolower($response->application)=='wordpress')
                             WordPress
                         @else
-                            {{strtoupper($response->application)}}
+                            {{ucfirst($response->application)}}
                         @endif
                     </dd>
                 </dl>
