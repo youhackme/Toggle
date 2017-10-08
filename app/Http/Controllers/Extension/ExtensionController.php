@@ -98,7 +98,12 @@ class ExtensionController extends Controller
 
 
         // Fetch result from external call
-        $responseFromExternalScan = (new Client())->request('GET', env('APP_URL') . '/site/?url=' . $url);
+        $responseFromExternalScan = (new Client())->request(
+            'GET',
+            env('APP_URL') . '/site/?url=' . $url
+        );
+
+
         $responseFromExternalScan = json_decode($responseFromExternalScan->getBody()->getContents());
         $externalTechnologies     = $technologies = [];
         //If there's no error
