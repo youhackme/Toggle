@@ -10,13 +10,14 @@ namespace App\Engine;
 
 use GuzzleHttp\Client;
 
+
 class Application
 {
     /**
      * What category should be displayed as main application?
      * @var array
      */
-    public $mainApplications = ['CMS', 'Ecommerce','Message Boards'];
+    public $mainApplications = ['CMS', 'Ecommerce', 'Message Boards'];
 
     /**
      * Instance of  Illuminate\Http\Request
@@ -130,7 +131,11 @@ class Application
             $response->application = $poweredBy;
         }
 
+        // Make Pretty Url before display
+        $uri                         = \App::make('Uri');
+        $response->technologies->url = $uri->parseUrl($response->technologies->url)->host->host;
 
+        // Group list of technologies by category
         $applicationByCategory = $this->sortApplicationByCategory($response);
 
         if ( ! empty($applicationByCategory)) {
