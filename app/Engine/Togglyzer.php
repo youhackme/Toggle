@@ -43,7 +43,7 @@ class Togglyzer
     {
         $wappalyzerPath = app_path() . '/../node_modules/togglyzer/index.js';
 
-        $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . env('APP_URL') . '/cache?url=' . urlencode($this->siteAnatomy->url);
+        $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . env('APP_URL') . '/cache?url=' . $this->siteAnatomy->url;
 
         $process = new Process($wappylyzerCommand);
         $process->run();
