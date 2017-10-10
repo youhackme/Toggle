@@ -34,6 +34,7 @@ class SiteAnatomy
     public $url;
     public $host;
     public $environment = null;
+    public $scanMode = 'online';
 
 
     /**
@@ -49,7 +50,7 @@ class SiteAnatomy
         if (is_null($requestInfo)) {
             $this->crawl($url);
         } else {
-
+            $this->scanMode = 'offline';
             // Browser simulation
             $this->simulateCrawl($requestInfo);
         }
@@ -71,7 +72,6 @@ class SiteAnatomy
             $data = $bot->crawl($requestInfo);
 
             $this->result($data);
-
 
         } catch (\Exception $e) {
 
@@ -282,8 +282,11 @@ class SiteAnatomy
             ];
 
 
-            Redis::set('site:' . $this->url, json_encode($this));
-            Redis::expire('site:' . $this->url, 3600);
+            if ($this->scanMode == 'online') {
+                Redis::set('site:' . $this->url, json_encode($this));
+                Redis::expire('site:' . $this->url, 3600);
+            }
+
 
             return $this;
 

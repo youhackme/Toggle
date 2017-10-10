@@ -58,8 +58,7 @@ class Application
         $headers     = $this->request->input('headers');
 
         $responseFromExternalScan = $this->externalScan([
-            'mode' => 'online',
-            'url'  => $url,
+            'url' => $url,
         ]);
 
 
@@ -132,8 +131,11 @@ class Application
         }
 
         // Make Pretty Url before display
-        $uri                         = \App::make('Uri');
-        $response->technologies->url = $uri->parseUrl($response->technologies->url)->host->host;
+        $uri = \App::make('Uri');
+
+        $response->technologies->url = $uri->parseUrl(
+            urldecode($response->technologies->url)
+        )->host->host;
 
         // Group list of technologies by category
         $applicationByCategory = $this->sortApplicationByCategory($response);
