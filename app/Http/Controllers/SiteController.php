@@ -98,6 +98,8 @@ class SiteController extends Controller
 
         } else {
 
+            \Bugsnag::notifyError('Error', json_encode($siteAnatomy->errors()));
+
             return response()->json([
                 'error' => 'Unable to simulate crawling in offline mode for ' . $site,
             ]);
