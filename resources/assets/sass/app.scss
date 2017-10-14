@@ -1,5 +1,6 @@
-// Bootstrap customization
-@import "variables";
+// Overriden bootstrap variables
+@import "custom";
+// Include Bootstrap default modules
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
@@ -34,5 +35,3 @@
 @import "node_modules/bootstrap/scss/popover";
 @import "node_modules/bootstrap/scss/carousel";
 @import "node_modules/bootstrap/scss/utilities";
-
-
