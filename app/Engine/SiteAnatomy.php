@@ -282,9 +282,13 @@ class SiteAnatomy
             ];
 
 
-            if ($this->scanMode == 'online') {
+            if ($this->scanMode = 'offline') {
                 Redis::set('site:' . $this->url, json_encode($this));
-                Redis::expire('site:' . $this->url, 3600);
+                Redis::expire('site:' . $this->url, 60);
+
+            } else {
+                Redis::set('site:' . $this->url, json_encode($this));
+                Redis::expire('site:' . $this->url, 7200);
             }
 
 

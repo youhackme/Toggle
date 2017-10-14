@@ -41,6 +41,11 @@ class Togglyzer
 
     public function check()
     {
+
+        if ($this->siteAnatomy->scanMode == 'offline') {
+            $this->siteAnatomy->url = urlencode($this->siteAnatomy->url);
+        }
+
         $wappalyzerPath = app_path() . '/../node_modules/togglyzer/index.js';
 
         $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . env('APP_URL') . '/cache?url=' . $this->siteAnatomy->url;
