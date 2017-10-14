@@ -93,7 +93,9 @@ class Theme extends WordPressAbstract
     private function extractThemeAlias($content)
     {
         $themes = [];
-        if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $content, $matches)) {
+        //if (preg_match_all('/\/wp-content\/themes\/(.+?)\//', $content, $matches)) {
+        if (preg_match_all('/\/wp-content\/themes\/([A-Za-z0-9-.]+?)\//', $content, $matches)) {
+
             if ( ! empty($matches[1])) {
                 $templates = array_unique($matches[1]);
 
@@ -102,6 +104,7 @@ class Theme extends WordPressAbstract
                 }
             }
         }
+
 
         return $themes;
     }
