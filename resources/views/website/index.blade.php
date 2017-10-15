@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Toggle</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
 </head>
 <body>
 
@@ -27,7 +27,7 @@
     }
 
     .wrapper {
-        background-color: #7774E7;
+        background-color: #6772E5 ;
         height: calc(100vh - 50px);
 
     }
