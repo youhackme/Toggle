@@ -26,16 +26,23 @@
         color: #ffffff;
     }
 
+    .btn-search:hover {
+        background-color: #59d69e;
+        border: 2px solid #ffffff;
+        color: #ffffff;
+    }
+
     .wrapper {
-        background-color: #6772E5 ;
+        background-color: #6772E5;
         height: calc(100vh - 50px);
 
     }
 
-    h2.headline {
+    .headline {
         color: #ffffff;
         text-align: center;
         padding-bottom: 20px;
+        margin-top: 100px;
     }
 
     .example3 .navbar-brand {
@@ -58,6 +65,39 @@
 
     .navbar-static-top {
         margin-bottom: 0px;
+    }
+
+    input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
+        outline: none;
+        box-shadow: none !important;
+        border: 1px solid #ffffff !important;
+    }
+
+    .headline {
+        font-family: "Proxima Nova Thin";
+    }
+
+    span.typed {
+        border-bottom: 4px solid #82B541;
+        transition: border-color .3s ease-in-out;
+        font-weight:bold;
+    }
+
+    .typed-cursor {
+        opacity: 1;
+        animation: blink .7s infinite;
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
     }
 
 
@@ -109,9 +149,16 @@
     </div>
     <div class="row">
         <div class="wrapper">
+            <div class="col-md-offset-2 col-md-8">
+                <h2 class="headline">
+                    Find out what
+                    <span class="typed"></span>
+                    your favorite sites
+                    are using!
+                </h2>
+            </div>
             <div class="col-md-offset-3 col-md-6">
                 <div class="innerwrapper" style="margin-top:100px;">
-                    <h2 class="headline">Find out what WordPress Theme your favorite sites are using!</h2>
                     <form role="form" style="margin-top:50px;">
                         <div class="input-group">
                             <input type="text" class="form-control input-xlg" placeholder="https://toggle.me">
@@ -133,7 +180,18 @@
         </div>
     </div>
 </div>
+<script src="{{asset('js/app.js')}}"></script>
+<script>
+  $(function () {
+    new Typed('.typed', {
+      strings: ['Technologies', 'WordPress Theme', 'WordPress Plugins'],
+      typeSpeed: 100,
+      loop: true,
+      startDelay: 1000,
+      backDelay: 1500
+    });
 
-
+  });
+</script>
 </body>
 </html>
