@@ -3,66 +3,137 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>Toggle</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
 <style>
-    body {
-        padding-top: 5rem;
+    .input-xlg {
+        height: 56px;
+        padding: 10px 16px;
+        font-size: 20px;
+        line-height: 1.3333333;
+        border-radius: 6px;
+        border: 1px solid #ffffff;
     }
 
-    .starter-template {
-        padding: 3rem 1.5rem;
-        text-align: center;
+    .btn-search {
+        background-color: #3ecf8e;
+        border: 2px solid #ffffff;
+        color: #ffffff;
     }
+
+    .wrapper {
+        background-color: #7774E7;
+        height: calc(100vh - 50px);
+
+    }
+
+    h2.headline {
+        color: #ffffff;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .example3 .navbar-brand {
+        height: 80px;
+    }
+
+    .example3 .nav > li > a {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .example3 .navbar-toggle {
+        padding: 10px;
+        margin: 25px 15px 25px 0;
+    }
+
+    .navbar-brand img {
+        height: 50px;
+    }
+
+    .navbar-static-top {
+        margin-bottom: 0px;
+    }
+
 
 </style>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="example3">
+            <nav class="navbar  navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#navbar3">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="https://toggle.me">
+                            <img src="{{asset('img/toggle.svg')}}" alt="Logo">
+                        </a>
+                    </div>
+                    <div id="navbar3" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
                 </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+                <!--/.container-fluid -->
+            </nav>
+        </div>
+
     </div>
-</nav>
-
-<div class="container">
-
-    <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
-            mostly barebones HTML document.</p>
+    <div class="row">
+        <div class="wrapper">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="innerwrapper" style="margin-top:100px;">
+                    <h2 class="headline">Find out what WordPress Theme your favorite sites are using!</h2>
+                    <form role="form" style="margin-top:50px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-xlg" placeholder="https://toggle.me">
+                            <span class="input-group-btn">
+                      <button class="btn btn-default btn-search input-xlg" type="button">SEARCH </button>
+                    </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
-</div><!-- /.container -->
+    <div class="row">
+        <div class="col-md-12" style="background-color:yellow;">
+            <footer>
+                This is a footer
+            </footer>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
