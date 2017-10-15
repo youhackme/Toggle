@@ -78,14 +78,15 @@
     }
 
     span.typed {
-        border-bottom: 4px solid #82B541;
-        transition: border-color .3s ease-in-out;
-        font-weight:bold;
+        font-family: "Proxima Nova Semibold";
+        font-weight: bold;
     }
 
     .typed-cursor {
         opacity: 1;
-        animation: blink .7s infinite;
+        animation: blink .9s infinite;
+        font-size: 50px;
+        vertical-align: middle;
     }
 
     @keyframes blink {
@@ -184,7 +185,7 @@
 <script>
   $(function () {
     new Typed('.typed', {
-      strings: ['Technologies', 'WordPress Theme', 'WordPress Plugins'],
+      strings: ['Technologies', 'WordPress Theme', 'WordPress Plugins', 'Fonts'],
       typeSpeed: 100,
       loop: true,
       startDelay: 1000,
