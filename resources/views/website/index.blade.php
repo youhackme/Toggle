@@ -101,6 +101,20 @@
         }
     }
 
+    canvas {
+        display: block;
+        vertical-align: bottom;
+    }
+
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50% 50%;
+    }
+
 
 </style>
 
@@ -148,9 +162,13 @@
         </div>
 
     </div>
+
     <div class="row">
-        <div class="wrapper">
-            <div class="col-md-offset-2 col-md-8">
+
+        <div class="col-md-12 wrapper">
+            <div id="particles-js"></div>
+
+            <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
                 <h2 class="headline">
                     Find out what
                     <span class="typed"></span>
@@ -158,7 +176,7 @@
                     are using!
                 </h2>
             </div>
-            <div class="col-md-offset-3 col-md-6">
+            <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                 <div class="innerwrapper" style="margin-top:100px;">
                     <form role="form" style="margin-top:50px;">
                         <div class="input-group">
@@ -170,7 +188,10 @@
                     </form>
                 </div>
             </div>
+
         </div>
+
+
     </div>
 
     <div class="row">
@@ -184,13 +205,10 @@
 <script src="{{asset('js/app.js')}}"></script>
 <script>
   $(function () {
-    new Typed('.typed', {
-      strings: ['Technologies', 'WordPress Theme', 'WordPress Plugins', 'Fonts'],
-      typeSpeed: 100,
-      loop: true,
-      startDelay: 1000,
-      backDelay: 1500
-    });
+
+
+
+
 
   });
 </script>
