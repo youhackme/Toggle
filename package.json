@@ -16,6 +16,7 @@
     "lodash": "^4.17.4"
   },
   "dependencies": {
+    "particles.js": "^2.0.0",
     "phantom": "^4.0.5",
     "redis": "^2.8.0",
     "togglyzer": "^1.0.7",
