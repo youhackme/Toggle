@@ -13,8 +13,6 @@ const {mix} = require('laravel-mix');
 
 mix.js([
   'resources/assets/js/app.js',
-  'node_modules/particles.js/particles.js',
-  'resources/assets/js/particle.js',
   'resources/assets/js/typed.js'
 ], 'public/js');
 
