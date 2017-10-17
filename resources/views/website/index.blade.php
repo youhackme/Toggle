@@ -101,20 +101,6 @@
         }
     }
 
-    canvas {
-        display: block;
-        vertical-align: bottom;
-    }
-
-    #particles-js {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: 50% 50%;
-    }
-
 
 </style>
 
@@ -140,19 +126,6 @@
                             <li class="active"><a href="#">Home</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Contact</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li class="dropdown-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -165,8 +138,7 @@
 
     <div class="row">
 
-        <div class="col-md-12 wrapper">
-            <div id="particles-js"></div>
+        <div class="wrapper">
 
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
                 <h2 class="headline">
@@ -203,12 +175,9 @@
     </div>
 </div>
 <script src="{{asset('js/app.js')}}"></script>
+
 <script>
   $(function () {
-
-
-
-
 
   });
 </script>
