@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('website.index');
+});
+
 /*
  * Scrape plugins from different providers
  */

@@ -8,5 +8,6 @@ Homestead.yaml
 laravel/
 public/css/
 public/js/
+public/img/
 public/fonts/
 public/mix-manifest.json
