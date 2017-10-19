@@ -14,9 +14,8 @@
           crossorigin="anonymous">
 
 
-    <style>
+    <link href="{{asset('css/font.css')}}" rel="stylesheet">
 
-    </style>
     <style>
         html, body {
             font-family: 'Proxima Nova', sans-serif;
@@ -36,8 +35,9 @@
         }
 
         dt {
-            font-family: 'proxima_nova_ltsemibold', sans-serif;
+            font-family: 'Proxima Nova Semibold', sans-serif;
             font-weight: 500;
+            color: #58585B;
         }
 
         dl dd {
@@ -49,21 +49,24 @@
         div.overview h4 small {
             background-color: #7774E7;
             color: #FFFFFF;
-            padding: 3px 5px;
+            padding: 5px 15px;
             font-weight: 300;
         }
 
         div.plugins span.badge, div.technologies span.badge {
+            font-family: "Proxima Nova Thin";
             background-color: #5BC739;
             font-weight: 100;
+            padding: 3px 4px;
         }
 
         ul.plugins, ul.plugins li {
+            font-family: "Proxima Nova Thin";
             list-style: none;
             margin: 0;
             padding: 0;
             color: #7A7A7A;
-            font-weight: 500;
+            font-weight: bold;
         }
 
         ul.plugins {
@@ -73,7 +76,7 @@
         ul.plugins li {
             float: left;
             width: 50%;
-            margin-top: 7px;
+            margin-top: 15px;
             text-align: left;
         }
 
@@ -109,11 +112,14 @@
         }
 
         div.item ul li {
-            margin-top: 7px;
+            font-family: "Proxima Nova Thin";
+            font-weight: bold;
+            margin-top: 15px;
+
         }
 
         .color {
-            color: #7774E6;
+            color: #58585B;
         }
 
         .well {
@@ -128,6 +134,7 @@
         }
 
         div.item h5 {
+            font-family: "Proxima Nova Semibold";
             font-weight: 600;
         }
 
@@ -223,7 +230,7 @@
                     <div class="col-md-12">
                         <ul class="plugins">
                             @foreach ($response->plugins as $key=>$plugin)
-                                <li>{{str_limit(ucfirst($plugin->name),25)}}</li>
+                                <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
                             @endforeach
                         </ul>
                     </div>

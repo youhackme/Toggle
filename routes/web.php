@@ -20,6 +20,11 @@ Route::get('/home', function () {
     return view('website.index');
 });
 
+Route::get('/home2', function () {
+    return view('website.index2');
+});
+
+
 /*
  * Scrape plugins from different providers
  */
@@ -65,7 +70,9 @@ Route::group(['namespace' => 'Admin'], function () {
 Route::group(['namespace' => 'Extension'], function () {
 
     Route::post('/scan', 'ExtensionController@scan');
-    Route::post('/scanv2', 'ExtensionController@scanv2');
+    // Route::post('/scanv2', 'ExtensionController@scanv2');
+    Route::match(['get', 'post'], '/scanv2', 'ExtensionController@scanv2');
+
 
 });
 
