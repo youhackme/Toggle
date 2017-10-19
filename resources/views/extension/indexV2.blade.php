@@ -37,6 +37,7 @@
         dt {
             font-family: 'Proxima Nova Semibold', sans-serif;
             font-weight: 500;
+            color: #58585B;
         }
 
         dl dd {
@@ -53,8 +54,10 @@
         }
 
         div.plugins span.badge, div.technologies span.badge {
+            font-family: "Proxima Nova Thin";
             background-color: #5BC739;
             font-weight: 100;
+            padding: 3px 4px;
         }
 
         ul.plugins, ul.plugins li {
@@ -110,7 +113,7 @@
 
         div.item ul li {
             font-family: "Proxima Nova Thin";
-            font-weight:bold;
+            font-weight: bold;
             margin-top: 15px;
 
         }
@@ -118,7 +121,6 @@
         .color {
             color: #58585B;
         }
-
 
         .well {
             margin-bottom: 0;
@@ -132,6 +134,7 @@
         }
 
         div.item h5 {
+            font-family: "Proxima Nova Semibold";
             font-weight: 600;
         }
 
