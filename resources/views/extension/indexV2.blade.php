@@ -14,9 +14,8 @@
           crossorigin="anonymous">
 
 
-    <style>
+    <link href="{{asset('css/font.css')}}" rel="stylesheet">
 
-    </style>
     <style>
         html, body {
             font-family: 'Proxima Nova', sans-serif;
@@ -36,7 +35,7 @@
         }
 
         dt {
-            font-family: 'proxima_nova_ltsemibold', sans-serif;
+            font-family: 'Proxima Nova Semibold', sans-serif;
             font-weight: 500;
         }
 
@@ -59,11 +58,12 @@
         }
 
         ul.plugins, ul.plugins li {
+            font-family: "Proxima Nova Thin";
             list-style: none;
             margin: 0;
             padding: 0;
             color: #7A7A7A;
-            font-weight: 500;
+            font-weight: 300;
         }
 
         ul.plugins {
