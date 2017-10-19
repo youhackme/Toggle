@@ -20,6 +20,11 @@ Route::get('/home', function () {
     return view('website.index');
 });
 
+Route::get('/home2', function () {
+    return view('website.index2');
+});
+
+
 /*
  * Scrape plugins from different providers
  */
