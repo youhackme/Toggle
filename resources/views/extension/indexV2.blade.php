@@ -48,7 +48,7 @@
         div.overview h4 small {
             background-color: #7774E7;
             color: #FFFFFF;
-            padding: 3px 5px;
+            padding: 5px 15px;
             font-weight: 300;
         }
 
@@ -63,7 +63,7 @@
             margin: 0;
             padding: 0;
             color: #7A7A7A;
-            font-weight: 300;
+            font-weight: bold;
         }
 
         ul.plugins {
@@ -73,7 +73,7 @@
         ul.plugins li {
             float: left;
             width: 50%;
-            margin-top: 7px;
+            margin-top: 15px;
             text-align: left;
         }
 
@@ -109,12 +109,16 @@
         }
 
         div.item ul li {
-            margin-top: 7px;
+            font-family: "Proxima Nova Thin";
+            font-weight:bold;
+            margin-top: 15px;
+
         }
 
         .color {
-            color: #7774E6;
+            color: #58585B;
         }
+
 
         .well {
             margin-bottom: 0;
@@ -223,7 +227,7 @@
                     <div class="col-md-12">
                         <ul class="plugins">
                             @foreach ($response->plugins as $key=>$plugin)
-                                <li>{{str_limit(ucfirst($plugin->name),25)}}</li>
+                                <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
                             @endforeach
                         </ul>
                     </div>
