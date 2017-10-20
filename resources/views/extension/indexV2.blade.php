@@ -36,7 +36,7 @@
 
         dt {
             font-family: 'Proxima Nova Semibold', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
             color: #58585B;
         }
 
@@ -49,7 +49,7 @@
         div.overview h4 small {
             background-color: #7774E7;
             color: #FFFFFF;
-            padding: 5px 15px;
+            padding: 5px 10px;
             font-weight: 300;
         }
 
@@ -57,7 +57,7 @@
             font-family: "Proxima Nova Thin";
             background-color: #5BC739;
             font-weight: 100;
-            padding: 3px 4px;
+            padding: 3px 5px;
         }
 
         ul.plugins, ul.plugins li {
