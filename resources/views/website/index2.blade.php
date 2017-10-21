@@ -10,13 +10,6 @@
 </head>
 <body>
 
-<style>
-
-
-
-
-</style>
-
 <div class="container-fluid">
 
     <!--  Top Navigation  -->
@@ -51,7 +44,7 @@
     </div>
 
 
-    <!--  Headlines && Search bar  -->
+    <!--  Headlines & Search bar  -->
     <div class="row">
         <div class="blockHeroWrapper">
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
@@ -66,7 +59,8 @@
                 <div class="blockSearch">
                     <form role="form">
                         <div class="input-group">
-                            <input type="text" class="form-control blockSearch__input-xlg" placeholder="https://toggle.me">
+                            <input type="text" class="form-control blockSearch__input-xlg"
+                                   placeholder="https://toggle.me">
                             <span class="input-group-btn">
                       <button class="btn btn-default blockSearch__btn-search blockSearch__input-xlg" type="button">SEARCH </button>
                     </span>
@@ -77,6 +71,7 @@
         </div>
     </div>
 
+    <!-- Footer  -->
     <div class="row">
         <div class="col-md-12">
             <footer>
@@ -84,13 +79,8 @@
             </footer>
         </div>
     </div>
+
 </div>
 <script src="{{asset('js/app.js')}}"></script>
-
-<script>
-  $(function () {
-
-  });
-</script>
 </body>
 </html>
