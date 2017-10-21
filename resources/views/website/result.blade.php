@@ -53,8 +53,18 @@
         text-transform: uppercase;
     }
 
+    h2.result-heading:first-child {
+        margin-top: 80px;
+    }
+
+    h2.result-heading:not(:first-child) {
+        margin-top: 115px;
+    }
+
     h2.result-heading {
         font-family: "Proxima Nova Semibold";
+        color: #333333;
+
     }
 
     p.summary {
@@ -119,9 +129,21 @@
         background-color: #0ACF78;
     }
 
+    div.technologies {
+        margin-bottom: 30px;
+    }
 
-    div.technologies{
-        margin-bottom:30px;
+    h5.media-heading {
+        text-transform: uppercase;
+    }
+
+    span.application {
+        font-family: "Proxima Nova Semibold";
+        font-size: 15px;
+    }
+
+    div.overview-details {
+        margin-top: 10px;
     }
 
 
@@ -170,19 +192,61 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row overview-details">
 
         <div class="col-md-3">
-            Icon 1
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Powered By</h5>
+                    <span class="application">WordPress</span>
+                </div>
+            </div>
+
+
         </div>
         <div class="col-md-3">
-            Icon 2
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Theme</h5>
+                    <span class="application">Progressive</span>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
-            Icon 3
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Plugins</h5>
+                    <span class="application">8</span>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
-            Icon 4
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Technologies</h5>
+                    <span class="application">19</span>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -201,7 +265,7 @@
     </div>
 
 
-    <div class="row">
+    <div class="row" style="margin-top:15px;">
 
         <div class="col-md-3">
             <div class="plugins">
@@ -273,7 +337,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top:15px;">
         <div class="col-md-3 technologies">
             <div class="col-md-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
