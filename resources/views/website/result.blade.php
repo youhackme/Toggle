@@ -53,8 +53,18 @@
         text-transform: uppercase;
     }
 
+    h2.result-heading:first-child {
+        margin-top: 80px;
+    }
+
+    h2.result-heading:not(:first-child) {
+        margin-top: 115px;
+    }
+
     h2.result-heading {
         font-family: "Proxima Nova Semibold";
+        color: #333333;
+
     }
 
     p.summary {
@@ -119,9 +129,21 @@
         background-color: #0ACF78;
     }
 
+    div.technologies {
+        margin-bottom: 30px;
+    }
 
-    div.technologies{
-        margin-bottom:30px;
+    h5.media-heading {
+        text-transform: uppercase;
+    }
+
+    span.application {
+        font-family: "Proxima Nova Semibold";
+        font-size: 15px;
+    }
+
+    div.overview-details {
+        margin-top: 10px;
     }
 
 
@@ -170,19 +192,61 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row overview-details">
 
-        <div class="col-md-3">
-            Icon 1
+        <div class="col-md-3 col-sm-6 col-xs-6">
+            <div class="media p-t-30 p-b-30">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Powered By</h5>
+                    <span class="application">WordPress</span>
+                </div>
+            </div>
+
+
         </div>
-        <div class="col-md-3">
-            Icon 2
+        <div class="col-md-3 col-sm-6 col-xs-6">
+            <div class="media p-t-30 p-b-30">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Theme</h5>
+                    <span class="application">Progressive</span>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3">
-            Icon 3
+        <div class="col-md-3 col-sm-6 col-xs-6">
+            <div class="media p-t-30 p-b-30">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Plugins</h5>
+                    <span class="application">8</span>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3">
-            Icon 4
+        <div class="col-md-3 col-sm-6 col-xs-6">
+            <div class="media p-t-30 p-b-30">
+                <div class="media-left">
+                    <a href="#">
+                        <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">Technologies</h5>
+                    <span class="application">19</span>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -201,16 +265,16 @@
     </div>
 
 
-    <div class="row">
+    <div class="row" style="margin-top:15px;">
 
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge grey">M</span>Mailchimp</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge light-blue">H</span>Hubspot</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
@@ -218,42 +282,42 @@
             </div>
 
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge orange">Y</span>Yopto</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge blue">W</span>Woocommerce</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge dark-grey">H</span>Hubspot</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge green">M</span>Mailchimp</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge grey">W</span>Woocommerce</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="plugins">
                 <h4><span class="plugin-badge orange">Y</span>Yopto</h4>
                 <p class="description">
@@ -273,139 +337,140 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+    <div class="row" style="margin-top:15px;">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 technologies">
-            <div class="col-md-4">
+        <div class="col-md-3 col-sm-6 col-xs-6 technologies">
+            <div class="col-md-4 col-sm-3 col-xs-4">
                 <img src="{{asset('img/slack.svg')}}" alt="Slack">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-9 col-xs-8">
                 <div class="technology-information">
                     <h6>Slack</h6>
                     <p>Communication</p>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
