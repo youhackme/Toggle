@@ -474,12 +474,11 @@
     </div>
 </div>
 
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12" style="background-color:yellow;">
+        <div class="col-md-12" style="text-align: center;">
             <footer>
-                This is a footer
+                <small class="text-muted" style="text-transform:uppercase;"> © 2017 Toggle.me</small>
             </footer>
         </div>
     </div>

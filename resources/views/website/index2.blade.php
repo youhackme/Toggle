@@ -178,9 +178,9 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12" style="background-color:yellow;">
+        <div class="col-md-12">
             <footer>
-                This is a footer
+               <small class="text-muted"> This is a footer</small>
             </footer>
         </div>
     </div>
