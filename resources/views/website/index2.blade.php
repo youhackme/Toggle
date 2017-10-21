@@ -11,148 +11,51 @@
 <body>
 
 <style>
-    .input-xlg {
-        height: 56px;
-        padding: 10px 16px;
-        font-size: 20px;
-        line-height: 1.3333333;
-        border-radius: 6px;
-        border: 1px solid #ffffff;
-    }
 
-    .btn-search {
-        background-color: #3ecf8e;
-        border: 2px solid #ffffff;
-        color: #ffffff;
-    }
 
-    .btn-search:hover {
-        background-color: #59d69e;
-        border: 2px solid #ffffff;
-        color: #ffffff;
-    }
-
-    .wrapper {
-        background-color: #6772E5;
-        height: calc(100vh - 50px);
-
-    }
-
-    .headline {
-        color: #ffffff;
-        text-align: center;
-        padding-bottom: 20px;
-        margin-top: 100px;
-    }
-
-    .example3 {
-        margin-top: 25px;
-    }
-
-    .example3 .navbar-brand {
-
-        height: 80px;
-    }
-
-    .example3 .nav > li > a {
-        padding-top: 30px;
-        padding-bottom: 30px;
-        color: #ffffff;
-    }
-
-    .example3 .nav > li > a:hover {
-        color: #ffffff;
-        background-color: transparent;
-    }
-
-    .example3 .navbar-toggle {
-        padding: 10px;
-        margin: 25px 15px 25px 0;
-    }
-
-    .navbar-brand img {
-        height: 50px;
-    }
-
-    .navbar-static-top {
-        margin-bottom: 0px;
-    }
-
-    input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
-        outline: none;
-        box-shadow: none !important;
-        border: 1px solid #ffffff !important;
-    }
-
-    .headline {
-        font-family: "Proxima Nova Thin";
-    }
-
-    span.typed {
-        font-family: "Proxima Nova Semibold";
-        font-weight: bold;
-    }
-
-    .typed-cursor {
-        opacity: 1;
-        animation: blink .9s infinite;
-        font-size: 50px;
-        vertical-align: middle;
-    }
-
-    @keyframes blink {
-        0% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
 
 
 </style>
 
 <div class="container-fluid">
-    <div class="row" style="background-color: #6772E5;">
-        <div class="example3">
-            <nav class="navbar  navbar-static-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#navbar3">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="https://toggle.me">
-                            <img src="{{asset('img/toggle4.svg')}}" alt="Logo">
-                        </a>
-                    </div>
-                    <div id="navbar3" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                    <!--/.nav-collapse -->
+
+    <!--  Top Navigation  -->
+    <div class="row blockNavigation blockNavigation--full">
+        <nav class="navbar  navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar3">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://toggle.me">
+                        <img src="{{asset('img/toggle4.svg')}}" alt="Logo">
+                    </a>
                 </div>
-                <!--/.container-fluid -->
-            </nav>
-        </div>
+                <div id="navbar3" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
+        </nav>
+
 
     </div>
 
+
+    <!--  Headlines && Search bar  -->
     <div class="row">
-
-        <div class="wrapper">
-
+        <div class="blockHeroWrapper">
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-                <h2 class="headline">
+                <h2 class="blockHeadline">
                     Find out what
                     <span class="typed"></span>
                     your favorite sites
@@ -160,27 +63,24 @@
                 </h2>
             </div>
             <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                <div class="innerwrapper" style="margin-top:100px;">
-                    <form role="form" style="margin-top:50px;">
+                <div class="blockSearch">
+                    <form role="form">
                         <div class="input-group">
-                            <input type="text" class="form-control input-xlg" placeholder="https://toggle.me">
+                            <input type="text" class="form-control blockSearch__input-xlg" placeholder="https://toggle.me">
                             <span class="input-group-btn">
-                      <button class="btn btn-default btn-search input-xlg" type="button">SEARCH </button>
+                      <button class="btn btn-default blockSearch__btn-search blockSearch__input-xlg" type="button">SEARCH </button>
                     </span>
                         </div>
                     </form>
                 </div>
             </div>
-
         </div>
-
-
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <footer>
-               <small class="text-muted"> This is a footer</small>
+                <small class="text-muted"> This is a footer</small>
             </footer>
         </div>
     </div>

@@ -1,0 +1,76 @@
+// Headlines and search input
+
+.blockHeroWrapper {
+  background-color: #6772E5;
+  height: calc(100vh - 50px);
+}
+
+.blockHeadline {
+
+  font-family: "Proxima Nova Thin";
+  color: #ffffff;
+  text-align: center;
+  padding-bottom: 20px;
+  margin-top: 100px;
+
+  span.typed {
+    font-family: "Proxima Nova Semibold";
+    font-weight: bold;
+  }
+
+  .typed-cursor {
+    opacity: 1;
+    animation: blink .9s infinite;
+    font-size: 50px;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+}
+
+.blockSearch {
+  margin-top: 100px;
+
+  form {
+    margin-top: 50px;
+  }
+
+  &__input-xlg {
+    height: 56px;
+    padding: 10px 16px;
+    font-size: 20px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    border: 1px solid #ffffff;
+  }
+
+  &__btn-search {
+    background-color: #3ecf8e;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+
+  &__btn-search:hover {
+    background-color: #59d69e;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+
+  input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid #ffffff !important;
+  }
+}
+
