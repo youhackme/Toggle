@@ -1,0 +1,47 @@
+// Components for logo and menu
+.blockNavigation {
+
+  border-bottom: 1px solid #e0e0e0;
+
+  .navbar-brand {
+    height: 80px;
+  }
+
+  .nav > li > a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: $brand-primary;
+  }
+  .nav > li > a:hover, .nav > li > a:focus {
+    color: $brand-primary;
+    background-color: transparent;
+  }
+
+  .navbar-toggle {
+    padding: 10px;
+    margin: 25px 15px 25px 0;
+  }
+
+  img {
+    height: 50px;
+  }
+
+  .navbar-static-top {
+    margin-bottom: 0px;
+  }
+  // Style for --full modifier
+  &--full {
+    background-color: #6772E5;
+    border-bottom: none;
+  }
+
+  &--full .nav > li > a {
+    color: #ffffff;
+  }
+  &--full .nav > li > a:hover, &--full .nav > li > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+  }
+
+}
+
