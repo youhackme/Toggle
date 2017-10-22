@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <div class="row blockNavigation">
 
-        <nav class="navbar  navbar-static-top">
+        <nav class="navbar  navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -47,7 +47,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="blockResultHeading">Overview
+            <h2 class="blockResultHeading" style="margin-top: 150px;">Overview
                 <small>stella-telecom.fr</small>
             </h2>
         </div>
@@ -137,7 +137,7 @@
         </div>
         <div class="col-md-3 col-sm-6 col-xs-6">
             <div class="blockPlugins__plugin">
-                <h4><span class="blockPlugins__pluginBadge light-blue">H</span>Hubspot</h4>
+                <h4><span class="blockPlugins__pluginBadge blue">H</span>Hubspot</h4>
                 <p class="description">Email marketing service for managing contacts, sending emails, and tracking
                     results.</p>
             </div>
