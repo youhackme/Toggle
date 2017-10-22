@@ -1,8 +1,9 @@
+// Variables
+@import "variables";
+
 @import "mixins";
 // Proxima Nova Fonts
 @import "fonts";
-// Variables
-@import "variables";
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 // Spacing utility
@@ -11,3 +12,5 @@
 @import "navigation";
 // Hero (Headlines and search bar)
 @import "hero";
+
+@import "result";

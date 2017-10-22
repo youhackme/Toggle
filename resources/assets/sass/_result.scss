@@ -1,0 +1,105 @@
+h2.blockResultHeading {
+
+  font-family: "Proxima Nova Semibold";
+  color: #333333;
+
+  small {
+    background-color: #7774E7;
+    color: #ffffff;
+    padding: 4px 10px;
+    vertical-align: middle;
+    font-size: 23px;
+    text-transform: uppercase;
+  }
+
+  &:first-child {
+    margin-top: 80px;
+  }
+
+  &:not(:first-child) {
+    margin-top: 115px;
+  }
+
+}
+
+.blockOverview {
+  margin-top: 10px;
+
+  h5.media-heading {
+    text-transform: uppercase;
+  }
+
+  .media-body {
+    vertical-align: middle;
+  }
+
+  span.application {
+    font-family: "Proxima Nova Semibold";
+    font-size: 15px;
+  }
+}
+
+.blockSummary {
+  &__p {
+    font-size: 16px;
+    color: #333333;
+    opacity: 0.6;
+  }
+}
+
+.blockPlugins {
+  margin-top: 15px;
+  &__plugin {
+    border: 1px solid #ECECEC;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  &__plugin h4 {
+    font-family: "Proxima Nova Semibold";
+    color: #333333;
+  }
+
+  &__pluginBadge {
+    font-family: "Proxima Nova";
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 13px;
+    color: #fff;
+    line-height: 27px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  &__pluginBadge.grey {
+    background-color: #46B9D8;
+  }
+  &__pluginBadge.orange {
+    background-color: #F67700;
+  }
+  &__pluginBadge.blue {
+    background-color: #2F84ED;
+  }
+  &__pluginBadge.dark-grey {
+    background-color: #424242;
+  }
+  &__pluginBadge.green {
+    background-color: #0ACF78;
+  }
+
+}
+
+.blockTechnologies {
+  margin-top: 15px;
+
+  &__technology {
+    margin-bottom: 30px;
+  }
+  &__technology-information h5 {
+    color: #6772e5;
+  }
+
+}

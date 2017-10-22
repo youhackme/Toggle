@@ -1,6 +1,8 @@
 // Components for logo and menu
 .blockNavigation {
 
+  border-bottom: 1px solid #e0e0e0;
+
   .navbar-brand {
     height: 80px;
   }
@@ -10,7 +12,7 @@
     padding-bottom: 30px;
     color: $brand-primary;
   }
-  .nav > li > a:hover {
+  .nav > li > a:hover, .nav > li > a:focus {
     color: $brand-primary;
     background-color: transparent;
   }
@@ -30,12 +32,13 @@
   // Style for --full modifier
   &--full {
     background-color: #6772E5;
+    border-bottom: none;
   }
 
   &--full .nav > li > a {
     color: #ffffff;
   }
-  &--full .nav > li > a:hover {
+  &--full .nav > li > a:hover, &--full .nav > li > a:focus {
     color: #ffffff;
     background-color: transparent;
   }
