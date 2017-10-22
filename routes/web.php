@@ -24,9 +24,7 @@ Route::get('/home', function () {
     return view('website.index');
 });
 
-Route::get('/home2', function () {
-    return view('website.index2');
-});
+
 Route::get('/result', function () {
     return view('website.result');
 });

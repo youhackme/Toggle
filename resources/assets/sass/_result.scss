@@ -2,6 +2,7 @@ h2.blockResultHeading {
 
   font-family: "Proxima Nova Semibold";
   color: #333333;
+  margin-top: 105px;
 
   small {
     background-color: #7774E7;
@@ -11,15 +12,6 @@ h2.blockResultHeading {
     font-size: 23px;
     text-transform: uppercase;
   }
-
-  &:first-child {
-    margin-top: 80px;
-  }
-
-  &:not(:first-child) {
-    margin-top: 115px;
-  }
-
 }
 
 .blockOverview {
