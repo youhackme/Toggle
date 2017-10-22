@@ -52,10 +52,14 @@
                     <div class="blockSearch">
                         <form role="form">
                             <div class="input-group">
-                                <input type="text" class="form-control blockSearch__input-xlg"
-                                       placeholder="https://toggle.me">
+                                <input type="text"
+                                       class="form-control blockSearch__input-xlg"
+                                       placeholder="https://toggle.me"
+                                       autofocus>
                                 <span class="input-group-btn">
-                      <button class="btn btn-default blockSearch__btn-search blockSearch__input-xlg" type="button">SEARCH </button>
+                      <button class="btn btn-default blockSearch__btn-search blockSearch__input-xlg"
+                              type="button">SEARCH
+                      </button>
                     </span>
                             </div>
                         </form>
