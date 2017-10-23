@@ -1,8 +1,9 @@
 // Components for logo and menu
 .blockNavigation {
 
-  border-bottom: 1px solid #e0e0e0;
-
+  .navbar-default {
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, .2));
+  }
   .navbar-brand {
     height: 80px;
   }
@@ -12,7 +13,7 @@
     padding-bottom: 30px;
     color: $brand-primary;
   }
-  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: $brand-primary;
     background-color: transparent;
   }
