@@ -18,7 +18,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="https://toggle.me">
+                        <a class="navbar-brand" href="{{env('APP_URL')}}">
                             <img src="{{asset('img/toggle4.svg')}}" alt="Logo">
                         </a>
                     </div>
