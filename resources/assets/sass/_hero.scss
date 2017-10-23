@@ -46,25 +46,27 @@
     margin-top: 50px;
   }
 
-  &__input-xlg {
+  &__input-xlg, &__input-xlg:focus, &__input-xlg:active {
     height: 56px;
     padding: 10px 16px;
     font-size: 20px;
     line-height: 1.3333333;
     border-radius: 6px;
     border: 1px solid #ffffff;
+
   }
 
-  &__btn-search {
-    background-color: $brand-success;
-    border: 2px solid #ffffff;
-    color: #ffffff;
+  &__btn-search, &__btn-search:focus, &__btn-search:active {
+    background-color: $brand-success !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    outline:none !important;
   }
 
   &__btn-search:hover {
-    background-color: #59d69e;
-    border: 2px solid #ffffff;
-    color: #ffffff;
+    background-color: #59d69e !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
   }
 
   input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
