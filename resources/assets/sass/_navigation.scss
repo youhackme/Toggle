@@ -1,6 +1,8 @@
 // Components for logo and menu
 .blockNavigation {
 
+
+
   .navbar-default {
     filter: drop-shadow(0 0 4px rgba(0, 0, 0, .2));
   }
@@ -34,6 +36,7 @@
   &--full {
     background-color: #6772E5;
     border-bottom: none;
+    padding-top: 25px;
   }
 
   &--full .nav > li > a {
