@@ -24,10 +24,7 @@ Route::get('/home', function () {
     return view('website.index');
 });
 
-
-Route::get('/result', function () {
-    return view('website.result');
-});
+Route::get('/result', 'SiteController@scanFromWeb');
 
 
 /*

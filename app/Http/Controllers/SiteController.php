@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Engine\Application;
 use App\Engine\Togglyzer;
 use Illuminate\Support\Facades\Redis;
 use Request;
@@ -18,6 +19,7 @@ class SiteController extends Controller
 
         $site = Request::get('url');
 
+        // We probably do not need this anymore
         $site = str_replace(' ', '%20', $site);
 
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
@@ -106,4 +108,23 @@ class SiteController extends Controller
         }
 
     }
+
+    /**
+     * Public end-point for detecting through web
+     *
+     * @param Request $request
+     *
+     * @return $this
+     */
+    public function scanFromWeb(\Illuminate\Http\Request $request)
+    {
+        $application = new Application($request);
+        $response    = $application->analyze();
+
+
+        return view('website.result')
+            ->with('response', $response);
+    }
+
+
 }
