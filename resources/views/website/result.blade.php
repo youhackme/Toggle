@@ -11,7 +11,6 @@
    ])
 
 
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -120,7 +119,7 @@
             <div class="row blockSummary">
                 <div class="col-md-12">
                     <p class="blockSummary__p">www.darktips.com seems to be running WordPress. We have been able to
-                        identified @if (count($response->plugins)>0) {{count($response->plugins)}} @else 0 @endif
+                        identify @if (count($response->plugins)>0) {{count($response->plugins)}} @else 0 @endif
                         plugins.
                     </p>
                 </div>
@@ -138,10 +137,14 @@
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <div class="blockPlugins__plugin">
                             <h4>
-                                <span class="blockPlugins__pluginBadge {{$color}}">{{substr(ucfirst($plugin->name),0,1)}}</span>{{str_limit(ucfirst($plugin->name),30)}}
+                                <span class="blockPlugins__pluginBadge {{$color}}">{{substr(ucfirst($plugin->name),0,1)}}</span>{{str_limit(ucfirst($plugin->name),20)}}
                             </h4>
-                            <p class="description">
-                                Email marketing service for managing contacts, sending emails, and tracking results.
+                            <p class="blockPlugins__muted">
+                                @if(!is_null($plugin->description))
+                                    {{str_limit(ucfirst($plugin->description),95)}}
+                                @else
+                                    No description found for this plugin.
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -168,7 +171,7 @@
                             <div class="col-md-8 col-sm-9 col-xs-8">
                                 <div class="blockTechnologies__technology-information">
                                     <h5> {{ucfirst($application->name)}} {{$application->version}}</h5>
-                                    <h6>{{$category}}</h6>
+                                    <h5>{{$category}}</h5>
                                 </div>
                             </div>
                         </div>
