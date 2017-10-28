@@ -2,7 +2,7 @@ h2.blockResultHeading {
 
   font-family: "Proxima Nova Semibold";
   color: #333333;
-  margin-top: 105px;
+  margin-top: 70px;
 
   small {
     background-color: #7774E7;
@@ -45,10 +45,17 @@ h2.blockResultHeading {
     border: 1px solid #ECECEC;
     padding: 20px;
     margin-bottom: 30px;
+    height: 166px;
+    max-height: 166px;
+  }
+
+  &__muted {
+    color: #333333;
+    opacity: 0.6;
   }
 
   &__plugin h4 {
-    font-family: "Proxima Nova Semibold";
+    font-family: "Proxima Nova";
     color: #333333;
   }
 
@@ -61,7 +68,6 @@ h2.blockResultHeading {
     color: #fff;
     line-height: 27px;
     text-align: center;
-    vertical-align: middle;
     display: inline-block;
     margin-right: 10px;
   }
@@ -90,7 +96,7 @@ h2.blockResultHeading {
   &__technology {
     margin-bottom: 30px;
   }
-  &__technology-information h5 {
+  &__technology-information h5:first-of-type {
     color: #6772e5;
   }
 
