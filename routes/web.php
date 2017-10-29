@@ -20,14 +20,11 @@ Route::get('/', function () {
 /**
  * Website pages
  */
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('website.index');
 });
 
-
-Route::get('/result', function () {
-    return view('website.result');
-});
+Route::get('/result', 'SiteController@scanFromWeb');
 
 
 /*

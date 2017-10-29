@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', 'Toggle')
+@section('title', 'Toggle - Find out what technology your favorite sites are using')
 
 @section('content')
 

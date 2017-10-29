@@ -2,7 +2,7 @@ h2.blockResultHeading {
 
   font-family: "Proxima Nova Semibold";
   color: #333333;
-  margin-top: 105px;
+  margin-top: 70px;
 
   small {
     background-color: #7774E7;
@@ -45,25 +45,41 @@ h2.blockResultHeading {
     border: 1px solid #ECECEC;
     padding: 20px;
     margin-bottom: 30px;
+    height: 166px;
+    max-height: 166px;
+    transition: all ease-in 0.15s;
+  }
+
+  &__plugin:hover {
+    border: 1px solid #6772e5;
+    padding: 20px;
+    margin-bottom: 30px;
+    height: 166px;
+    max-height: 166px;
+
+  }
+
+  &__muted {
+    color: #333333;
+    opacity: 0.6;
   }
 
   &__plugin h4 {
-    font-family: "Proxima Nova Semibold";
+    font-family: "Proxima Nova";
     color: #333333;
   }
 
   &__pluginBadge {
     font-family: "Proxima Nova";
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    font-size: 13px;
+    font-size: 11px;
     color: #fff;
-    line-height: 27px;
+    line-height: 23px;
     text-align: center;
-    vertical-align: middle;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   &__pluginBadge.grey {
@@ -89,9 +105,30 @@ h2.blockResultHeading {
 
   &__technology {
     margin-bottom: 30px;
+    height: 65px;
+    max-height: 65px;
   }
-  &__technology-information h5 {
+  &__technology-information h5 a:first-of-type, &__technology-information a:hover {
     color: #6772e5;
+    text-decoration: none;
+  }
+  &__outericon {
+    width: 65px;
+    height: 65px;
+    background-color: #fbfbfb;
+    border-radius: 65px;
+    display: table;
+  }
+  &__outericon a {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  &__innericon {
+    width: 33px;
+    height: 33px;
+    margin: 0 auto;
+
   }
 
 }

@@ -14,12 +14,13 @@ const {mix} = require('laravel-mix');
 mix.js([
   'resources/assets/js/app.js',
   'resources/assets/js/typed.js'
-], 'public/js');
+], 'public/js')
+  .version();
 
 mix.sass('resources/assets/sass/app.scss', 'public/css')
   .options({
     processCssUrls: false
-  });
+  }).version();
 
 mix.copyDirectory('resources/assets/img', 'public/img');
 mix.copyDirectory('resources/assets/fonts', 'public/fonts');
