@@ -21,9 +21,9 @@
                 @if(!$homepage)
 
 
-                    <div class="col-sm-12 col-sm-offset-2 col-md-offset-1 col-md-6 blockInlineSearch hidden-sm">
+                    <div class="col-sm-5   col-md-6 blockInlineSearch hidden-xs">
                             <form method="get" class="navbar-form" action="/result">
-                            <div class="input-group  col-md-12 blockInlineSearch__valign">
+                            <div class="input-group  col-md-12 col-sm-12 blockInlineSearch__valign">
                                 <input type="text" class="form-control" placeholder="Search another website.." name="url">
                                 <div class="input-group-btn">
                                     <button class="btn btn-default blockInlineSearch__btn-search" type="submit">
