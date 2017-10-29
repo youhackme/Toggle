@@ -136,12 +136,14 @@
                     @endphp
                     <div class="col-md-4 col-sm-6 col-xs-6">
                         <div class="blockPlugins__plugin">
-                            <h4>
-                                <span class="blockPlugins__pluginBadge {{$color}}">{{substr(ucfirst($plugin->name),0,1)}}</span>{{str_limit(ucfirst($plugin->name),30)}}
-                            </h4>
+                            <h5>
+                                <span class="blockPlugins__pluginBadge {{$color}}">
+                                    {{substr(ucfirst($plugin->name),0,1)}}</span>
+                                {{str_limit(ucfirst($plugin->name),45)}}
+                            </h5>
                             <p class="blockPlugins__muted">
                                 @if(!is_null($plugin->description))
-                                    {{str_limit(ucfirst($plugin->description),95)}}
+                                    {{str_limit(ucfirst($plugin->description),130)}}
                                 @else
                                     No description found for this plugin.
                                 @endif

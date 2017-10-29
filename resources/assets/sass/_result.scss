@@ -71,15 +71,15 @@ h2.blockResultHeading {
 
   &__pluginBadge {
     font-family: "Proxima Nova";
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    font-size: 13px;
+    font-size: 11px;
     color: #fff;
-    line-height: 27px;
+    line-height: 23px;
     text-align: center;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   &__pluginBadge.grey {
@@ -106,7 +106,7 @@ h2.blockResultHeading {
   &__technology {
     margin-bottom: 30px;
   }
-  &__technology-information h5 a:first-of-type {
+  &__technology-information h5 a:first-of-type,&__technology-information a:hover {
     color: #6772e5;
     text-decoration: none;
   }
