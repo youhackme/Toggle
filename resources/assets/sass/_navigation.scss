@@ -1,8 +1,6 @@
 // Components for logo and menu
 .blockNavigation {
 
-
-
   .navbar-default {
     filter: drop-shadow(0 0 4px rgba(0, 0, 0, .2));
   }
@@ -45,6 +43,31 @@
   &--full .nav > li > a:hover, &--full .nav > li > a:focus {
     color: #ffffff;
     background-color: transparent;
+  }
+
+  .blockInlineSearch {
+
+    &__valign {
+      margin-top: 16px;
+    }
+
+    &__btn-search, &__btn-search:focus, &__btn-search:active {
+      background-color: $brand-success !important;
+      text-transform: uppercase;
+      color: #ffffff !important;
+      outline:none !important;
+      border-left:none;
+    }
+
+    &__btn-search:hover {
+      background-color: #59d69e !important;
+      color: #ffffff !important;
+    }
+
+    input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
+      outline: none;
+      box-shadow: none !important;
+    }
   }
 
 }
