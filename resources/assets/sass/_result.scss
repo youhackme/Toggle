@@ -49,6 +49,18 @@ h2.blockResultHeading {
     max-height: 166px;
   }
 
+
+  &__plugin:hover{
+    border: 1px solid #6772e5;
+    padding: 20px;
+    margin-bottom: 30px;
+    height: 166px;
+    max-height: 166px;
+    transition: all ease-in 0.15s;
+  }
+
+
+
   &__muted {
     color: #333333;
     opacity: 0.6;
