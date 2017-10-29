@@ -108,7 +108,7 @@ h2.blockResultHeading {
     height: 65px;
     max-height: 65px;
   }
-  &__technology-information h5 a:first-of-type,&__technology-information a:hover {
+  &__technology-information h5 a:first-of-type, &__technology-information a:hover {
     color: #6772e5;
     text-decoration: none;
   }
@@ -121,13 +121,13 @@ h2.blockResultHeading {
   }
   &__outericon a {
     display: table-cell;
-    vertical-align:middle;
+    vertical-align: middle;
   }
 
   &__innericon {
     width: 33px;
     height: 33px;
-    margin:0 auto;
+    margin: 0 auto;
 
   }
 
