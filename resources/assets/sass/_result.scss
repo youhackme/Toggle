@@ -50,8 +50,7 @@ h2.blockResultHeading {
     transition: all ease-in 0.15s;
   }
 
-
-  &__plugin:hover{
+  &__plugin:hover {
     border: 1px solid #6772e5;
     padding: 20px;
     margin-bottom: 30px;
@@ -59,8 +58,6 @@ h2.blockResultHeading {
     max-height: 166px;
 
   }
-
-
 
   &__muted {
     color: #333333;
@@ -109,8 +106,27 @@ h2.blockResultHeading {
   &__technology {
     margin-bottom: 30px;
   }
-  &__technology-information h5:first-of-type {
+  &__technology-information h5 a:first-of-type {
     color: #6772e5;
+    text-decoration: none;
+  }
+  &__outericon {
+    width: 65px;
+    height: 65px;
+    background-color: #fbfbfb;
+    border-radius: 65px;
+    display: table;
+  }
+  &__outericon a {
+    display: table-cell;
+    vertical-align:middle;
+  }
+
+  &__innericon {
+    width: 33px;
+    height: 33px;
+    margin:0 auto;
+
   }
 
 }

@@ -134,10 +134,10 @@
                         $randomColors = array_rand($colors, 1);
                         $color = $colors[$randomColors];
                     @endphp
-                    <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="col-md-4 col-sm-6 col-xs-6">
                         <div class="blockPlugins__plugin">
                             <h4>
-                                <span class="blockPlugins__pluginBadge {{$color}}">{{substr(ucfirst($plugin->name),0,1)}}</span>{{str_limit(ucfirst($plugin->name),20)}}
+                                <span class="blockPlugins__pluginBadge {{$color}}">{{substr(ucfirst($plugin->name),0,1)}}</span>{{str_limit(ucfirst($plugin->name),30)}}
                             </h4>
                             <p class="blockPlugins__muted">
                                 @if(!is_null($plugin->description))
@@ -161,16 +161,23 @@
             </div>
 
             <div class="row">
+
                 @foreach ($response->technologies->applications as $category=>$applications)
 
                     @foreach ($applications as $application)
                         <div class="col-md-3 col-sm-6 col-xs-6 blockTechnologies__technology">
-                            <div class="col-md-4 col-sm-3 col-xs-4">
-                                <img src="{{asset('img/slack.svg')}}" alt="Slack">
+                            <div class="col-md-4 col-sm-3 col-xs-4 blockTechnologies__outericon">
+                                <a href="{{$application->website}}" target="_blank">
+                                    <img src="{{$application->icon}}"
+                                         class="img-responsive blockTechnologies__innericon"
+                                         alt="{{ucfirst($application->name)}} {{$application->version}}">
+                                </a>
                             </div>
                             <div class="col-md-8 col-sm-9 col-xs-8">
                                 <div class="blockTechnologies__technology-information">
-                                    <h5> {{ucfirst($application->name)}} {{$application->version}}</h5>
+                                    <a href="{{$application->website}}" target="_blank">
+                                        <h5> {{ucfirst($application->name)}} {{$application->version}}</h5>
+                                    </a>
                                     <h5>{{$category}}</h5>
                                 </div>
                             </div>
