@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title', 'Result')
+@section('title','Technologies used by '. $response->technologies->url)
 
 @section('content')
 
