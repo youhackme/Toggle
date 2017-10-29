@@ -133,7 +133,7 @@ class WordPress
 
                 $slug                  = $plugin['slug'];
                 $plugin['description'] = null;
-                $plugin['name']        = $slug;
+                $plugin['name']        = ucwords(str_replace('-', ' ', $slug));
 
 
                 $pluginMeta = \App\Models\PluginMeta::where('slug', $slug)
