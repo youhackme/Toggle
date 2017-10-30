@@ -11,6 +11,8 @@
    ])
 
 
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -26,7 +28,16 @@
                 <div class="media p-t-30 p-b-30">
                     <div class="media-left">
                         <a href="#">
-                            <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                            @if (!$response->application)
+                                Unknown
+                            @else
+                                @foreach($response->application as $application)
+                                    <img class="blockOverview__iconSize" src="{{$application['icon']}}"
+                                         alt="{{$application['name']}}">
+                                    @break
+                                @endforeach
+                            @endif
+
                         </a>
                     </div>
                     <div class="media-body">
@@ -34,10 +45,11 @@
                         <span class="application">
                             @if (!$response->application)
                                 Unknown
-                            @elseif(in_array('wordpress',$response->application))
-                                WordPress
                             @else
-                                {{implode(', ',$response->application)}}
+                                @foreach($response->application as $application)
+                                    {{$application['name']}}
+                                    @break
+                                @endforeach
                             @endif
                         </span>
                     </div>
