@@ -3,6 +3,7 @@
 .blockHeroWrapper {
   background-color: #6772E5;
   height: calc(100vh - 50px);
+  min-height: 700px;
 }
 
 .blockHeadline {
@@ -60,7 +61,7 @@
     background-color: $brand-success !important;
     border: 2px solid #ffffff !important;
     color: #ffffff !important;
-    outline:none !important;
+    outline: none !important;
   }
 
   &__btn-search:hover {
