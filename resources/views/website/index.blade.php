@@ -6,7 +6,7 @@
 
 
     @include('website.includes.navigation', [
-  'logo' => 'img/toggle4.svg',
+  'logo' => 'img/logoWhiteOnBlack.svg',
   'homepage' => true
   ])
 
