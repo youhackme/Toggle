@@ -167,18 +167,19 @@
                     <dd>
                         @if (!$response->application)
                             Unknown
-                        @elseif(in_array('wordpress',$response->application))
-                            WordPress
                         @else
-                            {{implode(', ',$response->application)}}
+                            @foreach($response->application as $application)
+                                {{$application['name']}}
+                                @break
+                            @endforeach
                         @endif
                     </dd>
                 </dl>
             </div>
-            @if (in_array('wordpress',$response->application))
+            @if ($response->theme)
                 <div class="col-md-4 col-sm-4 col-xs-4">
                     <dl>
-                        <dt>Theme name</dt>
+                        <dt>Theme</dt>
                         <dd>
                             @if ($response->theme)
                                 @foreach($response->theme as $theme=>$detail)
