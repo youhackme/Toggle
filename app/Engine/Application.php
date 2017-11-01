@@ -117,18 +117,28 @@ class Application
 
                 if (array_search($mainApplication, $application->categories) !== false) {
                     // Add this technology as the main application
-                    $poweredBy[] = $application->name . ' ' . $application->version;
+                    $poweredBy[] = [
+                        'name' => $application->name . ' ' . $application->version,
+                        'icon' => $application->icon,
+
+                    ];
                     // Do not consider the main application as a technology as from now
                     unset($response->technologies->applications[$name]);
                 }
             }
         }
 
+
         // Well, main application is not WordPress? Then define the main application from togglyzer
         if ( ! $response->application) {
-
             $response->application = $poweredBy;
+        } else {
+            //Convert obj to array
+            $response->application = json_decode(json_encode($response->application), true);
         }
+
+
+
 
         // Make Pretty Url before display
         $uri = \App::make('Uri');

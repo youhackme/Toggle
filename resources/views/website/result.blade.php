@@ -11,6 +11,8 @@
    ])
 
 
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -26,7 +28,17 @@
                 <div class="media p-t-30 p-b-30">
                     <div class="media-left">
                         <a href="#">
-                            <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                            @if (!$response->application)
+                                <img class="blockOverview__iconSize" src="{{asset('img/unknown.svg')}}"
+                                     alt="{{asset('img/unknown.svg')}}">
+                            @else
+                                @foreach($response->application as $application)
+                                    <img class="blockOverview__iconSize" src="{{$application['icon']}}"
+                                         alt="{{$application['name']}}">
+                                    @break
+                                @endforeach
+                            @endif
+
                         </a>
                     </div>
                     <div class="media-body">
@@ -34,22 +46,23 @@
                         <span class="application">
                             @if (!$response->application)
                                 Unknown
-                            @elseif(in_array('wordpress',$response->application))
-                                WordPress
                             @else
-                                {{implode(', ',$response->application)}}
+                                @foreach($response->application as $application)
+                                    {{$application['name']}}
+                                    @break
+                                @endforeach
                             @endif
                         </span>
                     </div>
                 </div>
             </div>
 
-            @if (in_array('wordpress',$response->application))
+            @if ($response->theme)
                 <div class="col-md-3 col-sm-6 col-xs-6">
                     <div class="media p-t-30 p-b-30">
                         <div class="media-left">
                             <a href="#">
-                                <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                                <img src="{{asset('img/theme.svg')}}" alt="WordPress">
                             </a>
                         </div>
                         <div class="media-body">
@@ -73,7 +86,7 @@
                     <div class="media p-t-30 p-b-30">
                         <div class="media-left">
                             <a href="#">
-                                <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                                <img src="{{asset('img/plugin.svg')}}" alt="WordPress">
                             </a>
                         </div>
                         <div class="media-body">
@@ -93,7 +106,7 @@
                 <div class="media p-t-30 p-b-30">
                     <div class="media-left">
                         <a href="#">
-                            <img src="{{asset('img/wordpress.svg')}}" alt="WordPress">
+                            <img src="{{asset('img/technology.svg')}}" alt="WordPress">
                         </a>
                     </div>
                     <div class="media-body">

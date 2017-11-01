@@ -202,8 +202,15 @@ class WordPress
      */
     public function details()
     {
+
+
         return json_encode([
-            'application'  => ['wordpress'],
+            'application'  => [
+                [
+                    'name' => 'WordPress',
+                    'icon' => env('APP_URL') . '/storage/icons/wordpress.svg',
+                ],
+            ],
             'version'      => $this->version(),
             'theme'        => $this->extraInfos(),
             'plugins'      => $this->plugins(),
