@@ -32,6 +32,7 @@ class SiteAnatomy
     public $html;
     public $errors = [];
     public $url;
+    public $originalUrl;
     public $host;
     public $environment = null;
     public $scanMode = 'online';
@@ -88,6 +89,8 @@ class SiteAnatomy
      */
     public function crawl($url)
     {
+
+        $this->originalUrl = $url;
 
         if (Redis::EXISTS('site:' . $url)) {
 
@@ -283,12 +286,12 @@ class SiteAnatomy
 
 
             if ($this->scanMode = 'offline') {
-                Redis::set('site:' . $this->url, json_encode($this));
-                Redis::expire('site:' . $this->url, 7200);
+                Redis::set('site:' . $this->originalUrl, json_encode($this));
+                Redis::expire('site:' . $this->originalUrl, 86400);
 
             } else {
-                Redis::set('site:' . $this->url, json_encode($this));
-                Redis::expire('site:' . $this->url, 7200);
+                Redis::set('site:' . $this->originalUrl, json_encode($this));
+                Redis::expire('site:' . $this->originalUrl, 86400);
             }
 
 
