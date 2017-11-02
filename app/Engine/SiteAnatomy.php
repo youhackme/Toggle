@@ -264,7 +264,7 @@ class SiteAnatomy
             $this->html = $data->html();
 
 
-            $this->url         = $data->url();
+            $this->url         = $this->originalUrl;
             $this->headers     = $data->headers();
             $this->cookies     = $data->cookies();
             $this->environment = $data->environment();
