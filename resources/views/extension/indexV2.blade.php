@@ -176,7 +176,11 @@
                     </dd>
                 </dl>
             </div>
-            @if ($response->theme)
+            @php
+                $applicationName = array_column($response->application,'name');
+            @endphp
+
+            @if(in_array('WordPress',$applicationName))
                 <div class="col-md-4 col-sm-4 col-xs-4">
                     <dl>
                         <dt>Theme</dt>
