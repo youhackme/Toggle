@@ -71,6 +71,7 @@ class WordPress
         \App\Engine\WordPress\Algorithm\Robot::class,
         \App\Engine\WordPress\Algorithm\Link::class,
         \App\Engine\WordPress\Algorithm\Screenshot::class,
+        \App\Engine\WordPress\Algorithm\Version::class,
 
     ];
 
@@ -191,8 +192,20 @@ class WordPress
      */
     private function version()
     {
-        // If more than one different version is found, then something is wrong. Send to bugsnag.
-        return false;
+
+        $version = array_unique(array_collapse($this->version));
+        if (count($version) > 1) {
+            \Bugsnag::notifyError('Anomaly', 'More than one version detected',
+                function (Report $report) use ($version) {
+                    $report->setSeverity('info');
+                    $report->setMetaData([
+                        'versions' => $version,
+                        'other'    => json_encode($this),
+                    ]);
+                });
+        }
+
+        return implode('/', $version);
     }
 
     /**
@@ -202,16 +215,15 @@ class WordPress
      */
     public function details()
     {
-
-
         return json_encode([
-            'application'  => [
+            'application' => [
                 [
-                    'name' => 'WordPress',
-                    'icon' => env('APP_URL') . '/storage/icons/wordpress.svg',
+                    'name'    => 'WordPress',
+                    'icon'    => env('APP_URL') . '/storage/icons/wordpress.svg',
+                    'version' => $this->version(),
                 ],
             ],
-            'version'      => $this->version(),
+
             'theme'        => $this->extraInfos(),
             'plugins'      => $this->plugins(),
             'technologies' => $this->technologies(),
