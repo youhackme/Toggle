@@ -53,8 +53,11 @@
                     </div>
                 </div>
             </div>
+            @php
+                $applicationName = array_column($response->application,'name');
+            @endphp
 
-            @if ($response->theme)
+            @if(in_array('WordPress',$applicationName))
                 <div class="col-md-3 col-sm-6 col-xs-6">
                     <div class="media p-t-30 p-b-30">
                         <div class="media-left">
