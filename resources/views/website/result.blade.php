@@ -45,7 +45,7 @@
                                 Unknown
                             @else
                                 @foreach($response->application as $application)
-                                    {{$application['name']}} {{$application['version']}}
+                                    {{$application['name']}} {{isset($application['version'])? $application['version']:''}}
                                     @break
                                 @endforeach
                             @endif
