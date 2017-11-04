@@ -48,10 +48,7 @@ class Application
      */
     public function analyze()
     {
-
-        $debug = $this->request->input('debug');
-        $debug = is_null($debug) ? false : true;
-
+        $debug       = is_null($this->request->input('debug')) ? false : true;
         $url         = $this->request->input('url');
         $html        = $this->request->input('html');
         $environment = $this->request->input('environment');
@@ -138,8 +135,6 @@ class Application
         }
 
 
-
-
         // Make Pretty Url before display
         $uri = \App::make('Uri');
 
@@ -153,6 +148,9 @@ class Application
         if ( ! empty($applicationByCategory)) {
             $response->technologies->applications = $applicationByCategory;
         }
+
+        // Are we in debug mode or not?
+        $response->debug = $debug;
 
         return $response;
     }
