@@ -109,15 +109,17 @@ class SiteController extends Controller
 
     }
 
+
     /**
      * Public end-point for detecting through web
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return $this
      */
     public function scanFromWeb(\Illuminate\Http\Request $request)
     {
+
         $application = new Application($request);
         $response    = $application->analyze();
 
