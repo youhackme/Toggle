@@ -219,7 +219,7 @@ class WordPress
             'application' => [
                 [
                     'name'    => 'WordPress',
-                    'icon'    => env('APP_URL') . '/storage/icons/wordpress.svg',
+                    'icon'    => env('APP_URL') . '/storage/icons/WordPress.svg',
                     'version' => $this->version(),
                 ],
             ],
