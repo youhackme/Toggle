@@ -59,6 +59,7 @@ class Application
         ]);
 
 
+        $externalTechnologies = [];
         //If there's no error
         if ( ! isset($responseFromExternalScan->error)) {
             $externalTechnologies = $technologies = $response = $responseFromExternalScan->technologies->applications;
@@ -82,6 +83,7 @@ class Application
         // Contains duplicate technlogies when combining offline and online scan
         $technologies = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
 
+
         //Make technology list unique
         $uniqueApplications = [];
         if ( ! empty($technologies)) {
@@ -91,6 +93,15 @@ class Application
 
             }
         }
+
+
+        // No result found for internal or external technologies
+        if (empty($technologies)) {
+            $response['error'] = 'An error occured. Our highly trained monkeys have been notified to address this issue.';
+
+            return $response;
+        }
+
 
         if ( ! isset($responseFromExternalScan->error)) {
             $responseFromExternalScan->technologies->applications = $uniqueApplications;

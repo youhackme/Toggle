@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Engine\Application;
 use App\Engine\Togglyzer;
+use Bugsnag\Report;
 use Illuminate\Support\Facades\Redis;
 use Request;
-use Bugsnag\Report;
 
 class SiteController extends Controller
 {
@@ -51,7 +51,7 @@ class SiteController extends Controller
                 function (Report $report) use ($siteAnatomy) {
                     $report->setSeverity('error');
                     $report->setMetaData([
-                        'filename' => $siteAnatomy->errors()
+                        'filename' => $siteAnatomy->errors(),
                     ]);
                 });
 
@@ -132,6 +132,11 @@ class SiteController extends Controller
         $application = new Application($request);
         $response    = $application->analyze();
 
+        if (is_array($response) && ($response['error'])) {
+
+            return view('website.error')
+                ->with('response', $response);
+        }
 
         return view('website.result')
             ->with('response', $response);
