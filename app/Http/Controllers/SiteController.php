@@ -6,6 +6,7 @@ use App\Engine\Application;
 use App\Engine\Togglyzer;
 use Illuminate\Support\Facades\Redis;
 use Request;
+use Bugsnag\Report;
 
 class SiteController extends Controller
 {
@@ -44,7 +45,15 @@ class SiteController extends Controller
 
         } else {
 
-            \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
+            //  \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
+
+            \Bugsnag::notifyError('Connection Failed', "Failed to connect to $site",
+                function (Report $report) use ($siteAnatomy) {
+                    $report->setSeverity('error');
+                    $report->setMetaData([
+                        'filename' => $siteAnatomy->errors()
+                    ]);
+                });
 
             return response()->json([
                 'error' => 'Failed to connect to ' . $site,

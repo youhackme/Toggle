@@ -7,7 +7,7 @@
  */
 
 namespace App\Engine;
-
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -49,9 +49,10 @@ class Togglyzer
         $wappalyzerPath = app_path() . '/../node_modules/togglyzer/index.js';
 
         $wappylyzerCommand = 'node ' . $wappalyzerPath . ' ' . env('APP_URL') . '/cache?url=' . $this->siteAnatomy->url;
-
+        Log::info($wappylyzerCommand);
         $process = new Process($wappylyzerCommand);
         $process->run();
+
 
         // executes after the command finishes
         if ( ! $process->isSuccessful()) {
