@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Engine\Application;
 use App\Engine\Togglyzer;
+use Bugsnag\Report;
 use Illuminate\Support\Facades\Redis;
 use Request;
 
@@ -44,7 +45,15 @@ class SiteController extends Controller
 
         } else {
 
-            \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
+            //  \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
+
+            \Bugsnag::notifyError('Connection Failed', "Failed to connect to $site",
+                function (Report $report) use ($siteAnatomy) {
+                    $report->setSeverity('error');
+                    $report->setMetaData([
+                        'filename' => $siteAnatomy->errors(),
+                    ]);
+                });
 
             return response()->json([
                 'error' => 'Failed to connect to ' . $site,
@@ -109,18 +118,25 @@ class SiteController extends Controller
 
     }
 
+
     /**
      * Public end-point for detecting through web
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return $this
      */
     public function scanFromWeb(\Illuminate\Http\Request $request)
     {
+
         $application = new Application($request);
         $response    = $application->analyze();
 
+        if (is_array($response) && ($response['error'])) {
+
+            return view('website.error')
+                ->with('response', $response);
+        }
 
         return view('website.result')
             ->with('response', $response);
