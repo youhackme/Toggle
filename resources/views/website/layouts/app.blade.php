@@ -14,18 +14,7 @@
 @yield('content')
 
 
-<div class="container-fluid">
-    <!-- Footer  -->
-    
-    <div class="row">
-        <div class="col-md-12" style="text-align: center;">
-            <footer>
-                <small class="text-muted" style="text-transform:uppercase;"> © 2017 Toggle.me</small>
-            </footer>
-        </div>
-    </div>
 
-</div>
 <script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>
