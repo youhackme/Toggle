@@ -202,15 +202,17 @@
             </div>
         @endif
     </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" style="text-align: center;">
+                <footer>
+                    <small class="text-muted" style="text-transform:uppercase;"> © 2017 Toggle.me</small>
+                </footer>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12" style="text-align: center;">
-            <footer>
-                <small class="text-muted" style="text-transform:uppercase;"> © 2017 Toggle.me</small>
-            </footer>
-        </div>
-    </div>
-</div>
