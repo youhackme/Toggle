@@ -1,9 +1,46 @@
 // Headlines and search input
 
 .blockHeroWrapper {
-  background-color: #6772E5;
+
   height: calc(100vh - 50px);
   min-height: 700px;
+}
+
+.blockHeroWrapper:before {
+  background-color: #6772E5;
+  background-size: 256px, cover;
+  background-position: center, center;
+  background-repeat: repeat, no-repeat;
+}
+
+.blockHeroWrapper:before, .blockHeroWrapper:after {
+  content: '';
+  display: block;
+  position: fixed;
+  bottom: -5vh;
+  left: -5vw;
+  width: 110vw;
+  height: 110vh;
+  -moz-pointer-events: none;
+  -webkit-pointer-events: none;
+  -ms-pointer-events: none;
+  pointer-events: none;
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  z-index: -1;
+}
+
+.blockHeroWrapper:after {
+  background-image: url('../img/bg.svg');
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  -moz-transition: -moz-filter 0.5s ease, opacity 1s ease;
+  -webkit-transition: -webkit-filter 0.5s ease, opacity 1s ease;
+  -ms-transition: -ms-filter 0.5s ease, opacity 1s ease;
+  transition: filter 0.5s ease, opacity 1s ease;
 }
 
 .blockHeadline {
