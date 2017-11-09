@@ -96,8 +96,9 @@ class Application
 
 
         // No result found for internal or external technologies
+
         if (empty($technologies)) {
-            $response['error'] = 'An error occured. Our highly trained monkeys have been notified to address this issue.';
+            $response['error'] = 'Unfortunately, no technologies found for your query.';
 
             return $response;
         }

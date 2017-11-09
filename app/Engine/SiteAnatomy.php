@@ -49,9 +49,12 @@ class SiteAnatomy
         $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
 
         if (is_null($requestInfo)) {
+            $this->originalUrl = $url;
             $this->crawl($url);
         } else {
             $this->scanMode = 'offline';
+
+            $this->originalUrl = urldecode($requestInfo['url']);
             // Browser simulation
             $this->simulateCrawl($requestInfo);
         }
@@ -89,8 +92,6 @@ class SiteAnatomy
      */
     public function crawl($url)
     {
-
-        $this->originalUrl = $url;
 
         if (Redis::EXISTS('site:' . $url)) {
 
