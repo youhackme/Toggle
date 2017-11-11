@@ -24,29 +24,14 @@ class BrowserSimulator implements BotInterface
     public function request($requestInfo)
     {
 
-
         $this->response = (Object)[
             'html'     => $requestInfo['html'],
-            'hostname' => $requestInfo['url'],
+            'host' => $requestInfo['url'],
             'url'      => $requestInfo['url'],
             'headers'  => $requestInfo['headers'],
             'env'      => explode(' ', $requestInfo['environment']),
             "status"   => $requestInfo['status'],
         ];
-
-//        $this->response = (Object)[
-//            'html'     => 'This is an html test',
-//            'hostname' => 'darktips.com',
-//            'url'      => $requestInfo['url'],
-//            'headers'  => '[{"name":"Date","value":"Mon, 18 Sep 2017 17:04:54 GMT"},{"name":"Link","value":"<https://darktips.com/api/>; rel=\"https://api.w.org/\""},{"name":"Pragma","value":"public"},{"name":"Cache-Control","value":"max-age=0, no-cache, must-revalidate, proxy-revalidate"},{"name":"Vary","value":"Accept-Encoding"},{"name":"X-Mod-Pagespeed","value":"1.11.33.5-0"},{"name":"Content-Encoding","value":"gzip"},{"name":"strict-transport-security","value":"max-age=31536000"},{"name":"Keep-Alive","value":"timeout=5, max=100"},{"name":"Connection","value":"Keep-Alive"},{"name":"Content-Type","value":"text/html; charset=UTF-8"}]',
-//            'env'      => [
-//                'jQuery',
-//                'RocketChat',
-//            ],
-//            "status"   => 200,
-//        ];
-
-
         return $this;
 
     }
@@ -120,9 +105,7 @@ class BrowserSimulator implements BotInterface
      */
     public function host()
     {
-
-        return parse_url($this->url(), PHP_URL_HOST);
-
+        return parse_url(urldecode($this->url()), PHP_URL_HOST);
     }
 
     /**
