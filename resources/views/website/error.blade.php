@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title','An Error Occured.')
+@section('title','No result found')
 
 @section('content')
 

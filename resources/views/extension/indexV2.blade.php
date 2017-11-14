@@ -7,10 +7,15 @@
 
     <title>Toggle.me</title>
 
-    @if($response->debug===true)
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
+
+    @if (!is_array($response))
+
+        @if($response->debug===true)
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+                  crossorigin="anonymous">
+        @endif
+
     @endif
 
 
@@ -150,77 +155,107 @@
 <body>
 <div class="container-fluid extension-wrapper">
 
-    <div class="overview">
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Overview
-                    <small>{{$response->technologies->url}}</small>
-                </h4>
-            </div>
-        </div>
-        <div class="row m-top-10">
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <dl>
-                    <dt>Powered By</dt>
-                    <dd>
-                        @if (!$response->application)
-                            Unknown
-                        @else
-                            @foreach($response->application as $application)
-                                {{$application['name']}} {{isset($application['version'])? $application['version']:''}}
-                                @break
-                            @endforeach
-                        @endif
-                    </dd>
-                </dl>
-            </div>
-            @php
-                $applicationName = array_column($response->application,'name');
-            @endphp
+    @if (!is_array($response))
 
-            @if(in_array('WordPress',$applicationName))
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <dl>
-                        <dt>Theme</dt>
-                        <dd>
-                            @if ($response->theme)
-                                @foreach($response->theme as $theme=>$detail)
-                                    {{ucfirst($theme)}}
-                                    <br/>
-                                @endforeach
-                            @else
-                                Custom Theme
-                            @endif
-                        </dd>
-                    </dl>
-                </div>
-            @endif
-            @if ($response->plugins)
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <dl>
-                        <dt>Plugins</dt>
-                        <dd>
-                            @if (count($response->plugins)>0)
-                                {{count($response->plugins)}}
-                            @else
-                                0
-                            @endif
-                        </dd>
-                    </dl>
-                </div>
-            @endif
-        </div>
-
-    </div>
-
-    @if ($response->plugins)
-        <div class="plugins m-top-10">
+        <div class="overview">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>WordPress Plugins
-                        <span class="badge">
+                    <h4>Overview
+                        <small>{{$response->technologies->url}}</small>
+                    </h4>
+                </div>
+            </div>
+            <div class="row m-top-10">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <dl>
+                        <dt>Powered By</dt>
+                        <dd>
+                            @if (!$response->application)
+                                Unknown
+                            @else
+                                @foreach($response->application as $application)
+                                    {{$application['name']}} {{isset($application['version'])? $application['version']:''}}
+                                    @break
+                                @endforeach
+                            @endif
+                        </dd>
+                    </dl>
+                </div>
+                @php
+                    $applicationName = array_column($response->application,'name');
+                @endphp
+
+                @if(in_array('WordPress',$applicationName))
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <dl>
+                            <dt>Theme</dt>
+                            <dd>
+                                @if ($response->theme)
+                                    @foreach($response->theme as $theme=>$detail)
+                                        {{ucfirst($theme)}}
+                                        <br/>
+                                    @endforeach
+                                @else
+                                    Custom Theme
+                                @endif
+                            </dd>
+                        </dl>
+                    </div>
+                @endif
+                @if ($response->plugins)
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <dl>
+                            <dt>Plugins</dt>
+                            <dd>
+                                @if (count($response->plugins)>0)
+                                    {{count($response->plugins)}}
+                                @else
+                                    0
+                                @endif
+                            </dd>
+                        </dl>
+                    </div>
+                @endif
+            </div>
+
+        </div>
+
+        @if ($response->plugins)
+            <div class="plugins m-top-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>WordPress Plugins
+                            <span class="badge">
                          @if (count($response->plugins)>0)
-                                {{count($response->plugins)}}
+                                    {{count($response->plugins)}}
+                                @else
+                                    0
+                                @endif
+                    </span>
+                        </h4>
+                    </div>
+                </div>
+                @if ($response->plugins)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="plugins">
+                                @foreach ($response->plugins as $key=>$plugin)
+                                    <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        @endif
+
+        <div class="technologies" style="margin-top: 25px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Technologies
+                        <span class="badge">
+                        @if (count(array_collapse($response->technologies->applications))>0)
+                                {{count(array_collapse($response->technologies->applications))}}
                             @else
                                 0
                             @endif
@@ -228,69 +263,44 @@
                     </h4>
                 </div>
             </div>
-            @if ($response->plugins)
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="plugins">
-                            @foreach ($response->plugins as $key=>$plugin)
-                                <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+
+            @if (count($response->technologies->applications)>0)
+                <div class="row grid">
+
+
+                    @foreach ($response->technologies->applications as $category=>$applications)
+                        <div class="item well">
+                            <h5 class="color">{{$category}}</h5>
+                            <ul>
+                                @foreach ($applications as $application)
+                                    <li>
+                                        <img src="{{$application->icon}}" class="applicationIcon"
+                                             alt=""/>
+                                        {{ucfirst($application->name)}} {{$application->version}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+
                 </div>
             @endif
+
         </div>
+    @else
+        {{$response['error']}}
     @endif
-
-    <div class="technologies" style="margin-top: 25px;">
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Technologies
-                    <span class="badge">
-                        @if (count(array_collapse($response->technologies->applications))>0)
-                            {{count(array_collapse($response->technologies->applications))}}
-                        @else
-                            0
-                        @endif
-                    </span>
-                </h4>
-            </div>
-        </div>
-
-        @if (count($response->technologies->applications)>0)
-            <div class="row grid">
-
-
-                @foreach ($response->technologies->applications as $category=>$applications)
-                    <div class="item well">
-                        <h5 class="color">{{$category}}</h5>
-                        <ul>
-                            @foreach ($applications as $application)
-                                <li>
-                                    <img src="{{$application->icon}}" class="applicationIcon"
-                                         alt=""/>
-                                    {{ucfirst($application->name)}} {{$application->version}}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endforeach
-
-            </div>
-        @endif
-
-    </div>
-
 </div>
 
-@if($response->debug===true)
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+@if (!is_array($response))
+    @if($response->debug===true)
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+    @endif
 @endif
-
 
 </body>
 </html>
