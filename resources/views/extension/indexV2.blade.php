@@ -7,8 +7,8 @@
 
     <title>Toggle.me</title>
 
-    @if (!is_array($response) && (!$response['error']))
 
+    @if (!is_array($response))
 
         @if($response->debug===true)
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
@@ -17,6 +17,8 @@
         @endif
 
     @endif
+
+
     <style>
         html, body {
             font-family: 'Proxima Nova', sans-serif;
@@ -153,7 +155,7 @@
 <body>
 <div class="container-fluid extension-wrapper">
 
-    @if (!is_array($response) && (!$response['error']))
+    @if (!is_array($response))
 
         <div class="overview">
             <div class="row">
@@ -290,7 +292,7 @@
     @endif
 </div>
 
-@if (!is_array($response) && (!$response['error']))
+@if (!is_array($response))
     @if($response->debug===true)
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
