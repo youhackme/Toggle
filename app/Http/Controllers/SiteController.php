@@ -20,9 +20,6 @@ class SiteController extends Controller
 
         $site = Request::get('url');
 
-        // We probably do not need this anymore
-        $site = str_replace(' ', '%20', $site);
-
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
 
         if ( ! $siteAnatomy->errors()) {
@@ -68,7 +65,6 @@ class SiteController extends Controller
     public function cache()
     {
         $url = Request::get('url');
-        $url = str_replace(' ', '%20', $url);
 
         if (Redis::EXISTS('site:' . $url)) {
 
@@ -96,7 +92,6 @@ class SiteController extends Controller
     {
 
         $site = Request::get('url');
-        $site = str_replace(' ', '%20', $site);
 
         $requestInfo = Request::all();
         $siteAnatomy = (new \App\Engine\SiteAnatomy($site, $requestInfo));

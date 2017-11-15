@@ -24,14 +24,16 @@ class BrowserSimulator implements BotInterface
     public function request($requestInfo)
     {
 
+
         $this->response = (Object)[
-            'html'     => $requestInfo['html'],
-            'host' => $requestInfo['url'],
-            'url'      => $requestInfo['url'],
-            'headers'  => $requestInfo['headers'],
-            'env'      => explode(' ', $requestInfo['environment']),
-            "status"   => $requestInfo['status'],
+            'html'    => $requestInfo['html'],
+            'host'    => $requestInfo['url'],
+            'url'     => $requestInfo['url'],
+            'headers' => $requestInfo['headers'] ?? [],
+            'env'     => explode(' ', $requestInfo['environment']),
+            "status"  => $requestInfo['status'],
         ];
+
         return $this;
 
     }
