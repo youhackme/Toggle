@@ -75,8 +75,10 @@ class Application
                 'headers'     => $headers,
                 'status'      => 200,
             ]);
-            $internalTechnologies     = $response = $responseFromInternalScan->technologies->applications;
 
+            if ( ! isset($responseFromInternalScan->error)) {
+                $internalTechnologies = $response = $responseFromInternalScan->technologies->applications;
+            }
         }
 
 
