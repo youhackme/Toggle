@@ -38,6 +38,8 @@
                 <div id="navbar3" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="#">How it works?</a></li>
+                        <li class="active"><a href="#">About</a></li>
+                        <li class="active"><a href="#">Blog</a></li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->
