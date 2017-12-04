@@ -122,30 +122,16 @@ class Application
 
         $poweredBy = [];
         // For each technology detected
-        foreach ($response->technologies->applications as $name => $application) {
+        foreach ($response->technologies->applications as $name => &$application) {
+            $application->poweredBy = false;
             //Remove every category that is defined as main application
             foreach ($this->mainApplications as $mainApplication) {
 
                 if (array_search($mainApplication, $application->categories) !== false) {
                     // Add this technology as the main application
-                    $poweredBy[] = [
-                        'name' => $application->name . ' ' . $application->version,
-                        'icon' => $application->icon,
-
-                    ];
-                    // Do not consider the main application as a technology as from now
-                    unset($response->technologies->applications[$name]);
+                    $application->poweredBy = true;
                 }
             }
-        }
-
-
-        // Well, main application is not WordPress? Then define the main application from togglyzer
-        if ( ! $response->application) {
-            $response->application = $poweredBy;
-        } else {
-            //Convert obj to array
-            $response->application = json_decode(json_encode($response->application), true);
         }
 
 
@@ -160,7 +146,7 @@ class Application
         $applicationByCategory = $this->sortApplicationByCategory($response);
 
         if ( ! empty($applicationByCategory)) {
-            $response->technologies->applications = $applicationByCategory;
+            $response->technologies->applicationsByCategory = $applicationByCategory;
         }
 
         // Are we in debug mode or not?
