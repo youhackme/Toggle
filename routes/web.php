@@ -72,7 +72,7 @@ Route::group(['namespace' => 'Admin'], function () {
 Route::group(['namespace' => 'Extension'], function () {
 
 
-    Route::match(['get', 'post'], '/scanv2', 'ExtensionController@scanv2');
+    Route::match(['get', 'post'], '/extension', 'ExtensionController@scan');
 
 
 });

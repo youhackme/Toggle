@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 class ExtensionController extends Controller
 {
 
-    public function scanv2(Request $request)
+    public function scan(Request $request)
     {
         $application = new Application($request);
         $response    = $application->analyze();
 
 
-        return view('extension/indexV2')
+        return view('extension/index')
             ->with('response', $response);
 
     }
