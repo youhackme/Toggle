@@ -7,324 +7,310 @@
 
     <title>Toggle.me</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    @if($debug)
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
+
+    @if (!is_array($response))
+
+        @if($response->debug===true)
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+                  crossorigin="anonymous">
+        @endif
+
     @endif
+
 
     <style>
         html, body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Proxima Nova', sans-serif;
         }
 
         a:focus, a:hover {
             text-decoration: none;
         }
 
-        span.circle {
-            display: block;
-            height: 30px;
-            width: 30px;
-            line-height: 30px;
-            -moz-border-radius: 30px;
-            border-radius: 30px;
-            background-color: #C36497;
-            color: white;
-            text-align: center;
-            font-size: 15px;
+        div.extension-wrapper {
+            padding-top: 25px;
+            padding-bottom: 25px;
         }
 
-        .button.application {
-            margin: 5px 0px 0px 5px;
+        h4 {
+            color: #7A7A7A;
         }
 
-        .button {
-            align-items: center;
-            border-radius: 3px;
-            box-shadow: none;
-            display: inline-flex;
-            font-size: 12px;
-            height: 2.285em;
-            position: relative;
-            vertical-align: top;
-            user-select: none;
-            border: 1px solid #dbdbdb;
-            cursor: pointer;
-            justify-content: center;
-            padding-left: .75em;
-            padding-right: .75em;
-            text-align: center;
-            color: #4a4a4a;
-            line-height: 1.5;
+        dt {
+            font-family: 'Proxima Nova Semibold', sans-serif;
+            font-weight: 600;
+            color: #58585B;
         }
 
-        .app-icon {
-            height: 16px;
-            margin-right: .5rem;
-            overflow: hidden;
-            width: 16px;
-            vertical-align: baseline;
+        dl dd {
+
+            color: #7A7A7A;
+            font-weight: 500;
         }
 
-        .panel-default {
-            border-color: #ffffff;
+        div.overview h4 small {
+            background-color: #7774E7;
+            color: #FFFFFF;
+            padding: 5px 10px;
+            font-weight: 300;
         }
 
-        .panel {
-            box-shadow: none;
+        div.plugins span.badge, div.technologies span.badge {
+            font-family: "Proxima Nova Thin";
+            background-color: #5BC739;
+            font-weight: 100;
+            padding: 3px 5px;
+        }
+
+        ul.plugins, ul.plugins li {
+            font-family: "Proxima Nova Thin";
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: #7A7A7A;
+            font-weight: bold;
+        }
+
+        ul.plugins {
+            width: 100%;
+        }
+
+        ul.plugins li {
+            float: left;
+            width: 50%;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        /*ul.plugins li:hover {*/
+        /*background-color: red;*/
+        /*cursor: pointer;*/
+        /*}*/
+
+        .row.grid {
+            column-width: 19em;
+            -moz-column-width: 19em;
+            -webkit-column-width: 19em;
+            column-gap: 1em;
+            -moz-column-gap: 1em;
+            -webkit-column-gap: 1em;
+        }
+
+        .item {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .well {
+            margin-bottom: 0;
+            padding: 15px;
+        }
+
+        div.item ul {
+            text-align: left;
+            list-style-type: none;
+            padding: 0;
+            color: #7A7A7A;
+        }
+
+        div.item ul li {
+            font-family: "Proxima Nova Thin";
+            font-weight: bold;
+            margin-top: 15px;
+
+        }
+
+        .color {
+            color: #58585B;
+        }
+
+        .well {
+            margin-bottom: 0;
+            background-color: transparent;
             border: none;
             border-radius: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            padding: 0px 15px 0 15px;
+
         }
 
-        .panel-heading {
-            background-color: #F7F8FB !important;
+        div.item h5 {
+            font-family: "Proxima Nova Semibold";
+            font-weight: 600;
         }
 
-        .panel-body {
-            padding: 0px;
+        .m-top-10 {
+            margin-top: 10px;
         }
 
-        h6.panel-title {
-            color: #b3b3b3;
+        img.applicationIcon {
+            max-width: 20px;
+            max-height: 20px;
         }
 
-        div.panel-group {
-            margin-bottom: 0px;
-        }
-
-        li.list-group-item h5 {
-            margin-bottom: 5px;
-        }
-
-        .extension-wrapper {
-            height: 460px;
-        }
-
-        div.overview {
-            background-color: #ffffff;
-            padding-right: 0;
-            padding-left: 0;
-            height: 460px;
-            border-right: 1px solid #C9D2D5
-        }
-
-        div.overview li {
-            border: none;
-        }
-
-        div.overview li h6 {
-            text-transform: uppercase;
-            font-size: 12px;
-            font-weight: normal;
-        }
-
-        div.details {
-            background: #ffffff;
-            padding-right: 0;
-            padding-left: 0;
-            height: 460px;
-            overflow: scroll;
-        }
-
-        table.table {
-            margin-bottom: 0px;
-            border: none;
-        }
-
-        div.icon-holder {
-            padding-right: 15px;
-            padding-top: 10px;
-            width: 6%;
-        }
-
-        div.plugin-details {
-            width: 94%;
-            padding-left: 15px;
-        }
-
-        div.plugin-details h5 {
-            margin-bottom: 0px;
-        }
-
-        tr.zebra-color {
-            background-color: #fafafa;
-        }
-
-        tr > td {
-            border: none !important;
-        }
     </style>
 </head>
 <body>
 <div class="container-fluid extension-wrapper">
-    @if(!isset($response->error))
 
+    @if (!is_array($response))
 
-        <div class="row">
-            <div class="col-xs-5 overview">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <h6 class="panel-title">
-                            Domain
-                        </h6>
-                        <h5>
+        <div class="overview">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Overview
+                        <small>{{$response->technologies->url}}</small>
+                    </h4>
+                </div>
+            </div>
+            <div class="row m-top-10">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <dl>
+                        <dt>Powered By</dt>
+                        <dd>
+                            @php
+                                $mainApplication = false;
+                            @endphp
 
-                            <img class="favicon animated fadeIn"
-                                 src="https://www.google.com/s2/favicons?domain={{$response->technologies->url}}">
-                            {{$response->technologies->url}}
-                        </h5>
-
-                    </li>
-                    <li class="list-group-item">
-                        <h6 class="panel-title">
-                            Application
-                        </h6>
-                        <h5>
-                            @if (!$response->application)
+                            @if (!$mainApplication)
                                 Unknown
                             @else
-                                {{strtoupper($response->application)}}
+                                @foreach($response->technologies->applications as $application)
+                                    @if($application->poweredBy)
+                                        {{$application->name}} {{isset($application->version)? $application->version:''}}
+                                        @break
+                                    @endif
+                                @endforeach
                             @endif
+                        </dd>
+                    </dl>
+                </div>
+                @php
+                    $applicationName = array_column($response->technologies->applications,'name');
+                @endphp
 
-                        </h5>
-                    </li>
-
-                    @if (strtolower($response->application)=='wordpress')
-                        <li class="list-group-item">
-                            <h6 class="panel-title">
-                                Theme name
-                            </h6>
-                            <h5>
-                                @if ($response->theme)
-                                    @foreach($response->theme as $theme=>$detail)
+                @if(in_array('WordPress',$applicationName))
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <dl>
+                            <dt>Theme</dt>
+                            <dd>
+                                @if (!empty($response->technologies->applications['WordPress']->theme))
+                                    @foreach($response->technologies->applications['WordPress']->theme as $theme=>$detail)
                                         {{ucfirst($theme)}}
+                                        <br/>
                                     @endforeach
                                 @else
                                     Custom Theme
                                 @endif
-                            </h5>
-                        </li>
-                    @endif
-
-
-                    <li class="list-group-item">
-                        <h6 class="panel-title">
-                            Technologies found
-                        </h6>
-                        <h5>
-                            @if (count($response->technologies->applications)>0)
-                                {{count($response->technologies->applications)}}
-                            @else
-                                0
-                            @endif
-                        </h5>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-7 details">
-
-                @if ($response->plugins)
-                    <div class="panel-group" id="plugins">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a>WordPresss Plugins</a>
-                                </h4>
-                            </div>
-                            <div class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <table class="table table-bordered">
-                                        <tbody>
-
-                                        @foreach ($response->plugins as $key=>$plugin)
-                                            <tr @if($key%2==0)class="zebra-color" @endif>
-                                                <td>
-                                                    <div class="wrapper">
-                                                        <div class="icon-holder pull-left">
-                                                <span class="circle">
-                                                  {{strtoupper($plugin->name['0'])}}
-                                                </span>
-                                                        </div>
-                                                        <div class="plugin-details pull-left">
-                                                            <h5>{{ucfirst($plugin->name)}}</h5>
-                                                            <small>
-                                                                @if(is_null($plugin->description))
-                                                                    No description.
-                                                                @else
-                                                                    {{str_limit(trim($plugin->description),120)}}
-                                                                @endif
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                            </dd>
+                        </dl>
                     </div>
-
-
                 @endif
-
-
-                <div class="panel-group" id="technologies">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a>Technologies</a>
-                            </h4>
+                @if(in_array('WordPress',$applicationName))
+                    @if (isset($response->technologies->applications['WordPress']->plugins))
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <dl>
+                                <dt>Plugins</dt>
+                                <dd>
+                                    @if (count($response->technologies->applications['WordPress']->plugins)>0)
+                                        {{count($response->technologies->applications['WordPress']->plugins)}}
+                                    @else
+                                        0
+                                    @endif
+                                </dd>
+                            </dl>
                         </div>
-                        <div class="panel-collapse collapse in">
-                            <div class="panel-body" style="padding:0px;">
-
-                                @if (count($response->technologies->applications)>0)
-                                    @foreach ($response->technologies->applications as $application)
-                                        <a class="button application" target="_blank"
-                                           href="{{ $application->website }}">
-                                            <img class="app-icon" src="{{ $application->icon }}"
-                                                 alt="{{ $application->name }}">
-                                            {{ $application->name }}
-                                        </a>
-                                    @endforeach
-
-                                @else
-                                    <p style="color:#949494;font-size:16px;text-align: center;padding: 40px 0 40px 0;">
-                                        No Technology found on this page.
-                                    </p>
-                                @endif
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    @endif
+                @endif
             </div>
         </div>
 
+        @if(in_array('WordPress',$applicationName))
+            @if (isset($response->technologies->applications['WordPress']->plugins))
+                <div class="plugins m-top-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>WordPress Plugins
+                                <span class="badge">
+                                   @if (count($response->technologies->applications['WordPress']->plugins)>0)
+                                        {{count($response->technologies->applications['WordPress']->plugins)}}
+                                    @else
+                                        0
+                                    @endif
+                                 </span>
+                            </h4>
+                        </div>
+                    </div>
+                    @foreach ($response->technologies->applications['WordPress']->plugins as $key=>$plugin)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="plugins">
 
+                                    <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        @endif
+        <div class="technologies" style="margin-top: 25px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Technologies
+                        <span class="badge">
+                            @if (count(array_collapse($response->technologies->applicationsByCategory))>0)
+                                {{count(array_collapse($response->technologies->applicationsByCategory))}}
+                            @else
+                                0
+                            @endif
+                    </span>
+                    </h4>
+                </div>
+            </div>
+
+            @if (count($response->technologies->applicationsByCategory)>0)
+                <div class="row grid">
+                    @foreach ($response->technologies->applicationsByCategory as $category=>$applications)
+
+                        @if(count($applications)==1 && $applications['0']->poweredBy)
+                                @continue
+                        @endif
+                        <div class="item well">
+                            <h5 class="color">{{$category}}</h5>
+                            <ul>
+                                @foreach ($applications as $application)
+                                    <li>
+                                        <img src="{{$application->icon}}" class="applicationIcon"
+                                             alt=""/>
+                                        {{ucfirst($application->name)}} {{$application->version}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    @endforeach
+
+                </div>
+            @endif
+
+        </div>
     @else
-
-
-        <p style="font-size:17px;font-weight:700;text-align: center;padding:100px;">
-            Sorry, we are unable to uncover technologies for this website. Please try again later.
-        </p>
-
-
+        {{$response['error']}}
+    @endif
 </div>
 
-@endif
+@if (!is_array($response))
+    @if($response->debug===true)
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-@if($debug)
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+    @endif
 @endif
 
 </body>

@@ -37,9 +37,9 @@
                 @endif
                 <div id="navbar3" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li class="active"><a href="#">How it works?</a></li>
+                        <li class="active"><a href="#">About</a></li>
+                        <li class="active"><a href="#">Blog</a></li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->

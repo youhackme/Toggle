@@ -215,18 +215,35 @@ class WordPress
      */
     public function details()
     {
-        return json_encode([
-            'application' => [
-                [
+
+        $technologies      = $this->technologies();
+        $wordpressDetected = false;
+        if (isset($technologies->applications)) {
+
+            foreach ($technologies->applications as &$application) {
+                if (trim(strtolower($application->name)) == 'wordpress') {
+                    $application->version = $this->version();
+                    $application->theme   = $this->extraInfos();
+                    $application->plugins = $this->plugins();
+                    $wordpressDetected    = true;
+                    break;
+                }
+            }
+
+            if (!$wordpressDetected) {
+                $technologies->applications[] = [
                     'name'    => 'WordPress',
                     'icon'    => env('APP_URL') . '/storage/icons/WordPress.svg',
                     'version' => $this->version(),
-                ],
-            ],
+                    'theme'   => $this->extraInfos(),
+                    'plugins' => $this->plugins(),
+                ];
+            }
 
-            'theme'        => $this->extraInfos(),
-            'plugins'      => $this->plugins(),
-            'technologies' => $this->technologies(),
+        }
+
+        return json_encode([
+            'technologies' => $technologies,
         ]);
     }
 
