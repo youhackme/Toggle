@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="blockResultHeading" style="margin-top: 150px;">Overview
-                    <small>{{$response->technologies->url}}</small>
+                    <small>{{$response->technologies->host}}</small>
                 </h2>
             </div>
         </div>
