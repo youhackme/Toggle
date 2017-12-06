@@ -246,7 +246,7 @@ class Application
         $dsl['host']         = $response->host;
         $dsl['createdOn']    = $now;
         $dsl['technologies'] = $response->applications;
-        $dsl['origin']       = $extraData['chrome'];
+        $dsl['origin']       = $extraData['origin'];
 
 
         $data = [
