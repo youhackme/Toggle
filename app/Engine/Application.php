@@ -244,9 +244,9 @@ class Application
         $now                 = $currentTime->toDateTimeString();
         $dsl['url']          = $response->url;
         $dsl['host']         = $response->host;
+        $dsl['origin']       = $extraData['origin'];
         $dsl['createdOn']    = $now;
         $dsl['technologies'] = $response->applications;
-        $dsl['origin']       = $extraData['origin'];
 
 
         $data = [
