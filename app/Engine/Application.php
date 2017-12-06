@@ -120,7 +120,6 @@ class Application
         }
 
 
-        $poweredBy = [];
         // For each technology detected
         foreach ($response->technologies->applications as $name => &$application) {
             $application->poweredBy = false;
@@ -138,8 +137,8 @@ class Application
         // Make Pretty Url before display
         $uri = \App::make('Uri');
 
-        $response->technologies->url = $uri->parseUrl(
-            urldecode($response->technologies->url)
+        $response->technologies->host = $uri->parseUrl(
+            $response->technologies->url
         )->host->host;
 
         // Group list of technologies by category
@@ -148,11 +147,11 @@ class Application
         if ( ! empty($applicationByCategory)) {
             $response->technologies->applicationsByCategory = $applicationByCategory;
         }
-
         // Are we in debug mode or not?
         $response->debug = $debug;
 
-        return $response;
+        return $this->response = $response;
+
     }
 
     /**
@@ -235,6 +234,28 @@ class Application
         }
 
         return $applicationByCategory;
+    }
+
+    public function convertToElastic()
+    {
+        $dsl                 = [];
+        $response            = $this->response->technologies;
+        $currentTime         = \Carbon\Carbon::now();
+        $now                 = $currentTime->toDateTimeString();
+        $dsl['url']          = $response->url;
+        $dsl['host']         = $response->host;
+        $dsl['createdOn']    = $now;
+        $dsl['technologies'] = $response->applications;
+
+
+        $data = [
+            'body'  => $dsl,
+            'index' => 'toggle',
+            'type'  => 'technologies',
+
+        ];
+
+        return \Elasticsearch::index($data);
     }
 
 }

@@ -161,7 +161,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4>Overview
-                        <small>{{$response->technologies->url}}</small>
+                        <small>{{$response->technologies->host}}</small>
                     </h4>
                 </div>
             </div>
@@ -174,15 +174,20 @@
                                 $mainApplication = false;
                             @endphp
 
+
+                            @foreach($response->technologies->applications as $application)
+                                @if($application->poweredBy)
+                                    {{$application->name}} {{isset($application->version)? $application->version:''}}
+                                    @php
+                                        $mainApplication = true;
+                                    @endphp
+                                    @break
+                                @endif
+                            @endforeach
+
+
                             @if (!$mainApplication)
                                 Unknown
-                            @else
-                                @foreach($response->technologies->applications as $application)
-                                    @if($application->poweredBy)
-                                        {{$application->name}} {{isset($application->version)? $application->version:''}}
-                                        @break
-                                    @endif
-                                @endforeach
                             @endif
                         </dd>
                     </dl>
@@ -277,7 +282,7 @@
                     @foreach ($response->technologies->applicationsByCategory as $category=>$applications)
 
                         @if(count($applications)==1 && $applications['0']->poweredBy)
-                                @continue
+                            @continue
                         @endif
                         <div class="item well">
                             <h5 class="color">{{$category}}</h5>
