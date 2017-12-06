@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Extension;
 use App\Engine\Application;
 use App\Http\Controllers\Controller;
 use DB;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class ExtensionController extends Controller
@@ -16,6 +15,7 @@ class ExtensionController extends Controller
         $application = new Application($request);
         $response    = $application->analyze();
 
+        $application->convertToElastic(['origin' => 'chrome']);
 
         return view('extension/index')
             ->with('response', $response);

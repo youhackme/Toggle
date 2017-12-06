@@ -236,7 +236,7 @@ class Application
         return $applicationByCategory;
     }
 
-    public function convertToElastic()
+    public function convertToElastic($extraData)
     {
         $dsl                 = [];
         $response            = $this->response->technologies;
@@ -246,6 +246,7 @@ class Application
         $dsl['host']         = $response->host;
         $dsl['createdOn']    = $now;
         $dsl['technologies'] = $response->applications;
+        $dsl['origin']       = $extraData['chrome'];
 
 
         $data = [

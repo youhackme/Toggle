@@ -133,7 +133,7 @@ class SiteController extends Controller
                 ->with('response', $response);
         }
 
-        $application->convertToElastic();
+        $application->convertToElastic(['origin'=>'web']);
 
 
         return view('website.result')
