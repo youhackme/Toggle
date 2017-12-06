@@ -239,7 +239,7 @@ class Application
     public function convertToElastic($extraData)
     {
         $dsl                = [];
-        $response           = $this->response->technologies;
+        $response           = unserialize(serialize($this->response->technologies));
         $currentTime        = \Carbon\Carbon::now();
         $now                = $currentTime->toDateTimeString();
         $dsl['url']         = $response->url;
