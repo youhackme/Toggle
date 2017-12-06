@@ -246,8 +246,13 @@ class Application
         $dsl['host']        = $response->host;
         $dsl['origin']      = $extraData['origin'];
         $dsl['environment'] = env('APP_ENV');
-        $dsl['createdOn']    = $now;
-        $dsl['technologies'] = $response->applications;
+        $dsl['createdOn']   = $now;
+
+        if (isset($response->applications['WordPress']->theme)) {
+            $themesDetail                               = $response->applications['WordPress']->theme;
+            $response->applications['WordPress']->theme = array_keys((array)$themesDetail);
+        }
+        $dsl['technologies'] = array_values($response->applications);
 
 
         $data = [
