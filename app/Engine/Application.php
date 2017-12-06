@@ -238,13 +238,14 @@ class Application
 
     public function convertToElastic($extraData)
     {
-        $dsl                 = [];
-        $response            = $this->response->technologies;
-        $currentTime         = \Carbon\Carbon::now();
-        $now                 = $currentTime->toDateTimeString();
-        $dsl['url']          = $response->url;
-        $dsl['host']         = $response->host;
-        $dsl['origin']       = $extraData['origin'];
+        $dsl                = [];
+        $response           = $this->response->technologies;
+        $currentTime        = \Carbon\Carbon::now();
+        $now                = $currentTime->toDateTimeString();
+        $dsl['url']         = $response->url;
+        $dsl['host']        = $response->host;
+        $dsl['origin']      = $extraData['origin'];
+        $dsl['environment'] = env('APP_ENV');
         $dsl['createdOn']    = $now;
         $dsl['technologies'] = $response->applications;
 
