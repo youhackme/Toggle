@@ -236,16 +236,24 @@ class Application
         return $applicationByCategory;
     }
 
-    public function convertToElastic()
+    public function convertToElastic($extraData)
     {
-        $dsl                 = [];
-        $response            = $this->response->technologies;
-        $currentTime         = \Carbon\Carbon::now();
-        $now                 = $currentTime->toDateTimeString();
-        $dsl['url']          = $response->url;
-        $dsl['host']         = $response->host;
-        $dsl['createdOn']    = $now;
-        $dsl['technologies'] = $response->applications;
+        $dsl                = [];
+        $response           = unserialize(serialize($this->response->technologies));
+        $currentTime        = \Carbon\Carbon::now();
+        $now                = $currentTime->toDateTimeString();
+        $dsl['url']         = $response->url;
+        $dsl['host']        = $response->host;
+        $dsl['clientIp']    = \Request::ip();
+        $dsl['origin']      = $extraData['origin'];
+        $dsl['environment'] = env('APP_ENV');
+        $dsl['createdOn']   = $now;
+
+        if (isset($response->applications['WordPress']->theme)) {
+            $themesDetail                               = $response->applications['WordPress']->theme;
+            $response->applications['WordPress']->theme = array_keys((array)$themesDetail);
+        }
+        $dsl['technologies'] = array_values($response->applications);
 
 
         $data = [
