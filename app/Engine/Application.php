@@ -244,6 +244,7 @@ class Application
         $now                = $currentTime->toDateTimeString();
         $dsl['url']         = $response->url;
         $dsl['host']        = $response->host;
+        $dsl['clientIp']    = \Request::ip();
         $dsl['origin']      = $extraData['origin'];
         $dsl['environment'] = env('APP_ENV');
         $dsl['createdOn']   = $now;
