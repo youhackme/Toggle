@@ -15,8 +15,6 @@ class ExtensionController extends Controller
         $application = new Application($request);
         $response    = $application->analyze();
 
-        $application->convertToElastic(['origin' => 'chrome']);
-
         return view('extension/index')
             ->with('response', $response);
 

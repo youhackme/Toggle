@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Engine\Application;
+use App\Engine\CachedTechnologyBuilder;
+use App\Engine\Elastic\Technologies;
+use App\Engine\LiveTechnologyBuilder;
+use App\Engine\TechnologyDirector;
 use App\Engine\Togglyzer;
 use Bugsnag\Report;
 use Illuminate\Support\Facades\Redis;
 use Request;
+
 
 class SiteController extends Controller
 {
@@ -117,23 +121,29 @@ class SiteController extends Controller
     /**
      * Public end-point for detecting through web
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return $this
      */
-    public function scanFromWeb(\Illuminate\Http\Request $request)
+    public function scanFromWeb(Request $request)
     {
 
-        $application = new Application($request);
-        $response    = $application->analyze();
+        $site = new Technologies($request);
+
+
+        if ($site->alreadyScanned()) {
+            $technologyBuilder = new CachedTechnologyBuilder($request);
+        } else {
+            $technologyBuilder = new LiveTechnologyBuilder($request);
+        }
+
+        $response = (new TechnologyDirector($technologyBuilder))->build();
 
         if (is_array($response) && ($response['error'])) {
 
             return view('website.error')
                 ->with('response', $response);
         }
-
-        $application->convertToElastic(['origin'=>'web']);
 
 
         return view('website.result')

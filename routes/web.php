@@ -79,3 +79,4 @@ Route::group(['namespace' => 'Extension'], function () {
 
 
 Route::get('/cache', 'SiteController@cache');
+Route::get('/test', 'SiteController@test');

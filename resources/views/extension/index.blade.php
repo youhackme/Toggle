@@ -161,7 +161,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4>Overview
-                        <small>{{$response->technologies->host}}</small>
+                        <small>{{$response->host}}</small>
                     </h4>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                             @endphp
 
 
-                            @foreach($response->technologies->applications as $application)
+                            @foreach($response->applications as $application)
                                 @if($application->poweredBy)
                                     {{$application->name}} {{isset($application->version)? $application->version:''}}
                                     @php
@@ -193,7 +193,7 @@
                     </dl>
                 </div>
                 @php
-                    $applicationName = array_column($response->technologies->applications,'name');
+                    $applicationName = array_column($response->applications,'name');
                 @endphp
 
                 @if(in_array('WordPress',$applicationName))
@@ -201,8 +201,8 @@
                         <dl>
                             <dt>Theme</dt>
                             <dd>
-                                @if (!empty($response->technologies->applications['WordPress']->theme))
-                                    @foreach($response->technologies->applications['WordPress']->theme as $theme=>$detail)
+                                @if (!empty($response->applications['WordPress']->theme))
+                                    @foreach($response->applications['WordPress']->theme as $theme=>$detail)
                                         {{ucfirst($theme)}}
                                         <br/>
                                     @endforeach
@@ -214,13 +214,13 @@
                     </div>
                 @endif
                 @if(in_array('WordPress',$applicationName))
-                    @if (isset($response->technologies->applications['WordPress']->plugins))
+                    @if (isset($response->applications['WordPress']->plugins))
                         <div class="col-md-4 col-sm-4 col-xs-4">
                             <dl>
                                 <dt>Plugins</dt>
                                 <dd>
-                                    @if (count($response->technologies->applications['WordPress']->plugins)>0)
-                                        {{count($response->technologies->applications['WordPress']->plugins)}}
+                                    @if (count($response->applications['WordPress']->plugins)>0)
+                                        {{count($response->applications['WordPress']->plugins)}}
                                     @else
                                         0
                                     @endif
@@ -233,14 +233,14 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->technologies->applications['WordPress']->plugins))
+            @if (isset($response->applications['WordPress']->plugins))
                 <div class="plugins m-top-10">
                     <div class="row">
                         <div class="col-md-12">
                             <h4>WordPress Plugins
                                 <span class="badge">
-                                   @if (count($response->technologies->applications['WordPress']->plugins)>0)
-                                        {{count($response->technologies->applications['WordPress']->plugins)}}
+                                   @if (count($response->applications['WordPress']->plugins)>0)
+                                        {{count($response->applications['WordPress']->plugins)}}
                                     @else
                                         0
                                     @endif
@@ -248,7 +248,7 @@
                             </h4>
                         </div>
                     </div>
-                    @foreach ($response->technologies->applications['WordPress']->plugins as $key=>$plugin)
+                    @foreach ($response->applications['WordPress']->plugins as $key=>$plugin)
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="plugins">
@@ -267,8 +267,8 @@
                 <div class="col-md-12">
                     <h4>Technologies
                         <span class="badge">
-                            @if (count(array_collapse($response->technologies->applicationsByCategory))>0)
-                                {{count(array_collapse($response->technologies->applicationsByCategory))}}
+                            @if (count(array_collapse($response->applicationsByCategory))>0)
+                                {{count(array_collapse($response->applicationsByCategory))}}
                             @else
                                 0
                             @endif
@@ -277,9 +277,9 @@
                 </div>
             </div>
 
-            @if (count($response->technologies->applicationsByCategory)>0)
+            @if (count($response->applicationsByCategory)>0)
                 <div class="row grid">
-                    @foreach ($response->technologies->applicationsByCategory as $category=>$applications)
+                    @foreach ($response->applicationsByCategory as $category=>$applications)
 
                         @if(count($applications)==1 && $applications['0']->poweredBy)
                             @continue

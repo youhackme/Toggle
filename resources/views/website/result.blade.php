@@ -1,6 +1,6 @@
 @extends('website.layouts.app')
 
-@section('title','Technologies used by '. $response->technologies->url)
+@section('title','Technologies used by '. $response->url)
 
 @section('content')
 
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="blockResultHeading" style="margin-top: 150px;">Overview
-                    <small>{{$response->technologies->host}}</small>
+                    <small>{{$response->host}}</small>
                 </h2>
             </div>
         </div>
@@ -30,7 +30,7 @@
                             @endphp
 
 
-                            @foreach($response->technologies->applications as $application)
+                            @foreach($response->applications as $application)
                                 @if($application->poweredBy)
                                     <img class="blockOverview__iconSize" src="{{$application->icon}}"
                                          alt="{{$application->name}}">
@@ -54,7 +54,7 @@
                             @if (!$mainApplication)
                                 Unknown
                             @else
-                                @foreach($response->technologies->applications as $application)
+                                @foreach($response->applications as $application)
                                     @if($application->poweredBy)
                                         {{$application->name}} {{isset($application->version)? $application->version:''}}
                                         @break
@@ -67,7 +67,7 @@
             </div>
 
             @php
-                $applicationName = array_column($response->technologies->applications,'name');
+                $applicationName = array_column($response->applications,'name');
             @endphp
 
             @if(in_array('WordPress',$applicationName))
@@ -81,8 +81,8 @@
                         <div class="media-body">
                             <h5 class="media-heading">Theme</h5>
                             <span class="application">
-                            @if (!empty($response->technologies->applications['WordPress']->theme))
-                                    @foreach($response->technologies->applications['WordPress']->theme as $theme=>$detail)
+                            @if (!empty($response->applications['WordPress']->theme))
+                                    @foreach($response->applications['WordPress']->theme as $theme=>$detail)
                                         {{ucfirst($theme)}}
                                         <br/>
                                     @endforeach
@@ -95,7 +95,7 @@
                 </div>
             @endif
             @if(in_array('WordPress',$applicationName))
-                @if (isset($response->technologies->applications['WordPress']->plugins))
+                @if (isset($response->applications['WordPress']->plugins))
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <div class="media p-t-30 p-b-30">
                             <div class="media-left">
@@ -106,8 +106,8 @@
                             <div class="media-body">
                                 <h5 class="media-heading">Plugins</h5>
                                 <span class="application">
-                             @if (count($response->technologies->applications['WordPress']->plugins)>0)
-                                        {{count($response->technologies->applications['WordPress']->plugins)}}
+                             @if (count($response->applications['WordPress']->plugins)>0)
+                                        {{count($response->applications['WordPress']->plugins)}}
                                     @else
                                         0
                                     @endif
@@ -127,8 +127,8 @@
                     <div class="media-body">
                         <h5 class="media-heading">Technologies</h5>
                         <span class="application">
-                            @if (count(array_collapse($response->technologies->applicationsByCategory))>0)
-                                {{count(array_collapse($response->technologies->applicationsByCategory))}}
+                            @if (count(array_collapse($response->applicationsByCategory))>0)
+                                {{count(array_collapse($response->applicationsByCategory))}}
                             @else
                                 0
                             @endif
@@ -140,7 +140,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->technologies->applications['WordPress']->plugins))
+            @if (isset($response->applications['WordPress']->plugins))
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="blockResultHeading">WordPress Plugins</h2>
@@ -148,10 +148,10 @@
                 </div>
                 <div class="row blockSummary">
                     <div class="col-md-12">
-                        <p class="blockSummary__p">{{$response->technologies->url}} seems to be running WordPress. We
+                        <p class="blockSummary__p">{{$response->url}} seems to be running WordPress. We
                             have been able to identify
-                            @if (count($response->technologies->applications['WordPress']->plugins)>0)
-                                {{count($response->technologies->applications['WordPress']->plugins)}}
+                            @if (count($response->applications['WordPress']->plugins)>0)
+                                {{count($response->applications['WordPress']->plugins)}}
                             @else
                                 0
                             @endif
@@ -162,7 +162,7 @@
 
                 <div class="row blockPlugins">
 
-                    @foreach ($response->technologies->applications['WordPress']->plugins as $key=>$plugin)
+                    @foreach ($response->applications['WordPress']->plugins as $key=>$plugin)
 
                         @php
                             $colors = ['grey','blue','orange','dark-grey','green'];
@@ -191,7 +191,7 @@
         @endif
 
 
-        @if (count($response->technologies->applicationsByCategory)>0)
+        @if (count($response->applicationsByCategory)>0)
             <div class="row">
                 <div class="col-md-12 blockSummary">
                     <h2 class="blockResultHeading">Technologies</h2>
@@ -202,7 +202,7 @@
 
             <div class="row">
 
-                @foreach ($response->technologies->applicationsByCategory as $category=>$applications)
+                @foreach ($response->applicationsByCategory as $category=>$applications)
                     @foreach ($applications as $application)
                         @if(!$application->poweredBy)
                             <div class="col-md-3 col-sm-6 col-xs-6 blockTechnologies__technology">
