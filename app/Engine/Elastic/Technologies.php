@@ -89,7 +89,7 @@ class Technologies
                 $appStack['plugins'] = $this->plugins();
             }
 
-            $applications['technologies']['applications'][] = $appStack;
+            $applications['technologies']['applications'][$name] = $appStack;
 
         }
 
