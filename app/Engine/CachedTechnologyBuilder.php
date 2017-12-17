@@ -25,6 +25,6 @@ class CachedTechnologyBuilder extends TechnologyBuilderAbstract implements Techn
             ]
         );
         $applications       = $technologies->result();
-        $this->applications = $applications->technologies->applications;
+        $this->applications = $applications['applications'];
     }
 }

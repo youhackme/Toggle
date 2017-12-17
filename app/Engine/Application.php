@@ -68,7 +68,6 @@ class Application
         // Contains duplicate technlogies when combining offline and online scan
         $technologies = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
 
-
         //Make technology list unique
         $uniqueApplications = [];
         if ( ! empty($technologies)) {
@@ -125,7 +124,7 @@ class Application
             $this->saveToElastic(['origin' => 'web']);
         }
 
-        return $this->response->technologies->applications;
+        return (Array)$this->response->technologies->applications;
 
     }
 

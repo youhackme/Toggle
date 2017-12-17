@@ -64,9 +64,7 @@ class Technologies
     {
         $technologies = $this->technologies();
 
-        $applications                         = [];
-        $applications['technologies']['url']  = $this->url;
-        $applications['technologies']['host'] = $this->host;
+        $applications = [];
         foreach ($technologies['aggregations']['result']['name']['buckets'] as $technology) {
 
             $name = $technology['key'];
@@ -89,14 +87,14 @@ class Technologies
                 $appStack['plugins'] = $this->plugins();
             }
 
-            $applications['technologies']['applications'][$name] = $appStack;
+            $applications['applications'][$name] = (Object)$appStack;
 
         }
 
         $applications['stats'] = $this->stats();
 
 
-        return json_decode(json_encode($applications), false);
+        return $applications;
     }
 
     /**
