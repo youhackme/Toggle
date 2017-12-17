@@ -71,12 +71,9 @@ Route::group(['namespace' => 'Admin'], function () {
 
 Route::group(['namespace' => 'Extension'], function () {
 
-
     Route::match(['get', 'post'], '/extension', 'ExtensionController@scan');
-
-
+    
 });
 
 
 Route::get('/cache', 'SiteController@cache');
-Route::get('/test', 'SiteController@test');
