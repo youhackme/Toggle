@@ -8,6 +8,7 @@
 
 namespace App\Engine\Elastic;
 
+use Request;
 
 class Technologies
 {
@@ -18,30 +19,49 @@ class Technologies
      */
     public $host;
 
-    /** Time taken to execute a DSL
-     * @var
+    /**
+     * The original url
+     * @var array
      */
-    private $timeTook = [];
+    public $url;
 
     /**
-     * Result constructor.
-     *
-     * @param $host
+     * response from togglyzer result
+     * @var
      */
-    public function __construct($host)
-    {
-        $host = [$host];
+    public $response;
 
-        if ( ! starts_with(reset($host), 'www.')) {
-            $host = [reset($host), 'www.' . reset($host)];
+
+    /**
+     * Instance of  Illuminate\Http\Request
+     * @var
+     */
+    public $request;
+
+
+    /**
+     * Technologies constructor.
+     */
+    public function __construct()
+    {
+        $this->url = Request::input('url');
+
+        if (Request::method() == 'POST') {
+            $this->url = urldecode(Request::input('url'));
         }
 
-        $this->host = $host;
+
+        $uri = \App::make('Uri');
+
+        $this->host = $uri->parseUrl(
+            $this->url
+        )->host->host;
+
 
     }
 
     /**
-     * Fetch the result
+     * Fetch the result from ES (including technologies, wordpress and corresponding plugins)
      * @return array
      */
     public function result()
@@ -59,7 +79,7 @@ class Technologies
                 'version'    => $versionNode['key'],
                 'icon'       => $versionNode['icon']['buckets']['0']['key'],
                 'website'    => $versionNode['icon']['buckets']['0']['website']['buckets']['0']['key'],
-                'poweredBy'  => $technology['poweredBy']['buckets']['0']['key'],
+                'poweredBy'  => filter_var($technology['poweredBy']['buckets']['0']['key'], FILTER_VALIDATE_BOOLEAN),
                 'categories' => array_column(
                     $versionNode['icon']['buckets']['0']['website']['buckets']['0']['categories']['buckets'],
                     'key'
@@ -71,13 +91,20 @@ class Technologies
                 $appStack['plugins'] = $this->plugins();
             }
 
-            $applications[] = $appStack;
+            $applications['applications'][$name] = (Object)$appStack;
 
         }
 
-        return [$this->stats(), $applications];
+        $applications['stats'] = $this->stats();
+
+
+        return $applications;
     }
 
+    /**
+     * Fetch the technologies being used from ES
+     * @return mixed
+     */
     public function technologies()
     {
 
@@ -88,7 +115,7 @@ class Technologies
                     "filter" => [
                         [
                             "terms" => [
-                                "host" => $this->host,
+                                "host" => [$this->host],
                             ],
                         ],
                     ],
@@ -160,6 +187,10 @@ class Technologies
     }
 
 
+    /**
+     * Fetch the theme being used
+     * @return array
+     */
     public function themes()
     {
         $dsl = [
@@ -169,7 +200,7 @@ class Technologies
                     "filter" => [
                         [
                             "terms" => [
-                                "host" => $this->host,
+                                "host" => [$this->host],
                             ],
                         ],
                         [
@@ -222,6 +253,10 @@ class Technologies
 
     }
 
+    /**
+     * Fetch the plugin being used
+     * @return array
+     */
     public function plugins()
     {
         $dsl = [
@@ -231,7 +266,7 @@ class Technologies
                     "must" => [
                         [
                             "terms" => [
-                                "host" => $this->host,
+                                "host" => [$this->host],
                             ],
                         ],
                         [
@@ -300,6 +335,48 @@ class Technologies
         return $plugins;
     }
 
+
+    /**
+     * Find out if a url has have already been scanned
+     * @return bool
+     */
+    public function alreadyScanned()
+    {
+
+        $dsl = [
+            "size"  => 0,
+            "query" => [
+                "bool" => [
+                    "filter" => [
+                        [
+                            "terms" => [
+                                "url" => [$this->url],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+
+        $response = $this->search($dsl);
+
+
+        if ($response['hits']['total'] !== 0) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Execute an ES query
+     *
+     * @param $dsl
+     *
+     * @return mixed
+     */
     public function search($dsl)
     {
         $data = [
@@ -325,12 +402,17 @@ class Technologies
         $this->timeTook[] = $timeTook;
     }
 
-    public function stats()
+    /**
+     * Fetch stats related to a query
+     * @return array
+     */
+    private function stats()
     {
         return [
             'took'    => array_sum($this->timeTook),
             'queries' => count($this->timeTook),
         ];
     }
+
 
 }

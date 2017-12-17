@@ -36,7 +36,7 @@ return [
     |
     */
 
-    'app_version' => env('BUGSNAG_APP_VERSION', '1.0.8'),
+    'app_version' => env('BUGSNAG_APP_VERSION', '1.0.9'),
 
     /*
     |--------------------------------------------------------------------------

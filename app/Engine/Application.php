@@ -9,7 +9,7 @@
 namespace App\Engine;
 
 use GuzzleHttp\Client;
-
+use Request;
 
 class Application
 {
@@ -20,26 +20,10 @@ class Application
     public $mainApplications = ['CMS', 'Ecommerce', 'Message Boards'];
 
     /**
-     * Instance of  Illuminate\Http\Request
-     * @var
-     */
-    public $request;
-
-    /**
      * response from togglyzer result
      * @var
      */
     public $response;
-
-    /**
-     * Application constructor.
-     *
-     * @param $request
-     */
-    public function __construct($request)
-    {
-        $this->request = $request;
-    }
 
 
     /**
@@ -48,11 +32,10 @@ class Application
      */
     public function analyze()
     {
-        $debug       = is_null($this->request->input('debug')) ? false : true;
-        $url         = $this->request->input('url');
-        $html        = $this->request->input('html');
-        $environment = $this->request->input('environment');
-        $headers     = $this->request->input('headers');
+        $url         = Request::input('url');
+        $html        = Request::input('html') ?? null;
+        $environment = Request::input('environment') ?? null;
+        $headers     = Request::input('headers') ?? null;
 
         $responseFromExternalScan = $this->externalScan([
             'url' => $url,
@@ -84,7 +67,6 @@ class Application
 
         // Contains duplicate technlogies when combining offline and online scan
         $technologies = array_merge((array)$internalTechnologies, (array)$externalTechnologies);
-
 
         //Make technology list unique
         $uniqueApplications = [];
@@ -134,23 +116,15 @@ class Application
         }
 
 
-        // Make Pretty Url before display
-        $uri = \App::make('Uri');
+        $this->response = $response;
 
-        $response->technologies->host = $uri->parseUrl(
-            $response->technologies->url
-        )->host->host;
-
-        // Group list of technologies by category
-        $applicationByCategory = $this->sortApplicationByCategory($response);
-
-        if ( ! empty($applicationByCategory)) {
-            $response->technologies->applicationsByCategory = $applicationByCategory;
+        if (isset($html)) {
+            $this->saveToElastic(['origin' => 'chrome']);
+        } else {
+            $this->saveToElastic(['origin' => 'web']);
         }
-        // Are we in debug mode or not?
-        $response->debug = $debug;
 
-        return $this->response = $response;
+        return (Array)$this->response->technologies->applications;
 
     }
 
@@ -202,48 +176,20 @@ class Application
     }
 
 
-    /**
-     *
-     * Group technologies by category
-     *
-     * @param $response
-     *
-     * @return array
-     */
-    public function sortApplicationByCategory($response)
+    private function saveToElastic($extraData)
     {
-        $json                  = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
-        $categories            = $json->categories;
-        $applicationByCategory = [];
 
-        foreach ($categories as $category) {
+        $uri = \App::make('Uri');
 
-            $categoryName = $category->name;
-            if ( ! empty($response->technologies->applications)) {
 
-                foreach ($response->technologies->applications as $appName => $app) {
-                    $appCategories = $app->categories;
-
-                    if (in_array($categoryName, $appCategories)) {
-                        $applicationByCategory[$categoryName][] = $app;
-                    }
-
-                }
-
-            }
-        }
-
-        return $applicationByCategory;
-    }
-
-    public function convertToElastic($extraData)
-    {
         $dsl                = [];
         $response           = unserialize(serialize($this->response->technologies));
         $currentTime        = \Carbon\Carbon::now();
         $now                = $currentTime->toDateTimeString();
-        $dsl['url']         = $response->url;
-        $dsl['host']        = $response->host;
+        $dsl['url']         = Request::input('url');
+        $dsl['host']        = $uri->parseUrl(
+            $dsl['url']
+        )->host->host;
         $dsl['clientIp']    = \Request::ip();
         $dsl['origin']      = $extraData['origin'];
         $dsl['environment'] = env('APP_ENV');
@@ -255,7 +201,6 @@ class Application
         }
         $dsl['technologies'] = array_values($response->applications);
 
-
         $data = [
             'body'  => $dsl,
             'index' => 'toggle',
@@ -265,5 +210,6 @@ class Application
 
         return \Elasticsearch::index($data);
     }
+
 
 }
