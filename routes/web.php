@@ -11,12 +11,6 @@
 |
 */
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 /**
  * Website pages
  */
@@ -72,7 +66,7 @@ Route::group(['namespace' => 'Admin'], function () {
 Route::group(['namespace' => 'Extension'], function () {
 
     Route::match(['get', 'post'], '/extension', 'ExtensionController@scan');
-    
+
 });
 
 
