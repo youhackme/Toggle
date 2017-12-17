@@ -25,6 +25,7 @@ class ExtensionController extends Controller
         }
 
         $response = (new TechnologyDirector($technologyBuilder))->build();
+        
 
         return view('extension/index')
             ->with('response', $response);

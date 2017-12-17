@@ -49,6 +49,11 @@ class TechnologyBuilderAbstract
     public function addUrl()
     {
         $this->url = Request::input('url');
+
+        if (Request::method() == 'POST') {
+            $this->url = urldecode(Request::input('url'));
+        }
+
     }
 
     /**
@@ -58,9 +63,11 @@ class TechnologyBuilderAbstract
     {
         $uri = \App::make('Uri');
 
+
         $this->host = $uri->parseUrl(
             $this->url
         )->host->host;
+
     }
 
 

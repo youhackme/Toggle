@@ -44,8 +44,12 @@ class Technologies
      */
     public function __construct()
     {
-
         $this->url = Request::input('url');
+
+        if (Request::method() == 'POST') {
+            $this->url = urldecode(Request::input('url'));
+        }
+
 
         $uri = \App::make('Uri');
 
