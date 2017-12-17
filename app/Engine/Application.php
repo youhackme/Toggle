@@ -176,9 +176,21 @@ class Application
     }
 
 
+    /**
+     * Save result to ES
+     *
+     * @param $extraData
+     *
+     * @return mixed
+     */
     private function saveToElastic($extraData)
     {
 
+        $url = Request::input('url');
+
+        if (Request::method() == 'POST') {
+            $url = urldecode(Request::input('url'));
+        }
         $uri = \App::make('Uri');
 
 
@@ -186,7 +198,7 @@ class Application
         $response           = unserialize(serialize($this->response->technologies));
         $currentTime        = \Carbon\Carbon::now();
         $now                = $currentTime->toDateTimeString();
-        $dsl['url']         = Request::input('url');
+        $dsl['url']         = $url;
         $dsl['host']        = $uri->parseUrl(
             $dsl['url']
         )->host->host;
