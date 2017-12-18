@@ -87,10 +87,15 @@ class Technologies
             ];
 
             if ($name == 'WordPress') {
+                $themes = $this->themes();
+                if ( ! is_null($themes)) {
+                    $appStack['theme'] = $themes;
+                }
 
-
-                $appStack['theme']   = $this->themes();
-                $appStack['plugins'] = $this->plugins();
+                $plugins = $this->plugins();
+                if ( ! is_null($plugins)) {
+                    $appStack['plugins'] = $plugins;
+                }
             }
 
             $applications['applications'][$name] = (Object)$appStack;
@@ -250,9 +255,15 @@ class Technologies
         ];
 
         $result = $this->search($dsl);
+        $themes = array_column($result['aggregations']['Wordpress']['name']['buckets'], 'key');
+        if ( ! empty($themes)) {
+            if ($themes[0] == 0) {
+                return null;
+            }
+        }
 
-        return (Object)array_flip(array_column($result['aggregations']['Wordpress']['name']['buckets'],
-            'key'));
+        return (Object)array_flip($themes);
+
 
     }
 
@@ -343,6 +354,10 @@ class Technologies
                 'description' => $description,
             ];
 
+        }
+
+        if (empty($plugins)) {
+            return null;
         }
 
         return $plugins;

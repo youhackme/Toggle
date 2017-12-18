@@ -140,7 +140,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->applications['WordPress']->plugins)&&!empty($response->applications['WordPress']->plugins))
+            @if (isset($response->applications['WordPress']->plugins))
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="blockResultHeading">WordPress Plugins</h2>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="row blockSummary">
                     <div class="col-md-12">
-                        <p class="blockSummary__p">{{$response->url}} seems to be running WordPress. We
+                        <p class="blockSummary__p">{{$response->host}} seems to be running WordPress. We
                             have been able to identify
                             @if (count($response->applications['WordPress']->plugins)>0)
                                 {{count($response->applications['WordPress']->plugins)}}
