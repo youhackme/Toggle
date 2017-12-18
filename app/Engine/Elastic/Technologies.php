@@ -322,12 +322,22 @@ class Technologies
 
         $result = $this->search($dsl);
 
+
         $plugins = [];
         foreach ($result['aggregations']['result']['name']['buckets'] as $plugin) {
 
-            $plugins[] = [
-                'name' => $plugin['key'],
-                'slug' => $plugin['slug']['buckets'][0]['key'],
+            $pluginSlug  = $plugin['slug']['buckets'][0]['key'];
+            $pluginMeta  = \App\Models\PluginMeta::where('slug', $pluginSlug)
+                                                 ->get();
+            $description = null;
+            if (isset($pluginMeta[0])) {
+                $description = $pluginMeta[0]->plugin->description;
+            }
+
+            $plugins[] = (Object)[
+                'name'        => $plugin['key'],
+                'slug'        => $pluginSlug,
+                'description' => $description,
             ];
 
         }
