@@ -325,7 +325,7 @@ class Technologies
         $plugins = [];
         foreach ($result['aggregations']['result']['name']['buckets'] as $plugin) {
 
-            $plugins[] = [
+            $plugins[] = (Object)[
                 'name' => $plugin['key'],
                 'slug' => $plugin['slug']['buckets'][0]['key'],
             ];
