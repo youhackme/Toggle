@@ -233,7 +233,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->applications['WordPress']->plugins))
+            @if (isset($response->applications['WordPress']->plugins)&&!empty($response->applications['WordPress']->plugins))
                 <div class="plugins m-top-10">
                     <div class="row">
                         <div class="col-md-12">

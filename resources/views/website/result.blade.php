@@ -106,12 +106,12 @@
                             <div class="media-body">
                                 <h5 class="media-heading">Plugins</h5>
                                 <span class="application">
-                             @if (count($response->applications['WordPress']->plugins)>0)
+                                    @if (count($response->applications['WordPress']->plugins)>0)
                                         {{count($response->applications['WordPress']->plugins)}}
                                     @else
                                         0
                                     @endif
-                        </span>
+                                 </span>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->applications['WordPress']->plugins))
+            @if (isset($response->applications['WordPress']->plugins)&&!empty($response->applications['WordPress']->plugins))
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="blockResultHeading">WordPress Plugins</h2>
