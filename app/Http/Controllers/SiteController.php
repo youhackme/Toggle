@@ -138,8 +138,8 @@ class SiteController extends Controller
         }
 
         $response = (new TechnologyDirector($technologyBuilder))->build();
-
-        if (is_array($response) && ($response['error'])) {
+        
+        if (isset($response->applications['error'])) {
 
             return view('website.error')
                 ->with('response', $response);
