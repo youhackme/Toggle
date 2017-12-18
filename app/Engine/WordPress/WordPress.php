@@ -230,13 +230,15 @@ class WordPress
                 }
             }
 
-            if (!$wordpressDetected) {
+            if ( ! $wordpressDetected) {
                 $technologies->applications[] = [
-                    'name'    => 'WordPress',
-                    'icon'    => env('APP_URL') . '/storage/icons/WordPress.svg',
-                    'version' => $this->version(),
-                    'theme'   => $this->extraInfos(),
-                    'plugins' => $this->plugins(),
+                    'name'       => 'WordPress',
+                    'icon'       => env('APP_URL') . '/storage/icons/WordPress.svg',
+                    'version'    => $this->version(),
+                    'theme'      => $this->extraInfos(),
+                    'plugins'    => $this->plugins(),
+                    'categories' => ['CMS', 'Blogs'],
+                    "website"    => "http://wordpress.org",
                 ];
             }
 
