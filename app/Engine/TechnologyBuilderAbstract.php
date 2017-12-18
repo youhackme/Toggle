@@ -97,6 +97,9 @@ class TechnologyBuilderAbstract
      */
     public function sortApplicationByCategory($applications)
     {
+        if (isset($applications['error'])) {
+            return false;
+        }
         $json                  = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
         $categories            = $json->categories;
         $applicationByCategory = [];

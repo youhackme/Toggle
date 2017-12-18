@@ -12,7 +12,7 @@
 
     <div class="container" style="margin-top:200px;">
         <div class="row">
-            <h4 style="text-align: center;">{{$response['error']}}</h4>
+            <h4 style="text-align: center;">{{$response->applications['error']}}</h4>
         </div>
     </div>
 @endsection

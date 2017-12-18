@@ -155,7 +155,7 @@
 <body>
 <div class="container-fluid extension-wrapper">
 
-    @if (!is_array($response))
+    @if (!isset($response->applications['error']))
 
         <div class="overview">
             <div class="row">
@@ -304,7 +304,7 @@
 
         </div>
     @else
-        {{$response['error']}}
+        {{$response->applications['error']}}
     @endif
 </div>
 
