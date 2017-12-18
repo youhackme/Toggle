@@ -177,17 +177,12 @@
                                     {{str_limit(ucfirst($plugin->name),45)}}
                                 </h5>
                                 <p class="blockPlugins__muted">
-                                    @if(isset($plugin->description))
-                                        @if(!is_null($plugin->description))
-                                            {{str_limit(ucfirst($plugin->description),130)}}
-                                        @else
-                                            No description found for this plugin.
-                                        @endif
 
+                                    @if(!is_null($plugin->description))
+                                        {{str_limit(ucfirst($plugin->description),130)}}
                                     @else
                                         No description found for this plugin.
                                     @endif
-
                                 </p>
                             </div>
                         </div>
