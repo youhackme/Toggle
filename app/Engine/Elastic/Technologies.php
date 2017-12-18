@@ -87,6 +87,8 @@ class Technologies
             ];
 
             if ($name == 'WordPress') {
+
+
                 $appStack['theme']   = $this->themes();
                 $appStack['plugins'] = $this->plugins();
             }
@@ -249,7 +251,8 @@ class Technologies
 
         $result = $this->search($dsl);
 
-        return array_column($result['aggregations']['Wordpress']['name']['buckets'], 'key');
+        return (Object)array_flip(array_column($result['aggregations']['Wordpress']['name']['buckets'],
+            'key'));
 
     }
 
