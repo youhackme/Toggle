@@ -105,6 +105,7 @@ class Technologies
         $applications['stats'] = $this->stats();
 
 
+
         return $applications;
     }
 
@@ -256,11 +257,13 @@ class Technologies
 
         $result = $this->search($dsl);
         $themes = array_column($result['aggregations']['Wordpress']['name']['buckets'], 'key');
+
         if ( ! empty($themes)) {
-            if ($themes[0] == 0) {
+            if ($themes[0] === 0) {
                 return null;
             }
         }
+
 
         return (Object)array_flip($themes);
 
