@@ -213,6 +213,12 @@ class Application
         } else {
             unset($response->applications['WordPress']->theme);
         }
+
+        if (empty($response->applications['WordPress']->plugins)) {
+            unset($response->applications['WordPress']->plugins);
+        }
+
+
         $dsl['technologies'] = array_values($response->applications);
 
         $data = [

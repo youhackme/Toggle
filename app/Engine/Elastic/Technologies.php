@@ -88,7 +88,7 @@ class Technologies
 
             if ($name == 'WordPress') {
                 $themes = $this->themes();
-
+               
                 if ( ! is_null($themes)) {
                     $appStack['theme'] = $themes;
                 }
@@ -257,10 +257,13 @@ class Technologies
 
         $result = $this->search($dsl);
         $themes = array_column($result['aggregations']['Wordpress']['name']['buckets'], 'key');
+
         if ( ! empty($themes)) {
             if ($themes[0] === "0" || $themes[0] === 0) {
                 return null;
             }
+        } else {
+            return null;
         }
 
 

@@ -81,7 +81,7 @@
                         <div class="media-body">
                             <h5 class="media-heading">Theme</h5>
                             <span class="application">
-                            @if (!empty($response->applications['WordPress']->theme))
+                                @if (!empty($response->applications['WordPress']->theme)&&isset($response->applications['WordPress']->theme))
                                     @foreach($response->applications['WordPress']->theme as $theme=>$detail)
                                         {{ucfirst($theme)}}
                                         <br/>
@@ -95,7 +95,7 @@
                 </div>
             @endif
             @if(in_array('WordPress',$applicationName))
-                @if (isset($response->applications['WordPress']->plugins))
+                @if (!empty($response->applications['WordPress']->plugins))
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <div class="media p-t-30 p-b-30">
                             <div class="media-left">
@@ -140,7 +140,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->applications['WordPress']->plugins))
+            @if (!empty($response->applications['WordPress']->plugins))
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="blockResultHeading">WordPress Plugins</h2>
