@@ -207,15 +207,19 @@ class Application
         $dsl['environment'] = env('APP_ENV');
         $dsl['createdOn']   = $now;
 
-        if ($response->applications['WordPress']->theme !== false) {
-            $themesDetail                               = $response->applications['WordPress']->theme;
-            $response->applications['WordPress']->theme = array_keys((array)$themesDetail);
-        } else {
-            unset($response->applications['WordPress']->theme);
-        }
 
-        if (empty($response->applications['WordPress']->plugins)) {
-            unset($response->applications['WordPress']->plugins);
+        if (isset($response->applications['WordPress']->theme)) {
+            if ($response->applications['WordPress']->theme !== false) {
+                $themesDetail                               = $response->applications['WordPress']->theme;
+                $response->applications['WordPress']->theme = array_keys((array)$themesDetail);
+            } else {
+                unset($response->applications['WordPress']->theme);
+            }
+        }
+        if (isset($response->applications['WordPress']->theme)) {
+            if (empty($response->applications['WordPress']->plugins)) {
+                unset($response->applications['WordPress']->plugins);
+            }
         }
 
 
