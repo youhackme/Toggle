@@ -98,7 +98,7 @@ class Link extends WordPressAbstract
 
         $commonWordPressPaths = $this->commonWordPressPaths();
         foreach ($commonWordPressPaths as $commonWordPressPath) {
-            $url        = "https://$host/{$commonWordPressPath['path']}";
+            $url        = "http://$host/{$commonWordPressPath['path']}";
             $promises[] = $goutteClient->getClient()->getAsync($url);
         }
 
