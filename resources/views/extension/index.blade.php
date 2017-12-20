@@ -201,7 +201,7 @@
                         <dl>
                             <dt>Theme</dt>
                             <dd>
-                                @if (!empty($response->applications['WordPress']->theme))
+                                @if (!empty($response->applications['WordPress']->theme)&&isset($response->applications['WordPress']->theme))
                                     @foreach($response->applications['WordPress']->theme as $theme=>$detail)
                                         {{ucfirst($theme)}}
                                         <br/>
@@ -214,7 +214,7 @@
                     </div>
                 @endif
                 @if(in_array('WordPress',$applicationName))
-                    @if (isset($response->applications['WordPress']->plugins))
+                    @if (empty($response->applications['WordPress']->plugins))
                         <div class="col-md-4 col-sm-4 col-xs-4">
                             <dl>
                                 <dt>Plugins</dt>
@@ -233,7 +233,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (isset($response->applications['WordPress']->plugins))
+            @if (empty($response->applications['WordPress']->plugins))
                 <div class="plugins m-top-10">
                     <div class="row">
                         <div class="col-md-12">
