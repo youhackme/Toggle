@@ -207,9 +207,11 @@ class Application
         $dsl['environment'] = env('APP_ENV');
         $dsl['createdOn']   = $now;
 
-        if (isset($response->applications['WordPress']->theme)) {
+        if ($response->applications['WordPress']->theme !== false) {
             $themesDetail                               = $response->applications['WordPress']->theme;
             $response->applications['WordPress']->theme = array_keys((array)$themesDetail);
+        } else {
+            unset($response->applications['WordPress']->theme);
         }
         $dsl['technologies'] = array_values($response->applications);
 
