@@ -233,9 +233,11 @@
 
 
 
-    <footer class="footer">
+
+
+    <footer class="footer navbar-fixed-bottom">
         <div class="container">
-            <small class="text-muted" style="text-transform:uppercase;"> © 2017 Toggle.me</small>
+            <small class="text-muted"> © {{ Carbon\Carbon::now()->format('Y') }} Toggle.me</small>
         </div>
     </footer>
 
