@@ -33,18 +33,32 @@ class Theme extends WordPressAbstract
     }
 
     /**
-     * Attempt to extract the theme Alias from Html.
+     * Attempt to extract the theme Alias from stylesheet and javascript link .
      */
     public function extractThemeAliasFromHtml()
     {
-        $themes = $this->extractThemeAlias($this->siteAnatomy->html);
+        if (isset($this->siteAnatomy->styles)) {
+            foreach ($this->siteAnatomy->styles as $styleSheet) {
+                $themes[] = $this->extractThemeAlias($styleSheet);
+            }
+        }
+
+        if (isset($this->siteAnatomy->scripts)) {
+            foreach ($this->siteAnatomy->scripts as $script) {
+                $themes[] = $this->extractThemeAlias($script);
+            }
+        }
+
+        $themes = array_flatten($themes);
+
+
         foreach ($themes as $theme) {
             $this->setTheme($theme);
         }
     }
 
     /**
-     * Extract Theme alias from stylesheet.
+     * Extract Theme alias from stylesheet content.
      */
     public function extractThemeAliasFromStyleSheets()
     {
@@ -56,6 +70,7 @@ class Theme extends WordPressAbstract
             if ($response['state'] == 'fulfilled') {
                 if ($response['value']->getStatusCode() == 200) {
                     $themes = $this->extractThemeAlias($response['value']->getBody()->getContents());
+
                     foreach ($themes as $theme) {
                         $screenshotPath = $this->buildScreenshotPath($url, $theme);
                         $this->setTheme($theme);
