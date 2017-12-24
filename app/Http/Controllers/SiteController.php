@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Engine\CachedTechnologyBuilder;
 use App\Engine\Elastic\Technologies;
 use App\Engine\LiveTechnologyBuilder;
+use App\Engine\CachedTechnologyBuilder;
+use App\Engine\ResponseSynthetiser;
 use App\Engine\TechnologyDirector;
 use App\Engine\Togglyzer;
 use Bugsnag\Report;
@@ -130,15 +131,23 @@ class SiteController extends Controller
 
         $site = new Technologies($request);
 
+        $fullScan = false;
 
-        if ($site->alreadyScanned()) {
-            $technologyBuilder = new CachedTechnologyBuilder($request);
-        } else {
-            $technologyBuilder = new LiveTechnologyBuilder($request);
+        if ( ! $site->alreadyScanned()) {
+            $fullScan             = true;
+            $responseFromLiveScan = (new TechnologyDirector(new LiveTechnologyBuilder($request)))->build();
+
         }
 
-        $response = (new TechnologyDirector($technologyBuilder))->build();
-        
+        $responseFromCachedScan = (new TechnologyDirector(new CachedTechnologyBuilder($request)))->build();
+
+        if ($fullScan === true) {
+            //Synthesize response
+            $response = new ResponseSynthetiser($responseFromLiveScan, $responseFromCachedScan);
+        } else {
+            $response = $responseFromCachedScan;
+        }
+
         if (isset($response->applications['error'])) {
 
             return view('website.error')
