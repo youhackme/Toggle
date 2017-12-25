@@ -19,10 +19,7 @@ class CachedTechnologyBuilder extends TechnologyBuilderAbstract implements Techn
     public function addApplication()
     {
         $technologies       = new Technologies(
-            [
-                'host' => $this->host,
-                'url'  => $this->url,
-            ]
+            $this->request
         );
         $applications       = $technologies->result();
         $this->applications = $applications['applications'];

@@ -10,24 +10,25 @@ namespace App\Engine\Bot\Driver;
 
 use App;
 use App\Engine\Bot\BotInterface;
+use App\Http\Requests\ScanTechnologiesRequest;
 
 class Curl implements BotInterface
 {
 
 
     public $goutteClient;
+    public $crawler;
 
-    public function request($url)
+    public function request(ScanTechnologiesRequest $request)
     {
-        //echo 'Scrape ' . $url . ' using Curl via Guzzle';
-        $site = str_contains($url, ['http://', 'https://']) ? $url : 'http://' . $url;
+        $url = $request->getUrl();
 
         $this->goutteClient = App::make('goutte');
 
         try {
             $this->crawler = $this->goutteClient->request(
                 'GET',
-                $site
+                $url
             );
 
             return $this;

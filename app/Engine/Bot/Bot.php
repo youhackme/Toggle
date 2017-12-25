@@ -7,7 +7,7 @@
  */
 
 namespace App\Engine\Bot;
-
+use App\Http\Requests\ScanTechnologiesRequest;
 
 class Bot
 {
@@ -28,9 +28,9 @@ class Bot
         $this->bot = $bot;
     }
 
-    public function crawl($url)
+    public function crawl(ScanTechnologiesRequest $request)
     {
-        return $this->bot->request($url);
+        return $this->bot->request($request);
     }
 
 }

@@ -17,7 +17,7 @@ class LiveTechnologyBuilder extends TechnologyBuilderAbstract implements Technol
      */
     public function addApplication()
     {
-        $this->applications = (new Application(Request::all()))->analyze();
+        $this->applications = (new Application($this->request))->analyze();
     }
 
 }

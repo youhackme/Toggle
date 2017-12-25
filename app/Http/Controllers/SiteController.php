@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Engine\Elastic\Technologies;
 use App\Engine\LiveTechnologyBuilder;
-use App\Engine\CachedTechnologyBuilder;
-use App\Engine\ResponseSynthetiser;
+use App\Engine\SiteAnatomy;
 use App\Engine\TechnologyDirector;
 use App\Engine\Togglyzer;
+use App\Http\Requests\ScanTechnologiesRequest;
 use Bugsnag\Report;
 use Illuminate\Support\Facades\Redis;
 use Request;
@@ -18,14 +17,14 @@ class SiteController extends Controller
     /**
      * Discover whether this site is using WordPress or not.
      *
-     * @return string
+     * @param ScanTechnologiesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse|string
      */
-    public function detect()
+    public function detect(ScanTechnologiesRequest $request)
     {
 
-        $site = Request::get('url');
-
-        $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
+        $siteAnatomy = (new \App\Engine\SiteAnatomy($request));
 
         if ( ! $siteAnatomy->errors()) {
 
@@ -34,7 +33,6 @@ class SiteController extends Controller
             if ($application->isWordPress()) {
                 return $application->details();
             }
-
 
             return response()->json([
                 'application'  => false,
@@ -47,9 +45,8 @@ class SiteController extends Controller
 
         } else {
 
-            //  \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
 
-            \Bugsnag::notifyError('Connection Failed', "Failed to connect to $site",
+            \Bugsnag::notifyError('Connection Failed', "Failed to connect to " . $request->getUrl(),
                 function (Report $report) use ($siteAnatomy) {
                     $report->setSeverity('error');
                     $report->setMetaData([
@@ -58,18 +55,22 @@ class SiteController extends Controller
                 });
 
             return response()->json([
-                'error' => 'Failed to connect to ' . $site,
+                'error' => 'Failed to connect to ' . $request->getUrl(),
             ]);
         }
     }
 
+
     /**
-     * Fetch Cached result from redis
+     *  Fetch Cached result from redis
+     *
+     * @param ScanTechnologiesRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function cache()
+    public function cache(ScanTechnologiesRequest $request)
     {
-        $url = Request::get('url');
+        $url = $request->getUrl();
 
         if (Redis::EXISTS('site:' . $url)) {
 
@@ -90,16 +91,20 @@ class SiteController extends Controller
         return response()->json(['error' => 'Unable to find this key in redis.']);
     }
 
+
     /**
      * Detect technology by using togglyzer engine only. No external call. Period.
+     *
+     * @param ScanTechnologiesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function detectTechnologyOfflineMode()
+    public function detectTechnologyOfflineMode(ScanTechnologiesRequest $request)
     {
 
-        $site = Request::get('url');
+        $site = $request->getUrl();
 
-        $requestInfo = Request::all();
-        $siteAnatomy = (new \App\Engine\SiteAnatomy($site, $requestInfo));
+        $siteAnatomy = (new SiteAnatomy($request));
 
         if ( ! $siteAnatomy->errors()) {
 
@@ -122,31 +127,31 @@ class SiteController extends Controller
     /**
      * Public end-point for detecting through web
      *
-     * @param Request $request
+     * @param ScanTechnologiesRequest $request
      *
      * @return $this
      */
-    public function scanFromWeb(Request $request)
+    public function scanFromWeb(ScanTechnologiesRequest $request)
     {
 
-        $site = new Technologies($request);
+        //$site = new Technologies($request);
 
-        $fullScan = false;
+        // $fullScan = false;
 
-        if ( ! $site->alreadyScanned()) {
-            $fullScan             = true;
-            $responseFromLiveScan = (new TechnologyDirector(new LiveTechnologyBuilder($request)))->build();
+        //if ( ! $site->alreadyScanned()) {
+        // $fullScan             = true;
+        $response = (new TechnologyDirector(new LiveTechnologyBuilder($request)))->build();
 
-        }
+        //}
 
-        $responseFromCachedScan = (new TechnologyDirector(new CachedTechnologyBuilder($request)))->build();
+        //$responseFromCachedScan = (new TechnologyDirector(new CachedTechnologyBuilder($request)))->build();
 
-        if ($fullScan === true) {
-            //Synthesize response
-            $response = new ResponseSynthetiser($responseFromLiveScan, $responseFromCachedScan);
-        } else {
-            $response = $responseFromCachedScan;
-        }
+        //if ($fullScan === true) {
+        //Synthesize response
+        //     $response = new ResponseSynthetiser($responseFromLiveScan, $responseFromCachedScan);
+        // } else {
+        //    $response = $responseFromCachedScan;
+        // }
 
         if (isset($response->applications['error'])) {
 
@@ -157,6 +162,12 @@ class SiteController extends Controller
 
         return view('website.result')
             ->with('response', $response);
+    }
+
+
+    public function test()
+    {
+        dd('lol');
     }
 
 

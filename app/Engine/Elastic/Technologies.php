@@ -8,56 +8,28 @@
 
 namespace App\Engine\Elastic;
 
+use App\Http\Requests\ScanTechnologiesRequest;
 use Request;
 
 class Technologies
 {
 
+
     /**
-     * The host name
+     * The request
      * @var array
-     */
-    public $host;
-
-    /**
-     * The original url
-     * @var array
-     */
-    public $url;
-
-    /**
-     * response from togglyzer result
-     * @var
-     */
-    public $response;
-
-
-    /**
-     * Instance of  Illuminate\Http\Request
-     * @var
      */
     public $request;
 
 
     /**
      * Technologies constructor.
+     *
+     * @param ScanTechnologiesRequest $request
      */
-    public function __construct()
+    public function __construct(ScanTechnologiesRequest $request)
     {
-        $this->url = Request::input('url');
-
-        if (Request::method() == 'POST') {
-            $this->url = urldecode(Request::input('url'));
-        }
-
-
-        $uri = \App::make('Uri');
-
-        $this->host = $uri->parseUrl(
-            $this->url
-        )->host->host;
-
-
+        $this->request = $request;
     }
 
     /**
@@ -88,7 +60,7 @@ class Technologies
 
             if ($name == 'WordPress') {
                 $themes = $this->themes();
-               
+
                 if ( ! is_null($themes)) {
                     $appStack['theme'] = $themes;
                 }
@@ -123,7 +95,7 @@ class Technologies
                     "filter" => [
                         [
                             "terms" => [
-                                "host" => [$this->host],
+                                "host" => [$this->request->getHost()],
                             ],
                         ],
                     ],
@@ -208,7 +180,7 @@ class Technologies
                     "filter" => [
                         [
                             "terms" => [
-                                "host" => [$this->host],
+                                "host" => [$this->request->getHost()],
                             ],
                         ],
                         [
@@ -285,7 +257,7 @@ class Technologies
                     "must" => [
                         [
                             "terms" => [
-                                "host" => [$this->host],
+                                "host" => [$this->request->getHost()],
                             ],
                         ],
                         [
@@ -383,7 +355,7 @@ class Technologies
                     "filter" => [
                         [
                             "terms" => [
-                                "url" => [$this->url],
+                                "url" => [$this->request->getUrl()],
                             ],
                         ],
                     ],

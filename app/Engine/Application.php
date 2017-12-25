@@ -8,6 +8,7 @@
 
 namespace App\Engine;
 
+use App\Http\Requests\ScanTechnologiesRequest;
 use GuzzleHttp\Client;
 use Request;
 
@@ -19,11 +20,18 @@ class Application
      */
     public $mainApplications = ['CMS', 'Ecommerce', 'Message Boards'];
 
+    public $request;
+
     /**
      * response from togglyzer result
      * @var
      */
     public $response;
+
+    public function __construct(ScanTechnologiesRequest $request)
+    {
+        $this->request = $request;
+    }
 
 
     /**
@@ -32,13 +40,9 @@ class Application
      */
     public function analyze()
     {
-        $url         = Request::input('url');
-        $html        = Request::input('html') ?? null;
-        $environment = Request::input('environment') ?? null;
-        $headers     = Request::input('headers') ?? null;
 
         $responseFromExternalScan = $this->externalScan([
-            'url' => $url,
+            'url' => $this->request->getUrl(),
         ]);
 
 
@@ -50,12 +54,12 @@ class Application
 
         $internalTechnologies = [];
 
-        if (isset($html)) {
+        if ( ! is_null($this->request->getHtml())) {
             $responseFromInternalScan = $this->internalScan([
-                'url'         => $url,
-                'html'        => $html,
-                'environment' => $environment,
-                'headers'     => $headers,
+                'url'         => $this->request->getUrl(),
+                'html'        => $this->request->getHtml(),
+                'environment' => $this->request->getEnvironment(),
+                'headers'     => $this->request->getHeaders(),
                 'status'      => 200,
             ]);
 
@@ -118,7 +122,7 @@ class Application
 
         $this->response = $response;
 
-        if (isset($html)) {
+        if ( ! is_null($this->request->getHtml())) {
             $this->saveToElastic(['origin' => 'chrome']);
         } else {
             $this->saveToElastic(['origin' => 'web']);
@@ -186,26 +190,14 @@ class Application
     private function saveToElastic($extraData)
     {
 
-        $url = Request::input('url');
-
-        if (Request::method() == 'POST') {
-            $url = urldecode(Request::input('url'));
-        }
-        $uri = \App::make('Uri');
-
-
         $dsl                = [];
         $response           = unserialize(serialize($this->response->technologies));
-        $currentTime        = \Carbon\Carbon::now();
-        $now                = $currentTime->toDateTimeString();
-        $dsl['url']         = $url;
-        $dsl['host']        = $uri->parseUrl(
-            $dsl['url']
-        )->host->host;
-        $dsl['clientIp']    = \Request::ip();
+        $dsl['url']         = $this->request->getUrl();
+        $dsl['host']        = $this->request->getHost();
+        $dsl['clientIp']    = $this->request->getIp();
         $dsl['origin']      = $extraData['origin'];
         $dsl['environment'] = env('APP_ENV');
-        $dsl['createdOn']   = $now;
+        $dsl['createdOn']   = \Carbon\Carbon::now()->toDateTimeString();
 
 
         if (isset($response->applications['WordPress']->theme)) {

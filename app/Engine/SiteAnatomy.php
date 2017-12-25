@@ -5,6 +5,7 @@ namespace App\Engine;
 use App;
 use App\Engine\Bot\Driver\BrowserSimulator;
 use App\Engine\Bot\Driver\PhantomJS;
+use App\Http\Requests\ScanTechnologiesRequest;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -41,40 +42,36 @@ class SiteAnatomy
     /**
      * SiteAnatomy constructor.
      *
-     * @param      $site
-     * @param null $requestInfo
+     * @param ScanTechnologiesRequest $request
      */
-    public function __construct($site, $requestInfo = null)
+    public function __construct(ScanTechnologiesRequest $request)
     {
-        $url = str_contains($site, ['http://', 'https://']) ? $site : 'http://' . $site;
+        $this->originalUrl = $request->getUrl();
 
-        if (is_null($requestInfo)) {
-            $this->originalUrl = $url;
-            $this->crawl($url);
+        if (is_null($request->getHtml())) {
+
+            $this->crawl($request);
         } else {
             $this->scanMode = 'offline';
-
-            $this->originalUrl = urldecode($requestInfo['url']);
             // Browser simulation
-            $this->simulateCrawl($requestInfo);
+            $this->simulateCrawl($request);
         }
 
     }
 
+
     /**
      * Simulate site crawling
      *
-     * @param $requestInfo
+     * @param ScanTechnologiesRequest $request
      */
-    public function simulateCrawl($requestInfo)
+    public function simulateCrawl(ScanTechnologiesRequest $request)
     {
-
         try {
 
             $bot = new \App\Engine\Bot\Bot(new BrowserSimulator());
 
-            $data = $bot->crawl($requestInfo);
-
+            $data = $bot->crawl($request);
             $this->result($data);
 
         } catch (\Exception $e) {
@@ -83,15 +80,17 @@ class SiteAnatomy
         }
     }
 
+
     /**
      * Crawl a url
      *
-     * @param $url
+     * @param $request
      *
      * @return $this
      */
-    public function crawl($url)
+    public function crawl($request)
     {
+        $url = $request->getUrl();
 
         if (Redis::EXISTS('site:' . $url)) {
 
@@ -112,7 +111,7 @@ class SiteAnatomy
         try {
             $bot = new \App\Engine\Bot\Bot(new PhantomJS());
 
-            $data = $bot->crawl($url);
+            $data = $bot->crawl($request);
 
             $this->result($data);
 

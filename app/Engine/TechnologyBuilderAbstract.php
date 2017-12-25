@@ -9,6 +9,7 @@
 namespace App\Engine;
 
 use Request;
+use App\Http\Requests\ScanTechnologiesRequest;
 
 class TechnologyBuilderAbstract
 {
@@ -42,18 +43,19 @@ class TechnologyBuilderAbstract
      */
     public $applicationsByCategory;
 
+    public $request;
+
+    public function __construct(ScanTechnologiesRequest $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      * Set the url
      */
     public function addUrl()
     {
-        $this->url = Request::input('url');
-
-        if (Request::method() == 'POST') {
-            $this->url = urldecode(Request::input('url'));
-        }
-
+        $this->url = $this->request->getUrl();
     }
 
     /**
@@ -61,13 +63,7 @@ class TechnologyBuilderAbstract
      */
     public function addHost()
     {
-        $uri = \App::make('Uri');
-
-
-        $this->host = $uri->parseUrl(
-            $this->url
-        )->host->host;
-
+        $this->host = $this->request->getHost();
     }
 
 
@@ -127,7 +123,6 @@ class TechnologyBuilderAbstract
 
     public function formatJson()
     {
-
         return $this;
     }
 }

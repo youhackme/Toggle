@@ -49,12 +49,15 @@ class Theme extends WordPressAbstract
             }
         }
 
-        $themes = array_flatten($themes);
+        if (isset($themes)) {
+            $themes = array_flatten($themes);
+            
+            foreach ($themes as $theme) {
+                $this->setTheme($theme);
+            }
 
-
-        foreach ($themes as $theme) {
-            $this->setTheme($theme);
         }
+
     }
 
     /**
