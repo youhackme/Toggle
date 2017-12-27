@@ -42,9 +42,16 @@ Route::get('/scrape/tf/theme/alias', 'ThemeController@scrapeThemeAlias');
 /*
  * Scrape themes from different providers
  */
-Route::get('/site/', 'SiteController@detect');
+Route::get('/site/', 'SiteController@detectTechnologyOnlineMode');
 
-Route::post('/site/ScanOfflineMode/', 'SiteController@detectTechnologyOfflineMode');
+
+Route::match(['get', 'post'], '/site/ScanOfflineMode/', 'SiteController@detectTechnologyOfflineMode');
+
+
+Route::get('/site/ScanHistoricalMode/', 'SiteController@detectTechnologyHistoricalMode');
+
+Route::get('/site/ScanGodMode/', 'SiteController@detectTechnologyGodMode');
+
 
 Route::group(['namespace' => 'Admin'], function () {
 
@@ -71,3 +78,6 @@ Route::group(['namespace' => 'Extension'], function () {
 
 
 Route::get('/cache', 'SiteController@cache');
+
+
+Route::get('/test', 'SiteController@test');
