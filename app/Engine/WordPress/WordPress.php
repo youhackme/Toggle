@@ -9,7 +9,6 @@ namespace App\Engine\WordPress;
  * Time: 22:16
  */
 use App\Engine\SiteAnatomy;
-use App\Engine\Togglyzer;
 use Bugsnag\Report;
 
 /**
@@ -108,7 +107,7 @@ class WordPress
      *
      * @return bool
      */
-    public function isWordPress()
+    public function isWordPress(): bool
     {
         if ( ! empty(array_collapse($this->isWordPress))) {
             return true;
@@ -123,14 +122,15 @@ class WordPress
      *
      * @return array
      */
-    private function plugins()
+    private function plugins(): array
     {
-        // return array_collapse($this->plugins);
 
-        $plugins = array_collapse($this->plugins);
+        $allPlugins = [];
+        $plugins    = array_collapse($this->plugins);
 
         if ( ! empty($plugins)) {
             foreach ($plugins as &$plugin) {
+
 
                 $slug                  = $plugin['slug'];
                 $plugin['description'] = null;
@@ -145,11 +145,19 @@ class WordPress
                     $plugin['description'] = $pluginMeta[0]->plugin->description;
                     $plugin['name']        = $pluginMeta[0]->plugin->name;
                 }
+
+
+                $allPlugins[] = (new \App\Engine\Plugin()
+                )->setName($plugin['name'])
+                 ->setSlug($slug)
+                 ->setDescription($plugin['description']);
+
+
             }
         }
 
 
-        return $plugins;
+        return $allPlugins;
 
 
         // Cycle through each algorithm and find out through getPlugin
@@ -216,37 +224,29 @@ class WordPress
     public function details()
     {
 
-        $technologies      = $this->technologies();
-        $wordpressDetected = false;
-        if (isset($technologies->applications)) {
+        if ($this->isWordPress()) {
 
-            foreach ($technologies->applications as &$application) {
-                if (trim(strtolower($application->name)) == 'wordpress') {
-                    $application->version = $this->version();
-                    $application->theme   = $this->extraInfos();
-                    $application->plugins = $this->plugins();
-                    $wordpressDetected    = true;
-                    break;
-                }
+            $app = (new \App\Engine\App())
+                ->setName("WordPress")
+                ->setConfidence("100")
+                ->setVersion($this->version())
+                ->setIcon(env('APP_URL') . "/storage/icons/WordPress.svg")
+                ->setWebsite("http://wordpress.org")
+                ->setCategories(["Blogs", "CMS"]);
+
+            foreach ($this->extraThemeInfos() as $theme) {
+                $app->setTheme($theme);
             }
 
-            if ( ! $wordpressDetected) {
-                $technologies->applications[] = [
-                    'name'       => 'WordPress',
-                    'icon'       => env('APP_URL') . '/storage/icons/WordPress.svg',
-                    'version'    => $this->version(),
-                    'theme'      => $this->extraInfos(),
-                    'plugins'    => $this->plugins(),
-                    'categories' => ['CMS', 'Blogs'],
-                    "website"    => "http://wordpress.org",
-                ];
+            foreach ($this->plugins() as $plugin) {
+                $app->setPlugin($plugin);
             }
 
+            return $app;
         }
 
-        return json_encode([
-            'technologies' => $technologies,
-        ]);
+        return false;
+
     }
 
 
@@ -254,18 +254,29 @@ class WordPress
      * Fetch description from database
      * @return array|bool|int|string
      */
-    private function extraInfos()
+    private function extraThemeInfos(): array
     {
-
-        $themes = $this->theme();
+        $themes    = $this->theme();
+        $allThemes = [];
 
         if ( ! empty($themes)) {
+
             foreach ($themes as $themeAlias => &$details) {
+
+                $theme = (new \App\Engine\Theme()
+                )->setName($themeAlias)
+                 ->setSlug($themeAlias);
+
 
                 $screenshotHash = '';
 
                 if (isset($details['screenshot']['hash'])) {
+                    $theme->setScreenshotHash($details['screenshot']['hash']);
                     $screenshotHash = $details['screenshot']['hash'];
+                }
+
+                if (isset($details['screenshot']['url'])) {
+                    $theme->setScreenshotUrl($details['screenshot']['url']);
                 }
 
 
@@ -274,20 +285,15 @@ class WordPress
                                                   ->get();
 
                 if (isset($themeMeta[0])) {
-                    $themeDescription       = $themeMeta[0]->theme->description;
-                    $details['description'] = $themeDescription;
+                    $themeDescription = $themeMeta[0]->theme->description;
+                    $theme->setDescription($themeDescription);
                 }
+
+                $allThemes[] = $theme;
             }
+
         }
 
-
-        return $themes;
-
-    }
-
-
-    public function technologies()
-    {
-        return (new Togglyzer($this->siteAnatomy))->check();
+        return $allThemes;
     }
 }

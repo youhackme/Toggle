@@ -37,6 +37,7 @@ class SiteAnatomy
     public $host;
     public $environment = null;
     public $scanMode = 'online';
+    public $request;
 
 
     /**
@@ -49,10 +50,10 @@ class SiteAnatomy
         $this->originalUrl = $request->getUrl();
 
         if (is_null($request->getHtml())) {
-
             $this->crawl($request);
         } else {
             $this->scanMode = 'offline';
+
             // Browser simulation
             $this->simulateCrawl($request);
         }
@@ -262,7 +263,6 @@ class SiteAnatomy
         if ( ! ($this->errors())) {
 
             $this->html = $data->html();
-
 
             $this->url         = $this->originalUrl;
             $this->headers     = $data->headers();

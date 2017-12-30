@@ -36,13 +36,9 @@ class ScanTechnologiesRequest extends FormRequest
      */
     public function getUrl()
     {
-        $url = $this->input('url');
+        $url = urldecode($this->input('url'));
 
         $url = str_contains($url, ['http://', 'https://']) ? $url : 'http://' . $url;
-
-        if ($this->method() == 'POST') {
-            $url = urldecode($url);
-        }
 
         return $url;
     }
@@ -53,11 +49,10 @@ class ScanTechnologiesRequest extends FormRequest
      */
     public function getHost()
     {
-
         $uri = \App::make('Uri');
 
         return $uri->parseUrl(
-            $this->input('url')
+            $this->getUrl()
         )->host->host;
     }
 
@@ -94,6 +89,19 @@ class ScanTechnologiesRequest extends FormRequest
         return $this->ip();
     }
 
+    /**
+     * Origin of the request
+     * @return string
+     */
+    public function getOrigin()
+    {
+        return is_null($this->getHtml()) ? 'web' : 'extension';
+    }
+
+    /**
+     * Lets hard code the  status for now..
+     * @return int
+     */
     public function getStatus()
     {
         return 200;
