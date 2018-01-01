@@ -7,11 +7,11 @@
  */
 
 namespace App\Engine\Bot;
-
+use App\Http\Requests\ScanTechnologiesRequest;
 
 interface BotInterface
 {
-    public function request($url);
+    public function request(ScanTechnologiesRequest $request);
 
     public function headers();
 

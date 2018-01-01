@@ -9,6 +9,7 @@
 namespace App\Engine\Bot\Driver;
 
 use App\Engine\Bot\BotInterface;
+use App\Http\Requests\ScanTechnologiesRequest;
 
 class BrowserSimulator implements BotInterface
 {
@@ -17,21 +18,20 @@ class BrowserSimulator implements BotInterface
 
 
     /**
-     * @param $requestInfo
+     * @param ScanTechnologiesRequest $request
      *
      * @return $this
      */
-    public function request($requestInfo)
+    public function request(ScanTechnologiesRequest $request)
     {
 
-
         $this->response = (Object)[
-            'html'    => $requestInfo['html'],
-            'host'    => $requestInfo['url'],
-            'url'     => $requestInfo['url'],
-            'headers' => $requestInfo['headers'] ?? [],
-            'env'     => explode(' ', $requestInfo['environment']),
-            "status"  => $requestInfo['status'],
+            'html'    => $request->getHtml(),
+            'host'    => $request->getHost(),
+            'url'     => $request->getUrl(),
+            'headers' => $request->getHeaders() ?? [],
+            'env'     => explode(' ', $request->getEnvironment()),
+            "status"  => $request->getStatus(),
         ];
 
         return $this;

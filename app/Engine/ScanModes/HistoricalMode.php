@@ -2,80 +2,70 @@
 /**
  * Created by PhpStorm.
  * User: Hyder
- * Date: 09/12/2017
- * Time: 21:19
+ * Date: 28/12/2017
+ * Time: 08:07
  */
 
-namespace App\Engine\Elastic;
+namespace App\Engine\ScanModes;
 
-use App\Http\Requests\ScanTechnologiesRequest;
-use Request;
 
-class Technologies
+class HistoricalMode extends \App\Engine\ApplicationAbstract
 {
 
 
-    /**
-     * The request
-     * @var array
-     */
-    public $request;
-
-
-    /**
-     * Technologies constructor.
-     *
-     * @param ScanTechnologiesRequest $request
-     */
-    public function __construct(ScanTechnologiesRequest $request)
+    public function result()
     {
-        $this->request = $request;
+        if ($this->alreadyScanned()) {
+
+            $applicationsFromHistoricalSearch = $this->searchForHistoricalTechnologies();
+
+            $applications = $applicationsFromHistoricalSearch;
+
+            $this->applications = $applications;
+
+        }
+
+        return $this;
     }
+
 
     /**
      * Fetch the result from ES (including technologies, wordpress and corresponding plugins)
      * @return array
      */
-    public function result()
+    public function searchForHistoricalTechnologies()
     {
         $technologies = $this->technologies();
 
         $applications = [];
+
         foreach ($technologies['aggregations']['result']['name']['buckets'] as $technology) {
 
             $name = $technology['key'];
 
-            $versionNode = $technology['poweredBy']['buckets']['0']['version']['buckets']['0'];
-            $appStack    = [
-                'name'       => $name,
-                'version'    => $versionNode['key'],
-                'icon'       => $versionNode['icon']['buckets']['0']['key'],
-                'website'    => $versionNode['icon']['buckets']['0']['website']['buckets']['0']['key'],
-                'poweredBy'  => filter_var($technology['poweredBy']['buckets']['0']['key'], FILTER_VALIDATE_BOOLEAN),
-                'categories' => array_column(
-                    $versionNode['icon']['buckets']['0']['website']['buckets']['0']['categories']['buckets'],
+            $versionNode = $technology['version']['buckets']['0'];
+            $app         = (new \App\Engine\App())
+                ->setName($name)
+                ->setConfidence(100)
+                ->setVersion($versionNode['key'])
+                ->setCategories(array_column(
+                    $versionNode['categories']['buckets'],
                     'key'
-                ),
-            ];
+                ))->compute();
+
+            $applications[] = $app;
 
             if ($name == 'WordPress') {
-                $themes = $this->themes();
-
-                if ( ! is_null($themes)) {
-                    $appStack['theme'] = $themes;
+                foreach ($this->themes() as $theme) {
+                    $app->setTheme($theme);
                 }
 
-                $plugins = $this->plugins();
-                if ( ! is_null($plugins)) {
-                    $appStack['plugins'] = $plugins;
+                foreach ($this->plugins() as $plugin) {
+                    $app->setPlugin($plugin);
                 }
             }
 
-            $applications['applications'][$name] = (Object)$appStack;
-
         }
-
-        $applications['stats'] = $this->stats();
 
 
         return $applications;
@@ -113,44 +103,21 @@ class Technologies
                                 "field" => "technologies.name",
                             ],
                             "aggs"  => [
-                                "poweredBy" => [
+
+                                "version" => [
                                     "terms" => [
-                                        "size"  => 1,
-                                        "field" => "technologies.poweredBy",
+                                        "size"    => 2,
+                                        "field"   => "technologies.version",
+                                        "missing" => "NA",
+                                        "order"   => [
+                                            "_key" => "desc",
+                                        ],
                                     ],
                                     "aggs"  => [
-                                        "version" => [
+                                        "categories" => [
                                             "terms" => [
-                                                "size"    => 2,
-                                                "field"   => "technologies.version",
-                                                "missing" => "NA",
-                                                "order"   => [
-                                                    "_key" => "desc",
-                                                ],
-                                            ],
-                                            "aggs"  => [
-                                                "icon" => [
-                                                    "terms" => [
-                                                        "size"  => 5,
-                                                        "field" => "technologies.icon",
-                                                    ],
-                                                    "aggs"  => [
-                                                        "website" => [
-                                                            "terms" => [
-                                                                "size"  => 1,
-                                                                "field" => "technologies.website",
-                                                            ],
-                                                            "aggs"  => [
-                                                                "categories" => [
-                                                                    "terms" => [
-                                                                        "size"  => 1,
-                                                                        "field" => "technologies.categories",
-                                                                    ],
-                                                                ],
-                                                            ],
-                                                        ],
-                                                    ],
-                                                ],
+                                                "size"  => 1,
+                                                "field" => "technologies.categories",
                                             ],
                                         ],
                                     ],
@@ -163,7 +130,7 @@ class Technologies
         ];
 
 
-        return $this->search($dsl);
+        return $this->query($dsl);
     }
 
 
@@ -213,13 +180,20 @@ class Technologies
             "aggs"  => [
                 "Wordpress" => [
                     "nested" => [
-                        "path" => "technologies",
+                        "path" => "technologies.themes",
                     ],
                     "aggs"   => [
                         "name" => [
                             "terms" => [
-                                "field" => "technologies.theme",
-                                "size"  => 200,
+                                "size"  => "100",
+                                "field" => "technologies.themes.name",
+                            ],
+                            "aggs"  => [
+                                "slug" => [
+                                    "terms" => [
+                                        "field" => "technologies.themes.slug",
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -227,19 +201,29 @@ class Technologies
             ],
         ];
 
-        $result = $this->search($dsl);
-        $themes = array_column($result['aggregations']['Wordpress']['name']['buckets'], 'key');
 
-        if ( ! empty($themes)) {
-            if ($themes[0] === "0" || $themes[0] === 0) {
-                return null;
+        $result = $this->query($dsl);
+
+        $allThemes = [];
+        if ( ! empty($result['aggregations']['Wordpress']['name']['buckets'])) {
+
+
+            foreach ($result['aggregations']['Wordpress']['name']['buckets'] as $theme) {
+                $themeName = $theme['key'];
+                $themeSlug = $theme['slug']['buckets'][0]['key'];
+
+                $themeObject = (new \App\Engine\Theme())
+                    ->setName($themeName)
+                    ->setSlug($themeSlug)
+                    ->compute();
+
+
+                $allThemes[] = $themeObject;
             }
-        } else {
-            return null;
+
         }
 
-
-        return (Object)array_flip($themes);
+        return $allThemes;
 
 
     }
@@ -311,30 +295,22 @@ class Technologies
             ],
         ];
 
-        $result = $this->search($dsl);
+        $result = $this->query($dsl);
 
 
         $plugins = [];
+
         foreach ($result['aggregations']['result']['name']['buckets'] as $plugin) {
 
-            $pluginSlug  = $plugin['slug']['buckets'][0]['key'];
-            $pluginMeta  = \App\Models\PluginMeta::where('slug', $pluginSlug)
-                                                 ->get();
-            $description = null;
-            if (isset($pluginMeta[0])) {
-                $description = $pluginMeta[0]->plugin->description;
-            }
+            $pluginSlug = $plugin['slug']['buckets'][0]['key'];
 
-            $plugins[] = (Object)[
-                'name'        => $plugin['key'],
-                'slug'        => $pluginSlug,
-                'description' => $description,
-            ];
 
-        }
+            $pluginObject = new \App\Engine\Plugin();
+            $plugins[]    = $pluginObject->setName($plugin['key'])
+                                         ->setSlug($pluginSlug)
+                                         ->compute();
 
-        if (empty($plugins)) {
-            return null;
+
         }
 
         return $plugins;
@@ -364,7 +340,7 @@ class Technologies
         ];
 
 
-        $response = $this->search($dsl);
+        $response = $this->query($dsl);
 
 
         if ($response['hits']['total'] !== 0) {
@@ -382,7 +358,7 @@ class Technologies
      *
      * @return mixed
      */
-    public function search($dsl)
+    public function query($dsl)
     {
         $data = [
             'body'  => $dsl,
@@ -392,7 +368,8 @@ class Technologies
         ];
 
         $response = \Elasticsearch::search($data);
-        $this->calcTimeTaken($response['took']);
+
+        // $this->calcTimeTaken($response['took']);
 
         return $response;
     }

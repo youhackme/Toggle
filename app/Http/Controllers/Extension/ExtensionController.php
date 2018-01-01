@@ -7,13 +7,14 @@ use App\Engine\Elastic\Technologies;
 use App\Engine\LiveTechnologyBuilder;
 use App\Engine\TechnologyDirector;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ScanTechnologiesRequest;
 use DB;
 use Request;
 
 class ExtensionController extends Controller
 {
 
-    public function scan(Request $request)
+    public function scan(ScanTechnologiesRequest $request)
     {
         $site = new Technologies($request);
 
@@ -25,7 +26,7 @@ class ExtensionController extends Controller
         }
 
         $response = (new TechnologyDirector($technologyBuilder))->build();
-        
+
 
         return view('extension/index')
             ->with('response', $response);

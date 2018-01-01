@@ -68,6 +68,16 @@
 
             @php
                 $applicationName = array_column($response->applications,'name');
+                $pluginCount = 0;
+                foreach($response->applications as $application){
+
+                   if($application->name=='WordPress'){
+                    if(!is_null($application->plugins)){
+                       $pluginCount = count($application->plugins);
+                    }
+                    }
+                }
+
             @endphp
 
             @if(in_array('WordPress',$applicationName))
@@ -81,41 +91,42 @@
                         <div class="media-body">
                             <h5 class="media-heading">Theme</h5>
                             <span class="application">
-                                @if (!empty($response->applications['WordPress']->theme)&&isset($response->applications['WordPress']->theme))
-                                    @foreach($response->applications['WordPress']->theme as $theme=>$detail)
-                                        {{ucfirst($theme)}}
-                                        <br/>
-                                    @endforeach
-                                @else
-                                    Custom Theme
-                                @endif
+
+                                @foreach($response->applications as $application)
+                                    @if($application->name=='WordPress')
+                                        @if(!is_null($application->themes))
+                                            @foreach($application->themes as $theme)
+                                                {{ucfirst($theme->name)}}
+                                                <br/>
+                                            @endforeach
+                                        @else
+                                            Custom Theme
+                                        @endif
+                                    @endif
+                                @endforeach
                         </span>
                         </div>
                     </div>
                 </div>
             @endif
             @if(in_array('WordPress',$applicationName))
-                @if (!empty($response->applications['WordPress']->plugins))
-                    <div class="col-md-3 col-sm-6 col-xs-6">
-                        <div class="media p-t-30 p-b-30">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img src="{{asset('img/plugin.svg')}}" alt="WordPress">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <h5 class="media-heading">Plugins</h5>
-                                <span class="application">
-                                    @if (count($response->applications['WordPress']->plugins)>0)
-                                        {{count($response->applications['WordPress']->plugins)}}
-                                    @else
-                                        0
-                                    @endif
+
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="media p-t-30 p-b-30">
+                        <div class="media-left">
+                            <a href="#">
+                                <img src="{{asset('img/plugin.svg')}}" alt="WordPress">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">Plugins</h5>
+                            <span class="application">
+                                    {{$pluginCount}}
                                  </span>
-                            </div>
                         </div>
                     </div>
-                @endif
+                </div>
+
             @endif
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="media p-t-30 p-b-30">
@@ -140,7 +151,7 @@
         </div>
 
         @if(in_array('WordPress',$applicationName))
-            @if (!empty($response->applications['WordPress']->plugins))
+            @if($pluginCount>0)
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="blockResultHeading">WordPress Plugins</h2>
@@ -150,11 +161,7 @@
                     <div class="col-md-12">
                         <p class="blockSummary__p">{{$response->host}} seems to be running WordPress. We
                             have been able to identify
-                            @if (count($response->applications['WordPress']->plugins)>0)
-                                {{count($response->applications['WordPress']->plugins)}}
-                            @else
-                                0
-                            @endif
+                            {{$pluginCount}}
                             plugins.
                         </p>
                     </div>
@@ -162,35 +169,39 @@
 
                 <div class="row blockPlugins">
 
-                    @foreach ($response->applications['WordPress']->plugins as $key=>$plugin)
-
-                        @php
-                            $colors = ['grey','blue','orange','dark-grey','green'];
-                            $randomColors = array_rand($colors, 1);
-                            $color = $colors[$randomColors];
-                        @endphp
-                        <div class="col-md-4 col-sm-6 col-xs-6">
-                            <div class="blockPlugins__plugin">
-                                <h5>
+                    @foreach($response->applications as $application)
+                        @if($application->name=='WordPress')
+                            @if(!is_null($application->plugins))
+                                @foreach($application->plugins as $plugin)
+                                    @php
+                                        $colors = ['grey','blue','orange','dark-grey','green'];
+                                        $randomColors = array_rand($colors, 1);
+                                        $color = $colors[$randomColors];
+                                    @endphp
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <div class="blockPlugins__plugin">
+                                            <h5>
                                 <span class="blockPlugins__pluginBadge {{$color}}">
                                     {{substr(ucfirst($plugin->name),0,1)}}</span>
-                                    {{str_limit(ucfirst($plugin->name),45)}}
-                                </h5>
-                                <p class="blockPlugins__muted">
-
-                                    @if(!is_null($plugin->description))
-                                        {{str_limit(ucfirst($plugin->description),130)}}
-                                    @else
-                                        No description found for this plugin.
-                                    @endif
-                                </p>
-                            </div>
-                        </div>
+                                                {{str_limit(ucfirst($plugin->name),45)}}
+                                            </h5>
+                                            <p class="blockPlugins__muted">
+                                                @if(!is_null($plugin->description))
+                                                    {{str_limit(ucfirst($plugin->description),130)}}
+                                                @else
+                                                    No description found for this plugin.
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        @endif
                     @endforeach
                 </div>
+
             @endif
         @endif
-
 
         @if (count($response->applicationsByCategory)>0)
             <div class="row">
