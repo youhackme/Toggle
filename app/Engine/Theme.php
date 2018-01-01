@@ -43,6 +43,14 @@ class Theme
     }
 
     /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
      * @param mixed $description
      *
      * @return Theme
@@ -52,6 +60,14 @@ class Theme
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -79,5 +95,61 @@ class Theme
         return $this;
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getScreenshotHash()
+    {
+        return $this->screenshotHash;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScreenshotUrl()
+    {
+        return $this->screenshotUrl;
+    }
+
+    public function compute()
+    {
+
+        $methods = get_class_methods($this);
+
+        $methods = collect($methods)->filter(function ($methodName) {
+            if (strpos($methodName, 'get') !== false) {
+
+                return $methodName;
+            }
+        });
+
+        foreach ($methods as $method) {
+            if (is_null($this->$method())) {
+
+                switch ($method) {
+                    case 'getDescription':
+
+                        if ( ! is_null($this->getScreenshotHash())) {
+                            $themeMeta = \App\Models\ThemeMeta::where('slug', $this->getSlug())
+                                                              ->where('screenshotHash', $this->getScreenshotHash())
+                                                              ->get()->first();
+                            if ( ! is_null($themeMeta)) {
+                                $this->setDescription($themeMeta->theme->description);
+                            } else {
+                                $this->setDescription('Theme description not found.');
+                            }
+                        }
+
+
+                        break;
+
+                }
+            }
+        }
+
+        return $this;
+    }
+
 
 }

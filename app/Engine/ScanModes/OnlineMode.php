@@ -42,7 +42,7 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
                     $app = (new \App\Engine\App())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
-                        ->setVersion($application->name)
+                        ->setVersion($application->version)
                         ->setIcon($application->icon)
                         ->setWebsite($application->website)
                         ->setCategories($application->categories);
@@ -97,27 +97,48 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
 
 
     /**
-     *  Save result to ES
+     *  Filter results before saving to ES
      * @return mixed
      */
     private function saveToElastic()
     {
 
+        $applications = unserialize(serialize($this->applications));
+
+        $applicationsFiltered = collect($applications)->each(function ($app) {
+
+            unset($app->poweredBy, $app->icon, $app->website);
+
+            if ( ! is_null($app->themes)) {
+                collect($app->themes)->each(function ($theme) {
+                    unset($theme->screenshotHash, $theme->screenshotUrl, $theme->description);
+                });
+            }
+
+            if ( ! is_null($app->plugins)) {
+                collect($app->plugins)->each(function ($plugin) {
+                    unset($plugin->description);
+                });
+            }
+
+            return $app;
+        });
+
+
         $dsl                 = [];
-        $response            = json_encode($this->applications);
         $dsl['url']          = $this->request->getUrl();
         $dsl['host']         = $this->request->getHost();
         $dsl['clientIp']     = $this->request->getIp();
         $dsl['origin']       = $this->request->getOrigin();
         $dsl['environment']  = env('APP_ENV');
         $dsl['createdOn']    = \Carbon\Carbon::now()->toDateTimeString();
-        $dsl['technologies'] = array_values($this->applications);
+        $dsl['technologies'] = $applicationsFiltered;
+
 
         $data = [
             'body'  => $dsl,
             'index' => 'toggle',
             'type'  => 'technologies',
-
         ];
 
 

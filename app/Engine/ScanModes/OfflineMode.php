@@ -31,7 +31,7 @@ class OfflineMode extends \App\Engine\ApplicationAbstract
                     $app = (new \App\Engine\App())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
-                        ->setVersion($application->name)
+                        ->setVersion($application->version)
                         ->setIcon($application->icon)
                         ->setWebsite($application->website)
                         ->setCategories($application->categories);

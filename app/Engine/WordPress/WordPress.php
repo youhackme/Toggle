@@ -137,20 +137,10 @@ class WordPress
                 $plugin['name']        = ucwords(str_replace('-', ' ', $slug));
 
 
-                $pluginMeta = \App\Models\PluginMeta::where('slug', $slug)
-                                                    ->get();
-
-                if (isset($pluginMeta[0])) {
-
-                    $plugin['description'] = $pluginMeta[0]->plugin->description;
-                    $plugin['name']        = $pluginMeta[0]->plugin->name;
-                }
-
-
                 $allPlugins[] = (new \App\Engine\Plugin()
                 )->setName($plugin['name'])
                  ->setSlug($slug)
-                 ->setDescription($plugin['description']);
+                 ->compute();
 
 
             }
@@ -268,11 +258,8 @@ class WordPress
                  ->setSlug($themeAlias);
 
 
-                $screenshotHash = '';
-
                 if (isset($details['screenshot']['hash'])) {
                     $theme->setScreenshotHash($details['screenshot']['hash']);
-                    $screenshotHash = $details['screenshot']['hash'];
                 }
 
                 if (isset($details['screenshot']['url'])) {
@@ -280,16 +267,7 @@ class WordPress
                 }
 
 
-                $themeMeta = \App\Models\ThemeMeta::where('slug', $themeAlias)
-                                                  ->where('screenshotHash', $screenshotHash)
-                                                  ->get();
-
-                if (isset($themeMeta[0])) {
-                    $themeDescription = $themeMeta[0]->theme->description;
-                    $theme->setDescription($themeDescription);
-                }
-
-                $allThemes[] = $theme;
+                $allThemes[] = $theme->compute();
             }
 
         }

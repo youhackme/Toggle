@@ -13,14 +13,27 @@ class App
 {
 
     public $name;
+
+
     public $confidence;
     public $version;
     public $icon;
+
+
     public $website;
     public $categories;
     public $poweredBy = false;
     public $themes;
     public $plugins;
+
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
 
     /**
@@ -112,6 +125,62 @@ class App
     public function setPlugin(Plugin $plugin)
     {
         $this->plugins[] = $plugin;
+
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    public function compute()
+    {
+        $methods = get_class_methods($this);
+
+        $methods = collect($methods)->filter(function ($methodName) {
+            if (strpos($methodName, 'get') !== false) {
+                return $methodName;
+            }
+        });
+
+
+        $json = false;
+        foreach ($methods as $method) {
+            if (is_null($this->$method())) {
+
+                if ($json === false) {
+                    $json = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
+                }
+
+                switch ($method) {
+                    case 'getIcon':
+                        if (isset($json->apps->{$this->getName()}->icon)) {
+                            $this->setIcon($json->apps->{$this->getName()}->icon);
+                        }
+
+                        break;
+                    case 'getWebsite':
+                        if (isset($json->apps->{$this->getName()}->website)) {
+                            $this->setWebsite($json->apps->{$this->getName()}->website);
+                        }
+                        break;
+
+                }
+            }
+        }
 
         return $this;
     }

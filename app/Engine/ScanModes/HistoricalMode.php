@@ -38,23 +38,20 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
         $technologies = $this->technologies();
 
         $applications = [];
+
         foreach ($technologies['aggregations']['result']['name']['buckets'] as $technology) {
 
             $name = $technology['key'];
 
-            $versionNode = $technology['poweredBy']['buckets']['0']['version']['buckets']['0'];
-
-
-            $app = (new \App\Engine\App())
+            $versionNode = $technology['version']['buckets']['0'];
+            $app         = (new \App\Engine\App())
                 ->setName($name)
                 ->setConfidence(100)
                 ->setVersion($versionNode['key'])
-                ->setIcon($versionNode['icon']['buckets']['0']['key'])
-                ->setWebsite($versionNode['icon']['buckets']['0']['website']['buckets']['0']['key'])
                 ->setCategories(array_column(
-                    $versionNode['icon']['buckets']['0']['website']['buckets']['0']['categories']['buckets'],
+                    $versionNode['categories']['buckets'],
                     'key'
-                ));
+                ))->compute();
 
             $applications[] = $app;
 
@@ -106,44 +103,21 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
                                 "field" => "technologies.name",
                             ],
                             "aggs"  => [
-                                "poweredBy" => [
+
+                                "version" => [
                                     "terms" => [
-                                        "size"  => 1,
-                                        "field" => "technologies.poweredBy",
+                                        "size"    => 2,
+                                        "field"   => "technologies.version",
+                                        "missing" => "NA",
+                                        "order"   => [
+                                            "_key" => "desc",
+                                        ],
                                     ],
                                     "aggs"  => [
-                                        "version" => [
+                                        "categories" => [
                                             "terms" => [
-                                                "size"    => 2,
-                                                "field"   => "technologies.version",
-                                                "missing" => "NA",
-                                                "order"   => [
-                                                    "_key" => "desc",
-                                                ],
-                                            ],
-                                            "aggs"  => [
-                                                "icon" => [
-                                                    "terms" => [
-                                                        "size"  => 5,
-                                                        "field" => "technologies.icon",
-                                                    ],
-                                                    "aggs"  => [
-                                                        "website" => [
-                                                            "terms" => [
-                                                                "size"  => 1,
-                                                                "field" => "technologies.website",
-                                                            ],
-                                                            "aggs"  => [
-                                                                "categories" => [
-                                                                    "terms" => [
-                                                                        "size"  => 1,
-                                                                        "field" => "technologies.categories",
-                                                                    ],
-                                                                ],
-                                                            ],
-                                                        ],
-                                                    ],
-                                                ],
+                                                "size"  => 1,
+                                                "field" => "technologies.categories",
                                             ],
                                         ],
                                     ],
@@ -206,13 +180,20 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
             "aggs"  => [
                 "Wordpress" => [
                     "nested" => [
-                        "path" => "technologies",
+                        "path" => "technologies.themes",
                     ],
                     "aggs"   => [
                         "name" => [
                             "terms" => [
-                                "field" => "technologies.theme",
-                                "size"  => 200,
+                                "size"  => "100",
+                                "field" => "technologies.themes.name",
+                            ],
+                            "aggs"  => [
+                                "slug" => [
+                                    "terms" => [
+                                        "field" => "technologies.themes.slug",
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -220,21 +201,26 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
             ],
         ];
 
+
         $result = $this->query($dsl);
 
+        $allThemes = [];
+        if ( ! empty($result['aggregations']['Wordpress']['name']['buckets'])) {
 
-        $themes = array_column($result['aggregations']['Wordpress']['name']['buckets'], 'key');
 
-        $themeObject = new \App\Engine\Theme();
-        $allThemes   = [];
-        if ( ! empty($themes)) {
-            foreach ($themes as $theme) {
-                $themeObject->setName($theme)
-                            ->setSlug($theme)
-                            ->setScreenshotHash('')
-                            ->setDescription('');
+            foreach ($result['aggregations']['Wordpress']['name']['buckets'] as $theme) {
+                $themeName = $theme['key'];
+                $themeSlug = $theme['slug']['buckets'][0]['key'];
+
+                $themeObject = (new \App\Engine\Theme())
+                    ->setName($themeName)
+                    ->setSlug($themeSlug)
+                    ->compute();
+
+
+                $allThemes[] = $themeObject;
             }
-            $allThemes[] = $themeObject;
+
         }
 
         return $allThemes;
@@ -317,18 +303,12 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
         foreach ($result['aggregations']['result']['name']['buckets'] as $plugin) {
 
             $pluginSlug = $plugin['slug']['buckets'][0]['key'];
-            //@todo: move this to plugin class
-            $pluginMeta  = \App\Models\PluginMeta::where('slug', $pluginSlug)
-                                                 ->get();
-            $description = null;
-            if (isset($pluginMeta[0])) {
-                $description = $pluginMeta[0]->plugin->description;
-            }
+
 
             $pluginObject = new \App\Engine\Plugin();
             $plugins[]    = $pluginObject->setName($plugin['key'])
                                          ->setSlug($pluginSlug)
-                                         ->setDescription($description);
+                                         ->compute();
 
 
         }

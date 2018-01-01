@@ -12,9 +12,47 @@ namespace App\Engine;
 class Plugin
 {
 
-    public $name;
-    public $slug;
-    public $description;
+    /**
+     * Plugin Name
+     * @var
+     */
+    public $name = null;
+
+    /**
+     * Plugin Slug
+     * @var
+     */
+    public $slug = null;
+
+    /**
+     * Plugin Description
+     * @var
+     */
+    public $description = null;
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
     /**
      * @param mixed $name
@@ -51,5 +89,39 @@ class Plugin
 
         return $this;
     }
+
+    public function compute()
+    {
+
+        $methods = get_class_methods($this);
+
+        $methods = collect($methods)->filter(function ($methodName) {
+            if (strpos($methodName, 'get') !== false) {
+
+                return $methodName;
+            }
+        });
+
+        foreach ($methods as $method) {
+            if (is_null($this->$method())) {
+
+                switch ($method) {
+                    case 'getDescription':
+                        $pluginMeta = \App\Models\PluginMeta::where('slug', $this->getSlug())
+                                                            ->get()->first();
+                        if ( ! is_null($pluginMeta)) {
+                            $this->setDescription($pluginMeta->plugin->description);
+                            $this->setName($pluginMeta->plugin->name);
+                        }
+                        
+                        break;
+
+                }
+            }
+        }
+
+        return $this;
+    }
+
 
 }
