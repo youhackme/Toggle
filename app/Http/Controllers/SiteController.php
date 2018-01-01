@@ -111,6 +111,8 @@ class SiteController extends Controller
         $result = (new ScanTechnologies($request))
             ->setOptions(['mode' => 'god'])
             ->result();
+
+
         if (empty($result->errors)) {
 
             return response()->json($result);
@@ -128,7 +130,7 @@ class SiteController extends Controller
     public function scanFromWeb(ScanTechnologiesRequest $request)
     {
         $response = (new ScanTechnologies($request))
-            ->setOptions(['mode' => 'online'])
+            ->setOptions(['mode' => 'god'])
             ->search();
 
         if (empty($response->errors)) {
