@@ -19,7 +19,7 @@ abstract class ApplicationAbstract
     public $applications;
     public $errors = false;
     protected $request;
-    public $sortApplicationByCategory;
+    public $applicationsByCategory;
 
 
     public function __construct(ScanTechnologiesRequest $request)
@@ -69,13 +69,11 @@ abstract class ApplicationAbstract
                     if (in_array($categoryName, $appCategories)) {
                         $applicationByCategory[$categoryName][] = $app;
                     }
-
                 }
-
             }
         }
 
-        return $this->sortApplicationByCategory = $applicationByCategory;
+        return $this->applicationsByCategory = $applicationByCategory;
     }
 
     abstract function result();

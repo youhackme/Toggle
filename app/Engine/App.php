@@ -13,13 +13,9 @@ class App
 {
 
     public $name;
-
-
     public $confidence;
     public $version;
     public $icon;
-
-
     public $website;
     public $categories;
     public $poweredBy = false;

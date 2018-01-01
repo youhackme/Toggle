@@ -125,6 +125,31 @@ class SiteController extends Controller
     }
 
 
+    public function scanFromWeb(ScanTechnologiesRequest $request)
+    {
+        $response = (new ScanTechnologies($request))
+            ->setOptions(['mode' => 'online'])
+            ->search();
+
+        if (empty($response->errors)) {
+
+            return view('website.result')
+                ->with('response', $response);
+        }
+
+        \Bugsnag::notifyError('Connection Failed', $response->errors,
+            function (Report $report) use ($request) {
+                $report->setSeverity('error');
+            });
+
+        return view('website.error')
+            ->with('response', $response);
+
+        return response()->json(['error' => $response->errors], 500);
+
+    }
+
+
     /**
      *  Fetch Cached result from redis
      *
