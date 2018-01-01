@@ -7,7 +7,7 @@
  */
 
 namespace App\Engine\ScanModes;
-
+use App\Engine\ScanTechnologies;
 class GodMode extends \App\Engine\ApplicationAbstract
 {
 
@@ -19,13 +19,19 @@ class GodMode extends \App\Engine\ApplicationAbstract
     public function result()
     {
 
-        $responseHistoricalMode = new HistoricalMode($this->request);
+        $responseHistoricalMode = (new ScanTechnologies($this->request))
+            ->setOptions(['mode' => 'historical'])
+            ->result();
 
         if ( ! $responseHistoricalMode->alreadyScanned()) {
             //echo('This url has NOT been scanned yet. ' . $this->request->getUrl());
             // Then fetch live data
 
-            $responseOnlineMode         = new OnlineMode($this->request);
+            $responseOnlineMode = (new ScanTechnologies($this->request))
+                ->setOptions(['mode' => 'online'])
+                ->result();
+
+
             $applicationsFromLiveSearch = $responseOnlineMode->applications;
             // Then fetch historical data by host
             $applicationsFromHistoricalSearch = $responseHistoricalMode->searchForHistoricalTechnologies();
