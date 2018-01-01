@@ -10,6 +10,7 @@ namespace App\Engine\Bot\Driver;
 
 
 use App\Engine\Bot\BotInterface;
+use App\Http\Requests\ScanTechnologiesRequest;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -23,8 +24,9 @@ class PhantomJS implements BotInterface
      *
      * @return string
      */
-    public function request($url)
+    public function request(ScanTechnologiesRequest $request)
     {
+        $url         = $request->getUrl();
         $scraperPath = app_path() . '/Engine/Bot/scraper.js';
         $command     = 'phantomjs --ignore-ssl-errors=true --load-images=false ' . $scraperPath . ' ' . "'" . $url . "'";
         $process     = new Process($command);
@@ -110,7 +112,12 @@ class PhantomJS implements BotInterface
     public function host()
     {
 
-        return parse_url($this->url(), PHP_URL_HOST);
+        $uri = \App::make('Uri');
+
+        return $uri->parseUrl(
+            $this->url()
+        )->host->host;
+
 
     }
 

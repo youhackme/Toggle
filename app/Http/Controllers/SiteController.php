@@ -2,74 +2,164 @@
 
 namespace App\Http\Controllers;
 
-use App\Engine\Elastic\Technologies;
 use App\Engine\LiveTechnologyBuilder;
-use App\Engine\CachedTechnologyBuilder;
-use App\Engine\ResponseSynthetiser;
+use App\Engine\ScanTechnologies;
 use App\Engine\TechnologyDirector;
-use App\Engine\Togglyzer;
-use Bugsnag\Report;
+use App\Http\Requests\ScanTechnologiesRequest;
 use Illuminate\Support\Facades\Redis;
 use Request;
-
 
 class SiteController extends Controller
 {
     /**
-     * Discover whether this site is using WordPress or not.
+     * Scan for technology live by initiating a request through the underlying headless browser
      *
-     * @return string
+     * @param ScanTechnologiesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse|string
      */
-    public function detect()
+    public function detectTechnologyOnlineMode(ScanTechnologiesRequest $request)
     {
+        $result = (new ScanTechnologies($request))
+            ->setOptions(['mode' => 'online'])
+            ->search();
 
-        $site = Request::get('url');
+        if (empty($result->errors)) {
 
-        $siteAnatomy = (new \App\Engine\SiteAnatomy($site));
-
-        if ( ! $siteAnatomy->errors()) {
-
-            $application = (new \App\Engine\WordPress\WordPress($siteAnatomy));
-
-            if ($application->isWordPress()) {
-                return $application->details();
-            }
-
-
-            return response()->json([
-                'application'  => false,
-                'version'      => false,
-                'theme'        => false,
-                'plugins'      => false,
-                'technologies' => (new Togglyzer($siteAnatomy))->check(),
-            ]);
-
-
-        } else {
-
-            //  \Bugsnag::notifyError("Failed to connect to $site", json_encode($siteAnatomy->errors()));
-
-            \Bugsnag::notifyError('Connection Failed', "Failed to connect to $site",
-                function (Report $report) use ($siteAnatomy) {
-                    $report->setSeverity('error');
-                    $report->setMetaData([
-                        'filename' => $siteAnatomy->errors(),
-                    ]);
-                });
-
-            return response()->json([
-                'error' => 'Failed to connect to ' . $site,
-            ]);
+            return response()->json($result);
         }
+
+        \Bugsnag::notifyError('Connection Failed', $result->errors,
+            function (Report $report) use ($request) {
+                $report->setSeverity('error');
+            });
+
+        return response()->json(['error' => $result->errors], 500);
+
     }
 
+
     /**
-     * Fetch Cached result from redis
+     * Detect technology by using togglyzer engine only. No external call. Period.
+     *
+     * @param ScanTechnologiesRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function cache()
+    public function detectTechnologyOfflineMode(ScanTechnologiesRequest $request)
     {
-        $url = Request::get('url');
+
+        $result = (new ScanTechnologies($request))
+            ->setOptions(['mode' => 'offline'])
+            ->search();
+
+
+        if (empty($result->errors)) {
+
+            return response()->json($result);
+        }
+
+        \Bugsnag::notifyError('Connection Failed', $result->errors,
+            function (Report $report) use ($request) {
+                $report->setSeverity('error');
+            });
+
+        return response()->json(['error' => $result->errors], 500);
+
+    }
+
+
+    /**
+     * Detect technology based on historical data saved in ES
+     *
+     * @param ScanTechnologiesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function detectTechnologyHistoricalMode(ScanTechnologiesRequest $request)
+    {
+        $result = (new ScanTechnologies($request))
+            ->setOptions(['mode' => 'historical'])
+            ->search();
+
+        if (empty($result->errors)) {
+
+            return response()->json($result);
+        }
+
+        \Bugsnag::notifyError('Connection Failed', $result->errors,
+            function (Report $report) use ($request) {
+                $report->setSeverity('error');
+            });
+
+        return response()->json(['error' => $result->errors], 500);
+
+
+    }
+
+
+    /**
+     * The most powerful way so far to detecmine technologies by combining
+     * Online, offline and cached mode
+     *
+     * @param ScanTechnologiesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function detectTechnologyGodMode(ScanTechnologiesRequest $request)
+    {
+        $result = (new ScanTechnologies($request))
+            ->setOptions(['mode' => 'god'])
+            ->result();
+        if (empty($result->errors)) {
+
+            return response()->json($result);
+        }
+
+        \Bugsnag::notifyError('Connection Failed', $result->errors,
+            function (Report $report) use ($request) {
+                $report->setSeverity('error');
+            });
+
+        return response()->json(['error' => $result->errors], 500);
+    }
+
+
+    public function scanFromWeb(ScanTechnologiesRequest $request)
+    {
+        $response = (new ScanTechnologies($request))
+            ->setOptions(['mode' => 'online'])
+            ->search();
+
+        if (empty($response->errors)) {
+
+            return view('website.result')
+                ->with('response', $response);
+        }
+
+        \Bugsnag::notifyError('Connection Failed', $response->errors,
+            function (Report $report) use ($request) {
+                $report->setSeverity('error');
+            });
+
+        return view('website.error')
+            ->with('response', $response);
+
+        return response()->json(['error' => $response->errors], 500);
+
+    }
+
+
+    /**
+     *  Fetch Cached result from redis
+     *
+     * @param ScanTechnologiesRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cache(ScanTechnologiesRequest $request)
+    {
+        $url = $request->getUrl();
 
         if (Redis::EXISTS('site:' . $url)) {
 
@@ -87,77 +177,7 @@ class SiteController extends Controller
 
         \Bugsnag::notifyError('Error', json_encode($this));
 
-        return response()->json(['error' => 'Unable to find this key in redis.']);
+        return response()->json(['error' => 'Unable to find this key in redis.'], 500);
     }
-
-    /**
-     * Detect technology by using togglyzer engine only. No external call. Period.
-     */
-    public function detectTechnologyOfflineMode()
-    {
-
-        $site = Request::get('url');
-
-        $requestInfo = Request::all();
-        $siteAnatomy = (new \App\Engine\SiteAnatomy($site, $requestInfo));
-
-        if ( ! $siteAnatomy->errors()) {
-
-            return response()->json([
-                'technologies' => (new Togglyzer($siteAnatomy))->check(),
-            ]);
-
-        } else {
-
-            \Bugsnag::notifyError('Error', json_encode($siteAnatomy->errors()));
-
-            return response()->json([
-                'error' => 'Unable to simulate crawling in offline mode for ' . $site,
-            ]);
-        }
-
-    }
-
-
-    /**
-     * Public end-point for detecting through web
-     *
-     * @param Request $request
-     *
-     * @return $this
-     */
-    public function scanFromWeb(Request $request)
-    {
-
-        $site = new Technologies($request);
-
-        $fullScan = false;
-
-        if ( ! $site->alreadyScanned()) {
-            $fullScan             = true;
-            $responseFromLiveScan = (new TechnologyDirector(new LiveTechnologyBuilder($request)))->build();
-
-        }
-
-        $responseFromCachedScan = (new TechnologyDirector(new CachedTechnologyBuilder($request)))->build();
-
-        if ($fullScan === true) {
-            //Synthesize response
-            $response = new ResponseSynthetiser($responseFromLiveScan, $responseFromCachedScan);
-        } else {
-            $response = $responseFromCachedScan;
-        }
-
-        if (isset($response->applications['error'])) {
-
-            return view('website.error')
-                ->with('response', $response);
-        }
-
-
-        return view('website.result')
-            ->with('response', $response);
-    }
-
 
 }
