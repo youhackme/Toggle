@@ -19,7 +19,7 @@ class ExtensionController extends Controller
         $response = (new ScanTechnologies($request))
             ->setOptions(['mode' => 'online'])
             ->search();
-      
+
 
         if (empty($response->errors)) {
 

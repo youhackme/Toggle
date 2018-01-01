@@ -2,8 +2,8 @@
 
 namespace App\Scrape\YooTheme;
 
-use App\Scrape\ScraperInterface;
 use App\Repositories\Theme\ThemeRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.
@@ -28,7 +28,7 @@ class Theme implements ScraperInterface
      */
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme        = $theme;
+        $this->theme = $theme;
     }
 
     /**

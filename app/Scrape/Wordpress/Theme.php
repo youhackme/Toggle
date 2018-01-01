@@ -2,9 +2,9 @@
 
 namespace App\Scrape\WordPress;
 
+use App\Repositories\Theme\ThemeRepository;
 use App\Scrape\ScraperInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use App\Repositories\Theme\ThemeRepository;
 
 /**
  * Created by PhpStorm.
@@ -15,12 +15,17 @@ use App\Repositories\Theme\ThemeRepository;
 class Theme implements ScraperInterface
 {
     /**
+     * An instance of Theme Repository.
+     *
+     * @var ThemeRepository
+     */
+    protected $theme;
+    /**
      * Store theme meta data.
      *
      * @var array
      */
     private $crawler;
-
     /**
      * Goutte Client.
      *
@@ -28,16 +33,9 @@ class Theme implements ScraperInterface
      */
     private $goutteClient;
 
-    /**
-     * An instance of Theme Repository.
-     *
-     * @var ThemeRepository
-     */
-    protected $theme;
-
     public function __construct(ThemeRepository $theme)
     {
-        $this->theme = $theme;
+        $this->theme        = $theme;
         $this->goutteClient = \App::make('goutte');
     }
 
@@ -55,61 +53,61 @@ class Theme implements ScraperInterface
 
         // The Theme name
         $this->crawler->filter('li')
-                        ->each(function (Crawler $themeName) use (&$theme) {
-                            $theme['name'] = $themeName->text();
+                      ->each(function (Crawler $themeName) use (&$theme) {
+                          $theme['name'] = $themeName->text();
 
-                            $theme['uniqueidentifier'] = $theme['name'];
-                            $url = 'https://wordpress.org/themes/'.$theme['name'];
-                            $theme['downloadLink'] = $url;
-                            $theme['PreviewLink'] = $url;
-                            $crawlerThemefullPage = $this->goutteClient->request(
-                                'GET',
-                                $url
-                            );
+                          $theme['uniqueidentifier'] = $theme['name'];
+                          $url                       = 'https://wordpress.org/themes/' . $theme['name'];
+                          $theme['downloadLink']     = $url;
+                          $theme['PreviewLink']      = $url;
+                          $crawlerThemefullPage      = $this->goutteClient->request(
+                              'GET',
+                              $url
+                          );
 
-                            $responseStatus = $this->goutteClient->getResponse()->getStatus();
-                            if ($responseStatus == 200) {
-                                $theme['provider'] = 'wordpress.org';
-                                $theme['type'] = 'free';
+                          $responseStatus = $this->goutteClient->getResponse()->getStatus();
+                          if ($responseStatus == 200) {
+                              $theme['provider'] = 'wordpress.org';
+                              $theme['type']     = 'free';
 
-                                // Get the Preview URL
-                                $crawlerThemefullPage->filter('.theme-wrap')
-                                                    ->each(function (Crawler $content) use (&$theme) {
+                              // Get the Preview URL
+                              $crawlerThemefullPage->filter('.theme-wrap')
+                                                   ->each(function (Crawler $content) use (&$theme) {
 
-                                                        // Get the Theme name
-                                                        $content->filter('.theme-name')
-                                                                ->each(function (Crawler $content) use (&$theme) {
-                                                                    $theme['name'] = trim($content->text());
-                                                                });
+                                                       // Get the Theme name
+                                                       $content->filter('.theme-name')
+                                                               ->each(function (Crawler $content) use (&$theme) {
+                                                                   $theme['name'] = trim($content->text());
+                                                               });
 
-                                                        $content->filter('div.screenshot img')
-                                                                ->each(function (Crawler $content) use (&$theme) {
-                                                                    $theme['screenshotUrl'] = trim($content->attr('src'));
-                                                                });
+                                                       $content->filter('div.screenshot img')
+                                                               ->each(function (Crawler $content) use (&$theme) {
+                                                                   $theme['screenshotUrl'] = trim($content->attr('src'));
+                                                               });
 
-                                                        // Get the description
-                                                        $content->filter('.theme-description')
-                                                                ->each(function (Crawler $content) use (&$theme) {
-                                                                    $theme['description'] = trim($content->text());
-                                                                });
+                                                       // Get the description
+                                                       $content->filter('.theme-description')
+                                                               ->each(function (Crawler $content) use (&$theme) {
+                                                                   $theme['description'] = trim($content->text());
+                                                               });
 
-                                                        $tags = [];
-                                                        // Get the category
-                                                        $content->filter('.theme-tags a')
-                                                                ->each(function (Crawler $content) use (
-                                                                    &$theme,
-                                                                    &$tags
-                                                                ) {
-                                                                    $tags[] = $content->text();
-                                                                });
-                                                        $theme['category'] = substr(implode(',', $tags), 0, 150);
-                                                    });
+                                                       $tags = [];
+                                                       // Get the category
+                                                       $content->filter('.theme-tags a')
+                                                               ->each(function (Crawler $content) use (
+                                                                   &$theme,
+                                                                   &$tags
+                                                               ) {
+                                                                   $tags[] = $content->text();
+                                                               });
+                                                       $theme['category'] = substr(implode(',', $tags), 0, 150);
+                                                   });
 
-                                $this->theme->save($theme);
-                            } else {
-                                echo "Theme {$theme['name']} does not exist";
-                                echo br();
-                            }
-                        });
+                              $this->theme->save($theme);
+                          } else {
+                              echo "Theme {$theme['name']} does not exist";
+                              echo br();
+                          }
+                      });
     }
 }

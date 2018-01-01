@@ -2,9 +2,8 @@
 
 namespace App\Scrape\Themeforest;
 
-use App\Scrape\ScraperInterface;
-
 use App\Repositories\Plugin\PluginRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.

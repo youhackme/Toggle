@@ -16,6 +16,36 @@ class OfflineMode extends \App\Engine\ApplicationAbstract
 
 
     /**
+     * @return $this
+     */
+    public function result()
+    {
+
+        if ( ! empty($this->siteAnatomy->errors())) {
+            $this->errors = $this->siteAnatomy->errors();
+
+            return $this;
+        }
+
+        $apps = new \App\Engine\Apps();
+
+        $otherTechnologies = $this->searchForOtherTechnologies();
+
+
+        if ( ! empty($otherTechnologies)) {
+
+            foreach ($otherTechnologies as $technology) {
+                $apps->add($technology);
+            }
+        }
+
+        $this->applications = $apps->render();
+
+
+        return $this;
+    }
+
+    /**
      * Scan for any other technologies running under the hood.
      * @return array
      */
@@ -44,37 +74,6 @@ class OfflineMode extends \App\Engine\ApplicationAbstract
         }
 
         return $applications;
-    }
-
-
-    /**
-     * @return $this
-     */
-    public function result()
-    {
-
-        if ( ! empty($this->siteAnatomy->errors())) {
-            $this->errors = $this->siteAnatomy->errors();
-
-            return $this;
-        }
-
-        $apps = new \App\Engine\Apps();
-
-        $otherTechnologies = $this->searchForOtherTechnologies();
-
-
-        if ( ! empty($otherTechnologies)) {
-
-            foreach ($otherTechnologies as $technology) {
-                $apps->add($technology);
-            }
-        }
-
-        $this->applications = $apps->render();
-
-
-        return $this;
     }
 
 

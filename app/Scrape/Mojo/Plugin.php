@@ -2,8 +2,8 @@
 
 namespace App\Scrape\Mojo;
 
-use App\Scrape\ScraperInterface;
 use App\Repositories\Plugin\PluginRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.

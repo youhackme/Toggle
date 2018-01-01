@@ -60,28 +60,6 @@ class SiteAnatomy
 
     }
 
-
-    /**
-     * Simulate site crawling
-     *
-     * @param ScanTechnologiesRequest $request
-     */
-    public function simulateCrawl(ScanTechnologiesRequest $request)
-    {
-        try {
-
-            $bot = new \App\Engine\Bot\Bot(new BrowserSimulator());
-
-            $data = $bot->crawl($request);
-            $this->result($data);
-
-        } catch (\Exception $e) {
-
-            $this->errors[] = $e->getMessage();
-        }
-    }
-
-
     /**
      * Crawl a url
      *
@@ -124,29 +102,62 @@ class SiteAnatomy
     }
 
     /**
+     * Get the result.
+     *
+     * @param $data
+     *
+     * @return $this
+     */
+    private function result($data)
+    {
+
+        if ( ! ($this->errors())) {
+
+            $this->html = $data->html();
+
+            $this->url         = $this->originalUrl;
+            $this->headers     = $data->headers();
+            $this->cookies     = $data->cookies();
+            $this->environment = $data->environment();
+            $this->status      = $data->status();
+            $this->host        = $data->host();
+
+            $this->crawler = new Crawler($this->html);
+            $this->styles  = $this->getStyleSheets();
+            $this->scripts = $this->getScripts();
+            $this->metas   = $this->metatags();
+            // $this->headers = $this->getHeaders();
+            // $this->cookies  = $this->getCookies();
+            $this->comments = $this->getHtmlComments();
+            // $this->status   = $this->getStatus();
+            $this->css = [
+                'classes' => $this->getCssClasses(),
+                'ids'     => $this->getCssIds(),
+            ];
+
+
+            if ($this->scanMode = 'offline') {
+                Redis::set('site:' . $this->originalUrl, json_encode($this));
+                Redis::expire('site:' . $this->originalUrl, 86400);
+
+            } else {
+                Redis::set('site:' . $this->originalUrl, json_encode($this));
+                Redis::expire('site:' . $this->originalUrl, 86400);
+            }
+
+
+            return $this;
+
+        }
+    }
+
+    /**
      * Read any errors found.
      */
     public function errors()
     {
         return $this->errors;
     }
-
-    /**
-     * Get meta tags.
-     *
-     * @return array
-     */
-    private function metatags()
-    {
-        $tags = [];
-        $this->crawler->filterXpath('//meta[@name="generator"]')
-                      ->each(function (Crawler $metaTags) use (&$tags) {
-                          $tags['generator'][] = $metaTags->attr('content');
-                      });
-
-        return $tags;
-    }
-
 
     /**
      * List CSS Sheets.
@@ -184,6 +195,22 @@ class SiteAnatomy
                       });
 
         return array_unique($scripts);
+    }
+
+    /**
+     * Get meta tags.
+     *
+     * @return array
+     */
+    private function metatags()
+    {
+        $tags = [];
+        $this->crawler->filterXpath('//meta[@name="generator"]')
+                      ->each(function (Crawler $metaTags) use (&$tags) {
+                          $tags['generator'][] = $metaTags->attr('content');
+                      });
+
+        return $tags;
     }
 
     /**
@@ -251,52 +278,22 @@ class SiteAnatomy
     }
 
     /**
-     * Get the result.
+     * Simulate site crawling
      *
-     * @param $data
-     *
-     * @return $this
+     * @param ScanTechnologiesRequest $request
      */
-    private function result($data)
+    public function simulateCrawl(ScanTechnologiesRequest $request)
     {
+        try {
 
-        if ( ! ($this->errors())) {
+            $bot = new \App\Engine\Bot\Bot(new BrowserSimulator());
 
-            $this->html = $data->html();
+            $data = $bot->crawl($request);
+            $this->result($data);
 
-            $this->url         = $this->originalUrl;
-            $this->headers     = $data->headers();
-            $this->cookies     = $data->cookies();
-            $this->environment = $data->environment();
-            $this->status      = $data->status();
-            $this->host        = $data->host();
+        } catch (\Exception $e) {
 
-            $this->crawler = new Crawler($this->html);
-            $this->styles  = $this->getStyleSheets();
-            $this->scripts = $this->getScripts();
-            $this->metas   = $this->metatags();
-            // $this->headers = $this->getHeaders();
-            // $this->cookies  = $this->getCookies();
-            $this->comments = $this->getHtmlComments();
-            // $this->status   = $this->getStatus();
-            $this->css = [
-                'classes' => $this->getCssClasses(),
-                'ids'     => $this->getCssIds(),
-            ];
-
-
-            if ($this->scanMode = 'offline') {
-                Redis::set('site:' . $this->originalUrl, json_encode($this));
-                Redis::expire('site:' . $this->originalUrl, 86400);
-
-            } else {
-                Redis::set('site:' . $this->originalUrl, json_encode($this));
-                Redis::expire('site:' . $this->originalUrl, 86400);
-            }
-
-
-            return $this;
-
+            $this->errors[] = $e->getMessage();
         }
     }
 

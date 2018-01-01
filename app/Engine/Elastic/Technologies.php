@@ -166,6 +166,37 @@ class Technologies
         return $this->search($dsl);
     }
 
+    /**
+     * Execute an ES query
+     *
+     * @param $dsl
+     *
+     * @return mixed
+     */
+    public function search($dsl)
+    {
+        $data = [
+            'body'  => $dsl,
+            'index' => 'toggle',
+            'type'  => 'technologies',
+
+        ];
+
+        $response = \Elasticsearch::search($data);
+        $this->calcTimeTaken($response['took']);
+
+        return $response;
+    }
+
+    /**
+     * Calculate the time taken to query a DSL
+     *
+     * @param $timeTook
+     */
+    public function calcTimeTaken($timeTook)
+    {
+        $this->timeTook[] = $timeTook;
+    }
 
     /**
      * Fetch the theme being used
@@ -340,6 +371,17 @@ class Technologies
         return $plugins;
     }
 
+    /**
+     * Fetch stats related to a query
+     * @return array
+     */
+    private function stats()
+    {
+        return [
+            'took'    => array_sum($this->timeTook),
+            'queries' => count($this->timeTook),
+        ];
+    }
 
     /**
      * Find out if a url has have already been scanned
@@ -373,50 +415,6 @@ class Technologies
 
         return false;
 
-    }
-
-    /**
-     * Execute an ES query
-     *
-     * @param $dsl
-     *
-     * @return mixed
-     */
-    public function search($dsl)
-    {
-        $data = [
-            'body'  => $dsl,
-            'index' => 'toggle',
-            'type'  => 'technologies',
-
-        ];
-
-        $response = \Elasticsearch::search($data);
-        $this->calcTimeTaken($response['took']);
-
-        return $response;
-    }
-
-    /**
-     * Calculate the time taken to query a DSL
-     *
-     * @param $timeTook
-     */
-    public function calcTimeTaken($timeTook)
-    {
-        $this->timeTook[] = $timeTook;
-    }
-
-    /**
-     * Fetch stats related to a query
-     * @return array
-     */
-    private function stats()
-    {
-        return [
-            'took'    => array_sum($this->timeTook),
-            'queries' => count($this->timeTook),
-        ];
     }
 
 

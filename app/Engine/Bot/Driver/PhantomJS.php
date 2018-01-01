@@ -97,15 +97,6 @@ class PhantomJS implements BotInterface
     }
 
     /**
-     * Url requested
-     * @return mixed
-     */
-    public function url()
-    {
-        return $this->response->url;
-    }
-
-    /**
      * The host name
      * @return mixed
      */
@@ -119,6 +110,15 @@ class PhantomJS implements BotInterface
         )->host->host;
 
 
+    }
+
+    /**
+     * Url requested
+     * @return mixed
+     */
+    public function url()
+    {
+        return $this->response->url;
     }
 
     /**

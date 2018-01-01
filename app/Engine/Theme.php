@@ -31,23 +31,11 @@ class Theme
     }
 
     /**
-     * @param mixed $slug
-     *
-     * @return Theme
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
-    public function getSlug()
+    public function getDescription()
     {
-        return $this->slug;
+        return $this->description;
     }
 
     /**
@@ -65,22 +53,9 @@ class Theme
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getScreenshotUrl()
     {
-        return $this->description;
-    }
-
-    /**
-     * @param $screenshotHash
-     *
-     * @return $this
-     */
-    public function setScreenshotHash($screenshotHash)
-    {
-        $this->screenshotHash = $screenshotHash;
-
-        return $this;
-
+        return $this->screenshotUrl;
     }
 
     /**
@@ -94,22 +69,6 @@ class Theme
 
         return $this;
 
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getScreenshotHash()
-    {
-        return $this->screenshotHash;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getScreenshotUrl()
-    {
-        return $this->screenshotUrl;
     }
 
     public function compute()
@@ -147,6 +106,47 @@ class Theme
                 }
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScreenshotHash()
+    {
+        return $this->screenshotHash;
+    }
+
+    /**
+     * @param $screenshotHash
+     *
+     * @return $this
+     */
+    public function setScreenshotHash($screenshotHash)
+    {
+        $this->screenshotHash = $screenshotHash;
+
+        return $this;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     *
+     * @return Theme
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
         return $this;
     }

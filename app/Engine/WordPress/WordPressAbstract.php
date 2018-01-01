@@ -102,6 +102,21 @@ abstract class WordPressAbstract
     }
 
     /**
+     * Assert this site is using WordPress.
+     *
+     * @param        $tag
+     * @param string $description
+     */
+    public function assertWordPress($tag, $description = null)
+    {
+        if ( ! is_null($tag) || ! empty($tag)) {
+            $this->assertWordPress[$tag] = [
+                'description' => $description,
+            ];
+        }
+    }
+
+    /**
      * Get list of plugin.
      *
      * @return mixed
@@ -136,21 +151,6 @@ abstract class WordPressAbstract
     public function getTheme()
     {
         return $this->themes;
-    }
-
-    /**
-     * Assert this site is using WordPress.
-     *
-     * @param        $tag
-     * @param string $description
-     */
-    public function assertWordPress($tag, $description = null)
-    {
-        if ( ! is_null($tag) || ! empty($tag)) {
-            $this->assertWordPress[$tag] = [
-                'description' => $description,
-            ];
-        }
     }
 
     /**

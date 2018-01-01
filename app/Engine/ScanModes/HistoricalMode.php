@@ -28,6 +28,62 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
         return $this;
     }
 
+    /**
+     * Find out if a url has have already been scanned
+     * @return bool
+     */
+    public function alreadyScanned()
+    {
+
+        $dsl = [
+            "size"  => 0,
+            "query" => [
+                "bool" => [
+                    "filter" => [
+                        [
+                            "terms" => [
+                                "url" => [$this->request->getUrl()],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+
+        $response = $this->query($dsl);
+
+
+        if ($response['hits']['total'] !== 0) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Execute an ES query
+     *
+     * @param $dsl
+     *
+     * @return mixed
+     */
+    public function query($dsl)
+    {
+        $data = [
+            'body'  => $dsl,
+            'index' => 'toggle',
+            'type'  => 'technologies',
+
+        ];
+
+        $response = \Elasticsearch::search($data);
+
+        // $this->calcTimeTaken($response['took']);
+
+        return $response;
+    }
 
     /**
      * Fetch the result from ES (including technologies, wordpress and corresponding plugins)
@@ -132,7 +188,6 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
 
         return $this->query($dsl);
     }
-
 
     /**
      * Fetch the theme being used
@@ -314,64 +369,6 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
         }
 
         return $plugins;
-    }
-
-
-    /**
-     * Find out if a url has have already been scanned
-     * @return bool
-     */
-    public function alreadyScanned()
-    {
-
-        $dsl = [
-            "size"  => 0,
-            "query" => [
-                "bool" => [
-                    "filter" => [
-                        [
-                            "terms" => [
-                                "url" => [$this->request->getUrl()],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-
-        $response = $this->query($dsl);
-
-
-        if ($response['hits']['total'] !== 0) {
-            return true;
-        }
-
-        return false;
-
-    }
-
-    /**
-     * Execute an ES query
-     *
-     * @param $dsl
-     *
-     * @return mixed
-     */
-    public function query($dsl)
-    {
-        $data = [
-            'body'  => $dsl,
-            'index' => 'toggle',
-            'type'  => 'technologies',
-
-        ];
-
-        $response = \Elasticsearch::search($data);
-
-        // $this->calcTimeTaken($response['took']);
-
-        return $response;
     }
 
     /**

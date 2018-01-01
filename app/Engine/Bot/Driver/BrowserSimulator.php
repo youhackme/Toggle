@@ -93,21 +93,21 @@ class BrowserSimulator implements BotInterface
     }
 
     /**
-     * Url requested
-     * @return mixed
-     */
-    public function url()
-    {
-        return $this->response->url;
-    }
-
-    /**
      * The host name
      * @return mixed
      */
     public function host()
     {
         return parse_url(urldecode($this->url()), PHP_URL_HOST);
+    }
+
+    /**
+     * Url requested
+     * @return mixed
+     */
+    public function url()
+    {
+        return $this->response->url;
     }
 
     /**
