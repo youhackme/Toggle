@@ -145,7 +145,6 @@ class SiteController extends Controller
         return view('website.error')
             ->with('response', $response);
 
-        return response()->json(['error' => $response->errors], 500);
 
     }
 
