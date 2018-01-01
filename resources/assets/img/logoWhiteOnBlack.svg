@@ -16,7 +16,7 @@
                 <rect id="Rectangle" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="481" height="175"></rect>
                 <g id="v2">
                     <rect id="Rectangle-2" stroke="#F0F0FB" x="16.5" y="40.5" width="95" height="95" rx="8"></rect>
-                    <text id="toggle" font-family="Proxima Nova" font-size="144" font-weight="normal" letter-spacing="-9" fill="#FFFFFF">
+                    <text id="toggle" font-family="Proxima Nova" font-size="144" font-weight="normal" letter-spacing="-9" fill="#FFFFFF" textLength="350">
                         <tspan x="122.256" y="132">toggle</tspan>
                     </text>
                 </g>
