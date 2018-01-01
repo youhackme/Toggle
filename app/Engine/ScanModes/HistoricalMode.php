@@ -162,7 +162,7 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
 
                                 "version" => [
                                     "terms" => [
-                                        "size"    => 2,
+                                        "size"    => 5,
                                         "field"   => "technologies.version",
                                         "missing" => "NA",
                                         "order"   => [
@@ -172,7 +172,7 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
                                     "aggs"  => [
                                         "categories" => [
                                             "terms" => [
-                                                "size"  => 1,
+                                                "size"  => 5,
                                                 "field" => "technologies.categories",
                                             ],
                                         ],
