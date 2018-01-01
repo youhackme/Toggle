@@ -141,7 +141,7 @@ class App
                 switch ($method) {
                     case 'getIcon':
                         if (isset($json->apps->{$this->getName()}->icon)) {
-                            $this->setIcon($json->apps->{$this->getName()}->icon);
+                            $this->setIcon(env('APP_URL') . '/storage/icons/' .$json->apps->{$this->getName()}->icon);
                         }
 
                         break;
