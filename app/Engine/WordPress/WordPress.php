@@ -32,7 +32,7 @@ class WordPress
         \App\Engine\WordPress\Algorithm\Theme::class,
         \App\Engine\WordPress\Algorithm\Plugin::class,
         \App\Engine\WordPress\Algorithm\Robot::class,
-        \App\Engine\WordPress\Algorithm\Link::class,
+        //\App\Engine\WordPress\Algorithm\Link::class,
         \App\Engine\WordPress\Algorithm\Screenshot::class,
         \App\Engine\WordPress\Algorithm\Version::class,
 
