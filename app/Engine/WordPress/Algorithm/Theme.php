@@ -51,54 +51,13 @@ class Theme extends WordPressAbstract
 
         if (isset($themes)) {
             $themes = array_flatten($themes);
-            
+
             foreach ($themes as $theme) {
                 $this->setTheme($theme);
             }
 
         }
 
-    }
-
-    /**
-     * Extract Theme alias from stylesheet content.
-     */
-    public function extractThemeAliasFromStyleSheets()
-    {
-        $responses = $this->launchAsyncRequests();
-
-        foreach ($responses as $key => $response) {
-            $url = $this->siteAnatomy->styles[$key];
-
-            if ($response['state'] == 'fulfilled') {
-                if ($response['value']->getStatusCode() == 200) {
-                    $themes = $this->extractThemeAlias($response['value']->getBody()->getContents());
-
-                    foreach ($themes as $theme) {
-                        $screenshotPath = $this->buildScreenshotPath($url, $theme);
-                        $this->setTheme($theme);
-                        $this->setScreenshot($theme, $screenshotPath);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Build screenshot path.
-     *
-     * @param $url   The input url that should normally contain 'wp-content'
-     * @param $theme The theme name
-     *
-     * @return string the full path to download the screenshot.png
-     */
-    private function buildScreenshotPath($url, $theme)
-    {
-        if (preg_match('/((.*)\/)wp-content\//', $url, $matches)) {
-            $screenshotUrl = $matches[0] . '/themes/' . $theme . '/screenshot.png';
-
-            return $screenshotUrl;
-        }
     }
 
     /**
@@ -128,6 +87,30 @@ class Theme extends WordPressAbstract
     }
 
     /**
+     * Extract Theme alias from stylesheet content.
+     */
+    public function extractThemeAliasFromStyleSheets()
+    {
+        $responses = $this->launchAsyncRequests();
+
+        foreach ($responses as $key => $response) {
+            $url = $this->siteAnatomy->styles[$key];
+
+            if ($response['state'] == 'fulfilled') {
+                if ($response['value']->getStatusCode() == 200) {
+                    $themes = $this->extractThemeAlias($response['value']->getBody()->getContents());
+
+                    foreach ($themes as $theme) {
+                        $screenshotPath = $this->buildScreenshotPath($url, $theme);
+                        $this->setTheme($theme);
+                        $this->setScreenshot($theme, $screenshotPath);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Launch asynchronous requests.
      *
      * @param $host The host e.g toggle.me
@@ -148,6 +131,23 @@ class Theme extends WordPressAbstract
 
         return false;
 
+    }
+
+    /**
+     * Build screenshot path.
+     *
+     * @param $url   The input url that should normally contain 'wp-content'
+     * @param $theme The theme name
+     *
+     * @return string the full path to download the screenshot.png
+     */
+    private function buildScreenshotPath($url, $theme)
+    {
+        if (preg_match('/((.*)\/)wp-content\//', $url, $matches)) {
+            $screenshotUrl = $matches[0] . '/themes/' . $theme . '/screenshot.png';
+
+            return $screenshotUrl;
+        }
     }
 
     //@TOOD

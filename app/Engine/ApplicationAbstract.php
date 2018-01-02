@@ -15,12 +15,11 @@ abstract class ApplicationAbstract
 
     public $url;
     public $host;
-    protected $siteAnatomy;
     public $applications;
     public $errors = false;
-    protected $request;
     public $applicationsByCategory;
-
+    protected $siteAnatomy;
+    protected $request;
 
     public function __construct(ScanTechnologiesRequest $request)
     {
@@ -42,12 +41,7 @@ abstract class ApplicationAbstract
         return $this;
     }
 
-    protected function clearAttributes()
-    {
-        unset($this->siteAnatomy);
-        unset($this->request);
-    }
-
+    abstract function result();
 
     public function sortApplicationByCategory()
     {
@@ -76,6 +70,10 @@ abstract class ApplicationAbstract
         return $this->applicationsByCategory = $applicationByCategory;
     }
 
-    abstract function result();
+    protected function clearAttributes()
+    {
+        unset($this->siteAnatomy);
+        unset($this->request);
+    }
 
 }

@@ -51,14 +51,21 @@ class Apps
             return $app->name == 'WordPress';
         });
 
+
         // Merge WordPress Apps
-        if ($uniqueWordPressList->count() > 1) {
+        if ($uniqueWordPressList->count() > 0) {
 
             $themes  = [];
             $plugins = [];
+
+
             foreach ($uniqueWordPressList as $application) {
-                $themes[]  = $application->themes;
-                $plugins[] = $application->plugins;
+                if ( ! is_null($application->themes)) {
+                    $themes[] = $application->themes;
+                }
+                if ( ! is_null($application->plugins)) {
+                    $plugins[] = $application->plugins;
+                }
             }
 
             $themeFlattened   = collect($themes)->flatten()->unique('slug');
@@ -72,8 +79,8 @@ class Apps
             ) {
 
                 if ($app->name == 'WordPress') {
-                    $app->themes  = $themeFlattened->all();
-                    $app->plugins = $pluginsFlattened->all();
+                    $app->themes  = ! empty($themeFlattened->all()) ? $themeFlattened->all() : null;
+                    $app->plugins = ! empty($pluginsFlattened->all()) ? $pluginsFlattened->all() : null;
 
                     return false;
                 }

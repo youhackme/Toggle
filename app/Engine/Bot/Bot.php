@@ -7,6 +7,7 @@
  */
 
 namespace App\Engine\Bot;
+
 use App\Http\Requests\ScanTechnologiesRequest;
 
 class Bot

@@ -2,9 +2,9 @@
 
 namespace App\Scrape\IThemes;
 
+use App\Repositories\Plugin\PluginRepository;
 use App\Scrape\ScraperInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use App\Repositories\Plugin\PluginRepository;
 
 /**
  * Created by PhpStorm.
@@ -15,18 +15,17 @@ use App\Repositories\Plugin\PluginRepository;
 class Plugin implements ScraperInterface
 {
     /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
-
-    /**
      * An instance of Plugin Repository.
      *
      * @var PluginRepository
      */
     protected $plugin;
+    /**
+     * Goutte Client.
+     *
+     * @var
+     */
+    private $goutteClient;
 
     /**
      * Plugin constructor.
@@ -66,7 +65,7 @@ class Plugin implements ScraperInterface
 
                     $plugin['name']         = $pluginlist->filter('div.plugin-title')->text();
                     $plugin['downloadlink'] = $pluginlist->attr('href');
-                    
+
                     $uniqueidentifier = explode('/', $plugin['downloadlink']);
 
                     $plugin['uniqueidentifier'] = $uniqueidentifier['4'];

@@ -2,9 +2,9 @@
 
 namespace App\Scrape\GraphPaperPress;
 
+use App\Repositories\Theme\ThemeRepository;
 use App\Scrape\ScraperInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use App\Repositories\Theme\ThemeRepository;
 
 /**
  * Created by PhpStorm.
@@ -15,18 +15,17 @@ use App\Repositories\Theme\ThemeRepository;
 class Theme implements ScraperInterface
 {
     /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
-
-    /**
      * An instance of Theme Repository.
      *
      * @var ThemeRepository
      */
     protected $theme;
+    /**
+     * Goutte Client.
+     *
+     * @var
+     */
+    private $goutteClient;
 
     /**
      * Theme constructor.
@@ -110,7 +109,7 @@ class Theme implements ScraperInterface
                         echo '[' . getMemUsage() . ']' . $theme['name'] . '(' . $theme['uniqueidentifier'] . ')' . ' already exists in database.';
                     }
                     echo br();
-                    
+
                     unset($theme);
 
                 });

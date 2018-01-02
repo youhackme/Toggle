@@ -3,8 +3,8 @@
 namespace App\Repositories\Theme;
 
 use App\Models\Theme as ThemeModel;
-use App\Repositories\ScrapeRepositoryInterface;
 use App\Repositories\DbScrapeRepositoryAbstract;
+use App\Repositories\ScrapeRepositoryInterface;
 
 /**
  * Created by PhpStorm.

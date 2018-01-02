@@ -2,8 +2,8 @@
 
 namespace App\Scrape\TemplateMonster;
 
-use App\Scrape\ScraperInterface;
 use App\Repositories\Theme\ThemeRepository;
+use App\Scrape\ScraperInterface;
 
 /**
  * Created by PhpStorm.

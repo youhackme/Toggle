@@ -43,6 +43,18 @@ class Robot extends WordPressAbstract
     }
 
     /**
+     * Check for WordPress footprints in robots.txt.
+     *
+     * @param $content
+     */
+    public function checkWordPressFootprints($content)
+    {
+        if (preg_match('/(wp-admin|admin-ajax.php|wp-content)/i', $content)) {
+            $this->assertWordPress('robot');
+        }
+    }
+
+    /**
      * Fetch the content of the Robots.txt.
      * @return bool
      */
@@ -58,17 +70,5 @@ class Robot extends WordPressAbstract
         }
 
         return $goutteClient->getResponse()->getContent();
-    }
-
-    /**
-     * Check for WordPress footprints in robots.txt.
-     *
-     * @param $content
-     */
-    public function checkWordPressFootprints($content)
-    {
-        if (preg_match('/(wp-admin|admin-ajax.php|wp-content)/i', $content)) {
-            $this->assertWordPress('robot');
-        }
     }
 }

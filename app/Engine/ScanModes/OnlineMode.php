@@ -15,49 +15,6 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
 
 
     /**
-     * Check if there is any sign of WordPress under the hood for this site
-     * @return string
-     */
-    public function searchForwordPress()
-    {
-        $application = (new \App\Engine\WordPress\WordPress($this->siteAnatomy))->details();
-
-        return $application;
-    }
-
-
-    /**
-     * Scan for any other technologies running under the hood.
-     * @return array
-     */
-    public function searchForOtherTechnologies()
-    {
-        $applications      = [];
-        $otherTechnologies = (new Togglyzer($this->siteAnatomy))->check();
-        if (isset($otherTechnologies->applications)) {
-            foreach ($otherTechnologies->applications as $application) {
-
-                if ($application->name != 'WordPress') {
-
-                    $app = (new \App\Engine\App())
-                        ->setName($application->name)
-                        ->setConfidence($application->confidence)
-                        ->setVersion($application->version)
-                        ->setIcon($application->icon)
-                        ->setWebsite($application->website)
-                        ->setCategories($application->categories);
-
-                    $applications[] = $app;
-                }
-
-            }
-        }
-
-        return $applications;
-    }
-
-
-    /**
      * @return $this
      */
     public function result()
@@ -95,6 +52,46 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
         return $this;
     }
 
+    /**
+     * Check if there is any sign of WordPress under the hood for this site
+     * @return string
+     */
+    public function searchForwordPress()
+    {
+        $application = (new \App\Engine\WordPress\WordPress($this->siteAnatomy))->details();
+
+        return $application;
+    }
+
+    /**
+     * Scan for any other technologies running under the hood.
+     * @return array
+     */
+    public function searchForOtherTechnologies()
+    {
+        $applications      = [];
+        $otherTechnologies = (new Togglyzer($this->siteAnatomy))->check();
+        if (isset($otherTechnologies->applications)) {
+            foreach ($otherTechnologies->applications as $application) {
+
+                if ($application->name != 'WordPress') {
+
+                    $app = (new \App\Engine\App())
+                        ->setName($application->name)
+                        ->setConfidence($application->confidence)
+                        ->setVersion($application->version)
+                        ->setIcon($application->icon)
+                        ->setWebsite($application->website)
+                        ->setCategories($application->categories);
+
+                    $applications[] = $app;
+                }
+
+            }
+        }
+
+        return $applications;
+    }
 
     /**
      *  Filter results before saving to ES

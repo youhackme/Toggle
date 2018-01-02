@@ -22,28 +22,6 @@ class App
     public $themes;
     public $plugins;
 
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
-    /**
-     * @param mixed $name
-     *
-     * @return App
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * @param mixed $confidence
      *
@@ -64,30 +42,6 @@ class App
     public function setVersion($version)
     {
         $this->version = $version;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $icon
-     *
-     * @return App
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $website
-     *
-     * @return App
-     */
-    public function setWebsite($website)
-    {
-        $this->website = $website;
 
         return $this;
     }
@@ -125,7 +79,6 @@ class App
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -135,11 +88,35 @@ class App
     }
 
     /**
+     * @param mixed $icon
+     *
+     * @return App
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    /**
+     * @param mixed $website
+     *
+     * @return App
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+
+        return $this;
     }
 
     public function compute()
@@ -164,7 +141,7 @@ class App
                 switch ($method) {
                     case 'getIcon':
                         if (isset($json->apps->{$this->getName()}->icon)) {
-                            $this->setIcon($json->apps->{$this->getName()}->icon);
+                            $this->setIcon(env('APP_URL') . '/storage/icons/' .$json->apps->{$this->getName()}->icon);
                         }
 
                         break;
@@ -177,6 +154,26 @@ class App
                 }
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     *
+     * @return App
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }

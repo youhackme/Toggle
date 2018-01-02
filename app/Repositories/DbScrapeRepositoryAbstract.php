@@ -23,6 +23,21 @@ abstract class DbScrapeRepositoryAbstract
         $this->model = $model;
     }
 
+    /**
+     * Save data only if it is new.
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function save(array $data)
+    {
+        if ($this->exist(trim($data['uniqueidentifier']), $data['provider'])) {
+            return $this->model->create($data);
+        }
+
+        return false;
+    }
 
     /**
      * Do you exists already in our database?
@@ -41,22 +56,6 @@ abstract class DbScrapeRepositoryAbstract
         ) {
 
             return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Save data only if it is new.
-     *
-     * @param array $data
-     *
-     * @return bool
-     */
-    public function save(array $data)
-    {
-        if ($this->exist(trim($data['uniqueidentifier']), $data['provider'])) {
-            return $this->model->create($data);
         }
 
         return false;

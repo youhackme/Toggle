@@ -10,7 +10,7 @@
 
     @if (!is_array($response))
 
-        @if($response->debugMode===true)
+        @if(isset($response->debugMode))
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
                   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
                   crossorigin="anonymous">
@@ -155,7 +155,7 @@
 <body>
 <div class="container-fluid extension-wrapper">
 
-    @if (!isset($response->applications['error']))
+    @if ($response->errors===false)
 
         <div class="overview">
             <div class="row">
@@ -194,6 +194,15 @@
                 </div>
                 @php
                     $applicationName = array_column($response->applications,'name');
+                    $pluginCount = 0;
+                    foreach($response->applications as $application){
+
+                       if($application->name=='WordPress'){
+                        if(!is_null($application->plugins)){
+                           $pluginCount = count($application->plugins);
+                        }
+                        }
+                    }
                 @endphp
 
                 @if(in_array('WordPress',$applicationName))
@@ -201,14 +210,18 @@
                         <dl>
                             <dt>Theme</dt>
                             <dd>
-                                @if (!empty($response->applications['WordPress']->theme)&&isset($response->applications['WordPress']->theme))
-                                    @foreach($response->applications['WordPress']->theme as $theme=>$detail)
-                                        {{ucfirst($theme)}}
-                                        <br/>
-                                    @endforeach
-                                @else
-                                    Custom Theme
-                                @endif
+                                @foreach($response->applications as $application)
+                                    @if($application->name=='WordPress')
+                                        @if(!is_null($application->themes))
+                                            @foreach($application->themes as $theme)
+                                                {{ucfirst($theme->name)}}
+                                                <br/>
+                                            @endforeach
+                                        @else
+                                            Custom Theme
+                                        @endif
+                                    @endif
+                                @endforeach
                             </dd>
                         </dl>
                     </div>
@@ -219,11 +232,7 @@
                             <dl>
                                 <dt>Plugins</dt>
                                 <dd>
-                                    @if (count($response->applications['WordPress']->plugins)>0)
-                                        {{count($response->applications['WordPress']->plugins)}}
-                                    @else
-                                        0
-                                    @endif
+                                    {{$pluginCount}}
                                 </dd>
                             </dl>
                         </div>
@@ -239,25 +248,32 @@
                         <div class="col-md-12">
                             <h4>WordPress Plugins
                                 <span class="badge">
-                                   @if (count($response->applications['WordPress']->plugins)>0)
-                                        {{count($response->applications['WordPress']->plugins)}}
-                                    @else
-                                        0
-                                    @endif
+                                   {{$pluginCount}}
                                  </span>
                             </h4>
                         </div>
                     </div>
-                    @foreach ($response->applications['WordPress']->plugins as $key=>$plugin)
-                        <div class="row">
-                            <div class="col-md-12">
-                                <ul class="plugins">
+                    @foreach($response->applications as $application)
+                        @if($application->name=='WordPress')
+                            @if(!is_null($application->plugins))
+                                @foreach($application->plugins as $plugin)
+                                    @php
+                                        $colors = ['grey','blue','orange','dark-grey','green'];
+                                        $randomColors = array_rand($colors, 1);
+                                        $color = $colors[$randomColors];
+                                    @endphp
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul class="plugins">
 
-                                    <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
+                                                <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
 
-                                </ul>
-                            </div>
-                        </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        @endif
                     @endforeach
                 </div>
             @endif
@@ -304,12 +320,12 @@
 
         </div>
     @else
-        {{$response->applications['error']}}
+        {{$response->errors}}
     @endif
 </div>
 
 @if (!is_array($response))
-    @if($response->debugMode===true)
+    @if(isset($response->debugMode))
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

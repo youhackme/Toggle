@@ -66,17 +66,17 @@ class Curl implements BotInterface
     /**
      * @return mixed
      */
-    public function url()
+    public function host()
     {
-        return $this->crawler->getBaseHref();
+        return parse_url($this->url(), PHP_URL_HOST);
     }
 
     /**
      * @return mixed
      */
-    public function host()
+    public function url()
     {
-        return parse_url($this->url(), PHP_URL_HOST);
+        return $this->crawler->getBaseHref();
     }
 
     /**

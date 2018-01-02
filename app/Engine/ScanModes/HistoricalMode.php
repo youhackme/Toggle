@@ -15,19 +15,73 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
 
     public function result()
     {
-        if ($this->alreadyScanned()) {
 
-            $applicationsFromHistoricalSearch = $this->searchForHistoricalTechnologies();
+        $applicationsFromHistoricalSearch = $this->searchForHistoricalTechnologies();
 
-            $applications = $applicationsFromHistoricalSearch;
+        $applications = $applicationsFromHistoricalSearch;
 
-            $this->applications = $applications;
+        $this->applications = $applications;
 
-        }
 
         return $this;
     }
 
+    /**
+     * Find out if a url has have already been scanned
+     * @return bool
+     */
+    public function alreadyScanned()
+    {
+
+        $dsl = [
+            "size"  => 0,
+            "query" => [
+                "bool" => [
+                    "filter" => [
+                        [
+                            "terms" => [
+                                "url" => [$this->request->getUrl()],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+
+        $response = $this->query($dsl);
+
+
+        if ($response['hits']['total'] !== 0) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Execute an ES query
+     *
+     * @param $dsl
+     *
+     * @return mixed
+     */
+    public function query($dsl)
+    {
+        $data = [
+            'body'  => $dsl,
+            'index' => 'toggle',
+            'type'  => 'technologies',
+
+        ];
+
+        $response = \Elasticsearch::search($data);
+
+        // $this->calcTimeTaken($response['took']);
+
+        return $response;
+    }
 
     /**
      * Fetch the result from ES (including technologies, wordpress and corresponding plugins)
@@ -106,7 +160,7 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
 
                                 "version" => [
                                     "terms" => [
-                                        "size"    => 2,
+                                        "size"    => 5,
                                         "field"   => "technologies.version",
                                         "missing" => "NA",
                                         "order"   => [
@@ -116,7 +170,7 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
                                     "aggs"  => [
                                         "categories" => [
                                             "terms" => [
-                                                "size"  => 1,
+                                                "size"  => 5,
                                                 "field" => "technologies.categories",
                                             ],
                                         ],
@@ -132,7 +186,6 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
 
         return $this->query($dsl);
     }
-
 
     /**
      * Fetch the theme being used
@@ -314,64 +367,6 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
         }
 
         return $plugins;
-    }
-
-
-    /**
-     * Find out if a url has have already been scanned
-     * @return bool
-     */
-    public function alreadyScanned()
-    {
-
-        $dsl = [
-            "size"  => 0,
-            "query" => [
-                "bool" => [
-                    "filter" => [
-                        [
-                            "terms" => [
-                                "url" => [$this->request->getUrl()],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-
-        $response = $this->query($dsl);
-
-
-        if ($response['hits']['total'] !== 0) {
-            return true;
-        }
-
-        return false;
-
-    }
-
-    /**
-     * Execute an ES query
-     *
-     * @param $dsl
-     *
-     * @return mixed
-     */
-    public function query($dsl)
-    {
-        $data = [
-            'body'  => $dsl,
-            'index' => 'toggle',
-            'type'  => 'technologies',
-
-        ];
-
-        $response = \Elasticsearch::search($data);
-
-        // $this->calcTimeTaken($response['took']);
-
-        return $response;
     }
 
     /**

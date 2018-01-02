@@ -8,11 +8,11 @@
 
 namespace App\Scrape;
 
+use App\Repositories\Theme\PluginMetaRepository;
+use App\Repositories\Theme\ThemeRepository;
+use Bugsnag\Report;
 use File;
 use Storage;
-use Bugsnag\Report;
-use App\Repositories\Theme\ThemeRepository;
-use App\Repositories\Theme\PluginMetaRepository;
 
 /**
  * Advanced scrapping of theme:

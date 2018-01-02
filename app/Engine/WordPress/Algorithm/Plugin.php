@@ -32,21 +32,6 @@ class Plugin extends WordPressAbstract
     }
 
     /**
-     * Fetch plugin from html source code.
-     */
-    public function getPluginFromHtml()
-    {
-        if (preg_match_all('/\/wp-content\/plugins\/(.+?)\//i', $this->siteAnatomy->html, $matches)) {
-            if ( ! empty($matches[1])) {
-                $plugins = array_unique($matches[1]);
-                foreach ($plugins as $plugin) {
-                    $this->setPlugin($plugin, 'Detected from html source code');
-                }
-            }
-        }
-    }
-
-    /**
      * Identify from dictionary attack.
      *
      * @return $this
@@ -72,5 +57,20 @@ class Plugin extends WordPressAbstract
         }
 
         return $this;
+    }
+
+    /**
+     * Fetch plugin from html source code.
+     */
+    public function getPluginFromHtml()
+    {
+        if (preg_match_all('/\/wp-content\/plugins\/(.+?)\//i', $this->siteAnatomy->html, $matches)) {
+            if ( ! empty($matches[1])) {
+                $plugins = array_unique($matches[1]);
+                foreach ($plugins as $plugin) {
+                    $this->setPlugin($plugin, 'Detected from html source code');
+                }
+            }
+        }
     }
 }

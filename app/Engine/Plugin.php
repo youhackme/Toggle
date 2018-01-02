@@ -39,22 +39,6 @@ class Plugin
     }
 
     /**
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * @param mixed $name
      *
      * @return Plugin
@@ -67,15 +51,11 @@ class Plugin
     }
 
     /**
-     * @param mixed $slug
-     *
-     * @return Plugin
+     * @return mixed
      */
-    public function setSlug($slug)
+    public function getDescription()
     {
-        $this->slug = $slug;
-
-        return $this;
+        return $this->description;
     }
 
     /**
@@ -113,12 +93,32 @@ class Plugin
                             $this->setDescription($pluginMeta->plugin->description);
                             $this->setName($pluginMeta->plugin->name);
                         }
-                        
+
                         break;
 
                 }
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     *
+     * @return Plugin
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
         return $this;
     }

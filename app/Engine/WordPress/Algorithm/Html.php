@@ -30,7 +30,7 @@ class Html extends WordPressAbstract
         $this->siteAnatomy = $siteAnatomy;
 
         $this->checkInMetatags();
-        $this->checkUri();
+
 
         return $this;
     }
@@ -48,14 +48,5 @@ class Html extends WordPressAbstract
             }
         }
     }
-
-    /**
-     * Check presence of specific Uri in source code e.g wp-content, wp-includes etc.
-     */
-    public function checkUri()
-    {
-        if (preg_match('/wp-content|wp-includes/i', $this->siteAnatomy->html)) {
-            $this->assertWordPress('uri');
-        }
-    }
+    
 }

@@ -2,9 +2,9 @@
 
 namespace App\Scrape\CreativeMarket;
 
+use App\Repositories\Plugin\PluginRepository;
 use App\Scrape\ScraperInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use App\Repositories\Plugin\PluginRepository;
 
 /**
  * Created by PhpStorm.
@@ -15,18 +15,17 @@ use App\Repositories\Plugin\PluginRepository;
 class Plugin implements ScraperInterface
 {
     /**
-     * Goutte Client.
-     *
-     * @var
-     */
-    private $goutteClient;
-
-    /**
      * An instance of Plugin Repository.
      *
      * @var PluginRepository
      */
     protected $plugin;
+    /**
+     * Goutte Client.
+     *
+     * @var
+     */
+    private $goutteClient;
 
     /**
      * Plugin constructor.

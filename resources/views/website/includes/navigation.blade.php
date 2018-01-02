@@ -22,9 +22,10 @@
 
 
                     <div class="col-sm-5   col-md-6 blockInlineSearch hidden-xs">
-                            <form method="get" class="navbar-form" action="/result">
+                        <form method="get" class="navbar-form" action="/result">
                             <div class="input-group  col-md-12 col-sm-12 blockInlineSearch__valign">
-                                <input type="text" class="form-control" placeholder="Search another website.." name="url">
+                                <input type="text" class="form-control" placeholder="Search another website.."
+                                       name="url">
                                 <div class="input-group-btn">
                                     <button class="btn btn-default blockInlineSearch__btn-search" type="submit">
                                         Search
