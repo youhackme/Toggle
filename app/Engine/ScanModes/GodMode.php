@@ -7,7 +7,9 @@
  */
 
 namespace App\Engine\ScanModes;
+
 use App\Engine\ScanTechnologies;
+
 class GodMode extends \App\Engine\ApplicationAbstract
 {
 
@@ -39,8 +41,10 @@ class GodMode extends \App\Engine\ApplicationAbstract
 
             $apps = new \App\Engine\Apps();
 
-            foreach ($applicationsFromLiveSearch as $technology) {
-                $apps->add($technology);
+            if ( ! is_null($applicationsFromLiveSearch)) {
+                foreach ($applicationsFromLiveSearch as $technology) {
+                    $apps->add($technology);
+                }
             }
 
 
