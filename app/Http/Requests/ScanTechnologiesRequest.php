@@ -36,7 +36,7 @@ class ScanTechnologiesRequest extends FormRequest
      */
     public function getUrl()
     {
-        $url = urldecode($this->input('url'));
+        $url = urldecode(strtolower($this->input('url')));
 
         $url = str_contains($url, ['http://', 'https://']) ? $url : 'http://' . $url;
 
