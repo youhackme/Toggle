@@ -39,7 +39,7 @@ class OfflineMode extends \App\Engine\ApplicationAbstract
             }
         }
 
-        $this->applications = $apps->render();
+        $this->applications = $apps->all();
 
 
         return $this;
