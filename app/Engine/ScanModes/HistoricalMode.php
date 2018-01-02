@@ -15,15 +15,13 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
 
     public function result()
     {
-        if ($this->alreadyScanned()) {
 
-            $applicationsFromHistoricalSearch = $this->searchForHistoricalTechnologies();
+        $applicationsFromHistoricalSearch = $this->searchForHistoricalTechnologies();
 
-            $applications = $applicationsFromHistoricalSearch;
+        $applications = $applicationsFromHistoricalSearch;
 
-            $this->applications = $applications;
+        $this->applications = $applications;
 
-        }
 
         return $this;
     }
