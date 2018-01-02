@@ -58,16 +58,15 @@ class Apps
             $themes  = [];
             $plugins = [];
 
-            $uniqueWordPressList->each(function ($application) {
+
+            foreach ($uniqueWordPressList as $application) {
                 if ( ! is_null($application->themes)) {
                     $themes[] = $application->themes;
                 }
                 if ( ! is_null($application->plugins)) {
                     $plugins[] = $application->plugins;
                 }
-
-            });
-
+            }
 
             $themeFlattened   = collect($themes)->flatten()->unique('slug');
             $pluginsFlattened = collect($plugins)->flatten()->unique('slug');
