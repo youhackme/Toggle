@@ -6,7 +6,7 @@
  * Time: 22:44
  */
 
-namespace App\Engine;
+namespace App\Engine\ApplicationComponents;
 
 
 class Application
@@ -141,7 +141,7 @@ class Application
                 switch ($method) {
                     case 'getIcon':
                         if (isset($json->apps->{$this->getName()}->icon)) {
-                            $this->setIcon(env('APP_URL') . '/storage/icons/' .$json->apps->{$this->getName()}->icon);
+                            $this->setIcon(env('APP_URL') . '/storage/icons/' . $json->apps->{$this->getName()}->icon);
                         }
 
                         break;

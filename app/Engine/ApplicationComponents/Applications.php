@@ -6,7 +6,7 @@
  * Time: 18:46
  */
 
-namespace App\Engine;
+namespace App\Engine\ApplicationComponents;
 
 
 class Applications

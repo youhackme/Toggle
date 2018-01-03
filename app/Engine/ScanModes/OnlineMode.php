@@ -26,7 +26,7 @@ class OnlineMode extends \App\Engine\ApplicationScanAbstract
             return $this;
         }
 
-        $apps = new \App\Engine\Applications();
+        $apps = new \App\Engine\ApplicationComponents\Applications();
 
         //External scanning
         $appWordPress = $this->searchForwordPress();
@@ -76,7 +76,7 @@ class OnlineMode extends \App\Engine\ApplicationScanAbstract
 
                 if ($application->name != 'WordPress') {
 
-                    $app = (new \App\Engine\Application())
+                    $app = (new \App\Engine\ApplicationComponents\Application())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
                         ->setVersion($application->version)

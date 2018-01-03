@@ -98,7 +98,7 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
             $name = $technology['key'];
 
             $versionNode = $technology['version']['buckets']['0'];
-            $app         = (new \App\Engine\Application())
+            $app         = (new \App\Engine\ApplicationComponents\Application())
                 ->setName($name)
                 ->setConfidence(100)
                 ->setVersion($versionNode['key'])
@@ -265,7 +265,7 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
                 $themeName = $theme['key'];
                 $themeSlug = $theme['slug']['buckets'][0]['key'];
 
-                $themeObject = (new \App\Engine\Theme())
+                $themeObject = (new \App\Engine\ApplicationComponents\Theme())
                     ->setName($themeName)
                     ->setSlug($themeSlug)
                     ->compute();
@@ -358,7 +358,7 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
             $pluginSlug = $plugin['slug']['buckets'][0]['key'];
 
 
-            $pluginObject = new \App\Engine\Plugin();
+            $pluginObject = new \App\Engine\ApplicationComponents\Plugin();
             $plugins[]    = $pluginObject->setName($plugin['key'])
                                          ->setSlug($pluginSlug)
                                          ->compute();
