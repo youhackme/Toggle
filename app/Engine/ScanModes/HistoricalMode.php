@@ -22,7 +22,6 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
 
         $this->applications = $applications;
 
-
         return $this;
     }
 
@@ -98,17 +97,11 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
             $name = $technology['key'];
 
             $versionNode = $technology['version']['buckets']['0'];
-
+            $app         = (new \App\Engine\ApplicationComponents\Application());
 
             if ($name == 'WordPress') {
+
                 $app = (new \App\Engine\ApplicationComponents\WordPress());
-                $app->setName($name)
-                    ->setConfidence(100)
-                    ->setVersion($versionNode['key'])
-                    ->setCategories(array_column(
-                        $versionNode['categories']['buckets'],
-                        'key'
-                    ))->compute();
 
                 foreach ($this->themes() as $theme) {
                     $app->setTheme($theme);
@@ -117,16 +110,16 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
                 foreach ($this->plugins() as $plugin) {
                     $app->setPlugin($plugin);
                 }
-            } else {
-                $app = (new \App\Engine\ApplicationComponents\Application());
-                $app->setName($name)
-                    ->setConfidence(100)
-                    ->setVersion($versionNode['key'])
-                    ->setCategories(array_column(
-                        $versionNode['categories']['buckets'],
-                        'key'
-                    ))->compute();
+
             }
+
+            $app->setName($name)
+                ->setConfidence(100)
+                ->setVersion($versionNode['key'])
+                ->setCategories(array_column(
+                    $versionNode['categories']['buckets'],
+                    'key'
+                ))->compute();
 
 
             $applications[] = $app;
