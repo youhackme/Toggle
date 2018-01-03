@@ -181,7 +181,6 @@
                                     @php
                                         $mainApplication = true;
                                     @endphp
-                                    @break
                                 @endif
                             @endforeach
 
