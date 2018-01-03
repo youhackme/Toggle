@@ -20,7 +20,7 @@
   "dependencies": {
     "phantom": "^4.0.5",
     "redis": "^2.8.0",
-    "togglyzer": "^1.0.9",
+    "togglyzer": "^1.0.10",
     "typed.js": "^2.0.6"
   }
 }
