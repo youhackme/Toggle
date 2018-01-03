@@ -8,19 +8,49 @@
 
 namespace App\Engine\ApplicationComponents;
 
-
+/**
+ * Create an individual application instance
+ * Class Application
+ * @package App\Engine\ApplicationComponents
+ */
 class Application
 {
 
+    /**
+     * The name of your application
+     * @var
+     */
     public $name;
+    /**
+     * How confident are you on a scale of 1-100 that this is app is really what it is?
+     * @var
+     */
     public $confidence;
+    /**
+     * The version of the application
+     * @var
+     */
     public $version;
+    /**
+     * The icon of your application
+     * @var
+     */
     public $icon;
+    /**The website of your application
+     * @var
+     */
     public $website;
+    /**
+     * Which categories your application belongs to?
+     * @var
+     */
     public $categories;
+    /**
+     * How much power your app has? Is it authoritative enough?
+     * @var bool
+     */
     public $poweredBy = false;
-    public $themes;
-    public $plugins;
+
 
     /**
      * @param mixed $confidence
@@ -65,19 +95,6 @@ class Application
         return $this;
     }
 
-    public function setTheme(Theme $theme)
-    {
-        $this->themes[] = $theme;
-
-        return $this;
-    }
-
-    public function setPlugin(Plugin $plugin)
-    {
-        $this->plugins[] = $plugin;
-
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -119,6 +136,10 @@ class Application
         return $this;
     }
 
+    /**
+     * Make sure the object is not missing any uninitialized vital attributes
+     * @return $this
+     */
     public function compute()
     {
         $methods = get_class_methods($this);
