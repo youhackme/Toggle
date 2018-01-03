@@ -9,7 +9,7 @@
 namespace App\Engine;
 
 
-class Apps
+class Applications
 {
 
     private $applications;

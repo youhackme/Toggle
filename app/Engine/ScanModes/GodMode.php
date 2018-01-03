@@ -39,7 +39,7 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
             $applicationsFromHistoricalSearch = $responseHistoricalMode->searchForHistoricalTechnologies();
 
 
-            $apps = new \App\Engine\Apps();
+            $apps = new \App\Engine\Applications();
 
             if ( ! is_null($applicationsFromLiveSearch)) {
                 foreach ($applicationsFromLiveSearch as $technology) {

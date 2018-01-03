@@ -27,7 +27,7 @@ class OfflineMode extends \App\Engine\ApplicationScanAbstract
             return $this;
         }
 
-        $apps = new \App\Engine\Apps();
+        $apps = new \App\Engine\Applications();
 
         $otherTechnologies = $this->searchForOtherTechnologies();
 
