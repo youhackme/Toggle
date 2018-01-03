@@ -12,7 +12,13 @@
 */
 
 
-Route::get('/analyze', 'SiteController@detectTechnologyGodMode');
-Route::get('/analyzeOnline', 'SiteController@detectTechnologyOnlineMode');
-Route::match(['get', 'post'], 'analyzeOffline', 'SiteController@detectTechnologyOfflineMode');
-Route::get('analyzeHistoricalMode', 'SiteController@detectTechnologyHistoricalMode');
+Route::group(['middleware' => 'throttle'], function () {
+
+    Route::get('/analyze', 'SiteController@detectTechnologyGodMode');
+    Route::get('/analyzeOnline', 'SiteController@detectTechnologyOnlineMode');
+    Route::match(['get', 'post'], 'analyzeOffline', 'SiteController@detectTechnologyOfflineMode');
+    Route::get('analyzeHistoricalMode', 'SiteController@detectTechnologyHistoricalMode');
+
+});
+
+
