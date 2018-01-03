@@ -106,13 +106,13 @@ class OnlineMode extends \App\Engine\ApplicationScanAbstract
 
             unset($app->poweredBy, $app->icon, $app->website);
 
-            if ( ! is_null($app->themes)) {
+            if (isset($app->themes) && ! is_null($app->themes)) {
                 collect($app->themes)->each(function ($theme) {
                     unset($theme->screenshotHash, $theme->screenshotUrl, $theme->description);
                 });
             }
 
-            if ( ! is_null($app->plugins)) {
+            if (isset($app->themes) && ! is_null($app->themes)) {
                 collect($app->plugins)->each(function ($plugin) {
                     unset($plugin->description);
                 });

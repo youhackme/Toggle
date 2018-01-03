@@ -20,7 +20,7 @@ class Applications
         return $name;
     }
 
-    public function add(App $app)
+    public function add(Application $app)
     {
         $this->applications[] = $app;
     }
