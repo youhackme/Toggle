@@ -10,7 +10,7 @@ namespace App\Engine;
 
 use App\Http\Requests\ScanTechnologiesRequest;
 
-abstract class ApplicationAbstract
+abstract class ApplicationScanAbstract
 {
 
     public $url;
@@ -45,9 +45,11 @@ abstract class ApplicationAbstract
 
     public function sortApplicationByCategory()
     {
-        if (isset($this->applications['error'])) {
+
+        if ($this->applications === null) {
             return false;
         }
+
         $json                  = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
         $categories            = $json->categories;
         $applicationByCategory = [];
@@ -66,6 +68,7 @@ abstract class ApplicationAbstract
                 }
             }
         }
+
 
         return $this->applicationsByCategory = $applicationByCategory;
     }

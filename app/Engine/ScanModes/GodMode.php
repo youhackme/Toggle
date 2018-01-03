@@ -10,7 +10,7 @@ namespace App\Engine\ScanModes;
 
 use App\Engine\ScanTechnologies;
 
-class GodMode extends \App\Engine\ApplicationAbstract
+class GodMode extends \App\Engine\ApplicationScanAbstract
 {
 
     // Do an online search
@@ -39,7 +39,7 @@ class GodMode extends \App\Engine\ApplicationAbstract
             $applicationsFromHistoricalSearch = $responseHistoricalMode->searchForHistoricalTechnologies();
 
 
-            $apps = new \App\Engine\Apps();
+            $apps = new \App\Engine\ApplicationComponents\Applications();
 
             if ( ! is_null($applicationsFromLiveSearch)) {
                 foreach ($applicationsFromLiveSearch as $technology) {

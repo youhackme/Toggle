@@ -6,10 +6,10 @@
  * Time: 18:46
  */
 
-namespace App\Engine;
+namespace App\Engine\ApplicationComponents;
 
 
-class Apps
+class Applications
 {
 
     private $applications;
@@ -20,7 +20,7 @@ class Apps
         return $name;
     }
 
-    public function add(App $app)
+    public function add(Application $app)
     {
         $this->applications[] = $app;
     }

@@ -10,7 +10,7 @@ namespace App\Engine\ScanModes;
 
 use App\Engine\Togglyzer;
 
-class OnlineMode extends \App\Engine\ApplicationAbstract
+class OnlineMode extends \App\Engine\ApplicationScanAbstract
 {
 
 
@@ -26,7 +26,7 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
             return $this;
         }
 
-        $apps = new \App\Engine\Apps();
+        $apps = new \App\Engine\ApplicationComponents\Applications();
 
         //External scanning
         $appWordPress = $this->searchForwordPress();
@@ -76,7 +76,7 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
 
                 if ($application->name != 'WordPress') {
 
-                    $app = (new \App\Engine\App())
+                    $app = (new \App\Engine\ApplicationComponents\Application())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
                         ->setVersion($application->version)
@@ -106,13 +106,13 @@ class OnlineMode extends \App\Engine\ApplicationAbstract
 
             unset($app->poweredBy, $app->icon, $app->website);
 
-            if ( ! is_null($app->themes)) {
+            if (isset($app->themes) && ! is_null($app->themes)) {
                 collect($app->themes)->each(function ($theme) {
                     unset($theme->screenshotHash, $theme->screenshotUrl, $theme->description);
                 });
             }
 
-            if ( ! is_null($app->plugins)) {
+            if (isset($app->themes) && ! is_null($app->themes)) {
                 collect($app->plugins)->each(function ($plugin) {
                     unset($plugin->description);
                 });

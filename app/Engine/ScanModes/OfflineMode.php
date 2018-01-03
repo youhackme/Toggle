@@ -11,7 +11,7 @@ namespace App\Engine\ScanModes;
 use App\Engine\Togglyzer;
 
 
-class OfflineMode extends \App\Engine\ApplicationAbstract
+class OfflineMode extends \App\Engine\ApplicationScanAbstract
 {
 
 
@@ -27,7 +27,7 @@ class OfflineMode extends \App\Engine\ApplicationAbstract
             return $this;
         }
 
-        $apps = new \App\Engine\Apps();
+        $apps = new \App\Engine\ApplicationComponents\Applications();
 
         $otherTechnologies = $this->searchForOtherTechnologies();
 
@@ -58,7 +58,7 @@ class OfflineMode extends \App\Engine\ApplicationAbstract
 
                 if ($application->name != 'WordPress') {
 
-                    $app = (new \App\Engine\App())
+                    $app = (new \App\Engine\ApplicationComponents\Application())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
                         ->setVersion($application->version)

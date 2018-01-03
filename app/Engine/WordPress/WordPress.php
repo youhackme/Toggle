@@ -106,7 +106,7 @@ class WordPress
 
         if ($this->isWordPress()) {
 
-            $app = (new \App\Engine\App())
+            $app = (new \App\Engine\ApplicationComponents\WordPress())
                 ->setName("WordPress")
                 ->setConfidence("100")
                 ->setVersion($this->version())
@@ -180,7 +180,7 @@ class WordPress
 
             foreach ($themes as $themeAlias => &$details) {
 
-                $theme = (new \App\Engine\Theme()
+                $theme = (new \App\Engine\ApplicationComponents\Theme()
                 )->setName($themeAlias)
                  ->setSlug($themeAlias);
 
@@ -251,7 +251,7 @@ class WordPress
                 $plugin['name']        = ucwords(str_replace('-', ' ', $slug));
 
 
-                $allPlugins[] = (new \App\Engine\Plugin()
+                $allPlugins[] = (new \App\Engine\ApplicationComponents\Plugin()
                 )->setName($plugin['name'])
                  ->setSlug($slug)
                  ->compute();

@@ -6,7 +6,7 @@
  * Time: 17:24
  */
 
-namespace App\Engine;
+namespace App\Engine\ApplicationComponents;
 
 
 class Plugin

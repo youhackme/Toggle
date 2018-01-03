@@ -9,7 +9,7 @@
 namespace App\Engine\ScanModes;
 
 
-class HistoricalMode extends \App\Engine\ApplicationAbstract
+class HistoricalMode extends \App\Engine\ApplicationScanAbstract
 {
 
 
@@ -21,7 +21,6 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
         $applications = $applicationsFromHistoricalSearch;
 
         $this->applications = $applications;
-
 
         return $this;
     }
@@ -98,18 +97,12 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
             $name = $technology['key'];
 
             $versionNode = $technology['version']['buckets']['0'];
-            $app         = (new \App\Engine\App())
-                ->setName($name)
-                ->setConfidence(100)
-                ->setVersion($versionNode['key'])
-                ->setCategories(array_column(
-                    $versionNode['categories']['buckets'],
-                    'key'
-                ))->compute();
-
-            $applications[] = $app;
+            $app         = (new \App\Engine\ApplicationComponents\Application());
 
             if ($name == 'WordPress') {
+
+                $app = (new \App\Engine\ApplicationComponents\WordPress());
+
                 foreach ($this->themes() as $theme) {
                     $app->setTheme($theme);
                 }
@@ -117,7 +110,19 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
                 foreach ($this->plugins() as $plugin) {
                     $app->setPlugin($plugin);
                 }
+
             }
+
+            $app->setName($name)
+                ->setConfidence(100)
+                ->setVersion($versionNode['key'])
+                ->setCategories(array_column(
+                    $versionNode['categories']['buckets'],
+                    'key'
+                ))->compute();
+
+
+            $applications[] = $app;
 
         }
 
@@ -265,7 +270,7 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
                 $themeName = $theme['key'];
                 $themeSlug = $theme['slug']['buckets'][0]['key'];
 
-                $themeObject = (new \App\Engine\Theme())
+                $themeObject = (new \App\Engine\ApplicationComponents\Theme())
                     ->setName($themeName)
                     ->setSlug($themeSlug)
                     ->compute();
@@ -358,7 +363,7 @@ class HistoricalMode extends \App\Engine\ApplicationAbstract
             $pluginSlug = $plugin['slug']['buckets'][0]['key'];
 
 
-            $pluginObject = new \App\Engine\Plugin();
+            $pluginObject = new \App\Engine\ApplicationComponents\Plugin();
             $plugins[]    = $pluginObject->setName($plugin['key'])
                                          ->setSlug($pluginSlug)
                                          ->compute();
