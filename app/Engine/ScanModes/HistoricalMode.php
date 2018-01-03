@@ -98,7 +98,7 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
             $name = $technology['key'];
 
             $versionNode = $technology['version']['buckets']['0'];
-            $app         = (new \App\Engine\App())
+            $app         = (new \App\Engine\Application())
                 ->setName($name)
                 ->setConfidence(100)
                 ->setVersion($versionNode['key'])

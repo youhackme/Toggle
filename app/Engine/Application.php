@@ -9,7 +9,7 @@
 namespace App\Engine;
 
 
-class App
+class Application
 {
 
     public $name;

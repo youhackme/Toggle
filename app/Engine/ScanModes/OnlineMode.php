@@ -76,7 +76,7 @@ class OnlineMode extends \App\Engine\ApplicationScanAbstract
 
                 if ($application->name != 'WordPress') {
 
-                    $app = (new \App\Engine\App())
+                    $app = (new \App\Engine\Application())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
                         ->setVersion($application->version)

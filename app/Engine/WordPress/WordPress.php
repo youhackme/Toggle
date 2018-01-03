@@ -106,7 +106,7 @@ class WordPress
 
         if ($this->isWordPress()) {
 
-            $app = (new \App\Engine\App())
+            $app = (new \App\Engine\Application())
                 ->setName("WordPress")
                 ->setConfidence("100")
                 ->setVersion($this->version())
