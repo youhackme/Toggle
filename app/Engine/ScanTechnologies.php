@@ -55,14 +55,9 @@ class ScanTechnologies
                 $scan = new OnlineMode($this->request);
         }
 
+
         return $this->scan = $scan;
     }
-
-
-    public function result()
-    {
-        return $this->scan->result();
-    }
-
+    
 
 }

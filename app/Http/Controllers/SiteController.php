@@ -110,7 +110,7 @@ class SiteController extends Controller
     {
         $result = (new ScanTechnologies($request))
             ->setOptions(['mode' => 'god'])
-            ->result();
+            ->search();
 
 
         if (empty($result->errors)) {
