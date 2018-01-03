@@ -10,7 +10,7 @@ namespace App\Engine\ScanModes;
 
 use App\Engine\Togglyzer;
 
-class OnlineMode extends \App\Engine\ApplicationAbstract
+class OnlineMode extends \App\Engine\ApplicationScanAbstract
 {
 
 

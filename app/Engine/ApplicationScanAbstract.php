@@ -10,7 +10,7 @@ namespace App\Engine;
 
 use App\Http\Requests\ScanTechnologiesRequest;
 
-abstract class ApplicationAbstract
+abstract class ApplicationScanAbstract
 {
 
     public $url;

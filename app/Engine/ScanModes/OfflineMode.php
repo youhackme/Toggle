@@ -11,7 +11,7 @@ namespace App\Engine\ScanModes;
 use App\Engine\Togglyzer;
 
 
-class OfflineMode extends \App\Engine\ApplicationAbstract
+class OfflineMode extends \App\Engine\ApplicationScanAbstract
 {
 
 

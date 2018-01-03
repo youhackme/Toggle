@@ -9,7 +9,7 @@
 namespace App\Engine\ScanModes;
 
 
-class HistoricalMode extends \App\Engine\ApplicationAbstract
+class HistoricalMode extends \App\Engine\ApplicationScanAbstract
 {
 
 

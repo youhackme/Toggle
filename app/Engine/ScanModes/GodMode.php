@@ -10,7 +10,7 @@ namespace App\Engine\ScanModes;
 
 use App\Engine\ScanTechnologies;
 
-class GodMode extends \App\Engine\ApplicationAbstract
+class GodMode extends \App\Engine\ApplicationScanAbstract
 {
 
     // Do an online search
