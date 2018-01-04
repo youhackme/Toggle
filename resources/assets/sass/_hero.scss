@@ -107,3 +107,17 @@
   }
 }
 
+// Explainer
+
+.explainer {
+  background: linear-gradient(to bottom, white 0%, white 45%, #f2f4f4 100%);
+  min-height: 500px;
+
+  .applications {
+    background-color: red;
+    width: 1000px;
+    height: 400px;
+    position: absolute;
+    bottom: 110px;
+  }
+}

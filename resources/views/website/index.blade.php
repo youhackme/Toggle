@@ -72,14 +72,14 @@
         </div>
     </div>
 
-    <div class="container-fluid"
-         style="background:linear-gradient(to bottom, white 0%, white 45%, #f2f4f4 100%);min-height:500px;">
+    <div class="container-fluid explainer">
         <div class="row text-center m-t-50">
             <h1 data-parallax='{"y": -25}'>Identify over 1000 Technologies across 20+ categories</h1>
-            <p data-parallax='{"y": -35}' class="text-muted">Content Management Systems, Forums, Ecommerce, Frameworks, you name it!</p>
+            <p data-parallax='{"y": -35}' class="text-muted">Content Management Systems, Forums, Ecommerce, Frameworks,
+                you name it!</p>
         </div>
 
-        <div class="hidden col-md-offset-1 col-md-10">
+        <div class="col-md-offset-1 col-md-10 applications">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 
                 <!-- Wrapper for slides -->
@@ -112,10 +112,6 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        </div>
-        <div class="col-md-offset-1 col-md-10"
-             style="background-color:red;width:1000px;height:400px;position:absolute;bottom:110px;">
-            Overlapping container
         </div>
     </div>
     <div class="container-fluid"
