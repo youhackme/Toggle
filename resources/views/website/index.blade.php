@@ -72,9 +72,59 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row clearfix">
-            <h1>Hello World</h1>
+    <div class="container-fluid"
+         style="background:linear-gradient(to bottom, white 0%, white 45%, #f2f4f4 100%);min-height:500px;">
+        <div class="row text-center m-t-50">
+            <h1 data-parallax='{"y": -25}'>Identify over 1000 Technologies across 20+ categories</h1>
+            <p data-parallax='{"y": -35}' class="text-muted">Content Management Systems, Forums, Ecommerce, Frameworks, you name it!</p>
+        </div>
+
+        <div class="hidden col-md-offset-1 col-md-10">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <div style="background-color:red;width:1200px;height:400px;color:white;">
+                            Hello World
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div style="background-color:blue;width:1200px;height:400px;color:white;">
+                            Hello World
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div style="background-color:green;width:1200px;height:400px;color:white;">
+                            Hello World
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-10"
+             style="background-color:red;width:1000px;height:400px;position:absolute;bottom:110px;">
+            Overlapping container
+        </div>
+    </div>
+    <div class="container-fluid"
+         style="height:200px;background:linear-gradient(to bottom, #443ec2 0%, #5951ff 100%);color:#ffffff;">
+        <div class="row">
+            <footer style="padding-top:150px;" class="text-center">
+                <p>This is a footer.</p>
+            </footer>
+
         </div>
     </div>
 @endsection
