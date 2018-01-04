@@ -209,14 +209,6 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
                             ],
                         ],
                         [
-                            "range" => [
-                                "createdOn" => [
-                                    "gte" => "now-1d",
-                                    "lt"  => "now",
-                                ],
-                            ],
-                        ],
-                        [
                             "nested" => [
                                 "path"  => "technologies",
                                 "query" => [
@@ -259,7 +251,6 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
             ],
         ];
 
-
         $result = $this->query($dsl);
 
         $allThemes = [];
@@ -300,14 +291,6 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
                         [
                             "terms" => [
                                 "host" => [$this->request->getHost()],
-                            ],
-                        ],
-                        [
-                            "range" => [
-                                "createdOn" => [
-                                    "gte" => "now-1d",
-                                    "lt"  => "now",
-                                ],
                             ],
                         ],
                         [
