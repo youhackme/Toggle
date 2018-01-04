@@ -1,7 +1,7 @@
 // Headlines and search input
 
 .blockHeroWrapper {
-  min-height: calc(80vh);
+  min-height: 500px;
 }
 
 .blockHeroWrapper .section-arrow {
@@ -24,8 +24,8 @@
 }
 
 .hexagonal-background {
-  background-color: #6772E5;
-  background-image: url('../img/bg.svg');
+
+  background-image: url('../img/bg.svg'), linear-gradient(-160deg, #795DFF, #5439D4);
   background-size: cover;
   background-position: bottom;
   background-repeat: no-repeat;
@@ -41,7 +41,7 @@
   color: #ffffff;
   text-align: center;
   padding-bottom: 20px;
-  margin-top: 100px;
+  margin-top: 80px;
 
   span.typed {
     font-family: "Proxima Nova Semibold";
@@ -77,7 +77,7 @@
   }
 
   &__input-xlg, &__input-xlg:focus, &__input-xlg:active {
-    height: 56px;
+    height: 65px;
     padding: 10px 16px;
     font-size: 20px;
     line-height: 1.3333333;
@@ -91,10 +91,11 @@
     border: 2px solid #ffffff !important;
     color: #ffffff !important;
     outline: none !important;
+    border-radius: 8px;
   }
 
   &__btn-search:hover {
-    background-color: #59d69e !important;
+    background-color: #17c694 !important;
     border: 2px solid #ffffff !important;
     color: #ffffff !important;
   }
