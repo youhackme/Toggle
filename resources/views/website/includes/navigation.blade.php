@@ -1,5 +1,5 @@
 <!--  Top Navigation  -->
-<div class="container-fluid">
+<div class="container-fluid js-navigation-block">
     <div class="row blockNavigation @if($homepage)blockNavigation--full @endif ">
         <nav class="navbar  @if($homepage) navbar-static-top @else navbar-default navbar-fixed-top @endif ">
             <div class="container">

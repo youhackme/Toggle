@@ -4,13 +4,35 @@
 
 @section('content')
 
+    <div class="container-fluid  hexagonal-background">
+        <div class="row blockNavigation blockNavigation--full js-navigation-block ">
+            <nav class="navbar   navbar-staticw-top  ">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#navbar3">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{env('APP_URL')}}">
+                            <img src="{{asset('img/logoWhiteOnBlack.svg')}}" alt="Logo">
+                        </a>
+                    </div>
 
-    @include('website.includes.navigation', [
-  'logo' => 'img/logoWhiteOnBlack.svg',
-  'homepage' => true
-  ])
-
-    <div class="container-fluid">
+                    <div id="navbar3" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#">How it works?</a></li>
+                            <li class="active"><a href="#">About</a></li>
+                            <li class="active"><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+                <!--/.container-fluid -->
+            </nav>
+        </div>
         <!--  Headlines & Search bar  -->
         <div class="row">
             <div class="blockHeroWrapper">
@@ -41,7 +63,18 @@
                         </form>
                     </div>
                 </div>
+
+                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 text-center section-arrow">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                </div>
+
             </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <h1>Hello World</h1>
         </div>
     </div>
 @endsection

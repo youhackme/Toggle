@@ -10,5 +10,7 @@ try {
   window.$ = window.jQuery = require('jquery');
   require('bootstrap-sass');
   window.Typed = require('typed.js');
+
+  $('div.blockHeroWrapper').height($(window).height() - $('.js-navigation-block').innerHeight());
 } catch (e) {}
 
