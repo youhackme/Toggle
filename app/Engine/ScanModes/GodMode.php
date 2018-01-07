@@ -21,6 +21,25 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
     public function result()
     {
 
+        $apps = new \App\Engine\ApplicationComponents\Applications();
+
+        //Do u have any html? yes? then scan offlinemode
+
+        if ( ! is_null($this->request->getHtml())) {
+            $responseOfflineMode = (new ScanTechnologies($this->request))
+                ->setOptions(['mode' => 'offline'])
+                ->result();
+
+            $applicationsFromOfflineMode = $responseOfflineMode->applications;
+
+            if ( ! is_null($applicationsFromOfflineMode)) {
+                foreach ($applicationsFromOfflineMode as $technology) {
+                    $apps->add($technology);
+                }
+            }
+        };
+
+
         $responseHistoricalMode = (new ScanTechnologies($this->request))
             ->setOptions(['mode' => 'historical'])
             ->result();
@@ -39,20 +58,18 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
             $applicationsFromHistoricalSearch = $responseHistoricalMode->searchForHistoricalTechnologies();
 
 
-            $apps = new \App\Engine\ApplicationComponents\Applications();
-
             if ( ! is_null($applicationsFromLiveSearch)) {
                 foreach ($applicationsFromLiveSearch as $technology) {
                     $apps->add($technology);
                 }
             }
 
-
-            foreach ($applicationsFromHistoricalSearch as $technology) {
-                $apps->add($technology);
+            if ( ! is_null($applicationsFromLiveSearch)) {
+                foreach ($applicationsFromHistoricalSearch as $technology) {
+                    $apps->add($technology);
+                }
             }
-
-            $applications = $apps->unique();
+            //$applications = $apps->unique();
 
 
             // Then merge it
@@ -63,10 +80,16 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
             $applicationsFromHistoricalSearch = $responseHistoricalMode->searchForHistoricalTechnologies();
 
             $applications = $applicationsFromHistoricalSearch;
+
+            if ( ! is_null($applications)) {
+                foreach ($applications as $technology) {
+                    $apps->add($technology);
+                }
+            }
         }
         // Then fetch cached data by host name
         // Merge it with the live search.
-        $this->applications = $applications;
+        $this->applications = $apps->unique();
 
         return $this;
     }

@@ -18,6 +18,7 @@
     "lodash": "^4.17.4"
   },
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "phantom": "^4.0.5",
     "redis": "^2.8.0",
     "togglyzer": "^1.0.10",

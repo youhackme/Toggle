@@ -24,4 +24,5 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
 
 mix.copyDirectory('resources/assets/img', 'public/img');
 mix.copyDirectory('resources/assets/fonts', 'public/fonts');
-
+mix.copyDirectory('node_modules/bootstrap-sass/assets/fonts', 'public/fonts');
+mix.copyDirectory('node_modules/font-awesome/fonts', 'public/fonts/font-awesome');
