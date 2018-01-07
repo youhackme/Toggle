@@ -79,50 +79,411 @@
                 you name it!</p>
         </div>
 
-        <div class="col-md-offset-1 col-md-10 applications">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <div class="col-md-offset-1 col-md-10">
+            <div data-parallax='{"y": -40}' class="row">
+                <div id="carousel-applications" class="carousel slide applications" data-ride="carousel">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <div class="col-md-4" style="height:100%;">
+                                <div class="row logos">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <h4 class="text-center">
+                                            Content Management System
+                                        </h4>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <div style="background-color:red;width:1200px;height:400px;color:white;">
-                            Hello World
+                                </div>
+                            </div>
+                            <div class="col-md-4  hidden-xs hidden-sm" style="height:100%;">
+                                <div class="row logos">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <h4 class="text-center">
+                                            Ecommerce
+                                        </h4>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo6.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4 hidden-xs hidden-sm" style="height:100%;">
+                                <div class="row logos">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <h4 class="text-center">
+                                            Message Boards
+                                        </h4>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 logo">
+                                        <div class="logowrapper">
+                                            <img class="img-responsive"
+                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo8.jpg"
+                                                 alt="img">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div style="background-color:blue;width:1200px;height:400px;color:white;">
-                            Hello World
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div style="background-color:green;width:1200px;height:400px;color:white;">
-                            Hello World
-                        </div>
+
+
                     </div>
 
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-applications" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-applications" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
         </div>
     </div>
     <div class="container-fluid"
-         style="height:200px;background:linear-gradient(to bottom, #443ec2 0%, #5951ff 100%);color:#ffffff;">
-        <div class="row">
-            <footer style="padding-top:150px;" class="text-center">
-                <p>This is a footer.</p>
-            </footer>
+         style="height:850px;background:#2D2342;color:#ffffff;">
+        <div class="row chrome-extension">
+            <div class="col-md-6 p-l-0">
+                <div class="pull-left"
+                     style="width:36vw;height:425px;background-color:purple;">
+                    {{--<img src="https://www.whatruns.com/images/whatruns_main_image_v4.gif" alt="">--}}
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <h1>Get our Chrome extension. It's Free.</h1>
+                <p>Toggle's Chrome extension lets you find the technologies behind the website you're
+                    browsing in a click!</p>
+                <button class="btn btn-success btn-lg download-chrome"><i class="fa fa-chrome" aria-hidden="true"></i>
+                    &nbsp;Get Chrome Extension
+                </button>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="separator">
+                    <img class="separator-image" src="{{asset('/img/separator.svg')}}">
+                </div>
+            </div>
 
         </div>
     </div>
-@endsection
 
+    <div class="container-fluid">
+        <div class="row">
+            <footer class="col-md-12 text-center"
+                    style="background-color:#ffffff;color:#cfcfcf;height:200px;line-height: 200px;">
+                <small class="text-muted"> © {{ Carbon\Carbon::now()->format('Y') }} Toggle.me</small>
+            </footer>
+        </div>
+    </div>
+@endsection
 

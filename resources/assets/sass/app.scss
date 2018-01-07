@@ -3,6 +3,9 @@
 @import "mixins";
 // Proxima Nova Fonts
 @import "fonts";
+// Font Awesome
+$fa-font-path: "../fonts/font-awesome" !default;
+@import "~font-awesome/scss/font-awesome.scss";
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 // Spacing utility
