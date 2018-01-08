@@ -98,106 +98,106 @@
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/wordpress.svg'}}"
+                                                 alt="WordPress">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/joomla.svg'}}"
+                                                 alt="Joomla">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/drupal.svg'}}"
+                                                 alt="Drupal">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/typo3.svg'}}"
+                                                 alt="Typo3">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/blogger.svg'}}"
+                                                 alt="Blogger">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/wix.svg'}}"
+                                                 alt="Wix">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/tumblr.svg'}}"
+                                                 alt="Tumblr">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/weebly.svg'}}"
+                                                 alt="Weebly">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/Joomla.svg'}}"
+                                                 alt="Joomla">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/squarespace.svg'}}"
+                                                 alt="Squarespace">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/livejournal.svg'}}"
+                                                 alt="Livejournal">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/jimdo.svg'}}"
+                                                 alt="Jimdo">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/hugo.svg'}}"
+                                                 alt="Hugo">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/ghost.svg'}}"
+                                                 alt="Ghost">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="http://arkahost.com/wp-content/uploads/2015/07/scripts-logo1.jpg"
-                                                 alt="img">
+                                                 src="{{'img/apps/adobeexperiencemanager.svg'}}"
+                                                 alt="Adobe Experience Manager">
                                         </div>
                                     </div>
 
