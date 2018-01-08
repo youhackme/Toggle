@@ -27,8 +27,6 @@
     font-family: "Proxima Nova Thin";
     color: #ffffff;
     text-align: center;
-    padding-bottom: 20px;
-    margin-top: 80px;
 
     span.typed {
       font-family: "Proxima Nova Semibold";
@@ -71,12 +69,7 @@
 }
 
 .blockSearch {
-  margin-top: 100px;
-
-  form {
-    margin-top: 50px;
-  }
-
+  
   input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
     outline: none;
     box-shadow: none !important;

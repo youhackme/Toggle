@@ -37,7 +37,7 @@
         <div class="row">
             <div class="hero js-hero">
                 <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-                    <h2 class="hero__headline">
+                    <h2 class="hero__headline m-t-80 p-b-20">
                         Find out what
                         <span class="typed"></span>
                         your favorite sites
@@ -45,8 +45,8 @@
                     </h2>
                 </div>
                 <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                    <div class="blockSearch">
-                        <form method="get" action="/result">
+                    <div class="blockSearch m-t-100">
+                        <form class="m-t-50" method="get" action="/result">
                             <div class="input-group">
                                 <input type="text"
                                        id="url"
@@ -476,7 +476,6 @@
 
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <footer class="col-md-12 text-center footerhome">
