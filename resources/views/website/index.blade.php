@@ -468,7 +468,7 @@
             </div>
 
 
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="separator">
                     <img class="separator__image" src="{{asset('/img/separator.svg')}}" alt="separator">
                 </div>
