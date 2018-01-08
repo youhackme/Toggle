@@ -106,7 +106,7 @@
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
                                                  src="{{'img/apps/joomla.svg'}}"
-                                                 alt="Joomla">
+                                                 alt="Joomla!">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -154,8 +154,8 @@
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="{{'img/apps/Joomla.svg'}}"
-                                                 alt="Joomla">
+                                                 src="{{'img/apps/dnn.svg'}}"
+                                                 alt="DNN">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
