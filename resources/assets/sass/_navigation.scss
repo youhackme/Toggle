@@ -34,14 +34,16 @@
   &--full {
     border-bottom: none;
     padding-top: 25px;
-  }
 
-  &--full .nav > li > a {
-    color: #ffffff;
-  }
-  &--full .nav > li > a:hover, &--full .nav > li > a:focus {
-    color: #ffffff;
-    background-color: transparent;
+    .nav > li > a {
+      color: rgba(255,255,255,0.6);
+      transition: all .3s ease;
+    }
+
+    .nav > li > a:hover, &--full .nav > li > a:focus {
+      color: #ffffff;
+      background-color: transparent;
+    }
   }
 
   .blockInlineSearch {
