@@ -76,9 +76,8 @@
         <div class="row text-center m-t-50">
             <h1 class="explainer__title" data-parallax='{"y": -25}'>
                 Identify over 1000+ Technologies across 20 categories
-
             </h1>
-            <p class="explainer__subtitle" data-parallax='{"y": -35}' class="text-muted">Content Management Systems,
+            <p class="explainer__subtitle text-muted" data-parallax='{"y": -35}'>Content Management Systems,
                 Forums, eCommerce Platforms, Frameworks, you name it!
             </p>
         </div>
@@ -471,7 +470,7 @@
 
             <div class="col-md-12">
                 <div class="separator">
-                    <img class="separator__image" src="{{asset('/img/separator.svg')}}">
+                    <img class="separator__image" src="{{asset('/img/separator.svg')}}" alt="separator">
                 </div>
             </div>
 
