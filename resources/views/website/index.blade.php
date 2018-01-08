@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="container-fluid hexagonal-background">
-        <div class="row blockNavigation blockNavigation--full js-navigation-block ">
+        <div class="row blockNavigation blockNavigation--full js-navigation ">
             <nav class="navbar navbar-static-top">
                 <div class="container">
                     <div class="navbar-header">
