@@ -119,6 +119,13 @@
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
+                                                 src="{{'img/apps/ghost.svg'}}"
+                                                 alt="Ghost">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                        <div class="karousel__logowrapper">
+                                            <img class="img-responsive"
                                                  src="{{'img/apps/typo3.svg'}}"
                                                  alt="Typo3">
                                         </div>
@@ -184,13 +191,6 @@
                                             <img class="img-responsive"
                                                  src="{{'img/apps/hugo.svg'}}"
                                                  alt="Hugo">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/ghost.svg'}}"
-                                                 alt="Ghost">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
