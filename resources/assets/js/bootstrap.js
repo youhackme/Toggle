@@ -11,9 +11,7 @@ try {
   require('bootstrap-sass');
   window.Typed = require('typed.js');
 
-
-  $('div.blockHeroWrapper').height($(window).height() - $('.js-navigation-block').innerHeight());
-
+  $('div.js-hero').height($(window).height() - $('.js-navigation-block').innerHeight());
 
   var ParallaxScroll = {
     /* PUBLIC VARIABLES */
