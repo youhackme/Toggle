@@ -150,6 +150,17 @@
             max-height: 20px;
         }
 
+        .media-heading {
+            font-family: 'Proxima Nova Semibold', sans-serif;
+            font-weight: 600;
+            color: #58585B;
+        }
+
+        img.poweredBy {
+            width: 32px;
+            height: 35px;
+        }
+
     </style>
 </head>
 <body>
@@ -167,29 +178,47 @@
             </div>
             <div class="row m-top-10">
                 <div class="col-md-4 col-sm-4 col-xs-4">
-                    <dl>
-                        <dt>Powered By</dt>
-                        <dd>
-                            @php
-                                $mainApplication = false;
-                            @endphp
 
 
+                    <div class="media">
+                        <div class="media-left">
                             @foreach($response->applications as $application)
                                 @if($application->poweredBy)
-                                    {{$application->name}} {{isset($application->version)? $application->version:''}}
-                                    @php
-                                        $mainApplication = true;
-                                    @endphp
+
+                                    <img class="poweredBy"
+                                         src="{{$application->icon}}" alt="{{$application->name}}">
+
+                                    @break
                                 @endif
                             @endforeach
 
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">Powered By</h5>
+                            <span class="application">
+                                @php
+                                    $mainApplication = false;
+                                @endphp
 
-                            @if (!$mainApplication)
-                                Unknown
-                            @endif
-                        </dd>
-                    </dl>
+
+                                @foreach($response->applications as $application)
+                                    @if($application->poweredBy)
+                                        <a href="{{$application->website}}">{{$application->name}} {{isset($application->version)? $application->version:''}}</a>
+                                        @php
+                                            $mainApplication = true;
+                                        @endphp
+                                    @endif
+                                @endforeach
+
+
+                                @if (!$mainApplication)
+                                    Unknown
+                                @endif
+
+
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 @php
                     $applicationName = array_column($response->applications,'name');
@@ -255,20 +284,22 @@
                     @foreach($response->applications as $application)
                         @if($application->name=='WordPress')
                             @if(!is_null($application->plugins))
-                                @foreach($application->plugins as $plugin)
-                                    @php
-                                        $colors = ['grey','blue','orange','dark-grey','green'];
-                                        $randomColors = array_rand($colors, 1);
-                                        $color = $colors[$randomColors];
-                                    @endphp
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <ul class="plugins">
-                                                <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
-                                            </ul>
-                                        </div>
+
+                                @php
+                                    $colors = ['grey','blue','orange','dark-grey','green'];
+                                    $randomColors = array_rand($colors, 1);
+                                    $color = $colors[$randomColors];
+                                @endphp
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="plugins">
+                                            @foreach($application->plugins as $plugin)
+                                                <li class="col-md-6">{{str_limit(ucfirst($plugin->name),30)}}</li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                @endforeach
+                                </div>
+
                             @endif
                         @endif
                     @endforeach
