@@ -262,11 +262,9 @@
                                         $color = $colors[$randomColors];
                                     @endphp
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <ul class="plugins">
-
                                                 <li>{{str_limit(ucfirst($plugin->name),45)}}</li>
-
                                             </ul>
                                         </div>
                                     </div>
