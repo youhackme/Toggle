@@ -93,7 +93,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 karousel__title">
                                         <h4 class="text-center">
-                                            Content Management System
+                                            Content Management Systems
                                         </h4>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -208,7 +208,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 karousel__title">
                                         <h4 class="text-center">
-                                            Ecommerce
+                                            Ecommerce platforms
                                         </h4>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -545,8 +545,8 @@
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="{{'img/apps/mustache.svg'}}"
-                                                 alt="Mustache">
+                                                 src="{{'img/apps/handlebars.svg'}}"
+                                                 alt="Handlebars">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">

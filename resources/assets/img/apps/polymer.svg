@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="70px" viewBox="0 0 160 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>polymer</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="technologies" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Javascript-frameworks" transform="translate(-416.000000, -138.000000)">
+            <g id="polymer" transform="translate(416.000000, 138.000000)">
+                <rect id="Rectangle-Copy-6" fill="#FFFFFF" x="0" y="0" width="160" height="70"></rect>
+                <g transform="translate(52.000000, 15.000000)">
+                    <polygon id="Shape" fill="#FF4081" fill-rule="nonzero" points="32.9994271 39 11 0 22.000358 0 44 39"></polygon>
+                    <polygon id="Shape" fill-opacity="0.2" fill="#FFFFFF" fill-rule="nonzero" points="33 39 38.4992481 29 44 39"></polygon>
+                    <polygon id="Shape" fill-opacity="0.1" fill="#FFFFFF" fill-rule="nonzero" points="28 29 33.5 39 39 29"></polygon>
+                    <polygon id="Shape" fill-opacity="0.1" fill="#000000" fill-rule="nonzero" points="23 20 28.5 30 34 20 23 20"></polygon>
+                    <polygon id="Shape" fill-opacity="0.2" fill="#000000" fill-rule="nonzero" points="23 20 28.5 10 34 20 23 20"></polygon>
+                    <polygon id="Shape" fill-opacity="0.3" fill="#000000" fill-rule="nonzero" points="17 10 22.4998926 20 28 10 17.0002148 10"></polygon>
+                    <polygon id="Shape" fill-opacity="0.4" fill="#000000" fill-rule="nonzero" points="17 10 22.4998926 0 28 10 17.0002148 10"></polygon>
+                    <polygon id="Shape" fill-opacity="0.5" fill="#000000" fill-rule="nonzero" points="11 0 16.5006445 10 22 0 11.0002148 0"></polygon>
+                    <g id="Group" transform="translate(0.000000, 10.000000)">
+                        <polygon id="Shape" fill="#536DFE" fill-rule="nonzero" points="11.5429038 28.9956716 0.218278846 9.802 5.88114423 0.205164179 22.8673077 28.9956716 11.5426827 28.9956716"></polygon>
+                        <polygon id="Shape" fill-opacity="0.2" fill="#FFFFFF" fill-rule="nonzero" points="11.5429038 28.9956716 17.2057692 19.3988358 22.8673077 28.9956716 11.543125 28.9956716"></polygon>
+                        <polygon id="Shape" fill-opacity="0.1" fill="#FFFFFF" fill-rule="nonzero" points="5.88114423 19.3988358 11.5426827 28.9956716 17.2057692 19.3988358"></polygon>
+                        <polygon id="Shape" points="5.88114423 19.3988358 11.5426827 9.802 17.2057692 19.3988358"></polygon>
+                        <polygon id="Shape" fill-opacity="0.1" fill="#000000" fill-rule="nonzero" points="0.218278846 9.802 5.88114423 19.3988358 11.5426827 9.802 0.2185 9.802"></polygon>
+                        <polygon id="Shape" fill-opacity="0.2" fill="#000000" fill-rule="nonzero" points="0.218278846 9.802 5.88114423 0.205164179 11.5426827 9.802 0.2185 9.802"></polygon>
+                    </g>
+                    <g id="Group" transform="translate(6.000000, 0.000000)" fill-rule="nonzero">
+                        <polygon id="Shape" fill="#303F9F" points="5.54103846 19.8426667 0.125653846 9.98844444 5.54082692 0.134444444 10.9576923 9.98844444"></polygon>
+                        <polygon id="Shape" fill-opacity="0.2" fill="#000000" points="10.9576923 9.98844444 5.54103846 0.134444444 0.125653846 9.98844444"></polygon>
+                    </g>
+                    <g id="Group" transform="translate(39.000000, 20.000000)" fill-rule="nonzero">
+                        <polygon id="Shape" fill="#3F51B5" points="5.45896154 19.9955056 0.0423076923 10.0305618 5.45896154 0.0656179775 10.8743462 10.0305618 5.45896154 19.9955056"></polygon>
+                        <polygon id="Shape" fill-opacity="0.2" fill="#000000" points="10.8745577 10.0305618 5.45917308 19.9955056 0.0423076923 10.0305618"></polygon>
+                    </g>
+                    <g id="Group" transform="translate(33.000000, 0.000000)" fill-rule="nonzero">
+                        <polygon id="Shape" fill="#7986CB" points="17.1188558 28.9212239 0.132692308 0.130932836 11.4573173 0.130932836 22.7819423 19.3243881 17.1190769 28.9212239"></polygon>
+                        <polygon id="Shape" fill-opacity="0.2" fill="#FFFFFF" points="11.4570962 19.3243881 17.1186346 28.9212239 22.7817212 19.3243881 11.4570962 19.3243881"></polygon>
+                        <polygon id="Shape" fill-opacity="0.1" fill="#FFFFFF" points="11.4570962 19.3243881 17.1186346 9.72755224 22.7817212 19.3243881 11.4570962 19.3243881"></polygon>
+                        <polygon id="Shape" fill-opacity="0.1" fill="#000000" points="5.79423077 9.72755224 11.4570962 0.130932836 17.1186346 9.72755224"></polygon>
+                        <polygon id="Shape" fill-opacity="0.2" fill="#000000" points="0.132692308 0.130932836 5.79423077 9.72755224 11.4575385 0.130932836"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
