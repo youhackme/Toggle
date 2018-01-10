@@ -93,7 +93,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 karousel__title">
                                         <h4 class="text-center">
-                                            Content Management System
+                                            Content Management Systems
                                         </h4>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -208,7 +208,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 karousel__title">
                                         <h4 class="text-center">
-                                            Ecommerce
+                                            Ecommerce platforms
                                         </h4>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -545,8 +545,8 @@
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                         <div class="karousel__logowrapper">
                                             <img class="img-responsive"
-                                                 src="{{'img/apps/mustache.svg'}}"
-                                                 alt="Mustache">
+                                                 src="{{'img/apps/handlebars.svg'}}"
+                                                 alt="Handlebars">
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -657,7 +657,7 @@
         <div class="row chrome__wrapper">
             <div class="col-md-6 p-l-0">
                 <div class="pull-left chrome__demo">
-                    {{--Insert image here--}}
+                    <img class="img-responsive" src="{{asset('/img/toggle.gif')}}" alt="Toggle Chrome extension">
                 </div>
 
             </div>
@@ -665,7 +665,7 @@
                 <h1>Get our Chrome extension. It's Free.</h1>
                 <p>Toggle's Chrome extension lets you find the technologies behind the website you're
                     browsing in a click!</p>
-                <button class="m-t-50 btn btn-success input-xlg btn-animate">
+                <button class="m-t-50 btn btn-success input-xlg btn--download">
                     <i class="fa fa-chrome" aria-hidden="true"></i>
                     &nbsp;Get Chrome Extension
                 </button>

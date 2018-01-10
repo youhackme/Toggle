@@ -69,7 +69,7 @@
 }
 
 .blockSearch {
-  
+
   input[type="text"], textarea, input[type="text"]:focus, textarea:focus {
     outline: none;
     box-shadow: none !important;
@@ -228,6 +228,155 @@ The separator block
 
 .btn-animate:hover {
   transform: translateY(2px);
+}
+
+@keyframes a {
+  0% {
+    transform: matrix(1, 0, 0, 1, 0, 0)
+  }
+  1.9% {
+    transform: matrix(1.039, 0, 0, 1.058, 0, 0)
+  }
+  2.7% {
+    transform: matrix(1.062, 0, 0, 1.096, 0, 0)
+  }
+  3.8% {
+    transform: matrix(1.097, 0, 0, 1.151, 0, 0)
+  }
+  5.41% {
+    transform: matrix(1.147, 0, 0, 1.216, 0, 0)
+  }
+  5.71% {
+    transform: matrix(1.155, 0, 0, 1.224, 0, 0)
+  }
+  7.51% {
+    transform: matrix(1.198, 0, 0, 1.249, 0, 0)
+  }
+  8.11% {
+    transform: matrix(1.208, 0, 0, 1.246, 0, 0)
+  }
+  9.51% {
+    transform: matrix(1.224, 0, 0, 1.224, 0, 0)
+  }
+  10.71% {
+    transform: matrix(1.228, 0, 0, 1.194, 0, 0)
+  }
+  11.51% {
+    transform: matrix(1.227, 0, 0, 1.173, 0, 0)
+  }
+  13.51% {
+    transform: matrix(1.211, 0, 0, 1.128, 0, 0)
+  }
+  13.71% {
+    transform: matrix(1.209, 0, 0, 1.125, 0, 0)
+  }
+  15.52% {
+    transform: matrix(1.187, 0, 0, 1.112, 0, 0)
+  }
+  16.62% {
+    transform: matrix(1.172, 0, 0, 1.116, 0, 0)
+  }
+  17.52% {
+    transform: matrix(1.161, 0, 0, 1.125, 0, 0)
+  }
+  19.52% {
+    transform: matrix(1.143, 0, 0, 1.153, 0, 0)
+  }
+  19.62% {
+    transform: matrix(1.142, 0, 0, 1.155, 0, 0)
+  }
+  21.52% {
+    transform: matrix(1.133, 0, 0, 1.178, 0, 0)
+  }
+  22.52% {
+    transform: matrix(1.132, 0, 0, 1.184, 0, 0)
+  }
+  23.52% {
+    transform: matrix(1.133, 0, 0, 1.186, 0, 0)
+  }
+  27.53% {
+    transform: matrix(1.15, 0, 0, 1.164, 0, 0)
+  }
+  28.43% {
+    transform: matrix(1.155, 0, 0, 1.157, 0, 0)
+  }
+  31.53% {
+    transform: matrix(1.168, 0, 0, 1.146, 0, 0)
+  }
+  34.33% {
+    transform: matrix(1.171, 0, 0, 1.153, 0, 0)
+  }
+  39.54% {
+    transform: matrix(1.163, 0, 0, 1.168, 0, 0)
+  }
+  46.05% {
+    transform: matrix(1.155, 0, 0, 1.157, 0, 0)
+  }
+  47.55% {
+    transform: matrix(1.156, 0, 0, 1.156, 0, 0)
+  }
+  55.56% {
+    transform: matrix(1.162, 0, 0, 1.162, 0, 0)
+  }
+  57.86% {
+    transform: matrix(1.162, 0, 0, 1.161, 0, 0)
+  }
+  63.56% {
+    transform: matrix(1.16, 0, 0, 1.159, 0, 0)
+  }
+  69.57% {
+    transform: matrix(1.159, 0, 0, 1.16, 0, 0)
+  }
+  71.57% {
+    transform: matrix(1.159, 0, 0, 1.161, 0, 0)
+  }
+  79.58% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  81.38% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  87.59% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  93.19% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  95.6% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  to {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+}
+
+@keyframes b {
+  0% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  16.53% {
+    transform: matrix(1.147, 0, 0, 1.216, 0, 0)
+  }
+  17.53% {
+    transform: matrix(1.155, 0, 0, 1.224, 0, 0)
+  }
+  to {
+    transform: matrix(1, 0, 0, 1, 0, 0)
+  }
+}
+
+.btn--download:hover, .btn--download:focus {
+  box-shadow: 0 5px 15px 0 rgba(86, 33, 137, .3);
+  color: #fff;
+  animation: a 1.2s ease-out both;
+  transition: box-shadow .2s ease;
+  ouline: 0;
+}
+
+btn--download, .btn--download {
+  ouline: 0;
+  transition: box-shadow .2s ease;
+  animation: b .2s ease-in both;
 }
 
 .footerhome {

@@ -62,7 +62,7 @@ Route::group(['namespace' => 'Admin'], function () {
 
 Route::group(['namespace' => 'Extension'], function () {
 
-    Route::match(['get', 'post'], '/extension', 'ExtensionController@scan');
+    Route::match(['get', 'post'], '/extension', 'ExtensionController@scan')->middleware('legitOrigin');
 
 });
 

@@ -56,6 +56,10 @@ class ScanTechnologiesRequest extends FormRequest
         )->host->host;
     }
 
+    /**
+     * Do we have any html payload with this request?
+     * @return array|string
+     */
     public function getHtml()
     {
         return $this->input('html');

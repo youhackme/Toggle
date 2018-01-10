@@ -167,7 +167,9 @@
 <div class="container-fluid extension-wrapper">
 
     @if ($response->errors===false)
-
+        @php
+            $mainApplication = false;
+        @endphp
         <div class="overview">
             <div class="row">
                 <div class="col-md-12">
@@ -187,20 +189,22 @@
 
                                     <img class="poweredBy"
                                          src="{{$application->icon}}" alt="{{$application->name}}">
+                                    @php
+                                        $mainApplication = true;
+                                    @endphp
 
                                     @break
                                 @endif
                             @endforeach
+                            @if (!$mainApplication)
+                                <img class="poweredBy" src="{{asset('img/unknown.svg')}}"
+                                     alt="{{asset('img/unknown.svg')}}">
+                            @endif
 
                         </div>
                         <div class="media-body">
                             <h5 class="media-heading">Powered By</h5>
                             <span class="application">
-                                @php
-                                    $mainApplication = false;
-                                @endphp
-
-
                                 @foreach($response->applications as $application)
                                     @if($application->poweredBy)
                                         <a href="{{$application->website}}">{{$application->name}} {{isset($application->version)? $application->version:''}}</a>
