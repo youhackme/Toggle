@@ -93,10 +93,11 @@ class Theme
                             $themeMeta = \App\Models\ThemeMeta::where('slug', $this->getSlug())
                                                               ->where('screenshotHash', $this->getScreenshotHash())
                                                               ->get()->first();
+
+                            $this->setDescription('Theme description not found.');
+
                             if ( ! is_null($themeMeta)) {
                                 $this->setDescription($themeMeta->theme->description);
-                            } else {
-                                $this->setDescription('Theme description not found.');
                             }
                         }
 
