@@ -371,13 +371,13 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
      * Fetch stats related to a query
      * @return array
      */
-    private function stats()
-    {
-        return [
-            'took'    => array_sum($this->timeTook),
-            'queries' => count($this->timeTook),
-        ];
-    }
+//    private function stats()
+//    {
+//        return [
+//            'took'    => array_sum($this->timeTook),
+//            'queries' => count($this->timeTook),
+//        ];
+//    }
 
 
 }
