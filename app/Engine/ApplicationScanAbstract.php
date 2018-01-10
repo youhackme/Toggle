@@ -41,7 +41,7 @@ abstract class ApplicationScanAbstract
         return $this;
     }
 
-    abstract function result();
+    public abstract function result();
 
     public function sortApplicationByCategory()
     {

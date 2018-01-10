@@ -3,6 +3,7 @@
 namespace App\Engine;
 
 use App;
+use App\Engine\Bot\BotInterface;
 use App\Engine\Bot\Driver\BrowserSimulator;
 use App\Engine\Bot\Driver\PhantomJS;
 use App\Http\Requests\ScanTechnologiesRequest;
@@ -67,7 +68,7 @@ class SiteAnatomy
      *
      * @return $this
      */
-    public function crawl($request)
+    public function crawl(ScanTechnologiesRequest $request)
     {
         $url = $request->getUrl();
 
@@ -101,14 +102,15 @@ class SiteAnatomy
         }
     }
 
+
     /**
-     * Get the result.
+     * Get the result from the underlying bot.
      *
-     * @param $data
+     * @param BotInterface $data
      *
      * @return $this
      */
-    private function result($data)
+    private function result(BotInterface $data)
     {
 
         if ( ! ($this->errors())) {

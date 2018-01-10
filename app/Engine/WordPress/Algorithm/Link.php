@@ -63,7 +63,7 @@ class Link extends WordPressAbstract
             [
                 'path'      => 'wp-includes/wlwmanifest.xml',
                 'searchFor' => '/WordPress|wlw\/manifest\/weblog/i',
-                //@todo: We probably need to check corresponding http response type..
+                //We probably need to check corresponding http response type..
             ],
             [
                 'path'      => 'wp-links-opml.php',
