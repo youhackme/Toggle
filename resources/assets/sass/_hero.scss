@@ -350,10 +350,33 @@ The separator block
   }
 }
 
-.btn--download:hover {
+@keyframes b {
+  0% {
+    transform: matrix(1.16, 0, 0, 1.16, 0, 0)
+  }
+  16.53% {
+    transform: matrix(1.147, 0, 0, 1.216, 0, 0)
+  }
+  17.53% {
+    transform: matrix(1.155, 0, 0, 1.224, 0, 0)
+  }
+  to {
+    transform: matrix(1, 0, 0, 1, 0, 0)
+  }
+}
+
+.btn--download:hover, .btn--download:focus {
   box-shadow: 0 5px 15px 0 rgba(86, 33, 137, .3);
   color: #fff;
   animation: a 1.2s ease-out both;
+  transition: box-shadow .2s ease;
+  ouline: 0;
+}
+
+btn--download, .btn--download {
+  ouline: 0;
+  transition: box-shadow .2s ease;
+  animation: b .2s ease-in both;
 }
 
 .footerhome {
