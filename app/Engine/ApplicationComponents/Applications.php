@@ -41,13 +41,14 @@ class Applications
         $collection = collect($this->applications);
 
         // A collection of unique applications except WordPress
-        $applications = $technologiesCollectionExcludingWordPress = $collection->filter(function ($app) {
+        $applications = $technologiesCollectionExcludingWordPress = $collection->filter(function (Application $app) {
+
             return $app->name != 'WordPress';
         })->unique('name');
 
 
         // A collection of WordPress Apps
-        $uniqueWordPressList = $collection->filter(function ($app) {
+        $uniqueWordPressList = $collection->filter(function (Application $app) {
             return $app->name == 'WordPress';
         });
 
@@ -73,7 +74,7 @@ class Applications
 
 
             // We need to merge plugins and themes
-            $applications = $wordpressCollection = $uniqueWordPressList->unique(function ($app) use (
+            $applications = $wordpressCollection = $uniqueWordPressList->unique(function (Application $app) use (
                 $themeFlattened,
                 $pluginsFlattened
             ) {
