@@ -655,13 +655,13 @@
     </div>
     <div class="container-fluid chrome">
         <div class="row chrome__wrapper">
-            <div class="col-md-6 p-l-0">
-                <div class="pull-left chrome__demo">
+            <div class="col-md-6  hidden-xs hidden-sm p-l-0">
+                <div class="chrome__demo">
                     <img class="img-responsive" src="{{asset('/img/toggle.gif')}}" alt="Toggle Chrome extension">
                 </div>
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-12 col-sm-12">
                 <h1>Get our Chrome extension. It's Free.</h1>
                 <p>Toggle's Chrome extension lets you find the technologies behind the website you're
                     browsing in a click!</p>
@@ -671,13 +671,15 @@
                 </button>
             </div>
 
-
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="separator">
                     <img class="separator__image" src="{{asset('/img/separator.svg')}}" alt="separator">
                 </div>
             </div>
-
         </div>
     </div>
     <div class="container-fluid">
