@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class CheckIfOriginChrome
 {
@@ -14,7 +15,7 @@ class CheckIfOriginChrome
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
 
         if ($request->getMethod() == 'POST' && $request->header('origin') != env('CHROME_KEY')) {

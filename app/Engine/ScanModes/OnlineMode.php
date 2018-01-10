@@ -8,9 +8,13 @@
 
 namespace App\Engine\ScanModes;
 
+use App\Engine\ApplicationComponents\Application;
+use App\Engine\ApplicationComponents\Plugin;
+use App\Engine\ApplicationComponents\Theme;
+use App\Engine\ApplicationScanAbstract;
 use App\Engine\Togglyzer;
 
-class OnlineMode extends \App\Engine\ApplicationScanAbstract
+class OnlineMode extends ApplicationScanAbstract
 {
 
 
@@ -102,18 +106,19 @@ class OnlineMode extends \App\Engine\ApplicationScanAbstract
 
         $applications = unserialize(serialize($this->applications));
 
-        $applicationsFiltered = collect($applications)->each(function ($app) {
+        $applicationsFiltered = collect($applications)->each(function (Application $app
+        ) {
 
             unset($app->poweredBy, $app->icon, $app->website);
 
             if (isset($app->themes) && ! is_null($app->themes)) {
-                collect($app->themes)->each(function ($theme) {
+                collect($app->themes)->each(function (Theme $theme) {
                     unset($theme->screenshotHash, $theme->screenshotUrl, $theme->description);
                 });
             }
 
-            if (isset($app->themes) && ! is_null($app->themes)) {
-                collect($app->plugins)->each(function ($plugin) {
+            if (isset($app->plugins) && ! is_null($app->plugins)) {
+                collect($app->plugins)->each(function (Plugin $plugin) {
                     unset($plugin->description);
                 });
             }
