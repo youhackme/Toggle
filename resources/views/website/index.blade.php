@@ -657,7 +657,7 @@
         <div class="row chrome__wrapper">
             <div class="col-md-6 p-l-0">
                 <div class="pull-left chrome__demo">
-                    {{--Insert image here--}}
+                    <img class="img-responsive" src="{{asset('/img/toggle.gif')}}" alt="Toggle Chrome extension">
                 </div>
 
             </div>
