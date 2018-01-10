@@ -665,7 +665,7 @@
                 <h1>Get our Chrome extension. It's Free.</h1>
                 <p>Toggle's Chrome extension lets you find the technologies behind the website you're
                     browsing in a click!</p>
-                <button class="m-t-50 btn btn-success input-xlg btn-animate">
+                <button class="m-t-50 btn btn-success input-xlg btn--download">
                     <i class="fa fa-chrome" aria-hidden="true"></i>
                     &nbsp;Get Chrome Extension
                 </button>
