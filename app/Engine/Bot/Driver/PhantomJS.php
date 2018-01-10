@@ -18,11 +18,11 @@ class PhantomJS implements BotInterface
 {
 
     public $response;
-
+    
     /**
-     * @param $url
+     * @param ScanTechnologiesRequest $request
      *
-     * @return string
+     * @return $this
      */
     public function request(ScanTechnologiesRequest $request)
     {
