@@ -63,10 +63,12 @@ class BrowserSimulator implements BotInterface
 
 
         foreach ($headers as $headerName => $headerValue) {
-            $headerValue = [$headerValue];
-            
+
+
             if ( ! in_array($headerName, $blacklistHeaders)) {
                 $headerValue = explode(',', $headerValue);
+            } else {
+                $headerValue = [$headerValue];
             }
 
             $filteredHeaders[$headerName] = $headerValue;
