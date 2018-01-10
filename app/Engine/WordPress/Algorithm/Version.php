@@ -74,7 +74,7 @@ class Version extends WordPressAbstract
      *
      * @param $url
      *
-     * @return bool
+     * @return mixed
      */
     public function getContentFor($url)
     {
@@ -83,8 +83,6 @@ class Version extends WordPressAbstract
             $goutteClient->request('GET', $url);
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             \Bugsnag::notifyException($e);
-
-            return false;
         }
 
         return $goutteClient->getResponse()->getContent();
