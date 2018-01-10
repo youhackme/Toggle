@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Engine\ScanTechnologies;
 use App\Http\Requests\ScanTechnologiesRequest;
-use Bugsnag\Report;
 use Illuminate\Support\Facades\Redis;
 use Request;
 
@@ -29,10 +28,7 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        \Bugsnag::notifyError('Connection Failed', $result->errors,
-            function (Report $report) use ($request) {
-                $report->setSeverity('error');
-            });
+        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
 
         return response()->json(['error' => $result->errors], 500);
 
@@ -59,10 +55,7 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        \Bugsnag::notifyError('Connection Failed', $result->errors,
-            function (Report $report) use ($request) {
-                $report->setSeverity('error');
-            });
+        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
 
         return response()->json(['error' => $result->errors], 500);
 
@@ -87,10 +80,7 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        \Bugsnag::notifyError('Connection Failed', $result->errors,
-            function (Report $report) use ($request) {
-                $report->setSeverity('error');
-            });
+        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
 
         return response()->json(['error' => $result->errors], 500);
 
@@ -118,10 +108,7 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        \Bugsnag::notifyError('Connection Failed', $result->errors,
-            function (Report $report) use ($request) {
-                $report->setSeverity('error');
-            });
+        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
 
         return response()->json(['error' => $result->errors], 500);
     }
@@ -139,10 +126,7 @@ class SiteController extends Controller
                 ->with('response', $response);
         }
 
-        \Bugsnag::notifyError('Connection Failed', $response->errors,
-            function (Report $report) use ($request) {
-                $report->setSeverity('error');
-            });
+        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $response]));
 
         return view('website.error')
             ->with('response', $response);
@@ -176,7 +160,7 @@ class SiteController extends Controller
             return response()->json($this);
         }
 
-        \Bugsnag::notifyError('Error', json_encode($this));
+        Bugsnag::notifyError('Redis Cache: Unable to find this key', json_encode($this));
 
         return response()->json(['error' => 'Unable to find this key in redis.'], 500);
     }
