@@ -29,8 +29,6 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
-
         return response()->json(['error' => $result->errors], 500);
 
     }
@@ -56,8 +54,6 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
-
         return response()->json(['error' => $result->errors], 500);
 
     }
@@ -81,7 +77,6 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
 
         return response()->json(['error' => $result->errors], 500);
 
@@ -109,7 +104,6 @@ class SiteController extends Controller
             return response()->json($result);
         }
 
-        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $result]));
 
         return response()->json(['error' => $result->errors], 500);
     }
@@ -127,7 +121,6 @@ class SiteController extends Controller
                 ->with('response', $response);
         }
 
-        Bugsnag::notifyError("Failed to connect to site", json_encode([$request, $response]));
 
         return view('website.error')
             ->with('response', $response);
