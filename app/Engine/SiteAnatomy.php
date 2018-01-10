@@ -67,7 +67,7 @@ class SiteAnatomy
      *
      * @return $this
      */
-    public function crawl($request)
+    public function crawl(ScanTechnologiesRequest $request)
     {
         $url = $request->getUrl();
 
