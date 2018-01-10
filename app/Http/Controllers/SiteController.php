@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Engine\LiveTechnologyBuilder;
+
 use App\Engine\ScanTechnologies;
-use App\Engine\TechnologyDirector;
 use App\Http\Requests\ScanTechnologiesRequest;
+use Bugsnag\Report;
 use Illuminate\Support\Facades\Redis;
 use Request;
 
