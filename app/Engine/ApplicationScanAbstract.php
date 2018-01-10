@@ -59,7 +59,7 @@ abstract class ApplicationScanAbstract
             $categoryName = $category->name;
             if ( ! empty($this->applications)) {
 
-                foreach ($this->applications as $appName => $app) {
+                foreach ($this->applications as $app) {
                     $appCategories = $app->categories;
 
                     if (in_array($categoryName, $appCategories)) {

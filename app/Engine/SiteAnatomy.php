@@ -128,10 +128,7 @@ class SiteAnatomy
             $this->styles  = $this->getStyleSheets();
             $this->scripts = $this->getScripts();
             $this->metas   = $this->metatags();
-            // $this->headers = $this->getHeaders();
-            // $this->cookies  = $this->getCookies();
             $this->comments = $this->getHtmlComments();
-            // $this->status   = $this->getStatus();
             $this->css = [
                 'classes' => $this->getCssClasses(),
                 'ids'     => $this->getCssIds(),
