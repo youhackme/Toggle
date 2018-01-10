@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Engine\ScanTechnologies;
 use App\Http\Requests\ScanTechnologiesRequest;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Support\Facades\Redis;
 use Request;
 
