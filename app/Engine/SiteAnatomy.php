@@ -9,6 +9,7 @@ use App\Engine\Bot\Driver\PhantomJS;
 use App\Http\Requests\ScanTechnologiesRequest;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 /**
  * Created by PhpStorm.
@@ -97,7 +98,7 @@ class SiteAnatomy
 
 
         } catch (\Exception $e) {
-
+            Bugsnag::notifyException($e);
             $this->errors[] = $e;
         }
     }
@@ -124,12 +125,12 @@ class SiteAnatomy
             $this->status      = $data->status();
             $this->host        = $data->host();
 
-            $this->crawler = new Crawler($this->html);
-            $this->styles  = $this->getStyleSheets();
-            $this->scripts = $this->getScripts();
-            $this->metas   = $this->metatags();
+            $this->crawler  = new Crawler($this->html);
+            $this->styles   = $this->getStyleSheets();
+            $this->scripts  = $this->getScripts();
+            $this->metas    = $this->metatags();
             $this->comments = $this->getHtmlComments();
-            $this->css = [
+            $this->css      = [
                 'classes' => $this->getCssClasses(),
                 'ids'     => $this->getCssIds(),
             ];
@@ -291,7 +292,7 @@ class SiteAnatomy
             $this->result($data);
 
         } catch (\Exception $e) {
-
+            Bugsnag::notifyException($e);
             $this->errors[] = $e->getMessage();
         }
     }
