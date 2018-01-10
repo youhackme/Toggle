@@ -74,7 +74,7 @@ class Applications
 
 
             // We need to merge plugins and themes
-            $applications = $wordpressCollection = $uniqueWordPressList->unique(function (Application $app) use (
+            $applications = $uniqueWordPressList->unique(function (Application $app) use (
                 $themeFlattened,
                 $pluginsFlattened
             ) {
