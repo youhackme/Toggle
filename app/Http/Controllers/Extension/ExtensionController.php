@@ -16,10 +16,11 @@ class ExtensionController extends Controller
     {
 
 
-        $response            = (new ScanTechnologies($request))
+        $response = (new ScanTechnologies($request))
             ->setOptions(['mode' => 'god'])
             ->search();
-        $response->debugMode = true;
+
+
 
         if (empty($response->errors)) {
 
