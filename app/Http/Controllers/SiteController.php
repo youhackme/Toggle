@@ -153,7 +153,7 @@ class SiteController extends Controller
 
             return response()->json($this);
         }
-        $message = 'Redis Cache: Unable to find this key: ' . $url;
+        $message = 'Redis Cache: Unable to find  key.';
 
         Bugsnag::notifyError($message, json_encode($this));
 
