@@ -83,6 +83,8 @@ class Version extends WordPressAbstract
             $goutteClient->request('GET', $url);
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
             \Bugsnag::notifyException($e);
+
+            return false;
         }
 
         return $goutteClient->getResponse()->getContent();
