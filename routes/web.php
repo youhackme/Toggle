@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Route::get('/result', 'SiteController@scanFromWeb');
 
+Route::get('/privacy', function () {
+    return view('website.privacy');
+});
 
 /*
  * Scrape plugins from different providers
