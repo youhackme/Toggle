@@ -18,7 +18,10 @@ class CheckIfOriginChrome
     public function handle(Request $request, Closure $next)
     {
 
-        if ($request->getMethod() == 'POST' && $request->header('origin') != env('CHROME_KEY')) {
+        if ($request->getMethod() == 'POST'
+            && $request->header('origin') != env('CHROME_KEY')
+            && env('APP_ENV') == 'production'
+        ) {
             \Bugsnag::notifyError('ErrorType', 'Illicit access to API via chrome endpoint');
 
             return response(['message' => 'Why are you trying to rape this API?']);
