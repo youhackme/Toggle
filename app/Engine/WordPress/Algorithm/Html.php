@@ -48,5 +48,5 @@ class Html extends WordPressAbstract
             }
         }
     }
-    
+
 }

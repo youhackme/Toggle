@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Repositories\Plugin\PluginRepository;
+use Illuminate\Console\Command;
 
 class ScrapePlugin extends Command
 {

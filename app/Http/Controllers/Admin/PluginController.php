@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Plugin\PluginRepository;
 use App\Repositories\Plugin\PluginMetaRepository;
-use Illuminate\Http\Request;
+use App\Repositories\Plugin\PluginRepository;
 use DB;
+use Illuminate\Http\Request;
 
 class PluginController extends Controller
 {

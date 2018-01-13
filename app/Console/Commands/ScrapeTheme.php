@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Repositories\Theme\ThemeRepository;
+use Illuminate\Console\Command;
 
 class ScrapeTheme extends Command
 {

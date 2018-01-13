@@ -7,9 +7,9 @@ use App\Engine\Bot\BotInterface;
 use App\Engine\Bot\Driver\BrowserSimulator;
 use App\Engine\Bot\Driver\PhantomJS;
 use App\Http\Requests\ScanTechnologiesRequest;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 /**
  * Created by PhpStorm.

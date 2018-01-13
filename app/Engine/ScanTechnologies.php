@@ -58,6 +58,6 @@ class ScanTechnologies
 
         return $this->scan = $scan;
     }
-    
+
 
 }
