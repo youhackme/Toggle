@@ -241,10 +241,6 @@
     </div>
 
 
-
-
-
-
     <footer class="footer">
         <div class="container">
             <small class="text-muted"> © {{ Carbon\Carbon::now()->format('Y') }} Toggle.me</small>

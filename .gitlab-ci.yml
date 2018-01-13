@@ -16,6 +16,7 @@ alpha:
   stage: deploy
   script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/alpha.toggle.me/public_html
+    - ssh hyder@163.172.90.99 "mkdir -p /var/www/alpha.toggle.me/public_html/public/storage/"
     - ssh hyder@163.172.90.99 "ln -sf /var/www/alpha.toggle.me/public_html/node_modules/togglyzer/icons/    /var/www/alpha.toggle.me/public_html/public/storage/"
   environment:
     name: Alpha
@@ -26,6 +27,7 @@ prod:
   stage: deploy
   script:
     - rsync -rave ssh  --exclude-from '.rsyncignore' ./ hyder@163.172.90.99:/var/www/toggle.me/public_html
+    - ssh hyder@163.172.90.99 "mkdir -p /var/www/toggle.me/public_html/public/storage/"
     - ssh hyder@163.172.90.99 "ln -sf /var/www/toggle.me/public_html/node_modules/togglyzer/icons/    /var/www/toggle.me/public_html/public/storage/"
   environment:
     name: Production
