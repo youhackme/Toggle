@@ -31,6 +31,19 @@ class ScanTechnologiesRequest extends FormRequest
     }
 
     /**
+     * The host name of the url to be scanned
+     * @return mixed
+     */
+    public function getHost()
+    {
+        $uri = \App::make('Uri');
+
+        return $uri->parseUrl(
+            $this->getUrl()
+        )->host->host;
+    }
+
+    /**
      * The url to be scanned
      * @return array|string
      */
@@ -46,28 +59,6 @@ class ScanTechnologiesRequest extends FormRequest
 
 
         return $url;
-    }
-
-    /**
-     * The host name of the url to be scanned
-     * @return mixed
-     */
-    public function getHost()
-    {
-        $uri = \App::make('Uri');
-
-        return $uri->parseUrl(
-            $this->getUrl()
-        )->host->host;
-    }
-
-    /**
-     * Do we have any html payload with this request?
-     * @return array|string
-     */
-    public function getHtml()
-    {
-        return $this->input('html');
     }
 
     /**
@@ -88,7 +79,6 @@ class ScanTechnologiesRequest extends FormRequest
         return $this->input('headers');
     }
 
-
     /**
      * The source ip of this request
      * @return string
@@ -105,6 +95,15 @@ class ScanTechnologiesRequest extends FormRequest
     public function getOrigin()
     {
         return is_null($this->getHtml()) ? 'web' : 'extension';
+    }
+
+    /**
+     * Do we have any html payload with this request?
+     * @return array|string
+     */
+    public function getHtml()
+    {
+        return $this->input('html');
     }
 
     /**

@@ -18,7 +18,7 @@ class PhantomJS implements BotInterface
 {
 
     public $response;
-    
+
     /**
      * @param ScanTechnologiesRequest $request
      *

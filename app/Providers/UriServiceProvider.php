@@ -8,9 +8,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use Pdp\Parser;
 use Pdp\PublicSuffixListManager;
-use Illuminate\Support\ServiceProvider;
 
 class UriServiceProvider extends ServiceProvider
 {

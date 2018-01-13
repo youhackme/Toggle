@@ -666,7 +666,8 @@
                 <p data-parallax='{"y": -35}'>Toggle's Chrome extension lets you find the technologies behind the
                     website you're
                     browsing in a click!</p>
-                <a target="_blank" href="https://chrome.google.com/webstore/detail/toggle/opkmhmdcgdplgnmkcmmhilaedpehejap">
+                <a target="_blank"
+                   href="https://chrome.google.com/webstore/detail/toggle/opkmhmdcgdplgnmkcmmhilaedpehejap">
                     <button class="m-t-50 btn btn-success input-xlg btn--download">
                         <i class="fa fa-chrome" aria-hidden="true"></i>
                         &nbsp;Get Chrome Extension

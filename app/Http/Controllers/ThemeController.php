@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Theme\ThemeRepository;
 use App\Repositories\Theme\ThemeMetaRepository;
+use App\Repositories\Theme\ThemeRepository;
 
 /**
  * Class ThemeController.

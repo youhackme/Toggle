@@ -26,63 +26,6 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
     }
 
     /**
-     * Find out if a url has have already been scanned
-     * @return bool
-     */
-    public function alreadyScanned()
-    {
-
-        $dsl = [
-            "size"  => 0,
-            "query" => [
-                "bool" => [
-                    "filter" => [
-                        [
-                            "terms" => [
-                                "url" => [$this->request->getUrl()],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-
-        $response = $this->query($dsl);
-
-
-        if ($response['hits']['total'] !== 0) {
-            return true;
-        }
-
-        return false;
-
-    }
-
-    /**
-     * Execute an ES query
-     *
-     * @param $dsl
-     *
-     * @return mixed
-     */
-    public function query($dsl)
-    {
-        $data = [
-            'body'  => $dsl,
-            'index' => 'toggle',
-            'type'  => 'technologies',
-
-        ];
-
-        $response = \Elasticsearch::search($data);
-
-        // $this->calcTimeTaken($response['took']);
-
-        return $response;
-    }
-
-    /**
      * Fetch the result from ES (including technologies, wordpress and corresponding plugins)
      * @return array
      */
@@ -190,6 +133,29 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
 
 
         return $this->query($dsl);
+    }
+
+    /**
+     * Execute an ES query
+     *
+     * @param $dsl
+     *
+     * @return mixed
+     */
+    public function query($dsl)
+    {
+        $data = [
+            'body'  => $dsl,
+            'index' => 'toggle',
+            'type'  => 'technologies',
+
+        ];
+
+        $response = \Elasticsearch::search($data);
+
+        // $this->calcTimeTaken($response['took']);
+
+        return $response;
     }
 
     /**
@@ -355,6 +321,40 @@ class HistoricalMode extends \App\Engine\ApplicationScanAbstract
         }
 
         return $plugins;
+    }
+
+    /**
+     * Find out if a url has have already been scanned
+     * @return bool
+     */
+    public function alreadyScanned()
+    {
+
+        $dsl = [
+            "size"  => 0,
+            "query" => [
+                "bool" => [
+                    "filter" => [
+                        [
+                            "terms" => [
+                                "url" => [$this->request->getUrl()],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+
+        $response = $this->query($dsl);
+
+
+        if ($response['hits']['total'] !== 0) {
+            return true;
+        }
+
+        return false;
+
     }
 
     /**

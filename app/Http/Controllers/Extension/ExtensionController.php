@@ -21,7 +21,6 @@ class ExtensionController extends Controller
             ->search();
 
 
-
         if (empty($response->errors)) {
 
             return view('extension.index')
