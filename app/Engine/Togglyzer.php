@@ -8,6 +8,8 @@
 
 namespace App\Engine;
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Bugsnag\Report;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -55,8 +57,22 @@ class Togglyzer
             throw new ProcessFailedException($process);
         }
 
-        $response = json_decode($process->getOutput());
+        $output   = $process->getOutput();
+        $response = json_decode($output);
 
+        if (is_null($response)) {
+
+            Bugsnag::notifyError('ErrorType', 'Togglyzer could not parse results',
+                function (Report $report) use ($output) {
+                    $report->setSeverity('error');
+                    $report->setMetaData([
+                        'toggly' => $output,
+                    ]);
+                });
+
+
+            return false;
+        }
         $response->url = urldecode($response->url);
         if (isset($response->applications)) {
             foreach ($response->applications as &$application) {
