@@ -60,7 +60,8 @@
             font-family: "Proxima Nova Thin";
             background-color: #5BC739;
             font-weight: 100;
-            padding: 3px 5px;
+            padding: 5px 7px;
+            font-size: 11px;
         }
 
         ul.plugins, ul.plugins li {
