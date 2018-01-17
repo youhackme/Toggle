@@ -13,6 +13,17 @@ try {
 
   $('div.js-hero').height($(window).height() - $('.js-navigation').innerHeight());
 
+  $('.karousel__logowrapper').hover(
+    function () {
+      $(this).addClass('active');
+
+      $('.karousel__logowrapper:not(.active)').addClass('karousel__logowrapper--grayscale');
+    }, function () {
+      $(this).removeClass('active');
+      $('.karousel__logowrapper:not(.active)').removeClass('karousel__logowrapper--grayscale');
+    }
+  );
+
   var ParallaxScroll = {
     /* PUBLIC VARIABLES */
     showLogs: false,
