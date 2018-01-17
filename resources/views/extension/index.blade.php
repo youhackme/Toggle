@@ -61,7 +61,7 @@
             background-color: #5BC739;
             font-weight: 100;
             padding: 5px 7px;
-            font-size: 11px;
+            font-size: 9px;
         }
 
         ul.plugins, ul.plugins li {
