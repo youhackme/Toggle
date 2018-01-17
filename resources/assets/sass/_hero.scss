@@ -191,7 +191,7 @@
   &__logowrapper {
     border: 1px dashed #d9dbdc;
     padding: 2px;
-    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 
     &--grayscale {
       filter: grayscale(100%);
