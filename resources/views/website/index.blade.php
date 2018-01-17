@@ -35,39 +35,39 @@
         </div>
         <!--  Headlines & Search bar  -->
         <div class="row">
-            <div class="hero js-hero">
-                <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-                    <h2 class="hero__headline m-t-80 p-b-20">
-                        Find out what
-                        <span class="typed"></span>
-                        your favorite sites
-                        are using!
-                    </h2>
-                </div>
-                <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                    <div class="blockSearch m-t-100">
-                        <form class="m-t-50" method="get" action="/result">
-                            <div class="input-group">
-                                <input type="text"
-                                       id="url"
-                                       name="url"
-                                       class="form-control input-xlg"
-                                       placeholder="https://toggle.me"
-                                       autofocus>
-                                <span class="input-group-btn">
+            <div class="hero js-hero col-md-12">
+                <div class="hero__wrapper">
+                    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                        <h2 class="hero__headline m-t-0 p-b-20">
+                            Find out what
+                            <span class="typedx"></span>
+                            your favorite sites
+                            are using!
+                        </h2>
+                    </div>
+                    <div class=" col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                        <div class="blockSearch m-t-100">
+                            <form class="m-t-50" method="get" action="/result">
+                                <div class="input-group">
+                                    <input type="text"
+                                           id="url"
+                                           name="url"
+                                           class="form-control input-xlg"
+                                           placeholder="https://toggle.me"
+                                           autofocus>
+                                    <span class="input-group-btn">
                       <button class="btn btn-default btn-green input-xlg"
                               type="submit">SEARCH
                       </button>
                     </span>
-                            </div>
-                        </form>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 text-center hero__section-arrow">
+                        <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
                     </div>
                 </div>
-
-                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 text-center hero__section-arrow">
-                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-                </div>
-
             </div>
         </div>
     </div>
@@ -203,116 +203,116 @@
                             </div>
                             <div class="col-md-4  hidden-xs hidden-sm karousel__card">
 
-                                    <div class="col-xs-12 col-sm-12 col-md-12 karousel__title">
-                                        <h4 class="text-center">
-                                            Ecommerce platforms
-                                        </h4>
+                                <div class="col-xs-12 col-sm-12 col-md-12 karousel__title">
+                                    <h4 class="text-center">
+                                        Ecommerce platforms
+                                    </h4>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/magento.svg'}}"
+                                             alt="Magento">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/magento.svg'}}"
-                                                 alt="Magento">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/prestashop.svg'}}"
+                                             alt="Prestashop">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/prestashop.svg'}}"
-                                                 alt="Prestashop">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/opencart.svg'}}"
+                                             alt="Opencart">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/opencart.svg'}}"
-                                                 alt="Opencart">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/oscommerce.svg'}}"
+                                             alt="OSCommerce">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/oscommerce.svg'}}"
-                                                 alt="OSCommerce">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/bigcommerce.svg'}}"
+                                             alt="Bigcommerce">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/bigcommerce.svg'}}"
-                                                 alt="Bigcommerce">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/cscart.svg'}}"
+                                             alt="CScart">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/cscart.svg'}}"
-                                                 alt="CScart">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/shopify.svg'}}"
+                                             alt="Shopify">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/shopify.svg'}}"
-                                                 alt="Shopify">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/shopware.svg'}}"
+                                             alt="Shopware">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/shopware.svg'}}"
-                                                 alt="Shopware">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/epages.svg'}}"
+                                             alt="Epages">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/epages.svg'}}"
-                                                 alt="Epages">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/xtcommerce.svg'}}"
+                                             alt="Xt:commerce">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/xtcommerce.svg'}}"
-                                                 alt="Xt:commerce">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/ezpublish.svg'}}"
+                                             alt="EZ Publisher">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/ezpublish.svg'}}"
-                                                 alt="EZ Publisher">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/volusion.svg'}}"
+                                             alt="Volusion">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/volusion.svg'}}"
-                                                 alt="Volusion">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/lightspeed.svg'}}"
+                                             alt="Lightspeed">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/lightspeed.svg'}}"
-                                                 alt="Lightspeed">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/xcart.svg'}}"
+                                             alt="Xcart">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/xcart.svg'}}"
-                                                 alt="Xcart">
-                                        </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
+                                    <div class="karousel__logowrapper">
+                                        <img class="img-responsive"
+                                             src="{{'img/apps/whmcs.svg'}}"
+                                             alt="WHMCS">
                                     </div>
-                                    <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                        <div class="karousel__logowrapper">
-                                            <img class="img-responsive"
-                                                 src="{{'img/apps/whmcs.svg'}}"
-                                                 alt="WHMCS">
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4 hidden-xs hidden-sm karousel__card">
 

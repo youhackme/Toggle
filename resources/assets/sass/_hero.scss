@@ -1,24 +1,33 @@
 // Headlines and search input
 
 .hero {
-  min-height: 500px;
 
+  display: table;
+  overflow: hidden;
+
+  &__wrapper {
+    padding: 5% 0;
+    display: table-cell;
+    vertical-align: middle;
+    position: relative;
+  }
   &__section-arrow {
 
     @keyframes bouncing {
       0% {
-        bottom: 90px;
+        bottom: 10%;
       }
       50% {
-        bottom: 110px;
+        bottom: 15%;
       }
       100% {
-        bottom: 90px;
+        bottom: 10%;
       }
     }
     color: #ffffff;
-    position: relative;
-    margin-top: 215px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     animation: bouncing 2s infinite ease-in-out;
   }
 
