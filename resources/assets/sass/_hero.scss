@@ -6,7 +6,6 @@
   overflow: hidden;
 
   &__wrapper {
-    padding: 5% 0;
     display: table-cell;
     vertical-align: middle;
     position: relative;
@@ -75,6 +74,7 @@
   -webkit-transition: -webkit-filter 0.5s ease, opacity 1s ease;
   -ms-transition: -ms-filter 0.5s ease, opacity 1s ease;
   transition: filter 0.5s ease, opacity 1s ease;
+  height: 100vh;
 }
 
 .blockSearch {

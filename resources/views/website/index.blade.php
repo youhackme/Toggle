@@ -32,21 +32,20 @@
                 </div>
                 <!--/.container-fluid -->
             </nav>
-        </div>
-        <!--  Headlines & Search bar  -->
-        <div class="row">
+
+            <!--  Headlines & Search bar  -->
             <div class="hero js-hero col-md-12">
                 <div class="hero__wrapper">
                     <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
                         <h2 class="hero__headline m-t-0 p-b-20">
                             Find out what
-                            <span class="typedx"></span>
+                            <span class="typed"></span>
                             your favorite sites
                             are using!
                         </h2>
                     </div>
                     <div class=" col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                        <div class="blockSearch m-t-100">
+                        <div class="blockSearch m-t-70">
                             <form class="m-t-50" method="get" action="/result">
                                 <div class="input-group">
                                     <input type="text"
@@ -69,6 +68,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 
