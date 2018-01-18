@@ -506,6 +506,16 @@ btn--download, .btn--download {
     li {
       text-align: left;
     }
+
+    a {
+      color: #8F8D9A;
+      transition: all .3s ease;
+    }
+
+    a:hover {
+      color: #4f2ebf;
+      text-decoration: none;
+    }
   }
 
   &__heading {
