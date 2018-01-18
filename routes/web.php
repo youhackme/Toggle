@@ -20,6 +20,32 @@ Route::get('/', function () {
 
 Route::get('/result', 'SiteController@scanFromWeb');
 
+Route::get('/apps', function () {
+
+
+    $json                  = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
+    $categories            = $json->categories;
+    $applicationByCategory = [];
+
+    foreach ($categories as $categoryId => $category) {
+
+        $categoryName = $category->name;
+
+
+        foreach ($json->apps as $name => $app) {
+            $appCategories = $app->cats;
+
+            if (in_array($categoryId, $appCategories)) {
+                $applicationByCategory[$categoryName][$name] = $app;
+            }
+
+        }
+    }
+    
+
+    return view('website.apps', ['apps' => $applicationByCategory]);
+});
+
 Route::get('/privacy', function () {
     return view('website.privacy');
 });
