@@ -36,6 +36,20 @@
     color: #ffffff;
     text-align: center;
 
+    @media (max-width: 480px) {
+      font-size: 15px;
+      padding-bottom: 0px !important;
+    }
+    @media (min-width: 480px) and (max-width: 768px) {
+      font-size: 20px;
+      padding-bottom: 0px !important;
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      font-size: 28px;
+      padding-bottom: 0px !important;
+    }
+
     span.typed {
       font-family: "Proxima Nova Semibold";
       font-weight: bold;
@@ -75,6 +89,7 @@
   -ms-transition: -ms-filter 0.5s ease, opacity 1s ease;
   transition: filter 0.5s ease, opacity 1s ease;
   height: 100vh;
+  min-height: 415px;
 }
 
 .blockSearch {
@@ -92,6 +107,19 @@
   font-size: 20px;
   line-height: 1.3333333;
   border-radius: 6px;
+
+  @media (max-width: 480px) {
+    height: 45px;
+  }
+
+  @media (min-width: 480px) and (max-width: 768px) {
+    height: 55px;
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    height: 60px;
+  }
+
 }
 
 .btn-green, .btn-green:focus, .btn-green:active {
@@ -116,11 +144,19 @@
 }
 
 .karousel {
-  height: 400px;
+  height: 350px;
   background-color: #ffffff;
   box-shadow: 0 6px 8px 0 rgba(45, 35, 66, 0.15);
   border-radius: 6px;
   top: 120px;
+
+  @media (min-width: 480px) and (max-width: 768px) {
+    height: 480px;
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    height: 280px;
+  }
 
   &__item {
     height: 400px;
@@ -132,6 +168,10 @@
 
   &__title {
     margin-bottom: 30px;
+    h4 {
+      font-family: "Proxima Nova Thin";
+      font-weight: bold;
+    }
   }
 
   /**
@@ -174,6 +214,27 @@
     &.right {
       right: -50px;
     }
+
+    @media (min-width: 480px) and (max-width: 768px) {
+      &.right {
+        right: 0px;
+      }
+
+      &.left {
+        left: 0px;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      &.right {
+        right: 0px;
+      }
+
+      &.left {
+        left: 0px;
+      }
+    }
+
   }
   .carousel-control:hover,
   .carousel-control:focus {
@@ -186,6 +247,14 @@
 
   &__logo {
     height: 60px;
+
+    @media (min-width: 480px) and (max-width: 768px) {
+      height: 95px;
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      height: 85px;
+    }
   }
 
   &__logowrapper {
@@ -203,18 +272,46 @@
 /**
 The Chome block
 **/
-div.chrome {
+.chrome {
   height: 850px;
   background: #2D2342;
   color: #ffffff;
 
+  @media (min-width: 480px) and (max-width: 768px) {
+    height: 540px;
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    height: 605px;
+  }
+
   &__wrapper {
     margin-top: 250px;
+
+    @media (min-width: 480px) and (max-width: 768px) {
+      margin-top: 170px;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      margin-top: 150px;
+      text-align: center;
+    }
+
   }
 
   &__demo {
     width: 36vw;
     height: 425px;
+  }
+
+  &__heading {
+    font-family: "Proxima Nova Thin";
+  }
+  &__subheading {
+    font-family: "Proxima Nova Thin";
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
@@ -405,7 +502,33 @@ btn--download, .btn--download {
   background-color: #ffffff;
   color: #cfcfcf;
   height: 200px;
-  line-height: 200px;
+  margin-top: 50px;
+
+  &__list ul {
+    list-style-type: none;
+
+    li {
+      text-align: left;
+    }
+
+    a {
+      color: #8F8D9A;
+      transition: all .3s ease;
+    }
+
+    a:hover {
+      color: #4f2ebf;
+      text-decoration: none;
+    }
+  }
+
+  &__heading {
+    font-size: .875em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #2D2342;
+  }
 }
 
 
