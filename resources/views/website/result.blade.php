@@ -177,11 +177,12 @@
                                         $randomColors = array_rand($colors, 1);
                                         $color = $colors[$randomColors];
                                     @endphp
-                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
                                         <div class="blockPlugins__plugin">
                                             <h5>
-                                <span class="blockPlugins__pluginBadge {{$color}}">
-                                    {{substr(ucfirst($plugin->name),0,1)}}</span>
+                                        <span class="blockPlugins__pluginBadge {{$color}}">
+                                           {{substr(ucfirst($plugin->name),0,1)}}
+                                        </span>
                                                 {{str_limit(ucfirst($plugin->name),45)}}
                                             </h5>
                                             <p class="blockPlugins__muted">
@@ -216,7 +217,7 @@
                 @foreach ($response->applicationsByCategory as $category=>$applications)
                     @foreach ($applications as $application)
                         @if(!$application->poweredBy)
-                            <div class="col-md-3 col-sm-6 col-xs-6 blockTechnologies__technology">
+                            <div class="col-md-3 col-sm-6 col-xs-12 blockTechnologies__technology">
                                 <div class="col-md-4 col-sm-3 col-xs-4 blockTechnologies__outericon">
                                     <a href="{{$application->website}}" target="_blank">
                                         <img src="{{$application->icon}}"
