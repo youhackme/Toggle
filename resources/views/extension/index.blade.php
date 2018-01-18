@@ -208,7 +208,7 @@
                             <span class="application">
                                 @foreach($response->applications as $application)
                                     @if($application->poweredBy)
-                                        <a href="{{$application->website}}">{{$application->name}} {{isset($application->version)? $application->version:''}}</a>
+                                        {{$application->name}} {{isset($application->version)? $application->version:''}}
                                         @php
                                             $mainApplication = true;
                                         @endphp
@@ -217,7 +217,7 @@
 
 
                                 @if (!$mainApplication)
-                                    Unknown
+                                    Custom Application
                                 @endif
 
 

@@ -56,7 +56,7 @@
                             @else
                                 @foreach($response->applications as $application)
                                     @if($application->poweredBy)
-                                        <a href="{{$application->website}}">{{$application->name}} {{isset($application->version)? $application->version:''}}</a>
+                                        {{$application->name}} {{isset($application->version)? $application->version:''}}
                                     @endif
                                 @endforeach
                             @endif
