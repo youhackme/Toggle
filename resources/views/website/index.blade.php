@@ -135,13 +135,6 @@
                                 <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                     <div class="karousel__logowrapper">
                                         <img class="img-responsive"
-                                             src="{{'img/apps/blogger.svg'}}"
-                                             alt="Blogger">
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                    <div class="karousel__logowrapper">
-                                        <img class="img-responsive"
                                              src="{{'img/apps/wix.svg'}}"
                                              alt="Wix">
                                     </div>
@@ -158,13 +151,6 @@
                                         <img class="img-responsive"
                                              src="{{'img/apps/weebly.svg'}}"
                                              alt="Weebly">
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                    <div class="karousel__logowrapper">
-                                        <img class="img-responsive"
-                                             src="{{'img/apps/dnn.svg'}}"
-                                             alt="DNN">
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
@@ -195,13 +181,7 @@
                                              alt="Hugo">
                                     </div>
                                 </div>
-                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                    <div class="karousel__logowrapper">
-                                        <img class="img-responsive"
-                                             src="{{'img/apps/adobeexperiencemanager.svg'}}"
-                                             alt="Adobe Experience Manager">
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="col-md-4  hidden-xs hidden-sm karousel__card">
 
@@ -269,20 +249,6 @@
                                 <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
                                     <div class="karousel__logowrapper">
                                         <img class="img-responsive"
-                                             src="{{'img/apps/epages.svg'}}"
-                                             alt="Epages">
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                    <div class="karousel__logowrapper">
-                                        <img class="img-responsive"
-                                             src="{{'img/apps/xtcommerce.svg'}}"
-                                             alt="Xt:commerce">
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                    <div class="karousel__logowrapper">
-                                        <img class="img-responsive"
                                              src="{{'img/apps/ezpublish.svg'}}"
                                              alt="EZ Publisher">
                                     </div>
@@ -299,13 +265,6 @@
                                         <img class="img-responsive"
                                              src="{{'img/apps/lightspeed.svg'}}"
                                              alt="Lightspeed">
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
-                                    <div class="karousel__logowrapper">
-                                        <img class="img-responsive"
-                                             src="{{'img/apps/xcart.svg'}}"
-                                             alt="Xcart">
                                     </div>
                                 </div>
                                 <div class="col-xs-4 col-sm-2 col-md-4 karousel__logo">
