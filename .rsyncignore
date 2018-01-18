@@ -11,3 +11,4 @@ travis.yml
 .env.example
 tests
 storage/app/other/t_info.xml
+public/robots.txt
