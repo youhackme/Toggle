@@ -646,7 +646,7 @@
                 <div class="col-md-2 col-sm-3 col-xs-3">
                     <img class="img-responsive" src="{{asset('img/logoBlackOnWhite.svg')}}" alt="Logo">
                 </div>
-                <div class="col-md-offset-6 col-md-4 col-sm-offset-4 col-sm-5 col-xs-offset-0 col-xs-9">
+                <div class="col-md-offset-5 col-md-5 col-sm-offset-4 col-sm-5 col-xs-offset-0 col-xs-9">
                     <div class="footerhome__list col-md-6 col-sm-6 col-xs-6">
                         <h5 class="text-left footerhome__heading">Company</h5>
                         <ul class="p-l-0">
@@ -665,8 +665,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-12">
-                    <small class="text-muted text-left p-t-30"> © {{ Carbon\Carbon::now()->format('Y') }}
+                <div class="col-md-12 m-t-20">
+                    <small class="text-muted text-left"> © {{ Carbon\Carbon::now()->format('Y') }}
                         TOGGLE.ME. All Rights Reserved.
                     </small>
                 </div>

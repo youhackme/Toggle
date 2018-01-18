@@ -36,6 +36,20 @@
     color: #ffffff;
     text-align: center;
 
+    @media (max-width: 480px) {
+      font-size: 15px;
+      padding-bottom: 0px !important;
+    }
+    @media (min-width: 480px) and (max-width: 768px) {
+      font-size: 20px;
+      padding-bottom: 0px !important;
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      font-size: 28px;
+      padding-bottom: 0px !important;
+    }
+
     span.typed {
       font-family: "Proxima Nova Semibold";
       font-weight: bold;
@@ -75,6 +89,7 @@
   -ms-transition: -ms-filter 0.5s ease, opacity 1s ease;
   transition: filter 0.5s ease, opacity 1s ease;
   height: 100vh;
+  min-height: 415px;
 }
 
 .blockSearch {
@@ -92,6 +107,19 @@
   font-size: 20px;
   line-height: 1.3333333;
   border-radius: 6px;
+
+  @media (max-width: 480px) {
+    height: 45px;
+  }
+
+  @media (min-width: 480px) and (max-width: 768px) {
+    height: 55px;
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    height: 60px;
+  }
+
 }
 
 .btn-green, .btn-green:focus, .btn-green:active {
@@ -258,10 +286,12 @@ The Chome block
 
     @media (min-width: 480px) and (max-width: 768px) {
       margin-top: 170px;
+      text-align: center;
     }
 
     @media (min-width: 768px) and (max-width: 992px) {
       margin-top: 150px;
+      text-align: center;
     }
 
   }
