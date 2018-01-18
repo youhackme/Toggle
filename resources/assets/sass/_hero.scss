@@ -203,7 +203,7 @@
 /**
 The Chome block
 **/
-div.chrome {
+.chrome {
   height: 850px;
   background: #2D2342;
   color: #ffffff;
@@ -215,6 +215,15 @@ div.chrome {
   &__demo {
     width: 36vw;
     height: 425px;
+  }
+
+  &__heading {
+    font-family: "Proxima Nova Thin";
+  }
+  &__subheading {
+    font-family: "Proxima Nova Thin";
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
@@ -405,7 +414,23 @@ btn--download, .btn--download {
   background-color: #ffffff;
   color: #cfcfcf;
   height: 200px;
-  line-height: 200px;
+  margin-top: 50px;
+
+  &__list ul {
+    list-style-type: none;
+
+    li {
+      text-align: left;
+    }
+  }
+
+  &__heading {
+    font-size: .875em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #2D2342;
+  }
 }
 
 

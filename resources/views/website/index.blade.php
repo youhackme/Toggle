@@ -654,13 +654,13 @@
                 <div class="chrome__demo">
                     <img class="img-responsive" src="{{asset('/img/toggle.gif')}}" alt="Toggle Chrome extension">
                 </div>
-
             </div>
             <div class="col-md-6 col-xs-12 col-sm-12">
-                <h1 data-parallax='{"y": -25}'>Get our Chrome extension. It's Free.</h1>
-                <p data-parallax='{"y": -35}'>Toggle's Chrome extension lets you find the technologies behind the
+                <h1 data-parallax='{"y": -25}' class="chrome__heading">Get our Chrome extension. It's Free.</h1>
+                <h4 data-parallax='{"y": -35}' class="chrome__subheading">Toggle's Chrome extension lets you find the
+                    technologies behind the
                     website you're
-                    browsing in a click!</p>
+                    browsing in a click!</h4>
                 <a target="_blank"
                    href="https://chrome.google.com/webstore/detail/toggle/opkmhmdcgdplgnmkcmmhilaedpehejap">
                     <button class="m-t-50 btn btn-success input-xlg btn--download">
@@ -681,10 +681,37 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <footer class="col-md-12 text-center footerhome">
-                <small class="text-muted"> © {{ Carbon\Carbon::now()->format('Y') }} Toggle.me</small>
+                <div class="col-md-2 col-sm-3 col-xs-3">
+                    <img class="img-responsive" src="{{asset('img/logoBlackOnWhite.svg')}}" alt="Logo">
+                </div>
+                <div class="col-md-offset-6 col-md-4 col-sm-offset-4 col-sm-5 col-xs-offset-0 col-xs-9">
+                    <div class="footerhome__list col-md-6 col-sm-6 col-xs-6">
+                        <h5 class="text-left footerhome__heading">Company</h5>
+                        <ul class="p-l-0">
+                            <li><a href="/about">About</a></li>
+                            <li><a href="/privacy">Privacy Policy</a></li>
+                            <li><a href="/extension">Chrome Extension</a></li>
+                        </ul>
+                    </div>
+                    <div class="footerhome__list col-md-6 col-sm-6 col-xs-6">
+                        <h5 class="text-left footerhome__heading">Support</h5>
+                        <ul class="p-l-0">
+                            <li><a href="/contact">Contact Us</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">API</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <small class="text-muted text-left p-t-30"> © {{ Carbon\Carbon::now()->format('Y') }}
+                        TOGGLE.ME. All Rights Reserved.
+                    </small>
+                </div>
+
             </footer>
         </div>
     </div>
