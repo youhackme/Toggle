@@ -48,6 +48,7 @@
                         <div class="blockSearch m-t-70">
                             <form class="m-t-50" method="get" action="/result">
                                 <div class="input-group">
+
                                     <input type="text"
                                            id="url"
                                            name="url"
@@ -75,7 +76,7 @@
 
     <div class="container-fluid explainer">
         <div class="row text-center m-t-50">
-            <h1 class="explainer__title" data-parallax='{"y": -25}'>
+            <h1 class="explainer__title" data-parallax='{"y": -30}'>
                 Identify over 1000+ Technologies across 20 categories
             </h1>
             <p class="explainer__subtitle text-muted" data-parallax='{"y": -35}'>Content Management Systems,
