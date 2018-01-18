@@ -646,8 +646,8 @@
                 <div class="col-md-2 col-sm-3 col-xs-3">
                     <img class="img-responsive" src="{{asset('img/logoBlackOnWhite.svg')}}" alt="Logo">
                 </div>
-                <div class="col-md-offset-5 col-md-5 col-sm-offset-4 col-sm-5 col-xs-offset-0 col-xs-9">
-                    <div class="footerhome__list col-md-6 col-sm-6 col-xs-6">
+                <div class="col-md-offset-3 col-md-7 col-sm-offset-4 col-sm-5 col-xs-offset-0 col-xs-9">
+                    <div class="footerhome__list col-md-4 col-sm-4 col-xs-4">
                         <h5 class="text-left footerhome__heading">Company</h5>
                         <ul class="p-l-0">
                             <li><a href="/about">About</a></li>
@@ -655,12 +655,20 @@
                             <li><a href="/extension">Chrome Extension</a></li>
                         </ul>
                     </div>
-                    <div class="footerhome__list col-md-6 col-sm-6 col-xs-6">
+                    <div class="footerhome__list col-md-4 col-sm-4 col-xs-4">
                         <h5 class="text-left footerhome__heading">Support</h5>
                         <ul class="p-l-0">
                             <li><a href="/contact">Contact Us</a></li>
                             <li><a href="#">Twitter</a></li>
                             <li><a href="#">API</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="footerhome__list col-md-4 col-sm-4 col-xs-4">
+                        <h5 class="text-left footerhome__heading">Resources</h5>
+                        <ul class="p-l-0">
+                            <li><a href="/contact">FAQ</a></li>
+                            <li><a href="#">Statistics</a></li>
                         </ul>
                     </div>
                 </div>
