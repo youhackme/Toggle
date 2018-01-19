@@ -616,7 +616,8 @@
             </div>
             <div class="col-md-6 col-xs-12 col-sm-12">
                 <h1 data-parallax='{"y": -25}' class="chrome__heading">Get our Chrome extension. It's Free.</h1>
-                <h4 data-parallax='{"y": -35}' class="chrome__subheading">Toggle's Chrome extension lets you find the
+                <h4 data-parallax='{"y": -35}' class="chrome__subheading p-t-5">Toggle's Chrome extension lets you find
+                    the
                     technologies behind the
                     website you're
                     browsing in a click!</h4>
@@ -646,7 +647,7 @@
                 <div class="col-md-2 col-sm-3 col-xs-3">
                     <img class="img-responsive" src="{{asset('img/logoBlackOnWhite.svg')}}" alt="Logo">
                 </div>
-                <div class="col-md-offset-3 col-md-7 col-sm-offset-4 col-sm-5 col-xs-offset-0 col-xs-9">
+                <div class="col-md-offset-3 col-md-7 col-sm-offset-1 col-sm-8 col-xs-offset-0 col-xs-9">
                     <div class="footerhome__list col-md-4 col-sm-4 col-xs-4">
                         <h5 class="text-left footerhome__heading">Company</h5>
                         <ul class="p-l-0">
@@ -660,15 +661,16 @@
                         <ul class="p-l-0">
                             <li><a href="/contact">Contact Us</a></li>
                             <li><a href="#">Twitter</a></li>
-                            <li><a href="#">API</a></li>
+                            <li><a href="/faq">FAQ</a></li>
 
                         </ul>
                     </div>
                     <div class="footerhome__list col-md-4 col-sm-4 col-xs-4">
                         <h5 class="text-left footerhome__heading">Resources</h5>
                         <ul class="p-l-0">
-                            <li><a href="/contact">FAQ</a></li>
-                            <li><a href="#">Statistics</a></li>
+
+                            <li><a href="/api">API</a></li>
+                            <li><a href="/statictics">Statistics</a></li>
                         </ul>
                     </div>
                 </div>
