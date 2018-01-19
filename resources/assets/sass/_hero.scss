@@ -144,11 +144,11 @@
 }
 
 .karousel {
-  height: 350px;
+  height: 380px;
   background-color: #ffffff;
   box-shadow: 0 6px 8px 0 rgba(45, 35, 66, 0.15);
   border-radius: 6px;
-  top: 120px;
+  top: 80px;
 
   @media (min-width: 480px) and (max-width: 768px) {
     height: 480px;
@@ -246,7 +246,7 @@
   }
 
   &__logo {
-    height: 60px;
+    height: 70px;
 
     @media (min-width: 480px) and (max-width: 768px) {
       height: 95px;
@@ -301,7 +301,7 @@ The Chome block
   }
 
   &__demo {
-    width: 36vw;
+    width: 25vw;
     height: 425px;
   }
 
