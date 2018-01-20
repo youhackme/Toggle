@@ -609,7 +609,7 @@
     </div>
     <div class="container-fluid chrome">
         <div class="row chrome__wrapper">
-            <div data-parallax='{"y": -35}' class="col-md-6  hidden-xs hidden-sm p-l-0">
+            <div data-parallax='{"y": -25}' class="col-md-6  hidden-xs hidden-sm p-l-0">
                 <div class="chrome__demo">
                     <img class="img-responsive" src="{{asset('/img/toggle.gif')}}" alt="Toggle Chrome extension">
                 </div>
