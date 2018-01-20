@@ -20,7 +20,7 @@
                     <div class="col-md-3 col-sm-6 col-xs-12 blockTechnologies__technology">
                         <div class="col-md-4 col-sm-3 col-xs-4 blockTechnologies__outericon">
                             <a href="{{$application->website}}" target="_blank">
-                                <img src="http://toggle.test/storage/icons/{{$application->icon??''}}"
+                                <img src="storage/icons/{{$application->icon??''}}"
                                      class="img-responsive blockTechnologies__innericon"
                                      alt="{{ucfirst($name)}}">
                             </a>
