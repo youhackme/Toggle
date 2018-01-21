@@ -26,7 +26,7 @@ class Plugin extends WordPressAbstract
     {
         $this->siteAnatomy = $siteAnatomy;
         $this->getPluginFromDictionary();
-        $this->getPluginFromHtml();
+        $this->getPluginFromLinks();
 
         return $this;
     }
@@ -60,17 +60,40 @@ class Plugin extends WordPressAbstract
     }
 
     /**
-     * Fetch plugin from html source code.
+     * Fetch plugin from style and script tag links
      */
-    public function getPluginFromHtml()
+    public function getPluginFromLinks()
     {
-        if (preg_match_all('/\/wp-content\/plugins\/(.+?)\//i', $this->siteAnatomy->html, $matches)) {
-            if ( ! empty($matches[1])) {
-                $plugins = array_unique($matches[1]);
-                foreach ($plugins as $plugin) {
-                    $this->setPlugin($plugin, 'Detected from html source code');
+
+
+        if (isset($this->siteAnatomy->styles)) {
+            foreach ($this->siteAnatomy->styles as $styleSheet) {
+                if (preg_match_all('/\/wp-content\/plugins\/(.+?)\//i', $styleSheet, $matches)) {
+                    if ( ! empty($matches[1])) {
+                        $plugins = array_unique($matches[1]);
+                        dd($plugins);
+                        foreach ($plugins as $plugin) {
+                            $this->setPlugin($plugin, 'Plugin detected from styles link');
+                        }
+                    }
                 }
             }
         }
+
+        if (isset($this->siteAnatomy->scripts)) {
+            foreach ($this->siteAnatomy->scripts as $script) {
+                if (preg_match_all('/\/wp-content\/plugins\/(.+?)\//i', $script, $matches)) {
+                    if ( ! empty($matches[1])) {
+                        $plugins = array_unique($matches[1]);
+                        dd($plugins);
+                        foreach ($plugins as $plugin) {
+                            $this->setPlugin($plugin, 'Plugin detected from script links');
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
