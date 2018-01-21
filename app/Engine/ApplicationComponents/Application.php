@@ -84,7 +84,7 @@ class Application
     public function setCategories(Array $categories)
     {
 
-        $primaryCategories = ['CMS', 'Blogs', 'Ecommerce', 'Message Boards'];
+        $primaryCategories = ['CMS', 'Blogs', 'Ecommerce', 'Message Boards','Web Frameworks'];
         foreach ($categories as $category) {
             if (in_array($category, $primaryCategories)) {
                 $this->poweredBy = true;
