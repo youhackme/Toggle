@@ -649,7 +649,7 @@
                 </div>
                 <div class="col-md-offset-3 col-md-7 col-sm-offset-1 col-sm-8 col-xs-offset-0 col-xs-9">
                     <div class="footerhome__list col-md-4 col-sm-4 col-xs-4">
-                        <h5 class="text-left footerhome__heading">Company</h5>
+                        <h5 class="text-left footerhome__heading">Toggle</h5>
                         <ul class="p-l-0">
                             <li><a href="/about">About</a></li>
                             <li><a href="/privacy">Privacy Policy</a></li>
