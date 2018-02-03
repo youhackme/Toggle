@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" src="//script.crazyegg.com/pages/scripts/0072/9059.js" async="async"></script>
     <title>@yield('title')</title>
     <link href="{{mix('css/app.css')}}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
