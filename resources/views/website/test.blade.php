@@ -21,7 +21,6 @@
             margin: 0
         }
         .HomePage .feature-inim-collage .growable-container {
-            height: 180px;
             display: block;
             float: left;
             position: relative;
@@ -36,7 +35,9 @@
             opacity: .7
         }
         .HomePage .feature-inim-collage .growable-container img {
-            height: 100%
+            max-width: 100%;
+            max-height: 100%;
+            height: 200px;
         }
         .HomePage .feature-inim-collage .growable-container .growable-container-username {
             position: absolute;
@@ -202,6 +203,7 @@
             zoom: 1
         }
         .col {
+            width: 100%;
             display: block;
             float: left;
             margin: 1% 0 1% 1.6%;
@@ -595,32 +597,32 @@
 <body class="HomePage home white-header">
 <section class="section group normal-screen feature-inim-collage feature-inims-top-row margin-top-15px">
     <div class="col span_1_of_1">
-        <div class="growable-container growable-container-1" data-url="/inim/vivaluxury/76346/details" data-inims-id="76346" data-inims-username="vivaluxury" style="height: 336px;">
+        <div class="growable-container growable-container-1" data-url="/inim/vivaluxury/76346/details" data-inims-id="76346" data-inims-username="vivaluxury" >
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/3333/inims/5f013436988f54219e8c9d28ab44fb50a9ddec1c6f2ece3b7b56f540d88d2544.jpg">
         </div>
-        <div class="growable-container growable-container-2" data-url="/inim/zeanvo/99274/details" data-inims-id="99274" data-inims-username="zeanvo" style="height: 336px;">
+        <div class="growable-container growable-container-2" data-url="/inim/zeanvo/99274/details" data-inims-id="99274" data-inims-username="zeanvo" >
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/416/inims/2879689b51efc6b2d6325ba439a8d51fa7b9e757e87db037a3f65433412af513.jpg">
         </div>
-        <div class="growable-container growable-container-3" data-url="/inim/stockholmstreetstyle/4243/details" data-inims-id="4243" data-inims-username="stockholmstreetstyle" style="height: 336px;">
+        <div class="growable-container growable-container-3" data-url="/inim/stockholmstreetstyle/4243/details" data-inims-id="4243" data-inims-username="stockholmstreetstyle" >
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/50/inims/325c49038aa043174058083c3f53a8c6516241b0159d54d524c6f475ee082051.jpg">
         </div>
-        <div class="growable-container growable-container-4" data-url="/inim/stockholmstreetstyle/4288/details" data-inims-id="4288" data-inims-username="stockholmstreetstyle" style="height: 336px;">
+        <div class="growable-container growable-container-4" data-url="/inim/stockholmstreetstyle/4288/details" data-inims-id="4288" data-inims-username="stockholmstreetstyle" >
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/50/inims/b5a3b7ced95dc97909ec39c2a2a7e38cae0e3ca496918e0a0b117d6d7fa796b5.jpg">
         </div>
     </div>
 </section>
 <section class="section group normal-screen feature-inim-collage feature-inims-bottom-row">
     <div class="col span_1_of_1">
-        <div class="growable-container growable-container-5" data-url="/inim/vivaluxury/76056/details" data-inims-id="76056" data-inims-username="vivaluxury" style="height: 432px;">
+        <div class="growable-container growable-container-5" data-url="/inim/vivaluxury/76056/details" data-inims-id="76056" data-inims-username="vivaluxury">
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/3333/inims/7f8bc2b9d2049685416026fb6db4234931af430ec92f7c7659db606354496b93.jpg">
         </div>
-        <div class="growable-container growable-container-6" data-url="/inim/saraescudero/99165/details" data-inims-id="99165" data-inims-username="saraescudero" style="height: 432px;">
+        <div class="growable-container growable-container-6" data-url="/inim/saraescudero/99165/details" data-inims-id="99165" data-inims-username="saraescudero">
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/3315/inims/8d1f3558184937e6ecaf57250ba49ef43d8bbc7c3bd9ae00285372c3419b2398.jpg">
         </div>
-        <div class="growable-container growable-container-7" data-url="/inim/David/99163/details" data-inims-id="99163" data-inims-username="David" style="height: 432px;">
+        <div class="growable-container growable-container-7" data-url="/inim/David/99163/details" data-inims-id="99163" data-inims-username="David">
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/3404/inims/4b4605c129512ff5048888e67791437223ca3f114fe60cb1be41d30a48948640.jpg">
         </div>
-        <div class="growable-container growable-container-8" data-url="/inim/margaretzhang/24644/details" data-inims-id="24644" data-inims-username="margaretzhang" style="height: 432px;">
+        <div class="growable-container growable-container-8" data-url="/inim/margaretzhang/24644/details" data-inims-id="24644" data-inims-username="margaretzhang">
             <img class="growable-container-inim" src="https://dhklshjlt2i0p.cloudfront.net/content/resized/medium/715/inims/cf3c2d97466d4250ecf2f4004dce1f045aa07e5626821411988c787093bc4678.jpg">
         </div>
     </div>
@@ -655,7 +657,7 @@
      **********/
     var i = 0;
     do {
-      $('.feature-inims-top-row .growable-container').css('height', i);
+      $('.feature-inims-top-row .growable-container img').css('height', i);
       var RowWidth1 = CalculateTotalWidth(1);
       if(RowWidth1 < (ContainerWidth*0.8)){
         i = i+10;
@@ -670,7 +672,7 @@
      **********/
     var i = 0;
     do {
-      $('.feature-inims-bottom-row .growable-container').css('height', i);
+      $('.feature-inims-bottom-row .growable-container img').css('height', i);
       var RowWidth2 = CalculateTotalWidth(2);
       if(RowWidth2 < (ContainerWidth*0.8)){
         i = i+10;
