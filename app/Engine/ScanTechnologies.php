@@ -37,7 +37,10 @@ class ScanTechnologies
      */
     public function setOptions($options = ['mode' => 'online'])
     {
-
+        //Lastoplasse for the time being
+        $this->scan = new OnlineMode($this->request);
+       
+        return $this->scan;
         switch ($options['mode']) {
             case 'online':
                 $scan = new OnlineMode($this->request);
@@ -54,7 +57,6 @@ class ScanTechnologies
             default:
                 $scan = new OnlineMode($this->request);
         }
-
 
         return $this->scan = $scan;
     }

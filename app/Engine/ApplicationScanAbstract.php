@@ -26,6 +26,7 @@ abstract class ApplicationScanAbstract
         $this->host    = $request->getHost();
         $this->url     = $request->getUrl();
         $this->request = $request;
+
         if (get_class($this) != 'App\Engine\ScanModes\HistoricalMode') {
             $this->siteAnatomy = (new \App\Engine\SiteAnatomy($request));
         }
@@ -57,7 +58,7 @@ abstract class ApplicationScanAbstract
         foreach ($categories as $category) {
 
             $categoryName = $category->name;
-            if ( ! empty($this->applications)) {
+            if (!empty($this->applications)) {
 
                 foreach ($this->applications as $app) {
                     $appCategories = $app->categories;

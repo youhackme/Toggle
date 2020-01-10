@@ -1,36 +1,31 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Hyder
- * Date: 28/12/2017
- * Time: 08:06
- */
 
 namespace App\Engine\ScanModes;
 
 use App\Engine\ApplicationComponents\Application;
+use App\Engine\ApplicationComponents\Applications;
 use App\Engine\ApplicationComponents\Plugin;
 use App\Engine\ApplicationComponents\Theme;
 use App\Engine\ApplicationScanAbstract;
 use App\Engine\Togglyzer;
+use App\Engine\WordPress\WordPress;
+use Carbon\Carbon;
 
 class OnlineMode extends ApplicationScanAbstract
 {
-
 
     /**
      * @return $this
      */
     public function result()
     {
-
-        if ( ! empty($this->siteAnatomy->errors())) {
+        if (!empty($this->siteAnatomy->errors())) {
             $this->errors = $this->siteAnatomy->errors();
 
             return $this;
         }
 
-        $apps = new \App\Engine\ApplicationComponents\Applications();
+        $apps = new Applications();
 
         //External scanning
         $appWordPress = $this->searchForwordPress();
@@ -42,7 +37,7 @@ class OnlineMode extends ApplicationScanAbstract
         $otherTechnologies = $this->searchForOtherTechnologies();
 
 
-        if ( ! empty($otherTechnologies)) {
+        if (!empty($otherTechnologies)) {
 
             foreach ($otherTechnologies as $technology) {
                 $apps->add($technology);
@@ -62,7 +57,7 @@ class OnlineMode extends ApplicationScanAbstract
      */
     public function searchForwordPress()
     {
-        $application = (new \App\Engine\WordPress\WordPress($this->siteAnatomy))->details();
+        $application = (new WordPress($this->siteAnatomy))->details();
 
         return $application;
     }
@@ -80,7 +75,7 @@ class OnlineMode extends ApplicationScanAbstract
 
                 if ($application->name != 'WordPress') {
 
-                    $app = (new \App\Engine\ApplicationComponents\Application())
+                    $app = (new Application())
                         ->setName($application->name)
                         ->setConfidence($application->confidence)
                         ->setVersion($application->version)
@@ -111,13 +106,13 @@ class OnlineMode extends ApplicationScanAbstract
 
             unset($app->poweredBy, $app->icon, $app->website);
 
-            if (isset($app->themes) && ! is_null($app->themes)) {
+            if (isset($app->themes) && !is_null($app->themes)) {
                 collect($app->themes)->each(function (Theme $theme) {
                     unset($theme->screenshotHash, $theme->screenshotUrl, $theme->description);
                 });
             }
 
-            if (isset($app->plugins) && ! is_null($app->plugins)) {
+            if (isset($app->plugins) && !is_null($app->plugins)) {
                 collect($app->plugins)->each(function (Plugin $plugin) {
                     unset($plugin->description);
                 });
@@ -133,7 +128,7 @@ class OnlineMode extends ApplicationScanAbstract
         $dsl['clientIp']     = $this->request->getIp();
         $dsl['origin']       = $this->request->getOrigin();
         $dsl['environment']  = env('APP_ENV');
-        $dsl['createdOn']    = \Carbon\Carbon::now()->toDateTimeString();
+        $dsl['createdOn']    = Carbon::now()->toDateTimeString();
         $dsl['technologies'] = $applicationsFiltered;
 
 
@@ -144,7 +139,7 @@ class OnlineMode extends ApplicationScanAbstract
         ];
 
 
-        return \Elasticsearch::index($data);
+        return Elasticsearch::index($data);
     }
 
 

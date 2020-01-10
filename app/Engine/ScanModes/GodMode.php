@@ -8,9 +8,11 @@
 
 namespace App\Engine\ScanModes;
 
+use App\Engine\ApplicationComponents\Applications;
+use App\Engine\ApplicationScanAbstract;
 use App\Engine\ScanTechnologies;
 
-class GodMode extends \App\Engine\ApplicationScanAbstract
+class GodMode extends ApplicationScanAbstract
 {
 
     // Do an online search
@@ -20,19 +22,18 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
 
     public function result()
     {
-
-        $apps = new \App\Engine\ApplicationComponents\Applications();
+        $apps = new Applications();
 
         //Do u have any html? yes? then scan offlinemode
 
-        if ( ! is_null($this->request->getHtml())) {
+        if (!is_null($this->request->getHtml())) {
             $responseOfflineMode = (new ScanTechnologies($this->request))
                 ->setOptions(['mode' => 'offline'])
                 ->result();
 
             $applicationsFromOfflineMode = $responseOfflineMode->applications;
 
-            if ( ! is_null($applicationsFromOfflineMode)) {
+            if (!is_null($applicationsFromOfflineMode)) {
                 foreach ($applicationsFromOfflineMode as $technology) {
                     $apps->add($technology);
                 }
@@ -44,7 +45,7 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
             ->setOptions(['mode' => 'historical'])
             ->result();
 
-        if ( ! $responseHistoricalMode->alreadyScanned()) {
+        if (!$responseHistoricalMode->alreadyScanned()) {
             //echo('This url has NOT been scanned yet. ' . $this->request->getUrl());
             // Then fetch live data
 
@@ -58,13 +59,13 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
             $applicationsFromHistoricalSearch = $responseHistoricalMode->searchForHistoricalTechnologies();
 
 
-            if ( ! is_null($applicationsFromLiveSearch)) {
+            if (!is_null($applicationsFromLiveSearch)) {
                 foreach ($applicationsFromLiveSearch as $technology) {
                     $apps->add($technology);
                 }
             }
 
-            if ( ! is_null($applicationsFromLiveSearch)) {
+            if (!is_null($applicationsFromLiveSearch)) {
                 foreach ($applicationsFromHistoricalSearch as $technology) {
                     $apps->add($technology);
                 }
@@ -81,7 +82,7 @@ class GodMode extends \App\Engine\ApplicationScanAbstract
 
             $applications = $applicationsFromHistoricalSearch;
 
-            if ( ! is_null($applications)) {
+            if (!is_null($applications)) {
                 foreach ($applications as $technology) {
                     $apps->add($technology);
                 }

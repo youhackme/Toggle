@@ -114,23 +114,23 @@ class SiteAnatomy
     private function result(BotInterface $data)
     {
 
-        if ( ! ($this->errors())) {
+        if (!($this->errors())) {
 
             $this->html = $data->html();
 
-            $this->url         = $this->originalUrl;
-            $this->headers     = $data->headers();
-            $this->cookies     = $data->cookies();
+            $this->url = $this->originalUrl;
+            $this->headers = $data->headers();
+            $this->cookies = $data->cookies();
             $this->environment = $data->environment();
-            $this->status      = $data->status();
-            $this->host        = $data->host();
+            $this->status = $data->status();
+            $this->host = $data->host();
 
-            $this->crawler  = new Crawler($this->html);
-            $this->styles   = $this->getStyleSheets();
-            $this->scripts  = $this->getScripts();
-            $this->metas    = $this->metatags();
+            $this->crawler = new Crawler($this->html);
+            $this->styles = $this->getStyleSheets();
+            $this->scripts = $this->getScripts();
+            $this->metas = $this->metatags();
             $this->comments = $this->getHtmlComments();
-            $this->css      = [
+            $this->css = [
                 'classes' => $this->getCssClasses(),
                 'ids'     => $this->getCssIds(),
             ];
@@ -167,14 +167,14 @@ class SiteAnatomy
     private function getStyleSheets()
     {
         $blacklistedDomains = ['googleapis.com'];
-        $styleSheets        = [];
+        $styleSheets = [];
         $this->crawler->filterXpath('//link[@rel="stylesheet"]')
-                      ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
-                          $link = $styleSheet->attr('href');
-                          if ( ! str_contains($link, $blacklistedDomains)) {
-                              $styleSheets[] = $styleSheet->attr('href');
-                          }
-                      });
+            ->each(function (Crawler $styleSheet) use (&$styleSheets, $blacklistedDomains) {
+                $link = $styleSheet->attr('href');
+                if (!str_contains($link, $blacklistedDomains)) {
+                    $styleSheets[] = $styleSheet->attr('href');
+                }
+            });
 
         return array_values(array_unique($styleSheets));
     }
@@ -188,11 +188,11 @@ class SiteAnatomy
     {
         $scripts = [];
         $this->crawler->filterXpath('//script')
-                      ->each(function (Crawler $script) use (&$scripts) {
-                          if ( ! is_null($script->attr('src'))) {
-                              $scripts[] = $script->attr('src');
-                          }
-                      });
+            ->each(function (Crawler $script) use (&$scripts) {
+                if (!is_null($script->attr('src'))) {
+                    $scripts[] = $script->attr('src');
+                }
+            });
 
         return array_unique($scripts);
     }
@@ -206,9 +206,9 @@ class SiteAnatomy
     {
         $tags = [];
         $this->crawler->filterXpath('//meta[@name="generator"]')
-                      ->each(function (Crawler $metaTags) use (&$tags) {
-                          $tags['generator'][] = $metaTags->attr('content');
-                      });
+            ->each(function (Crawler $metaTags) use (&$tags) {
+                $tags['generator'][] = $metaTags->attr('content');
+            });
 
         return $tags;
     }
@@ -234,11 +234,11 @@ class SiteAnatomy
     {
         $cssClasses = [];
         $this->crawler->filterXpath('//*[@class]')
-                      ->each(function (Crawler $cssClass) use (&$cssClasses) {
-                          $classes      = trim($cssClass->attr('class'));
-                          $classes      = explode(' ', $classes);
-                          $cssClasses[] = $classes;
-                      });
+            ->each(function (Crawler $cssClass) use (&$cssClasses) {
+                $classes = trim($cssClass->attr('class'));
+                $classes = explode(' ', $classes);
+                $cssClasses[] = $classes;
+            });
 
         $uniqueCssClasses = array_unique(array_flatten($cssClasses));
 
@@ -261,9 +261,9 @@ class SiteAnatomy
     {
         $cssIds = [];
         $this->crawler->filterXpath('//*[@id]')
-                      ->each(function (Crawler $cssId) use (&$cssIds) {
-                          $cssIds[] = trim($cssId->attr('id'));
-                      });
+            ->each(function (Crawler $cssId) use (&$cssIds) {
+                $cssIds[] = trim($cssId->attr('id'));
+            });
 
         $uniqueCssIds = array_unique(array_flatten($cssIds));
 

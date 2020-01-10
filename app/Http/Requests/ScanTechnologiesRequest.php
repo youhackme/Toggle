@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use League\Uri\Uri;
 
 class ScanTechnologiesRequest extends FormRequest
 {
@@ -36,11 +37,8 @@ class ScanTechnologiesRequest extends FormRequest
      */
     public function getHost()
     {
-        $uri = \App::make('Uri');
-
-        return $uri->parseUrl(
-            $this->getUrl()
-        )->host->host;
+        $uri = Uri::createFromString($this->getUrl());
+        return $uri->getHost();
     }
 
     /**

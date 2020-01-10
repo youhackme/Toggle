@@ -19,6 +19,8 @@ class PhantomJS implements BotInterface
 
     public $response;
 
+    private $request;
+
     /**
      * @param ScanTechnologiesRequest $request
      *
@@ -26,14 +28,15 @@ class PhantomJS implements BotInterface
      */
     public function request(ScanTechnologiesRequest $request)
     {
-        $url         = $request->getUrl();
+        $this->request = $request;
+        $url = $this->request->getUrl();
         $scraperPath = app_path() . '/Engine/Bot/scraper.js';
-        $command     = 'phantomjs --ignore-ssl-errors=true --load-images=false ' . $scraperPath . ' ' . "'" . $url . "'";
-        $process     = new Process($command);
+        $command = 'phantomjs --ignore-ssl-errors=true --load-images=false ' . $scraperPath . ' ' . "'" . $url . "'";
+        $process = new Process($command);
         $process->run();
 
         // executes after the command finishes
-        if ( ! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
 
@@ -63,12 +66,12 @@ class PhantomJS implements BotInterface
         if (empty((array)$this->response->headers)) {
             return $filteredHeaders;
         }
-        $headers          = json_decode($this->response->headers);
+        $headers = json_decode($this->response->headers);
         $blacklistHeaders = ['Expires', 'Cache-Control'];
         foreach ($headers as $header) {
-            $headerName  = $header->name;
+            $headerName = $header->name;
             $headerValue = $header->value;
-            if ( ! in_array($headerName, $blacklistHeaders)) {
+            if (!in_array($headerName, $blacklistHeaders)) {
                 $headerValue = explode(',', $headerValue);
             } else {
                 $headerValue = [$headerValue];
@@ -102,14 +105,7 @@ class PhantomJS implements BotInterface
      */
     public function host()
     {
-
-        $uri = \App::make('Uri');
-
-        return $uri->parseUrl(
-            $this->url()
-        )->host->host;
-
-
+        return $this->request->getHost();
     }
 
     /**
