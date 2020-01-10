@@ -23,8 +23,8 @@ Route::get('/result', 'SiteController@scanFromWeb');
 Route::get('/apps', function () {
 
 
-    $json                  = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
-    $categories            = $json->categories;
+    $json = json_decode(file_get_contents(app_path() . '/../node_modules/togglyzer/apps.json'));
+    $categories = $json->categories;
     $applicationByCategory = [];
 
     foreach ($categories as $categoryId => $category) {
@@ -41,7 +41,7 @@ Route::get('/apps', function () {
 
         }
     }
-    
+
 
     return view('website.apps', ['apps' => $applicationByCategory]);
 });
